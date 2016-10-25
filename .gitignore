@@ -9,7 +9,11 @@
 !.config/cower/config
 
 !.vim/
-!.vim/*
+.vim/*
+!.vim/colors/
+!.vim/colors/*
+!.vim/autoload/
+!.vim/autoload/*
 
 !.local/
 !.local/share/

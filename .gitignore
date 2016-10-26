@@ -8,6 +8,9 @@
 !.config/cower
 !.config/cower/config
 
+!.config/Clementine/
+!.config/Clementine/Clementine.conf
+
 !.vim/
 .vim/*
 !.vim/colors/

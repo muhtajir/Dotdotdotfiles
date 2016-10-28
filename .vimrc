@@ -7,7 +7,7 @@ call plug#begin()
 call plug#end()
 
 if has("gui_running")
-    set guifont=Anonymous\ Pro\ Regular\ 12
+    set guifont=mononoki\ 12
     set lines=45 columns=160
 endif
 
@@ -30,9 +30,11 @@ set hidden
 let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
 
+"keybinds
 let mapleader=','
-map <C-Tab> gt
-map <C-S-Tab> gT
+nmap <silent> <leader><Tab> :bn<CR>
+nmap <silent> <leader><S-Tab> :bp<CR>
+nmap <silent> <C-F10> :w<CR> :so %<CR>
 nnoremap <silent> <F5> :SyntasticCheck<CR>
 nnoremap <silent> <F6> :SyntasticReset<CR>
 nnoremap ö ^

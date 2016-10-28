@@ -1,7 +1,7 @@
 [options]
 allow_bold = true
 fullscreen = true
-font = Inconsolata 13
+font = mononoki 12
 geometry = 85x25
 dynamic_title = true
 size_hints = true

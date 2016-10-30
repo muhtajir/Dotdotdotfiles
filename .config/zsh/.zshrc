@@ -1,7 +1,10 @@
 setopt appendhistory autocd extendedglob complete_aliases
 unsetopt beep
-zstyle :compinstall filename '/home/nicolai/.zshrc'
+zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+
+#autoload -Uz vcs_info
 
 autoload -Uz compinit
 compinit

@@ -8,6 +8,10 @@
 !.config/cower
 !.config/cower/config
 
+!.config/zsh
+.config/zsh/*
+!.config/zsh/.zshrc
+
 !.vim/
 .vim/*
 !.vim/colors/
@@ -28,4 +32,4 @@
 !.vimrc
 !.bashrc
 !.gitignore
-!.zshrc
+!.zshenv

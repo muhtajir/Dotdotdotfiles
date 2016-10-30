@@ -12,7 +12,13 @@ promptinit
 autoload -Uz colors
 colors
 
-PS1="%F{1}░▒▓█%K{1}%F{0}%# %F{1}%K{2}%F{0} %1~ %k%F{2} ∙%f "
+# widgets for history searching with arrow keys
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# over-the-top prompt theme
+PS1="%F{4}░▒▓█%K{4}%(0?,%F{0}%# %F{4}%K{2},%F{1}%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
 
 # Aliases and export options
 alias ls='ls --color=auto'
@@ -42,19 +48,21 @@ key[Down]=${terminfo[kcud1]}
 key[Left]=${terminfo[kcub1]}
 key[Right]=${terminfo[kcuf1]}
 
-bindkey "${key[Home]}" beginning-of-line
-bindkey "${key[End]}" end-of-line
-bindkey "${key[Insert]}" overwrite-mode
-bindkey "${key[Delete]}" delete-char
-bindkey  "${key[Up]}"      up-line-or-history
-bindkey  "${key[Down]}"    down-line-or-history
-bindkey  "${key[Left]}"    backward-char
-bindkey  "${key[Right]}"   forward-char
-bindkey "^\b" backward-kill-word
-bindkey "${key[PageUp]}" up-line-or-search
-bindkey "${key[PageDown]}" down-line-or-search
-bindkey "^[[1;5D" emacs-backward-word
-bindkey "^[[1;5C" emacs-forward-word
+[[ -n "${key[Home]}" ]] && bindkey "${key[Home]}" beginning-of-line
+[[ -n "${key[End]}" ]] && bindkey "${key[End]}" end-of-line
+[[ -n "${key[Insert]}" ]] && bindkey "${key[Insert]}" overwrite-mode
+[[ -n "${key[Delete]}" ]] && bindkey "${key[Delete]}" delete-char
+[[ -n "${key[Up]}" ]] && bindkey  "${key[Up]}" up-line-or-history
+[[ -n "${key[Down]}" ]] && bindkey  "${key[Down]}" down-line-or-history
+[[ -n "${key[Left]}" ]] && bindkey  "${key[Left]}" backward-char
+[[ -n "${key[Right]}" ]] && bindkey  "${key[Right]}" forward-char
+[[ -n "^\b" ]] && bindkey "^\b" backward-kill-word
+[[ -n "${key[PageUp]}" ]] && bindkey "${key[PageUp]}" up-line-or-search
+[[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" down-line-or-search
+[[ -n "^[[1;5D" ]] && bindkey "^[[1;5D" emacs-backward-word
+[[ -n "^[[1;5C" ]] && bindkey "^[[1;5C" emacs-forward-word
+[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.

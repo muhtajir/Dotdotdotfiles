@@ -4,6 +4,7 @@ call plug#begin()
     Plug 'vis'
     Plug 'vim-airline/vim-airline'
     Plug 'tpope/vim-surround'
+    Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 if has("gui_running")
@@ -39,8 +40,9 @@ endif
 
 "keybinds
 let mapleader=','
-nmap <silent> <leader><Tab> :bn<CR>
-nmap <silent> <leader><S-Tab> :bp<CR>
+nnoremap <silent> <leader><Tab> :bn<CR>
+nnoremap <silent> <leader><S-Tab> :bp<CR>
+nnoremap <silent> <leader>d :bd<CR>
 nmap <silent> <C-F10> :w<CR> :so %<CR>
 nmap <silent> <F4> :set hlsearch!<CR>
 imap <C-A> <Esc>A

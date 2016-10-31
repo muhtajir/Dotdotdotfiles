@@ -21,7 +21,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # over-the-top prompt theme
-PS1="%F{4}░▒▓█%K{4}%(0?,%F{0}%# %F{4}%K{2},%F{1}%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
+[[ $TERM == "xterm-termite" ]] && PS1="%F{4}░▒▓█%K{4}%F{0}%(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
 
 # Aliases and export options
 alias ls='ls --color=auto'

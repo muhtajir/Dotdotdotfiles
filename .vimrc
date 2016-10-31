@@ -35,7 +35,7 @@ let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
 "source the .vimrc automatically after saving
 if has("autocmd")
-    autocmd bufwritepost .vimrc source $MYVIMRC
+    autocmd bufwritepost .vimrc source $MYVIMRC | AirlineRefresh
 endif
 
 "keybinds

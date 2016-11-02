@@ -1,9 +1,24 @@
+"functions
+"thanks vimcasts.org
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
 call plug#begin()
     Plug 'scrooloose/syntastic'
     Plug 'raimondi/delimitmate'
     Plug 'vis'
     Plug 'vim-airline/vim-airline'
     Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary'
     Plug 'easymotion/vim-easymotion'
 call plug#end()
 
@@ -12,7 +27,8 @@ if has("gui_running")
     set lines=45 columns=160
 endif
 
-colorscheme base16-seti-ui
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-materia
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -27,10 +43,10 @@ set ttimeout
 set ttimeoutlen=10
 set linebreak
 set hidden
-set clipboard=unnamedplus
 set hlsearch
 set smartcase
-"use pipe character in insert mode
+set relativenumber
+"use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
 "source the .vimrc automatically after saving
@@ -43,14 +59,21 @@ let mapleader=','
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
 nnoremap <silent> <leader>d :bd<CR>
-nmap <silent> <C-F10> :w<CR> :so %<CR>
-nmap <silent> <F4> :set hlsearch!<CR>
-imap <C-A> <Esc>A
+nnoremap <leader>rc :vsplit $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :vsplit<CR>
+nnoremap <silent> <C-F10> :w<CR> :so %<CR>
+nnoremap <silent> <F4> :set hlsearch!<CR>
+inoremap <C-U> <Esc>viWUEi
+inoremap <C-A> <Esc>A
 nnoremap <silent> <F5> :SyntasticCheck<CR>
 nnoremap <silent> <F6> :SyntasticReset<CR>
-nnoremap \| ^
 nnoremap ü o<ESC>
 nnoremap Ü O<ESC>
+nnoremap <silent> <F3> :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <leader>y "+y
+nnoremap <leader>p "+p
+nnoremap <leader>Y "+Y
+nnoremap <leader>P "+P
 
 "syntastic configuration
 let g:syntastic_always_populate_loc_list = 1

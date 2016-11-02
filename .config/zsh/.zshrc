@@ -30,12 +30,12 @@ alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) 
 alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 
-HISTFILE=~/.histfile
-HISTSIZE=3500
-SAVEHIST=7000
-HISTCONTROL=ignoredups
-aur="${HOME}/Downloads/AUR"
-scripts="${HOME}/Etc./Scripts"
+export HISTFILE=~/.histfile
+export HISTSIZE=3500
+export SAVEHIST=7000
+export HISTCONTROL=ignoredups
+export aur="${HOME}/Downloads/AUR"
+export scripts="${HOME}/Etc./Scripts"
 
 # make special keys work
 typeset -A key

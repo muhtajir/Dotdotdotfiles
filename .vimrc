@@ -1,3 +1,14 @@
+call plug#begin()
+    Plug 'scrooloose/syntastic'
+    Plug 'kien/ctrlp.vim'
+    Plug 'raimondi/delimitmate'
+    Plug 'vis'
+    Plug 'vim-airline/vim-airline'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary'
+    Plug 'easymotion/vim-easymotion'
+call plug#end()
+
 "functions
 "thanks vimcasts.org
 function! <SID>StripTrailingWhitespaces()
@@ -11,16 +22,6 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-
-call plug#begin()
-    Plug 'scrooloose/syntastic'
-    Plug 'raimondi/delimitmate'
-    Plug 'vis'
-    Plug 'vim-airline/vim-airline'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-commentary'
-    Plug 'easymotion/vim-easymotion'
-call plug#end()
 
 if has("gui_running")
     set guifont=mononoki\ 12
@@ -44,6 +45,7 @@ set ttimeoutlen=10
 set linebreak
 set hidden
 set hlsearch
+set ignorecase
 set smartcase
 set relativenumber
 "use pipe character as cursor in insert mode
@@ -89,5 +91,8 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+"ctrlp configuration
+let g:ctrlp_by_filename = 1
 
 syntax on

@@ -37,6 +37,13 @@ export HISTCONTROL=ignoredups
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
 
+function precmd {
+    print -Pn "\e]0;Ter--[ %c ]--mite\a"
+}
+
+function preexec {
+    print -Pn "\e]0;Ter--[ $1 ]--mite\a"
+}
 # make special keys work
 typeset -A key
 

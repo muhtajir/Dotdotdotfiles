@@ -1,4 +1,4 @@
-setopt appendhistory autocd extendedglob complete_aliases
+setopt appendhistory autocd extendedglob complete_aliases correct
 unsetopt beep
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
@@ -14,6 +14,10 @@ promptinit
 
 autoload -Uz colors
 colors
+
+# create a navigation history with pushd
+setopt autopushd pushdminus pushdsilent
+alias dc='dirs -v'
 
 # widgets for history searching with arrow keys
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -42,8 +46,9 @@ function precmd {
 }
 
 function preexec {
-    print -Pn "\e]0;Ter--[ $1 ]--mite\a"
+    printf "\033]0;%s\a" "Ter--[ $1 ]--mite"
 }
+
 # make special keys work
 typeset -A key
 

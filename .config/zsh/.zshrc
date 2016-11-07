@@ -1,10 +1,22 @@
-setopt appendhistory autocd extendedglob complete_aliases correct
+setopt appendhistory autocd extendedglob complete_aliases correct prompt_subst
 unsetopt beep
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
-#autoload -Uz vcs_info
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*+set-message:*' hooks blank_master
+zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
+function +vi-no_vcs_prompt() {
+    vcs_info_msg_0_="%F{4}░▒▓%K{4}%F{0} %(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} "
+}
+function +vi-blank_master() {
+    if [[ ${hook_com[branch_orig]} == 'master' ]]; then
+        hook_com[branch]=''
+    fi
+}
+zstyle ':vcs_info:git:*' formats "%F{5}░▒▓%K{5}%F{0} %(0?,%b %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} "
 
 autoload -Uz compinit
 compinit
@@ -25,7 +37,8 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # over-the-top prompt theme
-[[ $TERM == "xterm-termite" ]] && PS1="%F{4}░▒▓█%K{4}%F{0}%(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
+[[ $TERM == "xterm-termite" ]] && PS1='${vcs_info_msg_0_}%(0?,∙,%F{1}∙)%f '
+[[ $TERM == "xterm-termite" ]] && PS2="%F{3}░▒▓%K{3}%F{0} %_ %k%F{3}%f "
 
 # Aliases and export options
 alias ls='ls --color=auto'
@@ -40,13 +53,15 @@ export SAVEHIST=7000
 export HISTCONTROL=ignoredups
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
+export EDITOR='vim'
 
 function precmd {
+    vcs_info
     print -Pn "\e]0;Ter--[ %c ]--mite\a"
 }
 
 function preexec {
-    printf "\033]0;%s\a" "Ter--[ $1 ]--mite"
+    printf "\033]0;%s\a" "Ter--{ $1 }--mite"
 }
 
 # make special keys work
@@ -71,11 +86,13 @@ key[Right]=${terminfo[kcuf1]}
 [[ -n "${key[Down]}" ]] && bindkey  "${key[Down]}" down-line-or-history
 [[ -n "${key[Left]}" ]] && bindkey  "${key[Left]}" backward-char
 [[ -n "${key[Right]}" ]] && bindkey  "${key[Right]}" forward-char
-[[ -n "^\b" ]] && bindkey "^\b" backward-kill-word
+[[ -n "^\b" ]] && bindkey "^\b" vi-backward-kill-word
 [[ -n "${key[PageUp]}" ]] && bindkey "${key[PageUp]}" up-line-or-search
 [[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" down-line-or-search
-[[ -n "^[[1;5D" ]] && bindkey "^[[1;5D" emacs-backward-word
-[[ -n "^[[1;5C" ]] && bindkey "^[[1;5C" emacs-forward-word
+[[ -n "^[[1;5D" ]] && bindkey "^[[1;5D" vi-backward-word
+[[ -n "^[[1;5C" ]] && bindkey "^[[1;5C" vi-forward-word
+[[ -n "^[[1;3D" ]] && bindkey "^[[1;3D" vi-backward-word
+[[ -n "^[[1;3C" ]] && bindkey "^[[1;3C" vi-forward-word
 [[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
 

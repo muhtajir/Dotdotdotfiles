@@ -76,6 +76,9 @@ nnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>Y "+Y
 nnoremap <leader>P "+P
+nnoremap <leader>k "_d
+nnoremap <leader>kk "_dd
+nnoremap <leader>K "_D
 
 "syntastic configuration
 let g:syntastic_always_populate_loc_list = 1

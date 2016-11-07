@@ -1,4 +1,5 @@
-setopt appendhistory autocd extendedglob complete_aliases correct prompt_subst
+setopt appendhistory autocd extendedglob complete_aliases correct share_history\
+    prompt_subst
 unsetopt beep
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select

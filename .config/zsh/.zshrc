@@ -1,6 +1,7 @@
 setopt appendhistory autocd extendedglob complete_aliases correct share_history\
     prompt_subst
 unsetopt beep
+zmodload zsh/complist
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
@@ -27,6 +28,9 @@ promptinit
 
 autoload -Uz colors
 colors
+
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
 
 # create a navigation history with pushd
 setopt autopushd pushdminus pushdsilent
@@ -87,15 +91,21 @@ key[Right]=${terminfo[kcuf1]}
 [[ -n "${key[Down]}" ]] && bindkey  "${key[Down]}" down-line-or-history
 [[ -n "${key[Left]}" ]] && bindkey  "${key[Left]}" backward-char
 [[ -n "${key[Right]}" ]] && bindkey  "${key[Right]}" forward-char
-[[ -n "^\b" ]] && bindkey "^\b" vi-backward-kill-word
+bindkey "^\b" vi-backward-kill-word
 [[ -n "${key[PageUp]}" ]] && bindkey "${key[PageUp]}" up-line-or-search
 [[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" down-line-or-search
-[[ -n "^[[1;5D" ]] && bindkey "^[[1;5D" vi-backward-word
-[[ -n "^[[1;5C" ]] && bindkey "^[[1;5C" vi-forward-word
-[[ -n "^[[1;3D" ]] && bindkey "^[[1;3D" vi-backward-word
-[[ -n "^[[1;3C" ]] && bindkey "^[[1;3C" vi-forward-word
+bindkey "^[[1;5D" vi-backward-word
+bindkey "^[[1;5C" vi-forward-word
+bindkey "^[[1;3D" vi-backward-word
+bindkey "^[[1;3C" vi-forward-word
 [[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+# vi keys in menu select
+bindkey -M menuselect j down-line-or-history
+bindkey -M menuselect k up-line-or-history
+bindkey -M menuselect l forward-char
+bindkey -M menuselect h backward-char
+bindkey "^[m" copy-earlier-word
 
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.

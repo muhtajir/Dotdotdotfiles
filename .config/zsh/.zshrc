@@ -11,14 +11,14 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*+set-message:*' hooks blank_master
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
 function +vi-no_vcs_prompt() {
-    vcs_info_msg_0_="%F{4}░▒▓%K{4}%F{0} %(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} "
+    [[ $TERM == "xterm-termite" ]] && PS1="%F{4}░▒▓%K{4}%F{0} %(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
 }
 function +vi-blank_master() {
     if [[ ${hook_com[branch_orig]} == 'master' ]]; then
         hook_com[branch]=''
     fi
 }
-zstyle ':vcs_info:git:*' formats "%F{5}░▒▓%K{5}%F{0} %(0?,%b %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} "
+zstyle ':vcs_info:git:*' formats "%b"
 
 autoload -Uz compinit
 compinit
@@ -42,7 +42,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # over-the-top prompt theme
-[[ $TERM == "xterm-termite" ]] && PS1='${vcs_info_msg_0_}%(0?,∙,%F{1}∙)%f '
+[[ $TERM == "xterm-termite" ]] && PS1='%F{5}░▒▓%K{5}%F{0} %(0?,${vcs_info_msg_0_} %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f '
 [[ $TERM == "xterm-termite" ]] && PS2="%F{3}░▒▓%K{3}%F{0} %_ %k%F{3}%f "
 
 # Aliases and export options

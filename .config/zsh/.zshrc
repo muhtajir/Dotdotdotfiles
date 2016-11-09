@@ -100,6 +100,8 @@ bindkey "^[[1;3D" vi-backward-word
 bindkey "^[[1;3C" vi-forward-word
 [[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+[[ -n "^[k"   ]] && bindkey "^[k"   up-line-or-beginning-search
+[[ -n "^[j" ]] && bindkey "^[j" down-line-or-beginning-search
 # vi keys in menu select
 bindkey -M menuselect j down-line-or-history
 bindkey -M menuselect k up-line-or-history

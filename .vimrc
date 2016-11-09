@@ -52,9 +52,12 @@ let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
 "and in neovim as well
 :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-"source the .vimrc automatically after saving
+"source the .vimrc/init.vim automatically after saving
 if has("autocmd")
     autocmd bufwritepost .vimrc source $MYVIMRC | AirlineRefresh
+endif
+if has("autocmd")
+    autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 endif
 
 "keybinds

@@ -1,21 +1,46 @@
 setopt appendhistory autocd extendedglob complete_aliases correct share_history\
-    prompt_subst
+    prompt_subst glob_complete
 unsetopt beep
 zmodload zsh/complist
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
+# function to check in what kind of terminal we are
+function is_pts() {
+    tstyle=$(tty)
+    if [[ ${tstyle:5:3} == pts ]];then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# OVERLY ELABORATE PROMPT SETUP STARTS HERE
+# first, a fall back prompt if is_pts returns false
+PS1="%B%F{2}%n%f@%M%b %1~ %#"
+# functions that define parts of the prompt, colors as arguments
+function st_prompt() {
+    echo "%F{${1}}░▒▓%K{${1}}%F{0} "
+}
+function end_prompt() {
+    echo "%(0?,∙,%F{1}∙)%f "
+}
+# for the time being, only a semi-fancy PS2-prompt
+is_pts && PS2='$(st_prompt 3)%_ %k%F{3}%f '
+# enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*+set-message:*' hooks blank_master
+# workaround for broken nvcsformats
+# set prompt at vcs_info start-up, overwrite if there's no vcs
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
 zstyle ':vcs_info:*+start-up:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
-    [[ $TERM == "xterm-termite" ]] && PS1="%F{5}░▒▓%K{5}%F{0} %(0?,${vcs_info_msg_0_} %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
+is_pts && PS1='$(st_prompt 5)%(0?,${vcs_info_msg_0_} %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} $(end_prompt)'
 }
 function +vi-no_vcs_prompt() {
-    [[ $TERM == "xterm-termite" ]] && PS1="%F{4}░▒▓%K{4}%F{0} %(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} %(0?,∙,%F{1}∙)%f "
+is_pts && PS1='$(st_prompt 4)%(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} $(end_prompt)'
 }
 function +vi-blank_master() {
     if [[ ${hook_com[branch_orig]} == 'master' ]]; then
@@ -23,6 +48,7 @@ function +vi-blank_master() {
     fi
 }
 zstyle ':vcs_info:git:*' formats "%b"
+# OVERLY ELABORATE PROMPT SETUP ENDS HERE
 
 autoload -Uz compinit
 compinit
@@ -44,9 +70,6 @@ alias dc='dirs -v'
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-
-# over-the-top prompt theme
-[[ $TERM == "xterm-termite" ]] && PS2="%F{3}░▒▓%K{3}%F{0} %_ %k%F{3}%f "
 
 # Aliases and export options
 alias ls='ls --color=auto'

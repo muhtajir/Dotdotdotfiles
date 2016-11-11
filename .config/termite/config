@@ -10,10 +10,11 @@ size_hints = true
 # Base16 Materia
 # Author: Defman21
 
-foreground      = #CDD3DE
-foreground_bold = #D5DBE5
-cursor          = #D5DBE5
-background      = rgba(38, 50, 56, 0.94)
+foreground          = #CDD3DE
+foreground_bold     = #D5DBE5
+cursor              = #D5DBE5
+cursor_foreground   = #263238
+background          = rgba(38, 50, 56, 0.94)
 
 # 16 color space
 

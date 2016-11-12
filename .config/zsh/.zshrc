@@ -19,15 +19,19 @@ function is_pts() {
 # OVERLY ELABORATE PROMPT SETUP STARTS HERE
 # first, a fall back prompt if is_pts returns false
 PS1="%B%F{2}%n%f@%M%b %1~ %#"
-# functions that define parts of the prompt, colors as arguments
-function st_prompt() {
-    echo "%F{${1}}░▒▓%K{${1}}%F{0} "
+# functions that define parts of the prompt, color is first argument,
+# second argument is content
+function p1_prompt() {
+    echo "%F{${1}}░▒▓%K{${1}}%F{0} %(0?,${2},%?) %F{${1}}"
 }
-function end_prompt() {
-    echo "%(0?,∙,%F{1}∙)%f "
+function p2_prompt() {
+echo "%K{${1}}%F{0} ${2} %k%F{${1}} "
+}
+function p3_prompt() {
+    echo "%F{${1}}∙%f "
 }
 # for the time being, only a semi-fancy PS2-prompt
-is_pts && PS2='$(st_prompt 3)%_ %k%F{3}%f '
+is_pts && PS2='$(p1_prompt 3 %_)%k%F{3}%f '
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
@@ -37,10 +41,10 @@ zstyle ':vcs_info:*+set-message:*' hooks blank_master
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
 zstyle ':vcs_info:*+start-up:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
-is_pts && PS1='$(st_prompt 5)%(0?,${vcs_info_msg_0_} %F{5}%K{2},%? %F{2}%K{5}%K{2})%F{0} %1~ %k%F{2} $(end_prompt)'
+    is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 %1~)$(p3_prompt 2)'
 }
 function +vi-no_vcs_prompt() {
-is_pts && PS1='$(st_prompt 4)%(0?,%# %F{4}%K{2},%? %F{2}%K{4}%K{2})%F{0} %1~ %k%F{2} $(end_prompt)'
+is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 %1~)$(p3_prompt 2)'
 }
 function +vi-blank_master() {
     if [[ ${hook_com[branch_orig]} == 'master' ]]; then
@@ -79,6 +83,7 @@ alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 
 export HISTFILE=~/.histfile
+export KEYTIMEOUT=1
 export HISTSIZE=3500
 export SAVEHIST=7000
 export HISTCONTROL=ignoredups
@@ -109,25 +114,27 @@ key[Down]=${terminfo[kcud1]}
 key[Left]=${terminfo[kcub1]}
 key[Right]=${terminfo[kcuf1]}
 
-[[ -n "${key[Home]}" ]] && bindkey "${key[Home]}" beginning-of-line
-[[ -n "${key[End]}" ]] && bindkey "${key[End]}" end-of-line
-[[ -n "${key[Insert]}" ]] && bindkey "${key[Insert]}" overwrite-mode
-[[ -n "${key[Delete]}" ]] && bindkey "${key[Delete]}" delete-char
-[[ -n "${key[Up]}" ]] && bindkey  "${key[Up]}" up-line-or-history
-[[ -n "${key[Down]}" ]] && bindkey  "${key[Down]}" down-line-or-history
-[[ -n "${key[Left]}" ]] && bindkey  "${key[Left]}" backward-char
-[[ -n "${key[Right]}" ]] && bindkey  "${key[Right]}" forward-char
+bindkey "${key[Home]}" beginning-of-line
+bindkey "${key[End]}" end-of-line
+bindkey "${key[Insert]}" overwrite-mode
+bindkey "${key[Delete]}" delete-char
+bindkey  "${key[Up]}" up-line-or-history
+bindkey  "${key[Down]}" down-line-or-history
+bindkey  "${key[Left]}" backward-char
+bindkey  "${key[Right]}" forward-char
 bindkey "^\b" vi-backward-kill-word
-[[ -n "${key[PageUp]}" ]] && bindkey "${key[PageUp]}" up-line-or-search
-[[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" down-line-or-search
+bindkey "${key[PageUp]}" up-line-or-search
+bindkey "${key[PageDown]}" down-line-or-search
 bindkey "^[[1;5D" vi-backward-word
 bindkey "^[[1;5C" vi-forward-word
 bindkey "^[[1;3D" vi-backward-word
 bindkey "^[[1;3C" vi-forward-word
-[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
-[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
-[[ -n "^[k"   ]] && bindkey "^[k"   up-line-or-beginning-search
-[[ -n "^[j" ]] && bindkey "^[j" down-line-or-beginning-search
+bindkey "${key[Up]}"   up-line-or-beginning-search
+bindkey "${key[Down]}" down-line-or-beginning-search
+bindkey "^[k"   up-line-or-beginning-search
+bindkey "^[j" down-line-or-beginning-search
+# nonsensically add vi mode to emacs bindings
+bindkey "^[" vi-cmd-mode
 # vi keys in menu select
 bindkey -M menuselect j down-line-or-history
 bindkey -M menuselect k up-line-or-history

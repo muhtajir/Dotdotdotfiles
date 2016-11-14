@@ -17,10 +17,17 @@ function is_pts() {
 }
 
 # OVERLY ELABORATE PROMPT SETUP STARTS HERE
-# first, a fall back prompt if is_pts returns false
-PS1="%B%F{2}%n%f@%M%b %1~ %#"
-# functions that define parts of the prompt, color is first argument,
+# first, a fall back prompt if is_pts returns false set the nvcsformats prompt
+# as a fallback prompt also, this is also a workaround due to the fact that
+# nvcsformats is currently broken
+if is_pts; then
+    PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+else
+    PS1="%B%F{2}%n%f@%M%b ${p_location} %#"
+fi
+# functions/variables that define parts of the prompt, color is first argument,
 # second argument is content
+p_location="%15>…>%1~%>>"
 function p1_prompt() {
     echo "%F{${1}}░▒▓%K{${1}}%F{0} %(0?,${2},%?) %F{${1}}"
 }
@@ -35,16 +42,19 @@ is_pts && PS2='$(p1_prompt 3 %_)%k%F{3}%f '
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
+# this disables vcs_info for ALL repositories in $HOME, we don't want that;
+# TODO: find a better way, maybe with $hook_com[base]
+zstyle ':vcs_info:*' disable-patterns "$HOME(|/*)"
 zstyle ':vcs_info:*+set-message:*' hooks blank_master
 # workaround for broken nvcsformats
 # set prompt at vcs_info start-up, overwrite if there's no vcs
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
-zstyle ':vcs_info:*+start-up:*' hooks vcs_prompt
+zstyle ':vcs_info:*+pre-get-data:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
-    is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 %1~)$(p3_prompt 2)'
+    is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 }
 function +vi-no_vcs_prompt() {
-is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 %1~)$(p3_prompt 2)'
+    is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 }
 function +vi-blank_master() {
     if [[ ${hook_com[branch_orig]} == 'master' ]]; then

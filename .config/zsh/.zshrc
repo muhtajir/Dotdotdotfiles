@@ -47,7 +47,7 @@ function p3_prompt() {
     fi
 }
 # for the time being, only a semi-fancy PS2-prompt
-is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %-1_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git

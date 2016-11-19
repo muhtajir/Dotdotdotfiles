@@ -43,7 +43,7 @@ function p3_prompt() {
     if [[ -n $M_PROMPT ]]; then
         echo "%F{16}∙%f "
     else
-        echo "%F{${1}}∙%f "
+        echo "%(0?,%F{${1}},%F{1})∙%f "
     fi
 }
 # for the time being, only a semi-fancy PS2-prompt
@@ -112,6 +112,7 @@ alias pacupdate='python2 ~/Etc./Scripts/pacupdate.py'
 alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) -not \( -path /sys -prune \) -not \( -path /run -prune \) -not \( -path /mnt -prune \) -not \( -path /media -prune \) -not \( -path /lost+found -prune \) -iname $* 2>/dev/null'
 alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
+alias v='nvim'
 
 export HISTFILE=~/.histfile
 export KEYTIMEOUT=1
@@ -120,7 +121,7 @@ export SAVEHIST=7000
 export HISTCONTROL=ignoredups
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
-export EDITOR='vim'
+export EDITOR='nvim'
 
 function precmd {
     vcs_info

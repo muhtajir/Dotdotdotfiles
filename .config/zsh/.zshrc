@@ -1,5 +1,5 @@
-setopt appendhistory autocd extendedglob complete_aliases correct share_history\
-    prompt_subst glob_complete
+setopt appendhistory autocd extendedglob correct share_history prompt_subst\
+    glob_complete
 unsetopt beep
 zmodload zsh/complist
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
@@ -113,6 +113,7 @@ alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) 
 alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 alias v='nvim'
+alias sctl='systemctl'
 
 export HISTFILE=~/.histfile
 export KEYTIMEOUT=1

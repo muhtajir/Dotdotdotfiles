@@ -1,5 +1,5 @@
-setopt appendhistory autocd extendedglob complete_aliases correct share_history\
-    prompt_subst glob_complete
+setopt appendhistory autocd extendedglob correct share_history prompt_subst\
+    glob_complete
 unsetopt beep
 zmodload zsh/complist
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
@@ -43,24 +43,31 @@ function p3_prompt() {
     if [[ -n $M_PROMPT ]]; then
         echo "%F{16}∙%f "
     else
-        echo "%F{${1}}∙%f "
+        echo "%(0?,%F{${1}},%F{1})∙%f "
+    fi
+}
+function git_change_sym() {
+    if [[ -n $(git status --porcelain) ]]; then
+        echo ''
     fi
 }
 # for the time being, only a semi-fancy PS2-prompt
-is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %-1_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 # this disables vcs_info for ALL repositories in $HOME, we don't want that;
 # TODO: find a better way, maybe with $hook_com[base]
-zstyle ':vcs_info:*' disable-patterns "$HOME(|/*)"
+#zstyle ':vcs_info:*' disable-patterns "$HOME(|/*)"
 zstyle ':vcs_info:*+set-message:*' hooks blank_master
 # workaround for broken nvcsformats
 # set prompt at vcs_info start-up, overwrite if there's no vcs
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
-zstyle ':vcs_info:*+pre-get-data:*' hooks vcs_prompt
+zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
-    is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+    if [[ ${hook_com[base]} != '/home/nicolai' ]]; then
+        is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+    fi
 }
 function +vi-no_vcs_prompt() {
     is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
@@ -112,6 +119,8 @@ alias pacupdate='python2 ~/Etc./Scripts/pacupdate.py'
 alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) -not \( -path /sys -prune \) -not \( -path /run -prune \) -not \( -path /mnt -prune \) -not \( -path /media -prune \) -not \( -path /lost+found -prune \) -iname $* 2>/dev/null'
 alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
+alias v='nvim'
+alias sctl='systemctl'
 
 export HISTFILE=~/.histfile
 export KEYTIMEOUT=1
@@ -120,7 +129,7 @@ export SAVEHIST=7000
 export HISTCONTROL=ignoredups
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
-export EDITOR='vim'
+export EDITOR='nvim'
 
 function precmd {
     vcs_info

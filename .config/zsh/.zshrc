@@ -20,7 +20,7 @@ function is_pts() {
 # set the standard prompts for is_pts=true and is_pts=false. we need the
 # fallback prompt for the nvcsformats workaround
 ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
-FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %#'
+FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
 if is_pts; then
     PS1=$ST_PROMPT
 else

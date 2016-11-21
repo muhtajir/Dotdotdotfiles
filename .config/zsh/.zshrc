@@ -46,6 +46,11 @@ function p3_prompt() {
         echo "%(0?,%F{${1}},%F{1})∙%f "
     fi
 }
+function git_change_sym() {
+    if [[ -n $(git status --porcelain) ]]; then
+        echo ''
+    fi
+}
 # for the time being, only a semi-fancy PS2-prompt
 is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %-1_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch
@@ -53,14 +58,16 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
 # this disables vcs_info for ALL repositories in $HOME, we don't want that;
 # TODO: find a better way, maybe with $hook_com[base]
-zstyle ':vcs_info:*' disable-patterns "$HOME(|/*)"
+#zstyle ':vcs_info:*' disable-patterns "$HOME(|/*)"
 zstyle ':vcs_info:*+set-message:*' hooks blank_master
 # workaround for broken nvcsformats
 # set prompt at vcs_info start-up, overwrite if there's no vcs
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
-zstyle ':vcs_info:*+pre-get-data:*' hooks vcs_prompt
+zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
-    is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+    if [[ ${hook_com[base]} != '/home/nicolai' ]]; then
+        is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+    fi
 }
 function +vi-no_vcs_prompt() {
     is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'

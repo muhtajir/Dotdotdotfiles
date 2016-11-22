@@ -6,6 +6,8 @@ zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
 
+WORDCHARS=''
+
 # function to check in what kind of terminal we are
 function is_pts() {
     tstyle=$(tty)
@@ -118,6 +120,7 @@ alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) 
 alias cls='echo -ne "\033c"'
 alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 alias v='nvim'
+alias vim='nvim'
 alias sctl='systemctl'
 
 export HISTFILE=~/.histfile
@@ -138,9 +141,11 @@ function preexec {
     printf "\033]0;%s\a" "Ter--{ $1 }--mite"
 }
 
-# make special keys work
-typeset -A key
+# KEYBINDINGS
+bindkey -e
 
+# special key aliases
+typeset -A key
 key[Home]="^[[H"
 key[End]="^[[F"
 key[Insert]="^[[2~"
@@ -154,18 +159,18 @@ key[Right]="^[[C"
 
 # modifier aliases… i can never remember these
 typeset -A mod
-
 mod[Alt]="^["
 mod[Ctrl]="^"
+
 bindkey "${key[Home]}" beginning-of-line
 bindkey "${key[End]}" end-of-line
 bindkey "${key[Insert]}" overwrite-mode
 bindkey "${key[Delete]}" delete-char
-bindkey  "${key[Up]}" up-line-or-history
-bindkey  "${key[Down]}" down-line-or-history
-bindkey  "${key[Left]}" backward-char
-bindkey  "${key[Right]}" forward-char
-bindkey "${mod[Alt]}b" vi-backward-kill-word
+bindkey "${key[Up]}" up-line-or-history
+bindkey "${key[Down]}" down-line-or-history
+bindkey "${key[Left]}" backward-char
+bindkey "${key[Right]}" forward-char
+bindkey "${mod[Ctrl]}H" vi-backward-kill-word
 bindkey "${key[PageUp]}" up-line-or-search
 bindkey "${key[PageDown]}" down-line-or-search
 bindkey "^[[1;5D" vi-backward-word
@@ -176,11 +181,14 @@ bindkey "${key[Up]}"   up-line-or-beginning-search
 bindkey "${key[Down]}" down-line-or-beginning-search
 bindkey "${mod[Alt]}k"   up-line-or-beginning-search
 bindkey "${mod[Alt]}j" down-line-or-beginning-search
-# nonsensically add vi mode to emacs bindings
+
+# add vi mode to emacs bindings
 bindkey "^[" vi-cmd-mode
+
 # vi keys in menu select
 bindkey -M menuselect j down-line-or-history
 bindkey -M menuselect k up-line-or-history
 bindkey -M menuselect l forward-char
 bindkey -M menuselect h backward-char
+
 bindkey "${mod[Alt]}m" copy-earlier-word

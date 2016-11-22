@@ -26,8 +26,8 @@ if is_pts; then
 else
     PS1=$FB_PROMPT
 fi
-# functions/variables that define parts of the prompt, color is first argument,
-# second argument is content
+# functions/variables that define parts of the prompt,the first argument is
+# color, the second argument is content
 p_location="%15>…>%1~%>>"
 function p1_prompt() {
     if [[ -n $M_PROMPT ]]; then
@@ -51,7 +51,7 @@ function git_change_sym() {
         echo ''
     fi
 }
-is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %-1_)$(p3_prompt 3)'
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
@@ -81,17 +81,13 @@ function +vi-blank_master() {
 }
 zstyle ':vcs_info:git:*' formats "%b"
 # indicate if vicmd keymap is active
-function zle-keymap-select {
-    if [[ $KEYMAP = 'vicmd' ]]; then
-        M_PROMPT='Φ'
-        zle reset-prompt
-    else
-        M_PROMPT=''
-        zle reset-prompt
-    fi
+function zle-keymap-select zle-line-init {
+M_PROMPT="${${KEYMAP/vicmd/Φ}/(viins|emacs|main)/}"
+zle reset-prompt
 }
 zle -N zle-line-init zle-keymap-select
 zle -N zle-keymap-select
+zle -N zle-line-init
 # OVERLY ELABORATE PROMPT SETUP ENDS HERE
 
 autoload -Uz compinit

@@ -48,10 +48,8 @@ function p3_prompt() {
         echo "%(0?,%F{${1}},%F{1})∙%f "
     fi
 }
-function git_change_sym() {
-    if [[ -n $(git status --porcelain) ]]; then
-        echo ''
-    fi
+function git_change_symbol() {
+    [[ -n $(git status --porcelain) ]] && echo '*'
 }
 is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch
@@ -65,7 +63,7 @@ zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
     if [[ ${hook_com[base]} = '/home/nicolai' ]]; then
         if [[ $(pwd) = '/home/nicolai' ]]; then
-            is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+            is_pts && PS1='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
         else
             is_pts && PS1=$ST_PROMPT
         fi
@@ -122,6 +120,7 @@ alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 alias v='nvim'
 alias vim='nvim'
 alias sctl='systemctl'
+alias mksri='makepkg -sri'
 
 export HISTFILE=~/.histfile
 export KEYTIMEOUT=1

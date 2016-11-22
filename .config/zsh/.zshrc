@@ -23,6 +23,7 @@ function is_pts() {
 # fallback prompt for the nvcsformats workaround
 ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
+VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 if is_pts; then
     PS1=$ST_PROMPT
 else
@@ -63,12 +64,12 @@ zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
 function +vi-vcs_prompt() {
     if [[ ${hook_com[base]} = '/home/nicolai' ]]; then
         if [[ $(pwd) = '/home/nicolai' ]]; then
-            is_pts && PS1='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+            is_pts && PS1=$VCS_PROMPT
         else
             is_pts && PS1=$ST_PROMPT
         fi
     else
-        is_pts && PS1='$(p1_prompt 5 ${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+        is_pts && PS1=$VCS_PROMPT
     fi
 }
 function +vi-no_vcs_prompt() {

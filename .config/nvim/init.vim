@@ -69,8 +69,6 @@ nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>vs :vsplit<CR>
 nnoremap <silent> <C-F10> :w<CR> :so %<CR>
 nnoremap <silent> <F4> :set hlsearch!<CR>
-inoremap <C-U> <Esc>viWUEi
-inoremap <C-A> <Esc>A
 nnoremap <silent> <F5> :SyntasticCheck<CR>
 nnoremap <silent> <F6> :SyntasticReset<CR>
 nnoremap ü o<ESC>
@@ -83,6 +81,19 @@ nnoremap <leader>P "+P
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd
 nnoremap <leader>K "_D
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+
+inoremap <C-U> <Esc>viWUEi
+inoremap <C-A> <Esc>A
+
 
 "syntastic configuration
 let g:syntastic_always_populate_loc_list = 1

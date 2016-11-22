@@ -12,12 +12,13 @@
 .config/zsh/*
 !.config/zsh/.zshrc
 
-!.vim/
-.vim/*
-!.vim/colors/
-!.vim/colors/*
-!.vim/autoload/
-!.vim/autoload/*
+!.config/nvim
+.config/nvim/*
+!.config/nvim/init.vim
+!.config/nvim/colors/
+!.config/nvim/colors/*
+!.config/nvim/autoload/
+!.config/nvim/autoload/*
 
 !.local/
 !.local/share/

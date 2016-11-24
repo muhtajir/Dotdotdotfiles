@@ -1,4 +1,5 @@
 call plug#begin()
+    Plug 'dietsche/vim-lastplace'
     Plug 'scrooloose/syntastic'
     Plug 'kien/ctrlp.vim'
     Plug 'raimondi/delimitmate'
@@ -94,6 +95,8 @@ tnoremap <A-l> <C-\><C-n><C-w>l
 inoremap <C-U> <Esc>viWUEi
 inoremap <C-A> <Esc>A
 
+cnoremap <A-k> <Up>
+cnoremap <A-j> <Down>
 
 "syntastic configuration
 let g:syntastic_always_populate_loc_list = 1

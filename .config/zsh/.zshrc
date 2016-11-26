@@ -113,6 +113,7 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
 # Aliases and export options
+alias sudo='sudo ' # working aliases following sudo
 alias ls='ls --color=auto'
 alias pacupdate='python2 ~/Etc./Scripts/pacupdate.py'
 alias locate='find / -not \( -path /dev -prune \) -not \( -path /proc -prune \) -not \( -path /sys -prune \) -not \( -path /run -prune \) -not \( -path /mnt -prune \) -not \( -path /media -prune \) -not \( -path /lost+found -prune \) -iname $* 2>/dev/null'

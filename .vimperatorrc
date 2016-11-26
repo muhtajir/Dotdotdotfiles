@@ -2,6 +2,10 @@
 
 nnoremap J gT
 nnoremap K gt
+nnoremap gd t<CR>:downloads<CR>
+nnoremap ga t<CR>:addons<CR>
+nnoremap gp t<CR>:preferences<CR>
+
 source! /home/nicolai/.vimperatorrc.local
 set gui=nonavigation
 

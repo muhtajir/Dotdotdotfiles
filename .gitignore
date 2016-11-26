@@ -30,6 +30,12 @@
 .local/share/icons/Adwaita-Mod/icon-theme.cache
 !.local/share/icons/archlinux-icon-crystal-16.svg
 
+!.vimperatorrc
+!.vimperator/
+!.vimperator/plugin/
+!.vimperator/plugin/*
+!.vimperator/*
+
 !.vimrc
 !.bashrc
 !.gitignore

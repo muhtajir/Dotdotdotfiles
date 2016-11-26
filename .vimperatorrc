@@ -3,6 +3,7 @@
 nnoremap J gT
 nnoremap K gt
 source! /home/nicolai/.vimperatorrc.local
+set gui=nonavigation
 
 "smooziee smooth scrolling settings
 let g:smooziee_scroll_interval="10"

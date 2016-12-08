@@ -6,6 +6,13 @@ nnoremap gd t<CR>:downloads<CR>
 nnoremap ga t<CR>:addons<CR>
 nnoremap gp t<CR>:preferences<CR>
 
+"workaround for Ctrl-A in insert mode
+inoremap <C-a> <C-Home><C-S-End>
+
+"basic HTML5 video keys
+nnoremap <S-Space> :videocontrol playOrPause<CR>
+nnoremap <S-Enter> :videocontrol fullscreen<CR>
+
 source! /home/nicolai/.vimperatorrc.local
 set gui=nonavigation
 

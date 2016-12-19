@@ -50,7 +50,7 @@ function p3_prompt() {
     fi
 }
 function git_change_symbol() {
-    [[ -n $(git status --porcelain) ]] && echo '*'
+    [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '*'
 }
 is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
 # enable vcs_info for git only and never print master branch

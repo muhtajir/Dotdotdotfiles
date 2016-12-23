@@ -5,6 +5,7 @@ zmodload zsh/complist
 zstyle :compinstall filename '$ZDOTDIR/.zshrc'
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' '+m:{a-z}={A-Z}' '+m:{A-Z}={a-z}'
+zstyle ':completion:*' rehash true
 
 WORDCHARS=''
 

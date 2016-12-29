@@ -125,7 +125,7 @@ alias vim='nvim'
 alias sctl='systemctl'
 alias mksri='makepkg -sri'
 
-export HISTFILE=~/.histfile
+export HISTFILE="$ZDOTDIR/.zsh_history"
 export KEYTIMEOUT=1
 export HISTSIZE=3500
 export SAVEHIST=7000

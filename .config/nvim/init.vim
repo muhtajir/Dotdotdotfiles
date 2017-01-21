@@ -1,7 +1,6 @@
 call plug#begin()
     Plug 'dietsche/vim-lastplace'
     Plug 'scrooloose/syntastic'
-    Plug 'kien/ctrlp.vim'
     Plug 'raimondi/delimitmate'
     Plug 'vis'
     Plug 'vim-airline/vim-airline'
@@ -61,40 +60,49 @@ if has("autocmd")
     autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 endif
 
-"keybinds
+""keybinds
 let mapleader=','
+nnoremap Y y$
+"buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
 nnoremap <silent> <leader>d :bd<CR>
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
-nnoremap <silent> <leader>vs :vsplit<CR>
-nnoremap <silent> <C-F10> :w<CR> :so %<CR>
+"split commands closer to i3
+nnoremap <silent> <leader>hs :vsplit<CR>
+nnoremap <silent> <leader>vs :split<CR>
+"auto-delete trailing whitespace
+nnoremap <silent> <F3> :call <SID>StripTrailingWhitespaces()<CR>
+"toggle search highlighting on
 nnoremap <silent> <F4> :set hlsearch!<CR>
+"pseudo-toggle syntaxcheck
 nnoremap <silent> <F5> :SyntasticCheck<CR>
 nnoremap <silent> <F6> :SyntasticReset<CR>
+" insert blank links without entering insert mode
 nnoremap ü o<ESC>
 nnoremap Ü O<ESC>
-nnoremap <silent> <F3> :call <SID>StripTrailingWhitespaces()<CR>
+"system clipboard accesible by prepending leader key
 nnoremap <leader>y "+y
 nnoremap <leader>p "+p
-nnoremap <leader>Y "+Y
+nnoremap <leader>Y "+y$
 nnoremap <leader>P "+P
+"kill text (don't move to register)
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd
 nnoremap <leader>K "_D
+"window navigation with alt key
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
-
+"also in terminal mode
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
-
-inoremap <C-U> <Esc>viWUEi
+"jump to end of line in insert mode
 inoremap <C-A> <Esc>A
-
+"use up-down bindings from my zsh configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 
@@ -112,9 +120,5 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-"ctrlp configuration
-let g:ctrlp_by_filename = 1
-let g:ctrlp_show_hidden = 1
 
 syntax on

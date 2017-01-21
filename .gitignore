@@ -20,6 +20,11 @@
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 
+!.config/i3
+.config/i3/*
+!.config/i3/config
+!.config/i3/i3status.conf.skel
+
 !.local/
 !.local/share/
 .local/share/*

@@ -1,0 +1,26 @@
+# [global]
+command=/usr/lib/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+# [mediaplayer]
+# instance=guayadeque
+# interval=5
+# signal=10
+
+[mediaplayer]
+command=${HOME}/.config/i3blocks/blocklets/mediadata.sh
+interval=5
+markup=pango
+signal=20
+
+[time]
+command=${HOME}/.config/i3blocks/blocklets/time.sh
+interval=30
+signal=25
+
+[network]
+command=${HOME}/.config/i3blocks/blocklets/network.sh
+instance=enp3s0
+interval=2
+markup=pango

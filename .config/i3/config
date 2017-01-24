@@ -31,6 +31,7 @@ set $base0F #b33508
 set $i3confdir "$HOME/.config/i3"
 set $mod Mod4
 
+set $i3b_up20 "pkill -RTMIN+20 i3blocks"
 ## configure window decorations
 # first the border
 hide_edge_borders vertical
@@ -125,61 +126,81 @@ bindsym $mod+p focus parent
 bindsym $mod+Shift+p focus child
 
 # define workspaces
-set $workspace1 "1"
-set $workspace2 "2"
-set $workspace3 "3"
-set $workspace4 "4"
-set $workspace5 "5"
-set $workspace6 "6"
-set $workspace7 "7"
-set $workspace8 "8"
-set $workspace9 "9"
-set $workspace10 "10"
+set $ws1 "1   "
+set $ws2 "2  "
+set $ws3 "3  "
+set $ws4 "4  "
+set $ws5 "5  "
+set $ws6 "6  "
+set $ws7 "7  "
+set $ws8 "8  "
+set $ws9 "9  "
+set $ws10 "10  "
 
 # switch to workspace
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+4 workspace $workspace4
-bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace $workspace6
-bindsym $mod+7 workspace $workspace7
-bindsym $mod+8 workspace $workspace8
-bindsym $mod+9 workspace $workspace9
-bindsym $mod+0 workspace $workspace10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym $mod+Tab workspace back_and_forth
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace $workspace3
-bindsym $mod+Shift+4 move container to workspace $workspace4
-bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace $workspace6
-bindsym $mod+Shift+7 move container to workspace $workspace7
-bindsym $mod+Shift+8 move container to workspace $workspace8
-bindsym $mod+Shift+9 move container to workspace $workspace9
-bindsym $mod+Shift+0 move container to workspace $workspace10
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+Tab move container to workspace back_and_forth
 
+# jump to urgent window
+bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
 bindsym $mod+Shift+Ctrl+r restart
 bindsym $mod+Shift+r reload
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -f Lato -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+# workspace assignments
+assign [class="Firefox"] $ws2
+assign [class="Guayadeque"] $ws10
+assign [class="TelegramDesktop"] $ws3
+assign [class="Thunderbird"] $ws3
+assign [class="keepassx" window_type="normal"] $ws9
+assign [class="Vlc"] $ws10
+assign [class="Inox"] $ws2
+assign [class="Thunar"] $ws4
+assign [class="(?i).*libreoffice.*"] $ws5
+assign [title="LibreOffice" window_type="splash"] $ws5
+
+## modes
+set $mode_music "music control"
+set $mode_resize "resize"
 # dedicated mode to control the audio player
-mode "music control" {
-        bindsym h exec playerctl previous
-        bindsym l exec playerctl next
-        bindsym space exec playerctl play-pause
+mode $mode_music {
+        bindsym h exec playerctl previous; exec $i3b_up20
+        bindsym l exec playerctl next; exec $i3b_up20
+        bindsym space exec playerctl play-pause; exec $i3b_up20
+        bindsym Return exec guayadeque; workspace $ws10
+        bindsym g exec guayadeque
 
         # back to normal: Enter or Escape or repeat mode keysequence
-        bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+m mode "default"
 }
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+mode $mode_resize{
         # These bindings trigger as soon as you enter the resize mode
 
         # Pressing left will shrink the window’s width.
@@ -198,19 +219,19 @@ mode "resize" {
         bindsym Right resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape
-        bindsym Return mode "default"
         bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+        bindsym $mod+plus mode "default"
 }
 
-bindsym $mod+plus mode "resize"
-bindsym $mod+m mode "music control"
+bindsym $mod+plus mode $mode_resize
+bindsym $mod+m mode $mode_music
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status -c $i3confdir/i3status.conf
+        status_command i3blocks
         position top
+        font pango:Muli 11
 
         colors {
             background $base01
@@ -218,14 +239,15 @@ bar {
             separator   $base0b
 
             # workspace indicators
-            #
-            # workspace         border  backgr. text
-            # focused_workspace
-            # inactive_workspace
-            # urgent_workspace
-            # binding_mode
+            # workspace             border  backgr. text
+            focused_workspace       $base0c $base0c $base07
+            inactive_workspace      $base01 $base01 $base05
+            urgent_workspace        $base08 $base08 $base05
+            binding_mode            $base0e $base0e $base00
         }
 }
 
 
 exec compton -f
+exec unclutter
+exec feh --bg-fill $HOME/Bilder/wallpaper.jpg

@@ -90,6 +90,8 @@ nnoremap <leader>P "+P
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd
 nnoremap <leader>K "_D
+nnoremap <leader>kiw "_diw
+nnoremap <leader>kaw "_daw
 "window navigation with alt key
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j

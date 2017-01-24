@@ -8,6 +8,9 @@
 !.config/cower
 !.config/cower/config
 
+!.config/fontconfig
+!.config/fontconfig/fonts.conf
+
 !.config/zsh
 .config/zsh/*
 !.config/zsh/.zshrc
@@ -23,17 +26,11 @@
 !.config/i3
 .config/i3/*
 !.config/i3/config
-!.config/i3/i3status.conf.skel
 
-!.local/
-!.local/share/
-.local/share/*
-!.local/share/icons/
-.local/share/icons/*
-!.local/share/icons/Adwaita-Mod/
-!.local/share/icons/Adwaita-Mod/*
-.local/share/icons/Adwaita-Mod/icon-theme.cache
-!.local/share/icons/archlinux-icon-crystal-16.svg
+!.config/i3blocks
+!.config/i3blocks/*
+!.config/i3blocks/blocklets/
+!.config/i3blocks/blocklets/*
 
 !.vimperatorrc
 !.vimperator/

@@ -67,6 +67,8 @@ nnoremap Y y$
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
 nnoremap <silent> <leader>d :bd<CR>
+"don't delete trailing whitespace here
+nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 "split commands closer to i3
 nnoremap <silent> <leader>hs :vsplit<CR>

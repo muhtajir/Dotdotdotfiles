@@ -7,9 +7,11 @@ markup=none
 # instance=guayadeque
 # interval=5
 # signal=10
+# markup=pango
 
 [mediaplayer]
-command=${HOME}/.config/i3blocks/blocklets/mediadata.sh
+command=${HOME}/.config/i3blocks/blocklets/mediadata.py
+instance=guayadeque
 interval=5
 markup=pango
 signal=20

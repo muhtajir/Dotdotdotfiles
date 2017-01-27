@@ -191,8 +191,8 @@ mode $mode_music {
         bindsym h exec playerctl previous; exec $i3b_up20
         bindsym l exec playerctl next; exec $i3b_up20
         bindsym space exec playerctl play-pause; exec $i3b_up20
-        bindsym Return exec guayadeque; workspace $ws10
         bindsym g exec guayadeque
+        bindsym Return exec guayadeque; workspace $ws10; mode "default"
 
         # back to normal: Enter or Escape or repeat mode keysequence
         bindsym Escape mode "default"

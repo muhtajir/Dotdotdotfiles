@@ -2,11 +2,14 @@ call plug#begin()
     Plug 'dietsche/vim-lastplace'
     Plug 'scrooloose/syntastic'
     Plug 'raimondi/delimitmate'
-    Plug 'vis'
     Plug 'vim-airline/vim-airline'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-repeat'
 call plug#end()
+
+"load included matchit_plugin
+runtime macros/matchit.vim
 
 "functions
 "thanks vimcasts.org

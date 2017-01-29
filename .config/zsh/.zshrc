@@ -82,11 +82,18 @@ function +vi-blank_master() {
     fi
 }
 zstyle ':vcs_info:git:*' formats "%b"
-# indicate if vicmd keymap is active
+
+# indicate if vicmd keymap is active (cursor & prompt)
 function zle-keymap-select zle-line-init {
 M_PROMPT="${${KEYMAP/vicmd/Φ}/(viins|emacs|main)/}"
+if [[ $M_PROMPT ]]; then
+    vterm-ctrl curshape block
+else
+    vterm-ctrl curshape under
+fi
 zle reset-prompt
 }
+
 zle -N zle-line-init zle-keymap-select
 zle -N zle-keymap-select
 zle -N zle-line-init

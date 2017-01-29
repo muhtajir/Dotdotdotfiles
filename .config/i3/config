@@ -163,6 +163,19 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+Tab move container to workspace back_and_forth
 
+# move focused container to workspace and switch to workspace
+bindsym $mod+Shift+Ctrl+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+Ctrl+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+Ctrl+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+Ctrl+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+Ctrl+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+Ctrl+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+Ctrl+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+Ctrl+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+Ctrl+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+Ctrl+0 move container to workspace $ws10; workspace $ws10
+bindsym $mod+Shift+Ctrl+Tab move container to workspace back_and_forth; workspace back_and_forth
+
 # jump to urgent window
 bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
@@ -182,6 +195,9 @@ assign [class="Inox"] $ws2
 assign [class="Thunar"] $ws4
 assign [class="(?i).*libreoffice.*"] $ws5
 assign [title="LibreOffice" window_type="splash"] $ws5
+
+# window arrangement fixes
+for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable
 
 ## modes
 set $mode_music "music control"
@@ -236,7 +252,7 @@ bar {
         colors {
             background $base01
             statusline $base06
-            separator   $base0b
+            separator  $base03
 
             # workspace indicators
             # workspace             border  backgr. text

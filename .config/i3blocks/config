@@ -3,12 +3,6 @@ command=/usr/lib/i3blocks/$BLOCK_NAME
 separator_block_width=15
 markup=none
 
-# [mediaplayer]
-# instance=guayadeque
-# interval=5
-# signal=10
-# markup=pango
-
 [mediaplayer]
 command=${HOME}/.config/i3blocks/blocklets/mediadata.py
 instance=guayadeque
@@ -16,13 +10,24 @@ interval=5
 markup=pango
 signal=20
 
+[clipboard]
+command=${HOME}/.config/i3blocks/blocklets/clipboard.py
+interval=15
+markup=pango
+
+[todo.txt]
+command=${HOME}/.config/i3blocks/blocklets/todotxt.py
+interval=60
+markup=pango
+
 [time]
 command=${HOME}/.config/i3blocks/blocklets/time.sh
 interval=30
 signal=25
+markup=pango
 
 [network]
 command=${HOME}/.config/i3blocks/blocklets/network.sh
 instance=enp3s0
-interval=2
+interval=10
 markup=pango

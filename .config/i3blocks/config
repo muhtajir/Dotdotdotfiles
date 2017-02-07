@@ -5,6 +5,7 @@ markup=none
 
 [mediaplayer]
 command=${HOME}/.config/i3blocks/blocklets/mediadata.py
+label=
 instance=guayadeque
 interval=5
 markup=pango
@@ -12,16 +13,19 @@ signal=20
 
 [clipboard]
 command=${HOME}/.config/i3blocks/blocklets/clipboard.py
+label=
 interval=15
 markup=pango
 
 [todo.txt]
 command=${HOME}/.config/i3blocks/blocklets/todotxt.py
+label=
 interval=60
 markup=pango
 
 [time]
 command=${HOME}/.config/i3blocks/blocklets/time.sh
+label=
 interval=30
 signal=25
 markup=pango
@@ -31,3 +35,7 @@ command=${HOME}/.config/i3blocks/blocklets/network.sh
 instance=enp3s0
 interval=10
 markup=pango
+
+[shutdown]
+command=${HOME}/.config/i3blocks/blocklets/shutdown.sh
+interval=once

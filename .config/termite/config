@@ -5,6 +5,7 @@ font = mononoki 12
 geometry = 85x25
 dynamic_title = true
 size_hints = true
+cursor_blink = off
 
 [colors]
 # Base16 Materia

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo -n ' '
 if [[ -z "${BLOCK_BUTTON}" ]]; then
     echo -n $(date +%H:%M)
 else

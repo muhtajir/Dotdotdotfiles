@@ -11,5 +11,5 @@ with open(todo_loc) as todo_file:
     tasks = str(len(lines.splitlines()))
     urgent_tasks = '<span font_size ="small"> (<span foreground="#dd464c">' \
             + urgent_len + '</span>)</span> '
-    output = ' ' + tasks + urgent_tasks + 'Aufgaben'
+    output = tasks + urgent_tasks + 'Aufgaben'
     print(output)

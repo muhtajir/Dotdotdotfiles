@@ -1,11 +1,15 @@
 call plug#begin()
     Plug 'dietsche/vim-lastplace'
-    Plug 'scrooloose/syntastic'
+    Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'vim-airline/vim-airline'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
+    Plug 'mtth/scratch.vim'
+    Plug 'vim-scripts/ReplaceWithRegister'
+    Plug 'kana/vim-textobj-user'
+    Plug 'kana/vim-textobj-indent'
 call plug#end()
 
 "load included matchit_plugin
@@ -50,6 +54,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set relativenumber
+
 "use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
@@ -77,12 +82,12 @@ nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 nnoremap <silent> <leader>hs :vsplit<CR>
 nnoremap <silent> <leader>vs :split<CR>
 "auto-delete trailing whitespace
-nnoremap <silent> <F3> :call <SID>StripTrailingWhitespaces()<CR>
-"toggle search highlighting on
-nnoremap <silent> <F4> :set hlsearch!<CR>
-"pseudo-toggle syntaxcheck
-nnoremap <silent> <F5> :SyntasticCheck<CR>
-nnoremap <silent> <F6> :SyntasticReset<CR>
+nnoremap <silent> <F3> /\s\+$<CR>
+nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
+"turn off search highlighting until next search
+nnoremap <silent> <F4> :nohlsearch<CR>
+"run Neomake
+nnoremap <silent> <F5> :Neomake<CR>
 " insert blank links without entering insert mode
 nnoremap ü o<ESC>
 nnoremap Ü O<ESC>
@@ -91,12 +96,12 @@ nnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>Y "+y$
 nnoremap <leader>P "+P
+nmap <leader>gr "+gr
+nmap <leader>gR "+gR
 "kill text (don't move to register)
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd
 nnoremap <leader>K "_D
-nnoremap <leader>kiw "_diw
-nnoremap <leader>kaw "_daw
 "window navigation with alt key
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
@@ -113,19 +118,16 @@ inoremap <C-A> <Esc>A
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 
-"syntastic configuration
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_pylint_exec = 'pylint2'
-let g:syntastic_auto_jump = 3
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': [],
-                           \ 'passive_filetypes': [] }
+syntax on
 
-"vim-airline configuration
+"" plugin configuration
+"neomake
+let g:neomake_python_enabled_makers = ['flake8']
+
+"vim-airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
-syntax on
+"scratch
+let g:scratch_insert_autohide = 0

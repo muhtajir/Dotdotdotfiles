@@ -1,4 +1,4 @@
-setxkbmap -option caps:escape &
+setxkbmap -option caps:escape -option compose:menu &
 ibus-daemon -drx &
 xset -b &
 numlockx on &

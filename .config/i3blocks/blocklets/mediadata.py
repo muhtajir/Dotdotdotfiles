@@ -14,9 +14,9 @@ title = title.decode()
 
 # print(type(artist))
 if artist == '' or artist == '(null)':
-    print(' <i>silence…</i>')
+    print('<i>silence…</i>')
 else:
-    artist = ' <b>' + markup_escape_text(artist) + '</b>'
+    artist = '<b>' + markup_escape_text(artist) + '</b>'
     title = markup_escape_text(title)
     metadata = [artist, title]
 

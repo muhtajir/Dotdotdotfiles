@@ -4,7 +4,7 @@ separator_block_width=15
 markup=none
 
 [mediaplayer]
-command=${HOME}/.config/i3blocks/blocklets/mediadata.py
+command=${HOME}/.config/i3blocks/blocklets/mediadata.sh
 label=
 instance=guayadeque
 interval=5
@@ -14,7 +14,7 @@ signal=20
 [clipboard]
 command=${HOME}/.config/i3blocks/blocklets/clipboard.py
 label=
-interval=15
+interval=5
 markup=pango
 
 [todo.txt]

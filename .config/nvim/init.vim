@@ -54,7 +54,6 @@ set hidden
 set hlsearch
 set ignorecase
 set smartcase
-set relativenumber
 
 "use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"
@@ -70,7 +69,9 @@ if has("autocmd")
 endif
 
 ""keybinds
-let mapleader='-'
+let mapleader=','
+"restore functionality lost by mapping ',' as leader
+nnoremap - ,
 nnoremap Y y$
 "buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>

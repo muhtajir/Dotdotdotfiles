@@ -10,6 +10,7 @@ import subprocess
 from gi.repository.GLib import markup_escape_text
 from os import environ
 
+# clicking the blocklet clears the clipboard
 if not environ['BLOCK_BUTTON'] == '':
     subprocess.call(['xsel', '-bc'])
     print('')

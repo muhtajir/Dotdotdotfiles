@@ -32,6 +32,8 @@ set $i3confdir "$HOME/.config/i3"
 set $mod Mod4
 
 set $i3b_up20 "pkill -RTMIN+20 i3blocks"
+# never let windows take focus
+focus_on_window_activation urgent
 ## configure window decorations
 # first the border
 hide_edge_borders vertical

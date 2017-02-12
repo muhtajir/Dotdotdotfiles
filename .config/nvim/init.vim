@@ -10,6 +10,7 @@ call plug#begin()
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'kana/vim-textobj-user'
     Plug 'kana/vim-textobj-indent'
+    Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 "load included matchit_plugin
@@ -69,7 +70,7 @@ if has("autocmd")
 endif
 
 ""keybinds
-let mapleader=','
+let mapleader='-'
 nnoremap Y y$
 "buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
@@ -89,8 +90,8 @@ nnoremap <silent> <F4> :nohlsearch<CR>
 "run Neomake
 nnoremap <silent> <F5> :Neomake<CR>
 " insert blank links without entering insert mode
-nnoremap ü o<ESC>
-nnoremap Ü O<ESC>
+nnoremap ö o<ESC>k
+nnoremap Ö O<ESC>j
 "system clipboard accesible by prepending leader key
 nnoremap <leader>y "+y
 nnoremap <leader>p "+p
@@ -113,10 +114,18 @@ tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 "jump to end of line in insert mode
-inoremap <C-A> <Esc>A
+inoremap æ <Esc>A
+"capitalize word or WORD in insert mode
+inoremap <A-u> <Esc>mzgUiw`za
+inoremap <A-U> <Esc>mzgUiW`za
 "use up-down bindings from my zsh configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
+"using the umlaut keys for something more sensible
+nnoremap ü {
+nnoremap ä }
+onoremap ü {
+onoremap ä }
 
 syntax on
 
@@ -131,3 +140,6 @@ let g:airline_powerline_fonts = 1
 
 "scratch
 let g:scratch_insert_autohide = 0
+
+"YouCompleteMe
+let g:ycm_autoclose_preview_window_after_insertion = 1

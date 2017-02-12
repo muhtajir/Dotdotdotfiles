@@ -131,6 +131,10 @@ alias v='nvim'
 alias vim='nvim'
 alias sctl='systemctl'
 alias mksri='makepkg -sri'
+function paccow {
+    pacman -Ss $1
+    cower -s $1
+}
 
 export HISTFILE="$ZDOTDIR/.zsh_history"
 export KEYTIMEOUT=1
@@ -190,6 +194,8 @@ bindkey "${key[Up]}"   up-line-or-beginning-search
 bindkey "${key[Down]}" down-line-or-beginning-search
 bindkey "${mod[Alt]}k"   up-line-or-beginning-search
 bindkey "${mod[Alt]}j" down-line-or-beginning-search
+bindkey "${mod[Ctrl]}p" history-incremental-search-backward
+bindkey "${mod[Ctrl]}n" history-incremental-search-forward
 
 # add vi mode to emacs bindings
 bindkey "^[" vi-cmd-mode

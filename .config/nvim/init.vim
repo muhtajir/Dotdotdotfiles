@@ -11,6 +11,7 @@ call plug#begin()
     Plug 'kana/vim-textobj-user'
     Plug 'kana/vim-textobj-indent'
     Plug 'Valloric/YouCompleteMe'
+    Plug 'chrisbra/SudoEdit.vim'
 call plug#end()
 
 "load included matchit_plugin

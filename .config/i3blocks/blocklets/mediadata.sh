@@ -4,7 +4,7 @@ sleep .5
 artist=$(playerctl metadata -p ${BLOCK_INSTANCE} artist)
 title=$(playerctl metadata -p ${BLOCK_INSTANCE} title)
 
-if [[ $artist ]]; then
+if [[ ! $artist ]]; then
     echo '<i>silence…</i>'
 else
     # escape pango (=html) special chars

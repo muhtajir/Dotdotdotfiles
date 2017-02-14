@@ -186,13 +186,8 @@ bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
 bindsym $mod+Shift+Ctrl+r restart
 bindsym $mod+Shift+r reload
-# open yad dialog for shutting off
-bindsym $mod+Escape exec yad --button=' _Herunterfahren':'systemctl poweroff' \
-        --button=' _Neustarten':'systemctl reboot'\
-        --button=gtk-close \
-        --title=Herunterfahren \
-        --text='System herunterfahren?\n' \
-        --text-align=center
+# execute shutdown blocklet
+bindsym $mod+Escape exec BLOCK_BUTTON=1 ${HOME}/.config/i3blocks/blocklets/shutdown.sh
 
 # workspace assignments
 assign [class="Firefox"] $ws2

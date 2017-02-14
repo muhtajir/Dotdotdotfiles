@@ -1,10 +1,14 @@
 #!/bin/bash
 
-sleep .5
-artist=$(playerctl metadata -p ${BLOCK_INSTANCE} artist)
-title=$(playerctl metadata -p ${BLOCK_INSTANCE} title)
+if [[ $BLOCK_BUTTON = 1 ]]; then
+    playerctl -p ${BLOCK_INSTANCE} play-pause
+fi
 
-if [[ ! $artist ]]; then
+sleep .5
+artist=$(playerctl -p ${BLOCK_INSTANCE} metadata artist)
+title=$(playerctl -p ${BLOCK_INSTANCE} metadata title)
+
+if [[ $artist = '(null)' ]]; then
     echo '<i>silence…</i>'
 else
     # escape pango (=html) special chars

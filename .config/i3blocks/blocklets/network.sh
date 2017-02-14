@@ -1,8 +1,8 @@
 #!/bin/bash
 
-
 # wired connection
 WIRED_INSTANCE=${BLOCK_INSTANCE%%;*}
+WIFI_INSTANCE=${BLOCK_INSTANCE##*;}
 STATE=$(cat /sys/class/net/${WIRED_INSTANCE}/operstate)
 if [[ $STATE == "up" ]]; then
     if [[ $(ip route | grep ${WIRED_INSTANCE}) ]]; then
@@ -12,14 +12,16 @@ if [[ $STATE == "up" ]]; then
     fi
 fi
 
+echo -n $wired
+# stop here if there's only one interface in block_instance
+[[ $WIRED_INSTANCE = $WIFI_INSTANCE ]] && exit
+
 # wifi connection
-WIFI_INSTANCE=${BLOCK_INSTANCE##*;}
-INTERFACE="${WIFI_INSTANCE:-wlan0}"
-QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+WIFI_INTERFACE="${WIFI_INSTANCE:-wlan0}"
+QUALITY=$(grep $WIFI_INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 WIFI_SSID=$(iwgetid -r)
 GEN_STATE=$(ip link show ${WIFI_INSTANCE} | grep -Eo 'state\s\w+')
 
-echo -n $wired
 # stop here if state of the wifi device is 'down'
 [[ ${GEN_STATE##state } = 'DOWN' ]] && exit
 
@@ -33,5 +35,6 @@ elif [[ $QUALITY -lt 40 ]]; then
 fi
 wifi="${mark_front}</span>"
 
+[[ $wired ]] && echo ' '
 echo "$wifi ${WIFI_SSID}" # full text
 echo "$wifi" # short text

@@ -38,6 +38,14 @@
 !.vimperator/plugin/*
 !.vimperator/*
 
+!.local/
+.local/*
+!.local/share
+.local/share/*
+!.local/share/mouseless
+.local/share/mouseless/*
+!.local/share/mouseless/mouselessrc
+
 !.vimrc
 !.bashrc
 !.gitignore

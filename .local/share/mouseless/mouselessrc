@@ -1,0 +1,9 @@
+set numerichints
+set typelinkhints
+set linkanimations
+set smoothscroll
+let scrollstep = 180
+let scrolldruation = 280
+
+set localconfig
+let configpath = '/home/nicolai/.local/share/mouseless/mouselessrc'

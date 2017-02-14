@@ -12,6 +12,7 @@ call plug#begin()
     Plug 'kana/vim-textobj-indent'
     Plug 'Valloric/YouCompleteMe'
     Plug 'chrisbra/SudoEdit.vim'
+    Plug 'kshenoy/vim-signature'
 call plug#end()
 
 "load included matchit_plugin

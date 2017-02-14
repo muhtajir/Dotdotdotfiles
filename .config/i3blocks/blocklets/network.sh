@@ -19,11 +19,9 @@ QUALITY=$(grep $INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }
 WIFI_SSID=$(iwgetid -r)
 GEN_STATE=$(ip link show ${WIFI_INSTANCE} | grep -Eo 'state\s\w+')
 
-# stop here if wifi device doesn't exist or it's in 'down' state
-if [[ ${GEN_STATE##state } = 'DOWN' || $(ip link show ${WIFI_INSTANCE}) ]]; then
-    echo $wired
-    exit
-fi
+echo -n $wired
+# stop here if state of the wifi device is 'down'
+[[ ${GEN_STATE##state } = 'DOWN' ]] && exit
 
 # color
 if [[ $QUALITY -ge 80 ]]; then
@@ -35,5 +33,5 @@ elif [[ $QUALITY -lt 40 ]]; then
 fi
 wifi="${mark_front}</span>"
 
-echo "$wired $wifi ${WIFI_SSID}" # full text
-echo "$wired $wifi" # short text
+echo "$wifi ${WIFI_SSID}" # full text
+echo "$wifi" # short text

@@ -1,0 +1,15 @@
+function paccow {
+    pacman -Ss $1
+    cower -s --sort=votes $1
+}
+
+function live {
+    while true; do
+        cd $1
+        touch .live
+        sleep .5
+        rm .live
+        sleep 300
+    done
+}
+# vim: set filetype=zsh:

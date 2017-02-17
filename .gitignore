@@ -14,6 +14,8 @@
 !.config/zsh
 .config/zsh/*
 !.config/zsh/.zshrc
+!.config/zsh/.zprompt
+!.config/zsh/.zfunc
 
 !.config/nvim
 .config/nvim/*

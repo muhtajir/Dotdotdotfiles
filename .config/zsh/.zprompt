@@ -1,0 +1,79 @@
+# set the standard prompts for is_pts=true and is_pts=false. we need the
+# fallback prompt for the nvcsformats workaround
+ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
+VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+if is_pts; then
+    PS1=$ST_PROMPT
+else
+    PS1=$FB_PROMPT
+fi
+# functions/variables that define parts of the prompt,the first argument is
+# color, the second argument is content
+p_location="%15>…>%1~%>>"
+function p1_prompt() {
+    if [[ -n $M_PROMPT ]]; then
+        echo "%F{16}░▒▓%K{16}%F{0} ${M_PROMPT} %F{16}"
+    else
+        echo "%F{${1}}░▒▓%K{${1}}%F{0} %(0?,${2},%?) %F{${1}}"
+    fi
+}
+function p2_prompt() {
+echo "%K{${1}}%F{0} ${2} %k%F{${1}} "
+}
+function p3_prompt() {
+    if [[ -n $M_PROMPT ]]; then
+        echo "%F{16}∙%f "
+    else
+        echo "%(0?,%F{${1}},%F{1})∙%f "
+    fi
+}
+function git_change_symbol() {
+    [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '*'
+}
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+# enable vcs_info for git only and never print master branch
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*+set-message:*' hooks blank_master
+# workaround for broken nvcsformats
+# set prompt at vcs_info start-up, overwrite if there's no vcs
+zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
+zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
+function +vi-vcs_prompt() {
+    if [[ ${hook_com[base]} = '/home/nicolai' ]]; then
+        if [[ $(pwd) = '/home/nicolai' ]]; then
+            is_pts && PS1=$VCS_PROMPT
+        else
+            is_pts && PS1=$ST_PROMPT
+        fi
+    else
+        is_pts && PS1=$VCS_PROMPT
+    fi
+}
+function +vi-no_vcs_prompt() {
+    is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+}
+function +vi-blank_master() {
+    if [[ ${hook_com[branch_orig]} == 'master' ]]; then
+        hook_com[branch]=''
+    fi
+}
+zstyle ':vcs_info:git:*' formats "%b"
+
+# indicate if vicmd keymap is active (cursor & prompt)
+function zle-keymap-select zle-line-init {
+M_PROMPT="${${KEYMAP/vicmd/Φ}/(viins|emacs|main)/}"
+if [[ $M_PROMPT ]]; then
+    vterm-ctrl curshape block
+else
+    vterm-ctrl curshape under
+fi
+zle reset-prompt
+}
+
+zle -N zle-line-init zle-keymap-select
+zle -N zle-keymap-select
+zle -N zle-line-init
+
+# vim: set filetype=zsh:

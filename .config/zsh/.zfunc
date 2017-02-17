@@ -5,11 +5,13 @@ function paccow {
 
 function live {
     while true; do
-        cd $1
-        touch .live
+        dd bs=8 count=1 if=/dev/urandom of=/tmp/.live &>/dev/null
+        cp /tmp/.live ${1}
         sleep .5
-        rm .live
+        rm ${1}/.live
+        echo -ne 'tick'
         sleep 300
+        echo -ne '\rtock'
     done
 }
 # vim: set filetype=zsh:

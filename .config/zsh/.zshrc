@@ -61,9 +61,10 @@ export KEYTIMEOUT=1
 export HISTSIZE=3500
 export SAVEHIST=7000
 export HISTCONTROL=ignoredups
+export EDITOR='nvim'
+export media="/run/media/${USER}"
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
-export EDITOR='nvim'
 
 function precmd {
     vcs_info

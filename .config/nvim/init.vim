@@ -111,6 +111,7 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+nnoremap <A-q> <C-w>q
 "also in terminal mode
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
@@ -124,6 +125,8 @@ inoremap <A-U> <Esc>mzgUiW`za
 "use up-down bindings from my zsh configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
+"delete word using ctrl or alt + backspace in command mode
+cnoremap <A-BS> <C-W>
 "using the umlaut keys for something more sensible
 nnoremap ü {
 nnoremap ä }

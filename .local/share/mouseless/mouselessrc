@@ -9,8 +9,8 @@ let defaultengine = 'duckduckgo'
 let completionengines = ['duckduckgo', 'wikipedia']
 " search engines
 let searchengine youtube = "https://www.youtube.com/results?search_query=%s"
-let searchengine wikipedia = "https://en.wikipedia.org/wiki/%s"
-let searchengine wikipedia_german = "https://de.wikipedia.org/wiki/%s"
+let searchengine wikipedia = "https://en.wikipedia.org/w/index.php?search=%s"
+let searchengine wikipedia_german = "https://en.wikipedia.org/w/index.php?search=%s"
 let searchengine google = "https://www.google.com/search?q=%s"
 let searchalias y= "youtube"
 let searchalias w = "wikipedia"
@@ -103,3 +103,5 @@ map W :new @%
 
 set localconfig
 let configpath = '/home/nicolai/.local/share/mouseless/mouselessrc'
+
+" vim: set filetype=vim:

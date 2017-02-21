@@ -12,7 +12,7 @@ markup=pango
 signal=20
 
 [clipboard]
-command=${HOME}/.config/i3blocks/blocklets/clipboard.py
+command=${HOME}/.config/i3blocks/blocklets/clipboard.sh
 label=
 interval=5
 markup=pango

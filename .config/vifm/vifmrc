@@ -175,27 +175,25 @@ command! reload :write | restart
 " Web
 filextype *.html,*.htm
         \ {Open with Inox}
-        \ inox %f &,
+        \ inox %f %i &,
         \ {Open with Firefox}
-        \ firefox %f &
+        \ firefox %f %i &
 
 " Images
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in feh}
-        \ feh %f &,
+        \ feh %f %S &,
         \ {Edit in GIMP}
-        \ gimp %f &,
+        \ gimp %f %S &,
         \ {View this directory in feh}
-        \ feh %d &
+        \ feh %d %S &
 
 " Vector images
 filextype *.svg
-        \ {View in feh}
-        \ feh %f &,
         \ {Edit in Inkscape}
-        \ inkscape %f &,
+        \ inkscape %f %S &,
         \ {Edit in GIMP}
-        \ gimp %f &
+        \ gimp %f %S &
 
 " MD5
 filetype *.md5

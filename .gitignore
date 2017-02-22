@@ -34,6 +34,10 @@
 !.config/i3blocks/blocklets/
 !.config/i3blocks/blocklets/*
 
+!.config/vifm
+.config/vifm/*
+!.config/vifm/vifmrc
+
 !.config/systemd
 !.config/systemd/user
 !.config/systemd/user/ssh-agent.service

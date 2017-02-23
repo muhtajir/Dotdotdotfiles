@@ -20,10 +20,9 @@ echo -n $wired
 WIFI_INTERFACE="${WIFI_INSTANCE:-wlan0}"
 QUALITY=$(grep $WIFI_INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 WIFI_SSID=$(iwgetid -r)
-GEN_STATE=$(ip link show ${WIFI_INSTANCE} | grep -Eo 'state\s\w+')
 
-# stop here if state of the wifi device is 'down'
-[[ ${GEN_STATE##state } = 'DOWN' ]] && exit
+# stop here if wifi interface isn't up
+[[ ! $(cat /sys/class/net/${WIFI_INSTANCE}/operstate) = 'up' ]] && exit
 
 # color
 if [[ $QUALITY -ge 80 ]]; then

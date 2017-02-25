@@ -5,8 +5,6 @@
 # blocklet is clicked (with any mouse button), the clipboard is emptied and the
 # blocklet disappears.
 
-# TODO adapt to xsel or xclip
-
 if [[ -e /usr/bin/xsel ]]; then
     function clip_out { 
         xsel -bo
@@ -22,7 +20,6 @@ elif [[ -e /usr/bin/xclip ]]; then
         echo -n "" | xclip -selection clipboard -i 
     }
 else 
-    echo "scheiße"
     exit
 fi
 

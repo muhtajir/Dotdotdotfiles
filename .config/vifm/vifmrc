@@ -117,7 +117,7 @@ set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 mark h ~/
 mark c ~/.config
 mark l ~/.local/share
-mark m /run/media/$USER
+mark m /run/media/
 mark s ~/SpiderOak\ Hive
 mark t /tmp
 
@@ -182,18 +182,18 @@ filextype *.html,*.htm
 " Images
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in feh}
-        \ feh %f %S &,
+        \ feh %f %i &,
         \ {Edit in GIMP}
-        \ gimp %f %S &,
+        \ gimp %f %i &,
         \ {View this directory in feh}
-        \ feh %d %S &
+        \ feh %d %i &
 
 " Vector images
 filextype *.svg
         \ {Edit in Inkscape}
-        \ inkscape %f %S &,
+        \ inkscape %f %i &,
         \ {Edit in GIMP}
-        \ gimp %f %S &
+        \ gimp %f %i &
 
 " MD5
 filetype *.md5
@@ -302,7 +302,11 @@ filextype */
 " uncommenting one of lines below will result in ignoring 'vi[x]cmd' option
 " for unknown file types.
 " For *nix:
-filetype * {Open with XDG assigned program} xdg-open
+filetype * 
+            \ {Open with XDG assigned program in background}
+            \ xdg-open &,
+            \ {Open with XDG assigned program}
+            \ xdg-open
 " For OS X:
 " filetype * open
 " For Windows:
@@ -369,14 +373,11 @@ nnoremap ,rc :write | edit $MYVIFMRC | restart<cr>
 " Toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
 
-" Example of standard two-panel file managers mappings
-nnoremap <f3> :!less %f<cr>
-nnoremap <f4> :edit<cr>
-nnoremap <f5> :copy<cr>
-nnoremap <f6> :move<cr>
-nnoremap <f7> :mkdir<space>
-nnoremap <f8> :delete<cr>
+" sync with backspace
+nnoremap <BS> :sync<CR>
 
+"delete word using alt + backspace in command mode
+cnoremap <A-BS> <C-W>
 " ------------------------------------------------------------------------------
 
 " Various customization examples

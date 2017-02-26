@@ -48,10 +48,10 @@ map <Leader>m createMultiHint
 " tabs
 map K nextTab
 map J previousTab
-map xx closeTab
-map XX myCloseTabsOthers
-map xJ closeTabsToLeft
-map xK closeTabsToRight
+map x closeTab
+map Xx myCloseTabsOthers
+map Xj closeTabsToLeft
+map Xk closeTabsToRight
 map r reloadTab
 map R reloadTabUncached
 map - lastClosedTab
@@ -64,12 +64,14 @@ map <Leader>. repeatCommand
 map \ passKeys
 map gE goUpUrl
 map <Leader>G goToRootUrl
-map go makeLinks
+map gt makeLinks
+map ä nextFrame
+map ü rootFrame
 " clipboard
+map yy yankDocumentUrl
 map yf yankUrl
 map yF multiYankUrl
-map yy yankUrl
-map <Leader>y yankHighlight
+map yh yankHighlight
 map p openPaste
 map P openPasteTab
 " search
@@ -88,6 +90,7 @@ map V toggleVisualLineMode
 map m<*> setMark
 map '<*> goToMark
 " misceallaneous
+map go openLastDownload
 map % hideDownloadsShelf
 map $ cancelWebRequests
 " bookmarks

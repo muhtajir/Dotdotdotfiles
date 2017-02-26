@@ -32,7 +32,7 @@ markup=pango
 
 [network]
 command=${HOME}/.config/i3blocks/blocklets/network.sh
-instance=enp3s0
+instance=enp3s0;
 interval=10
 markup=pango
 

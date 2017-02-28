@@ -110,16 +110,22 @@ endif
 
 set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
+" Make Ctrl-I the opposite of Ctrl-O
+set cpoptions-=t
+
 " ------------------------------------------------------------------------------
 
-" :mark mark /full/directory/path [filename]
+" Marks (clear all temporary marks)
 
+delmarks!
 mark h ~/
+mark r /
+mark t /tmp
+mark D /dev sdc
 mark c ~/.config
 mark l ~/.local/share
 mark m /run/media/
 mark s ~/SpiderOak\ Hive
-mark t /tmp
 
 " ------------------------------------------------------------------------------
 
@@ -182,11 +188,11 @@ filextype *.html,*.htm
 " Images
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in feh}
-        \ feh %f %i &,
+        \ feh -. %f %i &,
         \ {Edit in GIMP}
         \ gimp %f %i &,
         \ {View this directory in feh}
-        \ feh %d %i &
+        \ feh -. %d %i &
 
 " Vector images
 filextype *.svg
@@ -302,7 +308,7 @@ filextype */
 " uncommenting one of lines below will result in ignoring 'vi[x]cmd' option
 " for unknown file types.
 " For *nix:
-filetype * 
+filetype *
             \ {Open with XDG assigned program in background}
             \ xdg-open &,
             \ {Open with XDG assigned program}
@@ -349,6 +355,10 @@ vnoremap w :view<cr>gv
 
 " Open filetype menu
 nnoremap o :file<CR>
+vnoremap o :file<CR>
+
+" Replace o binding in virtual mode
+vnoremap <Tab> o
 
 " Open file in the background using its default program
 nnoremap gb :file &<cr>l
@@ -378,6 +388,11 @@ nnoremap <BS> :sync<CR>
 
 "delete word using alt + backspace in command mode
 cnoremap <A-BS> <C-W>
+
+" mount device under cursor
+nnoremap ,d :!gvfs-mount -d %c:p %S<CR>
+" unmount file under cursor
+nnoremap ,u ::!gvfs-mount -u %c:p %S<CR>
 " ------------------------------------------------------------------------------
 
 " Various customization examples

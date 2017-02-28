@@ -1,5 +1,10 @@
 echo ''
-if [[ $BLOCK_BUTTON = 1 ]]; then
+
+sys_shutdown='systemctl poweroff'
+sys_reboot='systemctl reboot'
+sys_suspend='systemctl suspend'
+
+function yad_sd {
     yad --button=' _Herunterfahren':21 \
         --button=' _Neustarten':22 \
         --button=' _Bereitschaft':23 \
@@ -10,13 +15,39 @@ if [[ $BLOCK_BUTTON = 1 ]]; then
 
     case $? in
         21)
-            systemctl poweroff
+            eval $sys_shutdown
             ;;
         22)
-            systemctl reboot
+            eval $sys_reboot
             ;;
         23)
-            systemctl suspend
+            eval $sys_suspend
             ;;
     esac
+}
+
+function zenity_sd {
+    zenity --question --text='System herunterfahren?'
+
+    if [[ $? = 0 ]]; then
+        eval $sys_shutdown
+    fi
+}
+
+function nagbar_sd {
+    i3-nagbar -m 'System herunterfahren?' \
+              -t warning \
+              --b '  Bereitschaft' "eval $sys_suspend" \
+              --b '  Neustarten' "eval $sys_reboot" \
+              --b '  Herunterfahren' "eval $sys_shutdown"
+}
+
+if [[ $BLOCK_BUTTON = 1 ]]; then
+    if [[ -e /usr/bin/yad ]]; then
+        yad_sd
+    elif [[ -e /usr/bin/zenity ]]; then
+        zenity_sd
+    else
+        nagbar_sd
+    fi
 fi

@@ -95,6 +95,8 @@ nnoremap <silent> <F5> :Neomake<CR>
 " insert blank links without entering insert mode
 nnoremap ö o<ESC>k
 nnoremap Ö O<ESC>j
+nnoremap <leader>ö o<ESC>
+nnoremap <leader>Ö O<ESC>
 "system clipboard accesible by prepending leader key
 nnoremap <leader>y "+y
 nnoremap <leader>p "+p
@@ -127,11 +129,15 @@ cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 "delete word using ctrl or alt + backspace in command mode
 cnoremap <A-BS> <C-W>
-"using the umlaut keys for something more sensible
-nnoremap ü {
-nnoremap ä }
-onoremap ü {
-onoremap ä }
+"section navigation that works better with an ISO keyboard
+nnoremap ( {
+nnoremap ) }
+onoremap ( {
+onoremap ) }
+nnoremap { (
+nnoremap } )
+onoremap { (
+onoremap } )
 
 syntax on
 
@@ -149,3 +155,6 @@ let g:scratch_insert_autohide = 0
 
 "YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"SudoEdit
+nnoremap <leader>sw :SudoWrite<CR>

@@ -91,7 +91,7 @@ map m<*> setMark
 map '<*> goToMark
 " misceallaneous
 map go openLastDownload
-map % hideDownloadsShelf
+map S hideDownloadsShelf
 map $ cancelWebRequests
 " bookmarks
 map B createBookmark
@@ -104,7 +104,8 @@ map T :tabnew @%
 map w :new<Space>
 map W :new @%
 
-set localconfig
 let configpath = '/home/nicolai/.local/share/mouseless/mouselessrc'
+set localconfig
+let newtaburl = 'https://www.duckduckgo.com'
 
 " vim: set filetype=vim:

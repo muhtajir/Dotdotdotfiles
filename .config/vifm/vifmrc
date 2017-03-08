@@ -126,6 +126,7 @@ mark c ~/.config
 mark l ~/.local/share
 mark m /run/media/
 mark s ~/SpiderOak\ Hive
+mark d ~/Downloads
 
 " ------------------------------------------------------------------------------
 
@@ -356,6 +357,9 @@ vnoremap w :view<cr>gv
 " Open filetype menu
 nnoremap o :file<CR>
 vnoremap o :file<CR>
+
+" Shortcut for mkdir
+nnoremap go :mkdir<Space>
 
 " Replace o binding in virtual mode
 vnoremap <Tab> o

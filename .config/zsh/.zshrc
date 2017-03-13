@@ -31,9 +31,17 @@ colors
 autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
 
+zmodload zsh/datetime
+
 # source additional stuff
 source $ZDOTDIR/.zprompt
 source $ZDOTDIR/.zfunc
+
+# ring terminal bell on longer tasks
+# Written by Jean-Philippe Ouellet <jpo@vt.edu>
+# Made available under the ISC license.
+# split into different files and simplified
+zbell_timestamp=$EPOCHSECONDS
 
 # create a navigation history with pushd
 setopt autopushd pushdminus pushdsilent
@@ -55,6 +63,7 @@ alias v='nvim'
 alias vim='nvim'
 alias sctl='systemctl'
 alias mksri='makepkg -sri'
+alias q='exit'
 
 export HISTFILE="$ZDOTDIR/.zsh_history"
 export KEYTIMEOUT=1
@@ -67,11 +76,13 @@ export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
 
 function precmd {
+    zbell_end
     vcs_info
     print -Pn "\e]0;Ter--[ %c ]--mite\a"
 }
 
 function preexec {
+    zbell_begin
     printf "\033]0;%s\a" "Ter--{ $1 }--mite"
 }
 

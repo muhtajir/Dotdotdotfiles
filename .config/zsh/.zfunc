@@ -1,17 +1,33 @@
-function paccow {
+# simple shorthand for combining pacman and cower searches
+paccow() {
     pacman -Ss $1
     cower -s --sort=votes $1
 }
 
-function live {
+# hacky function to keep a HDD from spinning down
+live() {
     while true; do
         dd bs=8 count=1 if=/dev/urandom of=/tmp/.live &>/dev/null
         cp /tmp/.live ${1}
         sleep .5
         rm ${1}/.live
-        echo -ne 'tick'
+        echo -e 'tick'
         sleep 300
-        echo -ne '\rtock'
+        echo -ne 'tock'
     done
 }
-# vim: set filetype=zsh:
+
+# functions to ring the terminal on longer tasks, see zshrc
+zbell_begin() {
+	zbell_timestamp=$EPOCHSECONDS
+	zbell_lastcmd=$1
+}
+
+zbell_end() {
+	ran_long=$(( $EPOCHSECONDS - $zbell_timestamp >= 15 ))
+    zbell_lastcmd_base=$(expr match "$zbell_lastcmd" '\([a-zA-z0-9]*\)')
+
+	if [[ ! $zbell_lastcmd_base = $EDITOR ]] && (( ran_long )); then
+		print -n "\a"
+	fi
+}

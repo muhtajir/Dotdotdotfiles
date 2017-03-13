@@ -6,6 +6,7 @@ geometry = 85x25
 dynamic_title = true
 size_hints = true
 cursor_blink = off
+urgent_on_bell = true
 
 [colors]
 # Base16 Materia

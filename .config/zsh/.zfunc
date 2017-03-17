@@ -1,7 +1,7 @@
 # simple shorthand for combining pacman and cower searches
 paccow() {
-    pacman -Ss $1
-    cower -s --sort=votes $1
+    pacman -Ss $*
+    cower -s --sort=votes $*
 }
 
 # hacky function to keep a HDD from spinning down

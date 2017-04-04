@@ -1,0 +1,6 @@
+EDITOR                      DEFAULT=nvim
+TERMINAL                    DEFAULT=termite
+QT_QPA_PLATFORMTHEME        DEFAULT=gtk2
+GTK_IM_MODULE               DEFAULT=ibus
+XMODIFIERS                  DEFAULT=@im=ibus
+QT_IM_MODULE                DEFAULT=ibus

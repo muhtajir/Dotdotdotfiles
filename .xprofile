@@ -1,11 +1,2 @@
-setxkbmap -option caps:escape -option compose:menu &
 ibus-daemon -drx &
 xset -b &
-numlockx on &
-
-export EDITOR=nvim
-export TERMINAL=termite
-export QT_QPA_PLATFORMTHEME=gtk2
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus

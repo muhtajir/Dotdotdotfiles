@@ -4,3 +4,6 @@ QT_QPA_PLATFORMTHEME        DEFAULT=gtk2
 GTK_IM_MODULE               DEFAULT=ibus
 XMODIFIERS                  DEFAULT=@im=ibus
 QT_IM_MODULE                DEFAULT=ibus
+XKB_DEFAULT_LAYOUT          DEFAULT=de
+XKB_DEFAULT_VARIANT         DEFAULT=nodeadkeys
+XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape

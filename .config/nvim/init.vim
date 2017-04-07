@@ -104,6 +104,12 @@ nnoremap <leader>Y "+y$
 nnoremap <leader>P "+P
 nmap <leader>gr "+gr
 nmap <leader>gR "+gR
+vnoremap <leader>y "+y
+vnoremap <leader>p "+p
+vnoremap <leader>Y "+y$
+vnoremap <leader>P "+P
+vmap <leader>gr "+gr
+vmap <leader>gR "+gR
 "kill text (don't move to register)
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd

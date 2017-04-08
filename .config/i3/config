@@ -49,14 +49,20 @@ set $i3b_up20 "pkill -RTMIN+20 i3blocks"
 focus_on_window_activation urgent
 ## configure window decorations
 # first the border
-hide_edge_borders vertical
-new_window normal 2
+hide_edge_borders smart
+new_window pixel 5
 
 # next the title font
 font pango:Muli 10
 
 # Format the window title beyond the font
 for_window [class=".*"] title_format "     %title"
+
+# Gaps
+# gaps edge_gaps on
+gaps inner 4
+gaps outer 0
+smart_gaps on
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).

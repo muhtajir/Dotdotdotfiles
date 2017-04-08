@@ -38,7 +38,7 @@ if has("gui_running")
 endif
 
 let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-materia-glass
+colorscheme base16-tomorrow-night-glass
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4

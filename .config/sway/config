@@ -57,6 +57,12 @@ font pango:FreeSans 10
 # Format the window title beyond the font
 for_window [class=".*"] title_format "     %title"
 
+# Gaps
+gaps edge_gaps on
+gaps inner 4
+gaps outer 0
+smart_gaps on
+
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -271,11 +277,5 @@ bar {
             binding_mode        $base00 $base0A $base00
         }
 }
-
-# Gaps
-gaps edge_gaps on
-gaps inner 4
-gaps outer 0
-smart_gaps on
 
 output "*" bg $HOME/Bilder/wallpaper.jpg fill

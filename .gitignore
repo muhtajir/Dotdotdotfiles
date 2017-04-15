@@ -27,14 +27,14 @@
 
 !.config/i3
 .config/i3/*
-!.config/i3/config
+!.config/i3/config.skel
 
 !.config/sway
 .config/sway/*
-!.config/sway/config
+!.config/sway/config.skel
 
 !.config/i3blocks
-!.config/i3blocks/*
+!.config/i3blocks/config.skel
 !.config/i3blocks/blocklets/
 !.config/i3blocks/blocklets/*
 

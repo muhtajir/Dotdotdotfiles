@@ -56,6 +56,7 @@ set hidden
 set hlsearch
 set ignorecase
 set smartcase
+set relativenumber
 
 "use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"

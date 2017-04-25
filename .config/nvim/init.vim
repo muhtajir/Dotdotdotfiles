@@ -38,7 +38,7 @@ if has("gui_running")
 endif
 
 let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-tomorrow-night-glass
+colorscheme base16-oceanicnext-glass
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -156,6 +156,7 @@ let g:neomake_python_enabled_makers = ['flake8']
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'base16_oceanicnext'
 
 "scratch
 let g:scratch_insert_autohide = 0

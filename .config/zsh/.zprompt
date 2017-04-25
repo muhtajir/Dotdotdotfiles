@@ -1,5 +1,5 @@
 # set the standard prompts for is_pts=true and is_pts=false. we need the
-# fallback prompt for the nvcsformats workaround
+# two prompts for the nvcsformats workaround
 ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
 VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
@@ -8,6 +8,7 @@ if is_pts; then
 else
     PS1=$FB_PROMPT
 fi
+
 # functions/variables that define parts of the prompt,the first argument is
 # color, the second argument is content
 p_location="%15>…>%1~%>>"

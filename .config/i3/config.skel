@@ -53,7 +53,7 @@ hide_edge_borders smart
 new_window pixel 5
 
 # next the title font
-font pango:Muli 10
+font pango:FreeSans 10
 
 # Format the window title beyond the font
 for_window [class=".*"] title_format "     %title"
@@ -263,7 +263,7 @@ bindsym $mod+m mode $mode_music
 bar {
         status_command i3blocks
         position top
-        font pango:Muli 11
+        font pango:FreeSans 11
 
         colors {
             background $base00

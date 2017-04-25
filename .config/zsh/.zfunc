@@ -1,3 +1,13 @@
+# function to check in what kind of terminal we are
+function is_pts() {
+    tstyle=$(tty)
+    if [[ ${tstyle:5:3} == pts ]];then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # simple shorthand for combining pacman and cower searches
 paccow() {
     pacman -Ss $*
@@ -17,7 +27,7 @@ live() {
     done
 }
 
-# functions to ring the terminal on longer tasks, see zshrc
+# functions to ring the terminal bell on longer tasks, see zshrc
 zbell_begin() {
 	zbell_timestamp=$EPOCHSECONDS
 	zbell_lastcmd=$1
@@ -31,3 +41,18 @@ zbell_end() {
 		print -n "\a"
 	fi
 }
+
+# precmd and preexec functions: basically what happens before the prompt is
+# made available
+function precmd {
+    zbell_end
+    vcs_info
+    print -Pn "\e]0;Ter--[ %c ]--mite\a"
+}
+
+function preexec {
+    zbell_begin
+    printf "\033]0;%s\a" "Ter--{ $1 }--mite"
+}
+
+# vim: set filetype=zsh:

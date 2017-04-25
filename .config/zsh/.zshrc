@@ -9,16 +9,6 @@ zstyle ':completion:*' rehash true
 
 WORDCHARS=''
 
-# function to check in what kind of terminal we are
-function is_pts() {
-    tstyle=$(tty)
-    if [[ ${tstyle:5:3} == pts ]];then
-        return 0
-    else
-        return 1
-    fi
-}
-
 autoload -Uz compinit
 compinit
 
@@ -31,16 +21,15 @@ colors
 autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
 
-zmodload zsh/datetime
-
 # source additional stuff
-source $ZDOTDIR/.zprompt
 source $ZDOTDIR/.zfunc
+source $ZDOTDIR/.zprompt
 
 # ring terminal bell on longer tasks
 # Written by Jean-Philippe Ouellet <jpo@vt.edu>
 # Made available under the ISC license.
 # split into different files and simplified
+zmodload zsh/datetime
 zbell_timestamp=$EPOCHSECONDS
 
 # create a navigation history with pushd
@@ -62,6 +51,7 @@ alias bootwin='sudo efibootmgr -n 0000 && systemctl reboot'
 alias v='nvim'
 alias vim='nvim'
 alias sctl='systemctl'
+alias sctlu='systemctl --user'
 alias mksri='makepkg -sri'
 alias q='exit'
 
@@ -74,17 +64,6 @@ export EDITOR='nvim'
 export media="/run/media/${USER}"
 export aur="${HOME}/Downloads/AUR"
 export scripts="${HOME}/Etc./Scripts"
-
-function precmd {
-    zbell_end
-    vcs_info
-    print -Pn "\e]0;Ter--[ %c ]--mite\a"
-}
-
-function preexec {
-    zbell_begin
-    printf "\033]0;%s\a" "Ter--{ $1 }--mite"
-}
 
 # KEYBINDINGS
 bindkey -e

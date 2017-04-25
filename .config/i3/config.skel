@@ -50,7 +50,7 @@ focus_on_window_activation urgent
 ## configure window decorations
 # first the border
 hide_edge_borders smart
-new_window pixel 3
+new_window pixel 5
 
 # next the title font
 font pango:Muli 10

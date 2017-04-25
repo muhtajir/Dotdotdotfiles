@@ -51,7 +51,8 @@ map J previousTab
 map x closeTab
 map Xx myCloseTabsOthers
 map Xj closeTabsToLeft
-map Xk closeTabsToRight
+map XJ closeTabsToLeft
+map XK closeTabsToRight
 map r reloadTab
 map R reloadTabUncached
 map - lastClosedTab

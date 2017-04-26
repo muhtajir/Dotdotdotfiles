@@ -29,13 +29,3 @@ label=
 interval=30
 signal=25
 markup=pango
-
-[network]
-command=${HOME}/.config/i3blocks/blocklets/network.sh
-instance=enp3s0;
-interval=10
-markup=pango
-
-[shutdown]
-command=${HOME}/.config/i3blocks/blocklets/shutdown.sh
-interval=once

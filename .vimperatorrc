@@ -5,6 +5,10 @@ nnoremap K gt
 nnoremap gd t<CR>:downloads<CR>
 nnoremap ga t<CR>:addons<CR>
 nnoremap gp t<CR>:preferences<CR>
+nnoremap x :bdelete<CR>
+nnoremap d <C-d>
+nnoremap u <C-u>
+nnoremap \- u
 
 "workaround for Ctrl-A in insert mode
 inoremap <C-a> <C-Home><C-S-End>

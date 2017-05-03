@@ -21,7 +21,7 @@ if [[ -n $WIFI_INSTANCE ]]; then
     if [[ ! $(cat /sys/class/net/${WIFI_INSTANCE}/operstate) = 'up' ]];then
     wifi=''
     else
-        QUALITY=$(grep $WIFI_INTERFACE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+        QUALITY=$(grep $WIFI_INSTANCE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
         WIFI_SSID=$(iwgetid -r)
 
         if [[ $QUALITY -ge 80 ]]; then

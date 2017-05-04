@@ -1,3 +1,5 @@
+"DON'T DELETE TRAILING WHITESPACE IN THIS FILE!
+
 call plug#begin()
     Plug 'dietsche/vim-lastplace'
     Plug 'neomake/neomake'
@@ -80,7 +82,8 @@ nnoremap Y y$
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
 nnoremap <silent> <leader>d :bd<CR>
-"don't delete trailing whitespace here
+nnoremap <silent> <leader>B :buffers<CR>
+nnoremap <leader>b :buffer 
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 "split commands closer to i3

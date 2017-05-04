@@ -1,3 +1,5 @@
+source .colors
+
 battery=/sys/class/power_supply/${BLOCK_INSTANCE}
 charge=$(grep '^POWER_SUPPLY_CAPACITY=' ${battery}/uevent | sed -r 's/^.+=//')
 status=$(grep '^POWER_SUPPLY_STATUS=' ${battery}/uevent | sed -r 's/^.+=//')
@@ -14,7 +16,7 @@ if (( $charge < 5 )); then
     echo ""
     # change color if critical charge is reached
     echo ""
-    echo "#dd464c"
+    echo $color04
 elif (( $charge < 13 )); then
     echo ""
 elif (( $charge < 36 )); then

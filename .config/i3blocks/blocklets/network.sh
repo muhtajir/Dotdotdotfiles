@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./colors
+
 WIRED_INSTANCE=${BLOCK_INSTANCE/;*/}
 WIFI_INSTANCE=${BLOCK_INSTANCE/*;/}
 
@@ -25,13 +27,13 @@ if [[ -n $WIFI_INSTANCE ]]; then
         WIFI_SSID=$(iwgetid -r)
 
         if [[ $QUALITY -ge 80 ]]; then
-            mark_front='<span foreground="#8ca06b">'
+            mark_front="<span foreground=\"${color01}\">"
         elif [[ $QUALITY -ge 60 ]]; then
-            mark_front='<span foreground="#fdcc59">'
+            mark_front="<span foreground=\"${color02}\">"
         elif [[ $QUALITY -ge 40 ]]; then
-            mark_front='<span foreground="#fd8b19">'
+            mark_front="<span foreground=\"${color03}\">"
         else
-            mark_front='<span foreground="#dd464c">'
+            mark_front="<span foreground=\"${color04}\">"
         fi
         wifi="${mark_front}</span>"
     fi

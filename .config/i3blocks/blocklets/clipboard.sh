@@ -6,20 +6,20 @@
 # blocklet disappears.
 
 if [[ -e /usr/bin/xsel ]]; then
-    function clip_out { 
+    function clip_out {
         xsel -bo
     }
-    function clip_clear { 
-        xsel -bc 
+    function clip_clear {
+        xsel -bc
     }
 elif [[ -e /usr/bin/xclip ]]; then
-    function clip_out { 
-        xclip -selection clipboard -o 
+    function clip_out {
+        xclip -selection clipboard -o
     }
-    function clip_clear { 
-        echo -n "" | xclip -selection clipboard -i 
+    function clip_clear {
+        echo -n "" | xclip -selection clipboard -i
     }
-else 
+else
     exit
 fi
 

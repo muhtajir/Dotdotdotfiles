@@ -9,6 +9,11 @@ nnoremap x :bdelete<CR>
 nnoremap d <C-d>
 nnoremap u <C-u>
 nnoremap \- u
+nnoremap D <C-D><C-D>
+nnoremap U <C-U><C-U>
+nnoremap d <C-D>
+nnoremap u <C-U>
+nnoremap \\ i
 
 "workaround for Ctrl-A in insert mode
 inoremap <C-a> <C-Home><C-S-End>

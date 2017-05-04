@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./colors
+
 # beware: unlike amixer, pactl allows raising the volume above 100%
 case $BLOCK_BUTTON in
     4)
@@ -19,7 +21,7 @@ if [[ $(amixer -c ${BLOCK_INSTANCE} -M -D pulse get Master | grep -E '^\s*Front.
 fi
 
 if (( ${volume%%%} > 100 )); then
-    echo "<span foreground='#dd464c'></span><span size='xx-small'>${volume%%%}</span>"
+    echo "<span foreground=\"${color04}\"></span><span size='xx-small'>${volume%%%}</span>"
 elif (( ${volume%%%} > 99 )); then
     echo ""
 elif (( ${volume%%%} > 0 )); then

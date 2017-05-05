@@ -81,7 +81,7 @@ nnoremap Y y$
 "buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
-nnoremap <silent> <leader>d :bd<CR>
+nnoremap <silent> <leader>x :bd<CR>
 nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>b :buffer 
 nnoremap <leader>e :e 
@@ -106,6 +106,8 @@ nnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>Y "+y$
 nnoremap <leader>P "+P
+nnoremap <leader>d "+d
+nnoremap <leader>D "+D
 nmap <leader>gr "+gr
 nmap <leader>gR "+gR
 vnoremap <leader>y "+y

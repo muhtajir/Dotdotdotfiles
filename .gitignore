@@ -37,6 +37,7 @@
 !.config/i3blocks/config.skel
 !.config/i3blocks/blocklets/
 !.config/i3blocks/blocklets/*
+.config/i3blocks/blocklets/todo.txt
 
 !.config/vifm
 .config/vifm/*

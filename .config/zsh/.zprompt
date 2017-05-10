@@ -1,17 +1,24 @@
 # set the standard prompts for is_pts=true and is_pts=false. we need the
 # two prompts for the nvcsformats workaround
-ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt)'
 FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
-VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
+VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt)'
+# print the last job, if there are any
+RS_PROMPT='%(1j,%F{17}%f%K{17} %10>…>${jobtexts[@]:(-1)}%>> %k%F{17}▓▒░%f,)'
+
 if is_pts; then
     PS1=$ST_PROMPT
+    RPS1=$RS_PROMPT
 else
     PS1=$FB_PROMPT
 fi
 
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+
 # functions/variables that define parts of the prompt,the first argument is
 # color, the second argument is content
 p_location="%15>…>%1~%>>"
+
 function p1_prompt() {
     if [[ -n $M_PROMPT ]]; then
         echo "%F{16}░▒▓%K{16}%F{0} ${M_PROMPT} %F{16}"
@@ -19,20 +26,23 @@ function p1_prompt() {
         echo "%F{${1}}░▒▓%K{${1}}%F{0} %(0?,${2},%?) %F{${1}}"
     fi
 }
+
 function p2_prompt() {
 echo "%K{${1}}%F{0} ${2} %k%F{${1}} "
 }
+
 function p3_prompt() {
-    if [[ -n $M_PROMPT ]]; then
-        echo "%F{16}∙%f "
+    if [[ -n $1 ]]; then
+        echo "%F{$1}∙%f "
     else
-        echo "%(0?,%F{${1}},%F{1})∙%f "
+        echo "%F{%(3L,6,%(0?,2,1))}∙%f "
     fi
 }
+
 function git_change_symbol() {
     [[ -n $(git status --porcelain 2>/dev/null) ]] && echo '*'
 }
-is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+
 # enable vcs_info for git only and never print master branch
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git
@@ -41,6 +51,7 @@ zstyle ':vcs_info:*+set-message:*' hooks blank_master
 # set prompt at vcs_info start-up, overwrite if there's no vcs
 zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
 zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
+
 function +vi-vcs_prompt() {
     if [[ ${hook_com[base]} = '/home/nicolai' ]]; then
         if [[ $(pwd) = '/home/nicolai' ]]; then
@@ -52,14 +63,18 @@ function +vi-vcs_prompt() {
         is_pts && PS1=$VCS_PROMPT
     fi
 }
+
 function +vi-no_vcs_prompt() {
     is_pts && PS1='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt 2)'
 }
+
 function +vi-blank_master() {
-    if [[ ${hook_com[branch_orig]} == 'master' ]]; then
+    if [[ ${hook_com[branch_orig]} == 'master' &&
+          ${hook_com[base]} == $HOME ]]; then
         hook_com[branch]=''
     fi
 }
+
 zstyle ':vcs_info:git:*' formats "%b"
 
 # indicate if vicmd keymap is active (cursor & prompt)

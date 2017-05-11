@@ -53,8 +53,8 @@ zstyle ':vcs_info:*+no-vcs:*' hooks no_vcs_prompt
 zstyle ':vcs_info:*+post-backend:*' hooks vcs_prompt
 
 function +vi-vcs_prompt() {
-    if [[ ${hook_com[base]} = '/home/nicolai' ]]; then
-        if [[ $(pwd) = '/home/nicolai' ]]; then
+    if [[ ${hook_com[base]} = $HOME ]]; then
+        if [[ $(pwd) = $HOME ]]; then
             is_pts && PS1=$VCS_PROMPT
         else
             is_pts && PS1=$ST_PROMPT

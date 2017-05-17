@@ -1,4 +1,4 @@
-"DON'T DELETE TRAILING WHITESPACE IN THIS FILE!
+" DON'T DELETE TRAILING WHITESPACE IN THIS FILE!
 
 call plug#begin()
     Plug 'dietsche/vim-lastplace'
@@ -8,6 +8,7 @@ call plug#begin()
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
+    " Plug 'tpope/vim-vinegar'
     Plug 'mtth/scratch.vim'
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'kana/vim-textobj-user'
@@ -17,11 +18,11 @@ call plug#begin()
     Plug 'kshenoy/vim-signature'
 call plug#end()
 
-"load included matchit_plugin
+" load included matchit_plugin
 runtime macros/matchit.vim
 
-"functions
-"thanks vimcasts.org
+" functions
+" thanks vimcasts.org
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -60,12 +61,14 @@ set ignorecase
 set smartcase
 set relativenumber
 
-"use pipe character as cursor in insert mode
+syntax on
+
+" use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
-"and in neovim as well
+" and in neovim as well
 :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-"source the .vimrc/init.vim automatically after saving
+" source the .vimrc/init.vim automatically after saving
 if has("autocmd")
     autocmd bufwritepost .vimrc source $MYVIMRC | AirlineRefresh
 endif
@@ -73,35 +76,44 @@ if has("autocmd")
     autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 endif
 
-""keybinds
+
+"" keybinds
 let mapleader=','
-"restore functionality lost by mapping ',' as leader
+
+" restore functionality lost by mapping ',' as leader
 nnoremap - ,
 nnoremap Y y$
-"buffer navigation
+
+" buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
 nnoremap <silent> <leader>x :bd<CR>
-nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>b :buffer 
+nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
-"split commands closer to i3
+
+" split commands closer to i3
 nnoremap <silent> <leader>hs :vsplit<CR>
 nnoremap <silent> <leader>vs :split<CR>
-"auto-delete trailing whitespace
+
+" auto-delete trailing whitespace
 nnoremap <silent> <F3> /\s\+$<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
-"turn off search highlighting until next search
+
+" turn off search highlighting until next search
 nnoremap <silent> <F4> :nohlsearch<CR>
-"run Neomake
+
+" run Neomake
 nnoremap <silent> <F5> :Neomake<CR>
-" insert blank links without entering insert mode
+
+"  insert blank links without entering insert mode
 nnoremap ö o<ESC>k
 nnoremap Ö O<ESC>j
 nnoremap <leader>ö o<ESC>
 nnoremap <leader>Ö O<ESC>
-"system clipboard accesible by prepending leader key
+
+" system clipboard accesible by prepending leader key
 nnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>Y "+y$
@@ -116,32 +128,40 @@ vnoremap <leader>Y "+y$
 vnoremap <leader>P "+P
 vmap <leader>gr "+gr
 vmap <leader>gR "+gR
-"kill text (don't move to register)
+
+" kill text (don't move to register)
 nnoremap <leader>k "_d
 nnoremap <leader>kk "_dd
 nnoremap <leader>K "_D
-"window navigation with alt key
+
+" window navigation with alt key
 nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 nnoremap <A-q> <C-w>q
-"also in terminal mode
+
+" also in terminal mode
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
-"jump to end of line in insert mode
+
+" jump to end of line in insert mode
 inoremap æ <Esc>A
-"capitalize word or WORD in insert mode
+
+" capitalize word or WORD in insert mode
 inoremap <A-u> <Esc>mzgUiw`za
 inoremap <A-U> <Esc>mzgUiW`za
-"use up-down bindings from my zsh configuration
+
+" use up-down bindings from my zsh configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
-"delete word using ctrl or alt + backspace in command mode
+
+" delete word using ctrl or alt + backspace in command mode
 cnoremap <A-BS> <C-W>
-"section navigation that works better with an ISO keyboard
+
+" section navigation that works better with an ISO keyboard
 nnoremap ( {
 nnoremap ) }
 onoremap ( {
@@ -151,23 +171,27 @@ nnoremap } )
 onoremap { (
 onoremap } )
 
-syntax on
+" file navigation
+nnoremap <silent> <A-o> :Explore<CR>
+
+" SudoEdit
+nnoremap <leader>sw :SudoWrite<CR>
+
 
 "" plugin configuration
-"neomake
+" netrw
+let g:netrw_banner = 0
+" neomake
 let g:neomake_python_enabled_makers = ['flake8']
 
-"vim-airline
+" vim-airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'base16_oceanicnext'
 
-"scratch
+" scratch
 let g:scratch_insert_autohide = 0
 
-"YouCompleteMe
+" YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
-
-"SudoEdit
-nnoremap <leader>sw :SudoWrite<CR>

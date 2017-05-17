@@ -34,7 +34,6 @@ zbell_timestamp=$EPOCHSECONDS
 
 # create a navigation history with pushd
 setopt autopushd pushdminus pushdsilent
-alias dc='dirs -v'
 
 # widgets for history searching with arrow keys
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
@@ -52,8 +51,11 @@ alias v='nvim'
 alias vim='nvim'
 alias sctl='systemctl'
 alias sctlu='systemctl --user'
+alias cctl='connmanctl'
+alias jctl='journalctl'
 alias mksri='makepkg -sri'
 alias q='exit'
+alias dc='dirs -v'
 
 export HISTFILE="$ZDOTDIR/.zsh_history"
 export KEYTIMEOUT=1

@@ -4,7 +4,7 @@ ST_PROMPT='$(p1_prompt 4 "%#")$(p2_prompt 2 ${p_location})$(p3_prompt)'
 FB_PROMPT='%B%F{2}%n%f@%M%b ${p_location} %# '
 VCS_PROMPT='$(p1_prompt 5 $(git_change_symbol)${vcs_info_msg_0_})$(p2_prompt 2 ${p_location})$(p3_prompt)'
 # print the last job, if there are any
-RS_PROMPT='%(1j,%F{17}%f%K{17} %10>…>${jobtexts[@]:(-1)}%>> %k%F{17}▓▒░%f,)'
+RS_PROMPT='%(1j,%F{17}%f%F{0}%K{17} %10>…>${jobtexts[@]:(-1)}%>> %k%F{17}▓▒░%f,)'
 
 if is_pts; then
     PS1=$ST_PROMPT
@@ -13,7 +13,7 @@ else
     PS1=$FB_PROMPT
 fi
 
-is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 %_)$(p3_prompt 3)'
+is_pts && PS2='$(p1_prompt 4 "%#")$(p2_prompt 3 "%_")$(p3_prompt 3)'
 
 # functions/variables that define parts of the prompt,the first argument is
 # color, the second argument is content

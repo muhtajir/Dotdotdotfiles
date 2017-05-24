@@ -1,0 +1,9 @@
+[user]
+    name = Pu Anlai
+    email = inspectormustache@users.noreply.github.com
+[core]
+    editor = nvim
+[alias]
+    c = commit
+    s = status
+    a = add

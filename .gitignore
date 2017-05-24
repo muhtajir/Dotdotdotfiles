@@ -25,6 +25,9 @@
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 
+!.config/git
+!.config/git/config
+
 !.config/i3
 .config/i3/*
 !.config/i3/config.skel

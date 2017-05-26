@@ -1,0 +1,8 @@
+include "%L"
+
+<Multi_key> <less> <parenleft>          : "⟨"
+<Multi_key> <greater> <parenright>      : "⟩"
+<Multi_key> <minus> <underscore>        : "¬"
+<Multi_key> <ß> <ß>                     : "ẞ"
+<Multi_key> <E> <e>                     : "ɛ"
+<Multi_key> <v> <v>                     : "p"

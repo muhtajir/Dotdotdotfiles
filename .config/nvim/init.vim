@@ -1,22 +1,28 @@
 " DON'T DELETE TRAILING WHITESPACE IN THIS FILE!
 
 call plug#begin()
+    Plug 'chrisbra/SudoEdit.vim'
+    Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
+    Plug 'kana/vim-textobj-indent'
+    Plug 'kana/vim-textobj-user'
+    Plug 'kshenoy/vim-signature'
+    Plug 'mtth/scratch.vim'
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
-    Plug 'vim-airline/vim-airline'
-    Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-vinegar'
-    Plug 'mtth/scratch.vim'
-    Plug 'vim-scripts/ReplaceWithRegister'
-    Plug 'kana/vim-textobj-user'
-    Plug 'kana/vim-textobj-indent'
     Plug 'Valloric/YouCompleteMe'
-    Plug 'chrisbra/SudoEdit.vim'
-    Plug 'kshenoy/vim-signature'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-scripts/ReplaceWithRegister'
 call plug#end()
+
+" make nvim use bash if started from fish
+if &shell =~# 'fish$'
+    set shell=bash
+endif
 
 " load included matchit_plugin
 runtime macros/matchit.vim
@@ -61,7 +67,7 @@ set ignorecase
 set smartcase
 set relativenumber
 
-syntax on
+syntax enable
 
 " use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"

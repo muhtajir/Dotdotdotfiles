@@ -66,9 +66,9 @@ set hlsearch
 set ignorecase
 set smartcase
 set relativenumber
+set splitbelow
 
 syntax enable
-
 " use pipe character as cursor in insert mode
 let &t_SI .= "\<Esc>[5 q"
 let &t_EI .= "\<Esc>[0 q"
@@ -106,6 +106,9 @@ nnoremap <silent> <leader>vs :split<CR>
 " auto-delete trailing whitespace
 nnoremap <silent> <F3> /\s\+$<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
+
+" get YCM Doc information for word under cursor
+nnoremap <silent> g? :YcmCompleter GetDoc<CR>
 
 " turn off search highlighting until next search
 nnoremap <silent> <F4> :nohlsearch<CR>
@@ -183,6 +186,8 @@ nnoremap <silent> <A-o> :Explore<CR>
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
+" redo the last command
+nnoremap <F12> :<Up><CR>
 
 "" plugin configuration
 " netrw
@@ -201,3 +206,4 @@ let g:scratch_insert_autohide = 0
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_add_preview_to_completeopt = 1

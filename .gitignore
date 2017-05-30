@@ -2,20 +2,30 @@
 !.config/
 .config/*
 
-!.config/termite/
-!.config/termite/config
-
 !.config/cower
 !.config/cower/config
+
+!.config/fish
+.config/fish/*
+!.config/fish/base16_colors.fish
+!.config/fish/functions
+!.config/fish/functions/*
 
 !.config/fontconfig
 !.config/fontconfig/fonts.conf
 
-!.config/zsh
-.config/zsh/*
-!.config/zsh/.zshrc
-!.config/zsh/.zprompt
-!.config/zsh/.zfunc
+!.config/git
+!.config/git/config
+
+!.config/i3
+.config/i3/*
+!.config/i3/config.skel
+
+!.config/i3blocks
+!.config/i3blocks/config.skel
+!.config/i3blocks/blocklets/
+!.config/i3blocks/blocklets/*
+.config/i3blocks/blocklets/todo.txt
 
 !.config/nvim
 .config/nvim/*
@@ -25,36 +35,26 @@
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 
-!.config/git
-!.config/git/config
-
-!.config/i3
-.config/i3/*
-!.config/i3/config.skel
-
 !.config/sway
 .config/sway/*
 !.config/sway/config.skel
-
-!.config/i3blocks
-!.config/i3blocks/config.skel
-!.config/i3blocks/blocklets/
-!.config/i3blocks/blocklets/*
-.config/i3blocks/blocklets/todo.txt
-
-!.config/vifm
-.config/vifm/*
-!.config/vifm/vifmrc
 
 !.config/systemd
 !.config/systemd/user
 !.config/systemd/user/ssh-agent.service
 
-!.vimperatorrc
-!.vimperator/
-!.vimperator/plugin/
-!.vimperator/plugin/*
-!.vimperator/*
+!.config/termite/
+!.config/termite/config
+
+!.config/vifm
+.config/vifm/*
+!.config/vifm/vifmrc
+
+!.config/zsh
+.config/zsh/*
+!.config/zsh/.zshrc
+!.config/zsh/.zprompt
+!.config/zsh/.zfunc
 
 !.local/
 .local/*
@@ -64,10 +64,15 @@
 .local/share/mouseless/*
 !.local/share/mouseless/mouselessrc
 
-!.vimrc
+!.vimperatorrc
+!.vimperator/
+!.vimperator/plugin/
+!.vimperator/plugin/*
+!.vimperator/*
+
 !.bashrc
 !.gitignore
-!.zshenv
-!.xprofile
 !.pam_environment
 !.XCompose
+!.xprofile
+!.zshenv

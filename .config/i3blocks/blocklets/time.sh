@@ -3,8 +3,6 @@
 if [[ -z "${BLOCK_BUTTON}" ]]; then
     echo -n $(date +%H:%M)
 else
-    echo -n $(date +%d.%m.%y)
-    # pkill -RTMIN+25 i3blocks
-    # exit
+    notify-send "$(date +%A,\ %d.%m.%Y)"
 fi
 # echo -n '</b>'

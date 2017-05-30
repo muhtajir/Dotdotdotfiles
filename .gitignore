@@ -5,6 +5,9 @@
 !.config/cower
 !.config/cower/config
 
+!.config/dunst
+!.config/dunst/dunstrc
+
 !.config/fish
 .config/fish/*
 !.config/fish/base16_colors.fish

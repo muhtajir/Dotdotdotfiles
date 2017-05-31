@@ -2,6 +2,9 @@
 !.config/
 .config/*
 
+!.config/beets
+!.config/beets/config.yaml.skel
+
 !.config/cower
 !.config/cower/config
 

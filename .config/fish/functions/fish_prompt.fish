@@ -10,11 +10,20 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 function create_first_seg --description 'Put together first segment'
+    # catch the exit status before anything else or it will be lost
     set -l return_code $status
+
+    # now choose content for the first segment
+    # most important indicator is vi mode, but that will come later
+    # second most important is last exit code
+    # least important is active jobs
     if test $return_code -gt 0
         draw_first_seg $color01 " $return_code "
+    else if jobs > /dev/null ^ /dev/null
+        set -l fish_last_job (jobs -lc | tail -n 1)
+        draw_first_seg $color06 " $fish_last_job "
     else
-        draw_first_seg $color04 ' fish '
+        draw_first_seg $color04 ' %% '
     end
 end
 

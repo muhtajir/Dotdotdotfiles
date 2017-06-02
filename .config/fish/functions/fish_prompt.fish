@@ -1,12 +1,6 @@
 function fish_prompt --description 'Write out the prompt'
     create_first_seg
-    second_seg $color02 (prompt_pwd)
-    # chcol $color04; and printf '░▒▓'
-    # chcol $color18 $color04 ; and printf ' fish '
-    # chcol $color04 $color02; and printf ''
-    # chcol $color18; and printf ' %s ' (prompt_pwd)
-    # chcol $color02 normal; and printf ' '
-    # chcol normal normal
+    second_seg $color02 (basename (prompt_pwd))
 end
 
 function create_first_seg --description 'Put together first segment'
@@ -14,14 +8,17 @@ function create_first_seg --description 'Put together first segment'
     set -l return_code $status
 
     # now choose content for the first segment
-    # most important indicator is vi mode, but that will come later
-    # second most important is last exit code
-    # least important is active jobs
-    if test $return_code -gt 0
+    # highest ranking output is bind mode
+    if test $fish_bind_mode != insert
+        draw_first_seg $color16 " Φ "
+    # second is last exit code
+    else if test $return_code -gt 0
         draw_first_seg $color01 " $return_code "
+    # least important is active jobs
     else if jobs > /dev/null ^ /dev/null
         set -l fish_last_job (jobs -lc | tail -n 1)
         draw_first_seg $color06 " $fish_last_job "
+    # and after that it's just a percent sign
     else
         draw_first_seg $color04 ' %% '
     end

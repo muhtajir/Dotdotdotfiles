@@ -3,7 +3,7 @@ library: ~/Musik/beets_library.db
 directory: ~/Musik
 ignore_hidden: yes
 per_disc_numbering: yes
-plugins: edit embedart fetchart fromfilename lastimport lyrics replaygain the
+plugins: discogs edit embedart fetchart fromfilename lastimport lyrics replaygain the
 
 import:
     move: yes
@@ -19,8 +19,8 @@ match:
         original_year: yes
 
 paths:
-    default: Alben/$albumartist - $album%aunique{}/$track - $title
-    singleton: Singles/$albumartist - $title
+    default: Alben/%the{$albumartist} - $album%aunique{}/$track - $title
+    singleton: Singles/%the{$albumartist} - $title
 
 
 # Plugin configuration

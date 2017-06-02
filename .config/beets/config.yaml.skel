@@ -3,7 +3,7 @@ library: ~/Musik/beets_library.db
 directory: ~/Musik
 ignore_hidden: yes
 per_disc_numbering: yes
-plugins: embedart fetchart fromfilename lastimport lyrics replaygain the
+plugins: edit embedart fetchart fromfilename lastimport lyrics replaygain the
 
 import:
     move: yes
@@ -12,17 +12,21 @@ import:
     group_albums: yes
     autotag: yes
     bell: yes
+    log: ~/.config/beets/import.log
 
 match:
     prefered:
         original_year: yes
 
 paths:
-    default: ~/Musik/Alben/$albumartist - $album%aunique{}/$track - $title
+    default: Alben/$albumartist - $album%aunique{}/$track - $title
     singleton: Singles/$albumartist - $title
 
 
 # Plugin configuration
+edit:
+    itemfields: artist album albumartist title 'unsynced lyrics' lyrics
+
 embedart:
     maxwidth: 1000
     remove_art_file: yes
@@ -30,18 +34,16 @@ embedart:
 fetchart:
     minwidth: 500
     source: coverart filesystem amazon
-    google_key: # private
+#    google_key: restricted
 
 lastfm:
     user: ExcessiveClap
 
-lyrics:
-    google_API_key: # private
+# lyrics:
+##     google_API_key: restricted
 
 replaygain:
     backend: gstreamer
 
 the:
     a: no
-
-# vim: ft=yaml

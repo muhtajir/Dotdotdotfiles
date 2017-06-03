@@ -28,3 +28,20 @@ elif (( $charge < 92 )); then
 else
     echo ""
 fi
+
+
+# notification warning system
+if (( $charge >= 10 )); then
+    [[ -e /tmp/batwarning_low.i3blocks ]] && rm /tmp/batwarning_low.i3blocks
+    [[ -e /tmp/batwarning_critical.i3blocks ]] && rm /tmp/batwarning_critical.i3blocks
+elif [[ $charge -le 10 && ! -e /tmp/batwarning_low.i3blocks ]]; then
+    notify-send -u normal 'Batterie' "$charge Prozent verbleiben!" 
+    [[ -e /tmp/batwarning_critical.i3blocks ]] && rm /tmp/batwarning_critical.i3blocks
+elif [[ $charge -le 5 && ! -e /tmp/batwarning_critical.i3blocks ]]; then
+    notify-send -u critical 'Batterie' "Nur noch $charge Prozent verbleiben!" 
+fi
+
+# also send notification on click
+if [[ -n "$BLOCK_BUTTON" ]]; then
+    notify-send -u normal 'Batterie' "$charge Prozent verbleiben." 
+fi

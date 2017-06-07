@@ -196,8 +196,9 @@ bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
 bindsym $mod+Shift+Ctrl+r restart
 bindsym $mod+Shift+r reload
-# execute shutdown blocklet
+# shortcuts for clicking blocklets
 bindsym $mod+Escape exec BLOCK_BUTTON=1 ${HOME}/.config/i3blocks/blocklets/shutdown.sh
+bindsym $mod+t exec BLOCK_BUTTON=1 python ${HOME}/.config/i3blocks/blocklets/todo.txt
 
 # workspace assignments
 assign [class="Inox"] $ws2

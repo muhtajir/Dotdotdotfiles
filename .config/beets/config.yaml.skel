@@ -6,8 +6,8 @@ per_disc_numbering: yes
 plugins: discogs edit embedart fetchart fromfilename lastimport lyrics replaygain the
 
 import:
-    move: yes
-    write: yes
+    move: no
+    write: no
     incremental: no
     group_albums: yes
     autotag: yes

@@ -5,4 +5,5 @@ function fish_set_user_abbreviations
     abbr --add sctlu systemctl --user
     abbr --add jctl journalctl
     abbr --add mksri makepkg --sri
+    abbr --add yt mpsyt /
 end

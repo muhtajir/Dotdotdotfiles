@@ -64,7 +64,8 @@ function __fish_draw_second_seg -a bg_color content
 end
 
 function __fish_draw_git_seg -a content --description 'Put together a git segment that changes color if the repo is not in a clean state'
-    if command git diff --no-ext-diff --quiet --exit-code ^/dev/null
+    set -l git_state (command git status --porcelain ^ /dev/null)
+    if test -z "$git_state"
         __fish_draw_second_seg $color21 ""$content
     else
         __fish_draw_second_seg $color13 ""$content

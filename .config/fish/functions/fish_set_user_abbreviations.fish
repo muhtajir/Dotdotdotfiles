@@ -6,4 +6,7 @@ function fish_set_user_abbreviations
     abbr --add jctl journalctl
     abbr --add mksri makepkg --sri
     abbr --add yt mpsyt /
+    abbr --add pd prevd
+    abbr --add nd nextd
+    abbr --add 
 end

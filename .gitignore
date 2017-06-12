@@ -14,7 +14,7 @@
 
 !.config/fish
 .config/fish/*
-!.config/fish/base16_colors.fish
+!.config/fish/config.fish
 !.config/fish/functions
 !.config/fish/functions/*
 

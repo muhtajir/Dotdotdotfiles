@@ -4,6 +4,7 @@ function fish_user_key_bindings
     end
 
     fish_default_key_bindings -M insert
+    bind -M insert \ce fish_expand_glob
 	bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
     bind -M insert \el accept-autosuggestion

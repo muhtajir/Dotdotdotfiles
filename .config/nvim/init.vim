@@ -4,12 +4,14 @@ call plug#begin()
     Plug 'chrisbra/SudoEdit.vim'
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
+    Plug 'dojoteef/neomake-autolint'
     Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
     Plug 'kshenoy/vim-signature'
     Plug 'mtth/scratch.vim'
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
+    Plug 'thinca/vim-quickrun'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
@@ -187,14 +189,24 @@ nnoremap <silent> <A-o> :Explore<CR>
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
-" redo the last command
-nnoremap <F12> :<Up><CR>
+" Quickrun
+nnoremap <F12> :QuickRun<CR>
 
 "" plugin configuration
 " netrw
 let g:netrw_banner = 0
+
 " neomake
 let g:neomake_python_enabled_makers = ['flake8']
+
+" neomake-autolint
+let g:neomake_autolint_sign_column_always = 1
+let g:neomake_autolint_events = {
+    \ 'InsertLeave': {'delay': 0},
+    \ 'TextChanged': {'delay': 0},
+    \ 'BufWritePost': {'delay': 0},
+    \ }
+
 
 " vim-airline
 set laststatus=2

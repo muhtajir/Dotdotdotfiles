@@ -17,6 +17,7 @@ call plug#begin()
     Plug 'Valloric/YouCompleteMe'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
+    Plug 'vim-scripts/vis'
 call plug#end()
 
 " make nvim use bash if started from fish

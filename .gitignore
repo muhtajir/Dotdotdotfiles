@@ -34,6 +34,9 @@
 !.config/i3blocks/blocklets/*
 .config/i3blocks/blocklets/todo.txt
 
+!.config/mpv
+!.config/mpv/*
+
 !.config/nvim
 .config/nvim/*
 !.config/nvim/init.vim

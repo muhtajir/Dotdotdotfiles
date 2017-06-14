@@ -13,4 +13,7 @@ function fish_user_key_bindings
     bind -M insert -m default \e backward-char force-repaint
     bind -M visual -m default \e backward-char force-repaint
     bind -M replace-one -m default \e backward-char force-repaint
+
+    # prepend sudo to cmdline and run it
+    bind -M insert \ep fish_plz_bind
 end

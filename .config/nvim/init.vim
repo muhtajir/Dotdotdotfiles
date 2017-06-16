@@ -31,17 +31,34 @@ endif
 runtime macros/matchit.vim
 
 " functions
-" thanks vimcasts.org
+" from vimcasts.org
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
     let c = col(".")
-    " Do the business:
     %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+    " restore previous position, before the find function if that has been run
+    if exists('b:__s')
+        call cursor(b:__l, b:__c)
+        let @/=b:__s
+        unlet b:__l
+        unlet b:__c
+        unlet b:__s
+    else
+        let @/=_s
+        call cursor(l, c)
+    endif
+endfunction
+
+function! <SID>FindTrailingWhitespaces()
+    if !exists('b:__s')
+        let b:__l = line(".")
+        let b:__c = col(".")
+        let b:__s=@/
+    endif
+    let @/='\s\+$'
+    norm n
 endfunction
 
 if has("gui_running")
@@ -72,18 +89,10 @@ set relativenumber
 set splitbelow
 
 syntax enable
-" use pipe character as cursor in insert mode
-" let &t_SI .= "\<Esc>[5 q"
-" let &t_EI .= "\<Esc>[0 q"
-" and in neovim as well
-:let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+"" autocommands
 " source the .vimrc/init.vim automatically after saving
-if has("autocmd")
-    autocmd bufwritepost .vimrc source $MYVIMRC | AirlineRefresh
-endif
-if has("autocmd")
-    autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
-endif
+autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 
 
 "" keybinds
@@ -91,7 +100,7 @@ let mapleader=','
 
 " restore functionality lost by mapping ',' as leader
 nnoremap - ,
-nnoremap Y y$
+" nnoremap Y y$
 
 " buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
@@ -107,7 +116,7 @@ nnoremap <silent> <leader>hs :vsplit<CR>
 nnoremap <silent> <leader>vs :split<CR>
 
 " auto-delete trailing whitespace
-nnoremap <silent> <F3> /\s\+$<CR>
+nnoremap <silent> <F3> :call <SID>FindTrailingWhitespaces()<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
 
 " get YCM Doc information for word under cursor
@@ -151,14 +160,14 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
-nnoremap <A-c> :clo<CR>
+nnoremap <silent> <A-c> :clo<CR>
 
 " also in terminal mode
 tnoremap <A-h> <C-\><C-n><C-w>h
 tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
-tnoremap <A-c> <C-\><C-n>:clo<CR>
+tnoremap <silent> <A-c> <C-\><C-n>:clo<CR>
 
 " jump to end of line in insert mode
 inoremap æ <Esc>A

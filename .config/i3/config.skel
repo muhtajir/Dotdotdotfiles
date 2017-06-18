@@ -90,6 +90,9 @@ bindsym --release button2 kill
 # start a program launcher
 bindsym $mod+r exec j4-dmenu-desktop --no-generic --usage-log=$i3confdir/j4-dmenu-desktop.log --dmenu="dmenu -fn Lato -i -b"
 
+# start the password finder
+bindsym $mod+x exec fish $i3confdir/scripts/pass_get.fish
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down

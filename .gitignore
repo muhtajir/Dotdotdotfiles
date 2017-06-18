@@ -1,4 +1,10 @@
 *
+
+!Code/
+Code/*
+!Code/Scripts
+!Code/Scripts/*
+
 !.config/
 .config/*
 
@@ -27,6 +33,8 @@
 !.config/i3
 .config/i3/*
 !.config/i3/config.skel
+!.config/i3/scripts
+!.config/i3/scripts/*
 
 !.config/i3blocks
 !.config/i3blocks/config.skel

@@ -1,0 +1,145 @@
+#!/bin/bash
+target=${!#}
+ext=mp3
+
+#zwei Funktionen: 1.: Coredump erstellen; 2. Coredump parsen
+#1. Coredump erstellen: "p_handle"
+p_handle() {
+	[[ ! $pid ]] && pid=$(pgrep -n $1)
+	if [ ! $pid ]
+	then
+		printf "Prozess nicht gefunden oder kein Prozess angegeben.\n" >&2
+		exit 1
+	fi
+	printf "Es wird nach Links gesucht...\n"
+	#das hier kopiert von gcore
+	sudo gdb </dev/null --nx --batch \
+	-ex "set pagination off" -ex "set height 0" -ex "set width 0" \
+	-ex "attach $pid" -ex "gcore /tmp/core.$pid" -ex detach -ex quit &>/dev/null
+	if [ ! -r /tmp/core.$pid ] ; then 
+		printf "Coredump konnte nicht erstellt werden.\n" >&2
+		exit 1
+	fi
+	extract /tmp/core.$pid printed
+}
+
+#2. Coredump parsen: "extract"
+extract() {
+	file=$1
+	[[ $2 == printed ]] || printf "Es wird nach Links gesucht...\n"
+	#Linkliste erstellen
+	od --string $file | grep -Po "http.+?${search}\.$ext" > $file.ext
+	if [[ $reverse == true ]]; then
+		sort -r $file.ext > $file.ext2
+		mv $file.ext2 $file.ext
+	fi	
+	counter=$(wc -l $file.ext | sed 's/\([0-9]\+\).\+/\1/')
+	if [ $counter -eq 0 ];
+	then
+		printf "Keine Links gefunden.\n" >&2
+		exit 1
+	fi
+
+	tput sc
+	while (( $counter > 0 ))
+	do
+		link=$(sed -n ${counter}p $file.ext)
+		echo -e "\e[1m\e[36m$link\e[0m\n\e[1mIst dies der korrekte Link? [J/n/p/a]\e[0m"
+		read response
+		case $response in
+		j|J|"")
+			[[ $(jobs %1 2>&-) ]] && kill %1
+			printf "Wird heruntergeladen...\n"
+			wget -nv $link
+			[[ ! $continuous == true ]] && break
+			;;
+		n)
+			[[ $(jobs %1 2>&-) ]] && kill %1
+			let counter--
+			tput rc && tput ed
+			;;
+		a)
+			[[ $(jobs %1 2>&-) ]] && kill %1
+			exit
+			;;
+		p)
+			[[ $(jobs %1 2>&-) ]] && kill %1
+			cvlc --play-and-exit $link &> /dev/null &
+			;;
+		*)
+			tput rc && tput ed
+			;;
+		esac
+	done
+
+	if (( $counter == 0 ))
+	then
+	printf "Keine weiteren Links vorhanden.\n" >&2
+	exit 1
+	fi
+}
+
+#Optionen gegeben?
+while getopts ":t:s:p:fchr" opt; do
+	case $opt in
+	h)
+		printf "Nutzung: \e[1mmpull\e[0m [-hcfr] [-t] [-s] \e[1mZIEL\e[0m\n \
+		\r\t\e[1m-c\e[0m\tNach Download einer Datei nach weiteren Dateien suchen.\n \
+		\r\t\e[1m-f\e[0m\tDateimodus. ZIEL ist kein Prozess, sondern ein Dateiname.\n \
+		\r\t\e[1m-r\e[0m\tSucht nicht am Ende, sondern am Anfang des Coredumps.\n \
+		\r\t\e[1m-s\e[0m\tSuche auf PCRE-Argument einschränken.\n \
+		\r\t\e[1m-t\e[0m\tZu suchenden Dateityp festlegen, Standard ist \e[3mmp3\e[0m.\n \
+		\r\t\e[1m-p\e[0m\tZIEL ist nicht der Name eines Prozesses, sondern PID. \n \
+		\r\t\e[1m-h\e[0m\tDiese Hilfe anzeigen.\n"
+		exit 0
+	;;
+	\?)
+		printf "${OPTARG} ist keine bekannte Option.\n"
+		exit 0
+	;;
+	:)
+		printf "Option -$OPTARG benötigt ein Argument.\n"
+		exit 0
+	;;
+	f)
+		if [ -r $target ]
+		then
+			mode=1
+		else
+			printf "Datei \"$target\" nicht gefunden.\n"
+			exit 1
+		fi		
+	;;
+	t)
+		ext=$OPTARG
+		printf "Dateityp auf \e[1m${OPTARG}\e[0m gesetzt.\n"
+	;;
+	r)
+		reverse=true
+	;;
+	s)
+		search=$OPTARG.*
+	;;
+	c)
+		continuous=true
+	;;
+	p)
+		echo $OPTARG
+		pid=$OPTARG
+	;;
+	esac
+done
+
+if [[ $mode == 1 ]]
+then
+	extract $target
+else
+	p_handle $target
+fi
+
+#Aufräumen
+if [[ $mode != 1 ]]
+then
+	sudo rm /tmp/core.$pid
+	sudo rm /tmp/core.$pid.ext
+fi

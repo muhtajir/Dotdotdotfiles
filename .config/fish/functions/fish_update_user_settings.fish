@@ -1,5 +1,5 @@
 function fish_update_user_settings
-    set -l uvars
+	set -l uvars
     set -l uvars_all (set -Un)
     set -l uvar_native __fish_init_2_39_8 \
         __fish_init_2_3_0 \
@@ -28,7 +28,7 @@ function fish_update_user_settings
         fish_pager_color_completion \
         fish_pager_color_description \
         fish_pager_color_prefix \
-        fish_pager_color_progress 
+        fish_pager_color_progress
 
     # only erase non-native variables
     for var in uvars_all
@@ -50,6 +50,7 @@ function fish_update_user_settings
     end
 
     fish_set_user_abbreviations
+
     # this last one is redundant for now, as all aliases are set at shell
     # startup
     # fish_set_user_aliases

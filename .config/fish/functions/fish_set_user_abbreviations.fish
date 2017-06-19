@@ -8,4 +8,6 @@ function fish_set_user_abbreviations
     abbr --add yt mpsyt /
     abbr --add pd prevd
     abbr --add nd nextd
+    abbr --add mksri makepkgs -sri
+    abbr --add mksri makepkg -sri
 end

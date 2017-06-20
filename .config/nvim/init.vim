@@ -2,6 +2,7 @@
 
 call plug#begin()
     Plug 'chrisbra/SudoEdit.vim'
+    Plug 'ctrlpvim/ctrlp.vim'
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
@@ -77,7 +78,7 @@ set autoindent
 set linespace=3
 set showcmd
 set mouse=a
-set autochdir
+" set autochdir
 set ttimeout
 set ttimeoutlen=10
 set linebreak
@@ -94,6 +95,8 @@ syntax enable
 " source the .vimrc/init.vim automatically after saving
 autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 
+"" cache and other files to ignore in wildcards
+set wildignore+=*/__pycache__/*
 
 "" keybinds
 let mapleader=','
@@ -110,6 +113,8 @@ nnoremap <leader>b :buffer
 nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
+" ctrlP buffer mode shortcut
+nnoremap <C-B> :CtrlPBuffer<CR>
 
 " split commands closer to i3
 nnoremap <silent> <leader>hs :vsplit<CR>
@@ -128,7 +133,7 @@ nnoremap <silent> <F4> :nohlsearch<CR>
 " run Neomake
 nnoremap <silent> <F5> :Neomake<CR>
 
-"  insert blank links without entering insert mode
+" insert blank links without entering insert mode
 nnoremap ö o<ESC>k
 nnoremap Ö O<ESC>j
 nnoremap <leader>ö o<ESC>
@@ -176,7 +181,7 @@ inoremap æ <Esc>A
 inoremap <A-u> <Esc>mzgUiw`za
 inoremap <A-U> <Esc>mzgUiW`za
 
-" use up-down bindings from my zsh configuration
+" use up-down bindings from my shell configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 
@@ -203,6 +208,13 @@ nnoremap <leader>sw :SudoWrite<CR>
 nnoremap <F12> :QuickRun<CR>
 
 "" plugin configuration
+" ctrlp
+" keybinds consistent with command mode
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtSelectMove("j")':    ['<A-j>'],
+    \ 'PrtSelectMove("k")':    ['<A-k>'],
+    \ }
+
 " netrw
 let g:netrw_banner = 0
 

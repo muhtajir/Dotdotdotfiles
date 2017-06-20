@@ -10,9 +10,15 @@ function glob
     # include a check for a hidden switch at some point
     set -l hidden -not -name '.*'
     set args $argv[2..(count $argv)]
+
     switch $mode
         case 'x'
-        find . -maxdepth 1 -not -name "$args" $hidden | sed -n 's/^\.\///p'
+            # match all except args
+            set -l params
+            for arg in $args
+                set params $params -not -name {$arg}
+            end
+            find . -maxdepth 1 $params $hidden | sed -n 's/^\.\///p'
         case '*'
             return
     end

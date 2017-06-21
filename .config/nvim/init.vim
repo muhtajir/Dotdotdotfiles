@@ -17,6 +17,7 @@ call plug#begin()
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-vinegar'
+    Plug 'skywind3000/asyncrun.vim'
     Plug 'Valloric/YouCompleteMe'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
@@ -206,6 +207,9 @@ nnoremap <leader>sw :SudoWrite<CR>
 
 " Quickrun
 nnoremap <F12> :QuickRun<CR>
+
+" create ctags
+nnoremap <silent> <F9> :AsyncRun ctags -R .<CR>
 
 "" plugin configuration
 " ctrlp

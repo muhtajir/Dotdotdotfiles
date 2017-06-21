@@ -17,11 +17,15 @@ call plug#begin()
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-vinegar'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'skywind3000/asyncrun.vim'
-    Plug 'Valloric/YouCompleteMe'
+    " Plug 'Valloric/YouCompleteMe'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'vim-scripts/vis'
+    " deoplete completions
+    Plug 'Shougo/neco-syntax'
+    Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 " make nvim use bash if started from fish
@@ -89,12 +93,15 @@ set ignorecase
 set smartcase
 set relativenumber
 set splitbelow
+set inccommand=nosplit
 
 syntax enable
 
 "" autocommands
 " source the .vimrc/init.vim automatically after saving
 autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
+" close preview window after leaving insert mode
+autocmd CompleteDone * silent! pclose!
 
 "" cache and other files to ignore in wildcards
 set wildignore+=*/__pycache__/*
@@ -179,8 +186,9 @@ tnoremap <silent> <A-c> <C-\><C-n>:clo<CR>
 inoremap æ <Esc>A
 
 " capitalize word or WORD in insert mode
-inoremap <A-u> <Esc>mzgUiw`za
-inoremap <A-U> <Esc>mzgUiW`za
+" try without for a while because these marks get really annoying
+" inoremap <A-u> <Esc>mzgUiw`za
+" inoremap <A-U> <Esc>mzgUiW`za
 
 " use up-down bindings from my shell configuration
 cnoremap <A-k> <Up>
@@ -198,6 +206,9 @@ nnoremap { (
 nnoremap } )
 onoremap { (
 onoremap } )
+
+" tab completion in input mode
+inoremap <Tab> <C-N>
 
 " file navigation
 nnoremap <silent> <A-o> :Explore<CR>
@@ -219,6 +230,9 @@ let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("k")':    ['<A-k>'],
     \ }
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
 " netrw
 let g:netrw_banner = 0
 
@@ -235,7 +249,6 @@ let g:neomake_autolint_events = {
 
 
 " vim-airline
-set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'base16_oceanicnext'

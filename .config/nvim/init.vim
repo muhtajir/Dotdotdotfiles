@@ -83,7 +83,6 @@ set autoindent
 set linespace=3
 set showcmd
 set mouse=a
-" set autochdir
 set ttimeout
 set ttimeoutlen=10
 set linebreak
@@ -95,13 +94,17 @@ set relativenumber
 set splitbelow
 set inccommand=nosplit
 
-syntax enable
+" enable folding
+set foldmethod=syntax
+set foldnestmax=2
 
 "" autocommands
 " source the .vimrc/init.vim automatically after saving
 autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 " close preview window after leaving insert mode
 autocmd CompleteDone * silent! pclose!
+" fold by indent for python
+autocmd FileType python setlocal foldmethod=indent
 
 "" cache and other files to ignore in wildcards
 set wildignore+=*/__pycache__/*
@@ -111,7 +114,12 @@ let mapleader=','
 
 " restore functionality lost by mapping ',' as leader
 nnoremap - ,
-" nnoremap Y y$
+
+" general
+nnoremap Y y$
+nnoremap <Space> zz
+" accessing folding more easily on QWERTZ
+nnoremap § z
 
 " buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>

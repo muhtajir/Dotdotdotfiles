@@ -59,3 +59,5 @@ color18 = #343D46
 color19 = #4F5B66
 color20 = #A7ADBA
 color21 = #CDD3DE
+
+# vim: ft=cfg commentstring=#\ %s

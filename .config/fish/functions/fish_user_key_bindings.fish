@@ -4,7 +4,6 @@ function fish_user_key_bindings
     end
 
     fish_default_key_bindings -M insert
-    bind -M insert \ce fish_expand_glob
 	bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
     bind -M insert \el accept-autosuggestion
@@ -16,4 +15,8 @@ function fish_user_key_bindings
 
     # prepend sudo to cmdline and run it
     bind -M insert \ep fish_plz_bind
+
+    # better line editing
+    bind -M insert \cE edit_command_buffer
+    bind \cE edit_command_buffer
 end

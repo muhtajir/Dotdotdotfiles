@@ -215,9 +215,6 @@ nnoremap } )
 onoremap { (
 onoremap } )
 
-" tab completion in input mode
-inoremap <Tab> <C-N>
-
 " file navigation
 nnoremap <silent> <A-o> :Explore<CR>
 

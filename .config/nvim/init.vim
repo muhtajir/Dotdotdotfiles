@@ -26,6 +26,7 @@ call plug#begin()
     Plug 'vim-scripts/vis'
     " deoplete completions
     Plug 'Shougo/neco-syntax'
+    Plug 'Soares/base16.nvim'
     Plug 'zchee/deoplete-jedi'
 call plug#end()
 
@@ -68,13 +69,8 @@ function! <SID>FindTrailingWhitespaces()
     norm n
 endfunction
 
-if has("gui_running")
-    set guifont=mononoki\ 12
-    set lines=45 columns=160
-endif
 
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-oceanicnext-glass
+" general settings
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -255,7 +251,7 @@ let g:neomake_autolint_events = {
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'base16_oceanicnext'
+" let g:airline_theme = 'base16_oceanicnext'
 
 " scratch
 let g:scratch_insert_autohide = 0
@@ -263,3 +259,13 @@ let g:scratch_insert_autohide = 0
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_add_preview_to_completeopt = 1
+
+" base16.nvim color settings
+set termguicolors
+set background=dark
+set cursorline
+let base16colorspace=256  " Access colors present in 256 colorspace
+let g:base16_transparent_background = 1
+let g:base16_airline = 1
+colorscheme oceanicnext
+Base16Highlight Pmenu bg=dark1

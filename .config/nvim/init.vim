@@ -14,6 +14,7 @@ call plug#begin()
     Plug 'raimondi/delimitmate'
     Plug 'thinca/vim-quickrun'
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-vinegar'
@@ -102,7 +103,7 @@ set foldnestmax=2
 " source the .vimrc/init.vim automatically after saving
 autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 " close preview window after leaving insert mode
-autocmd CompleteDone * silent! pclose!
+autocmd InsertLeave * silent! pclose!
 " fold by indent for python
 autocmd FileType python setlocal foldmethod=indent
 
@@ -117,14 +118,16 @@ nnoremap - ,
 
 " general
 nnoremap Y y$
-nnoremap <Space> zz
-" accessing folding more easily on QWERTZ
-nnoremap § z
+
+" more comfortable fold navigation on QWERTZ
+nnoremap <leader>j zj
+nnoremap <leader>k zk
+nnoremap <Space> za
 
 " buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
 nnoremap <silent> <leader><S-Tab> :bp<CR>
-nnoremap <silent> <leader>x :bd<CR>
+nnoremap <silent> <leader>x :bp<bar>sp<bar>bn<bar>bd<CR>
 nnoremap <leader>b :buffer 
 nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
@@ -170,11 +173,6 @@ vnoremap <leader>Y "+y$
 vnoremap <leader>P "+P
 vmap <leader>gr "+gr
 vmap <leader>gR "+gR
-
-" kill text (don't move to register)
-nnoremap <leader>k "_d
-nnoremap <leader>kk "_dd
-nnoremap <leader>K "_D
 
 " window navigation with alt key
 nnoremap <A-h> <C-w>h
@@ -237,6 +235,7 @@ let g:ctrlp_prompt_mappings = {
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#jedi#show_docstring = 1
 
 " netrw
 let g:netrw_banner = 0

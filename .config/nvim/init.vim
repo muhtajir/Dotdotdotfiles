@@ -119,6 +119,7 @@ nnoremap Y y$
 nnoremap <leader>j zj
 nnoremap <leader>k zk
 nnoremap <Space> za
+nnoremap <C-Space> zA
 
 " buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
@@ -269,3 +270,4 @@ let g:base16_transparent_background = 1
 let g:base16_airline = 1
 colorscheme oceanicnext
 Base16Highlight Pmenu bg=dark1
+Base16Highlight PmenuSel bg=dark3

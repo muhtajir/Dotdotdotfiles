@@ -13,6 +13,7 @@ call plug#begin()
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'thinca/vim-quickrun'
+    Plug 'tmhedberg/SimpylFold'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
@@ -20,7 +21,6 @@ call plug#begin()
     " Plug 'tpope/vim-vinegar'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'skywind3000/asyncrun.vim'
-    " Plug 'Valloric/YouCompleteMe'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'vim-scripts/vis'
@@ -30,6 +30,7 @@ call plug#begin()
     Plug 'zchee/deoplete-jedi'
 call plug#end()
 
+
 " make nvim use bash if started from fish
 if &shell =~# 'fish$'
     set shell=bash
@@ -37,6 +38,7 @@ endif
 
 " load included matchit_plugin
 runtime macros/matchit.vim
+
 
 " functions
 " from vimcasts.org
@@ -95,16 +97,16 @@ set inccommand=nosplit
 set foldmethod=syntax
 set foldnestmax=2
 
+"" set what to ignore when using wildcards (mainly relevant for ctrlP
+set wildignore+=*/__pycache__/*
+
+
 "" autocommands
 " source the .vimrc/init.vim automatically after saving
 autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 " close preview window after leaving insert mode
 autocmd InsertLeave * silent! pclose!
-" fold by indent for python
-autocmd FileType python setlocal foldmethod=indent
 
-"" cache and other files to ignore in wildcards
-set wildignore+=*/__pycache__/*
 
 "" keybinds
 let mapleader=','
@@ -129,6 +131,7 @@ nnoremap <leader>b :buffer
 nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
+
 " ctrlP buffer mode shortcut
 nnoremap <C-B> :CtrlPBuffer<CR>
 
@@ -139,9 +142,6 @@ nnoremap <silent> <leader>vs :split<CR>
 " auto-delete trailing whitespace
 nnoremap <silent> <F3> :call <SID>FindTrailingWhitespaces()<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
-
-" get YCM Doc information for word under cursor
-nnoremap <silent> g? :YcmCompleter GetDoc<CR>
 
 " turn off search highlighting until next search
 nnoremap <silent> <F4> :nohlsearch<CR>
@@ -188,17 +188,13 @@ tnoremap <silent> <A-c> <C-\><C-n>:clo<CR>
 " jump to end of line in insert mode
 inoremap æ <Esc>A
 
-" capitalize word or WORD in insert mode
-" try without for a while because these marks get really annoying
-" inoremap <A-u> <Esc>mzgUiw`za
-" inoremap <A-U> <Esc>mzgUiW`za
-
 " use up-down bindings from my shell configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 
 " delete word using ctrl or alt + backspace in command mode
 cnoremap <A-BS> <C-W>
+cnoremap <C-BS> <C-W>
 
 " section navigation that works better with an ISO keyboard
 nnoremap ( {
@@ -222,6 +218,7 @@ nnoremap <F12> :QuickRun<CR>
 " create ctags
 nnoremap <silent> <F9> :AsyncRun ctags -R .<CR>
 
+
 "" plugin configuration
 " ctrlp
 " keybinds consistent with command mode
@@ -233,6 +230,7 @@ let g:ctrlp_prompt_mappings = {
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
+call deoplete#custom#set('jedi', 'rank', 1000)
 
 " netrw
 let g:netrw_banner = 0
@@ -248,18 +246,16 @@ let g:neomake_autolint_events = {
     \ 'BufWritePost': {'delay': 0},
     \ }
 
-
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-" let g:airline_theme = 'base16_oceanicnext'
 
 " scratch
 let g:scratch_insert_autohide = 0
 
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_add_preview_to_completeopt = 1
+" simpylfold (what's with the name?)
+let g:SimpylFold_fold_docstring = 0
+let g:SimpylFold_fold_import = 0
 
 " base16.nvim color settings
 set termguicolors

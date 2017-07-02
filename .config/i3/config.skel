@@ -288,3 +288,7 @@ bar {
 exec compton -f
 exec unclutter
 exec feh --bg-fill $HOME/Bilder/wallpaper.jpg
+exec ibus-daemon -drx
+exec xset -b
+exec numlockx on
+exec setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape

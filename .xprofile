@@ -1,4 +1,0 @@
-ibus-daemon -drx &
-xset -b &
-numlockx on &
-setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape

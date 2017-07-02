@@ -10,12 +10,6 @@ if not set -q fish_default_variables_set
     fish_set_universal_variables
 end
 
-# set color scheme if it hasn't bet set yet
-# (blablabla updates)
-if not set -q color01
-    fish_set_base16_colors
-end
-
 # always set aliases as these are only set by shell instance
 # (so prefer abbreviations)
 fish_set_user_aliases

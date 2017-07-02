@@ -24,6 +24,9 @@ Code/*
 !.config/fish/functions
 !.config/fish/functions/*
 
+!.config/firejail
+!.config/firejail/*
+
 !.config/fontconfig
 !.config/fontconfig/fonts.conf
 

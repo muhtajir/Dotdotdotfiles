@@ -1,3 +1,4 @@
 function plz
-    eval "sudo $history[1]"
+    commandline -r "sudo $history[1]"
+    commandline -f execute
 end

@@ -1,7 +1,8 @@
 function fish_plz_bind --description 'Prepend sudo to current line and run it'
-	set -l cmdln (commandline)
-    commandline -r ''
-    printf \n
-    eval "sudo $cmdln"
-    commandline -f repaint
+    set -l cursor_pos (commandline --cursor)
+	set -l cmdln 'sudo '(commandline)
+    commandline -r $cmdln
+    commandline --cursor $cursor_pos
+    sleep .1
+    commandline -f execute
 end

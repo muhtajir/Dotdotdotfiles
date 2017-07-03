@@ -108,6 +108,11 @@ autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
 autocmd InsertLeave * silent! pclose!
 
 
+"" aliases
+" change working directory to current file's parent folder
+cnoreabbrev <silent> here lcd %:p:h
+
+
 "" keybinds
 let mapleader=','
 

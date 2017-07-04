@@ -7,15 +7,22 @@ let scrollduration = 200
 set noautofocus
 let defaultengine = 'duckduckgo'
 let completionengines = ['duckduckgo', 'wikipedia']
+
 " search engines
 let searchengine youtube = "https://www.youtube.com/results?search_query=%s"
 let searchengine wikipedia = "https://en.wikipedia.org/w/index.php?search=%s"
 let searchengine wikipedia_german = "https://de.wikipedia.org/w/index.php?search=%s"
 let searchengine google = "https://www.google.com/search?q=%s"
-let searchalias y= "youtube"
+let searchengine archwiki = "https://wiki.archlinux.org/index.php?title=Special:Search&search=%s"
+let searchengine lastfm = "https://www.last.fm/search?q=%s"
+let searchengine bandcamp = "https://bandcamp.com/search?q=%s"
+let searchalias y = "youtube"
 let searchalias w = "wikipedia"
 let searchalias wd = "wikipedia_german"
 let searchalias g = "google" 
+let searchalias aw = "archwiki" 
+let searchalias lf = "lastfm" 
+let searchalias bc = "bandcamp" 
 
 let mapleader=','
 " keybinds (normal mode)
@@ -108,5 +115,7 @@ map W :new @%
 let configpath = '/home/nicolai/.local/share/mouseless/mouselessrc'
 set localconfig
 let newtaburl = 'https://www.duckduckgo.com'
+
+let blacklists = ["chrome://settings/*"]
 
 " vim: set filetype=vim:

@@ -45,6 +45,14 @@ Code/*
 !.config/i3blocks/blocklets/*
 .config/i3blocks/blocklets/todo.txt
 
+!.config/inox/
+.config/inox/*
+!.config/inox/extensions
+.config/inox/extensions/*
+!.config/inox/extensions/mouseless
+.config/inox/extensions/mouseless/*
+!.config/inox/extensions/mouseless/mouselessrc
+
 !.config/mpv
 !.config/mpv/*
 
@@ -76,14 +84,6 @@ Code/*
 !.config/zsh/.zshrc
 !.config/zsh/.zprompt
 !.config/zsh/.zfunc
-
-!.local/
-.local/*
-!.local/share
-.local/share/*
-!.local/share/mouseless
-.local/share/mouseless/*
-!.local/share/mouseless/mouselessrc
 
 !.vimperatorrc
 !.vimperator/

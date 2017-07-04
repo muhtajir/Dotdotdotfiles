@@ -112,7 +112,7 @@ map T :tabnew @%
 map w :new<Space>
 map W :new @%
 
-let configpath = '/home/nicolai/.local/share/mouseless/mouselessrc'
+let configpath = '/home/nicolai/.config/inox/extensions/mouseless/mouselessrc'
 set localconfig
 let newtaburl = 'https://www.duckduckgo.com'
 

@@ -7,5 +7,5 @@ QT_IM_MODULE                DEFAULT=ibus
 XKB_DEFAULT_LAYOUT          DEFAULT=de
 XKB_DEFAULT_VARIANT         DEFAULT=nodeadkeys
 XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape
-SSH_AUTH_SOC                DEFAULT=$XDG_RUNTIME_DIR/ssh-agent.socket
+SSH_AUTH_SOCK               DEFAULT=$XDG_RUNTIME_DIR/ssh-agent.socket
 GNUPGHOME                   DEFAULT=~/.config/gnupg

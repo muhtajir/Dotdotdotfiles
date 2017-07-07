@@ -9,9 +9,10 @@ function fish_user_key_bindings
     bind -M insert \el accept-autosuggestion
 
     # use escape to get to normal mode
-    bind -M insert -m default \e backward-char force-repaint
-    bind -M visual -m default \e backward-char force-repaint
-    bind -M replace-one -m default \e backward-char force-repaint
+    bind -M insert \e 'if commandline -P; commandline -f cancel; else; set fish_bind_mode default; commandline -f backward-char force-repaint; end'
+    bind \e cancel
+    bind -M visual -m default \e end-selection force-repaint
+    bind -M replace-one -m default \e cancel force-repaint
 
     # prepend sudo to cmdline and run it
     bind -M insert \ep fish_plz_bind

@@ -43,16 +43,15 @@ function fish_update_user_settings
     end
 
     fish_set_universal_variables
+
+    set -l usrabbr (abbr -l)
+    for abbrev in $usrabbr
+        abbr -e $abbrev
+    end
+
+    fish_set_user_abbreviations
+
+    # this last one is redundant for now, as all aliases are set at shell
+    # startup
+    # fish_set_user_aliases
 end
-
-#     set -l usrabbr (abbr -l)
-#     for abbrev in $usrabbr
-#         abbr -e $abbrev
-#     end
-
-#     fish_set_user_abbreviations
-
-#     # this last one is redundant for now, as all aliases are set at shell
-#     # startup
-#     # fish_set_user_aliases
-# end

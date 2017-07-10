@@ -1,4 +1,5 @@
 function fish_set_universal_variables
+    set -U fish_greeting
     set -U fish_default_variables_set
     set -U fish_escape_delay_ms 10
     set -U fish_function_path_local $HOME/.config/fish/functions

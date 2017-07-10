@@ -272,3 +272,4 @@ let g:base16_airline = 1
 colorscheme oceanicnext
 Base16Highlight Pmenu bg=dark1
 Base16Highlight PmenuSel bg=dark3
+Base16Highlight NeomakeWarningSign fg=yellow

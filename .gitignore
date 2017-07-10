@@ -79,12 +79,6 @@ Code/*
 .config/vifm/*
 !.config/vifm/vifmrc
 
-!.config/zsh
-.config/zsh/*
-!.config/zsh/.zshrc
-!.config/zsh/.zprompt
-!.config/zsh/.zfunc
-
 !.vimperatorrc
 !.vimperator/
 !.vimperator/plugin/
@@ -95,5 +89,3 @@ Code/*
 !.gitignore
 !.pam_environment
 !.XCompose
-!.xprofile
-!.zshenv

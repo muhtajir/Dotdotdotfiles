@@ -4,6 +4,6 @@ function fish_load_event_handlers
                         __fish_bell_on_completion_handle
 
     for handler in $handler_list
-        source $fish_funclocal{$handler}.fish
+        source $fish_function_path_local/{$handler}.fish
     end
 end

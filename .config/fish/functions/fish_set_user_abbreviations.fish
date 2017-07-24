@@ -10,4 +10,7 @@ function fish_set_user_abbreviations
     abbr --add nd nextd
     abbr --add mksri makepkgs -sri
     abbr --add mksri makepkg -sri
+    abbr --add py python
+    abbr --add py2 python2
+    abbr --add bpy bpython
 end

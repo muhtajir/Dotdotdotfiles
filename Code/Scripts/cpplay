@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+
+set id $argv[1]
+
+zathura --fork "$HOME/Dokumente/Chinesepod/chinesepod_C"{$id}".pdf" &
+mpv --no-audio-display "$HOME/Dokumente/Chinesepod/chinesepod_C"{$id}"pr.mp3"

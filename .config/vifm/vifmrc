@@ -108,7 +108,7 @@ endif
 
 " Set custom status line look
 
-set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
+set statusline="  Hint: %z%= %A %10u:%-7g %15E %20d  "
 
 " Make Ctrl-I the opposite of Ctrl-O
 set cpoptions-=t

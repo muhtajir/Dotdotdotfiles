@@ -8,25 +8,23 @@ set -l name (string match -r '"[^"]+"' $name_line)
 set name (string replace -a ' ' '_' $name)
 
 # get list of all pass files
-set -l passes (find ~/.password-store -name '*.gpg')
+set -l passes (string replace -r '^.+?\.password-store/(.+?)\.gpg$' '$1' $HOME/.password-store/**/*)
 
 # loop through files and find one that matches
 set -l candidates
-for passfile in $passes
-    set -l barepass (command basename -s '.gpg' $passfile)
+for password in $passes
+    set -l barepass (command basename $password)
     string match -qi "*$barepass*" $name
     if test $status -eq 0
-        set candidates $candidates $passfile
+        set candidates $candidates $password
     end
 end
 
 # send candidate to pass; use dmenu to select one if there are too many
 set -l cand_num (count $candidates)
 if test $cand_num -eq 1
-    set -l pass_friendly (string replace -r '^.+?\.password-store/(.+?)\.gpg$' '$1' $candidates)
-
-    notify-send "Found $pass_friendly"
-    pass -c $pass_friendly
+    notify-send "Found $candidates"
+    pass -c $candidates
 else if test $cand_num -gt 1
     notify-send 'Too many candidates.'
 else

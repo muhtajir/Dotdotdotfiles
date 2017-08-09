@@ -56,6 +56,8 @@ Code/*
 !.config/mpv
 !.config/mpv/*
 
+!.config/maninex.conf
+
 !.config/nvim
 .config/nvim/*
 !.config/nvim/init.vim

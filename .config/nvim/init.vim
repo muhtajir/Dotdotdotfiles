@@ -12,6 +12,8 @@ call plug#begin()
     Plug 'mtth/scratch.vim'
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'skywind3000/asyncrun.vim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
     Plug 'tpope/vim-commentary'
@@ -19,8 +21,6 @@ call plug#begin()
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     " Plug 'tpope/vim-vinegar'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'skywind3000/asyncrun.vim'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'vim-scripts/vis'
@@ -221,8 +221,10 @@ nnoremap <leader>sw :SudoWrite<CR>
 nnoremap <F12> :QuickRun<CR>
 
 " create ctags
-nnoremap <silent> <F9> :AsyncRun ctags -R .<CR>
+nnoremap <silent> <C-C> :AsyncRun ctags -R .<CR>
 
+" shortcut for pytest
+nnoremap <F9> :terminal PYTHONPATH=$(pwd) pytest<CR>
 
 "" plugin configuration
 " ctrlp
@@ -251,16 +253,16 @@ let g:neomake_autolint_events = {
     \ 'BufWritePost': {'delay': 0},
     \ }
 
-" vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
 " scratch
 let g:scratch_insert_autohide = 0
 
 " simpylfold (what's with the name?)
 let g:SimpylFold_fold_docstring = 0
 let g:SimpylFold_fold_import = 0
+
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " base16.nvim color settings
 set termguicolors

@@ -7,3 +7,5 @@
     c = commit
     s = status
     a = add
+    co = checkout
+    l = log

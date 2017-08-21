@@ -66,6 +66,9 @@ Code/*
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 
+!.config/pacman
+!.config/pacman/makepkg.conf
+
 !.config/sway
 .config/sway/*
 !.config/sway/config.skel

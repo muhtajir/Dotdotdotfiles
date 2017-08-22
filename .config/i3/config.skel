@@ -219,6 +219,7 @@ assign [class="Vlc"] $ws10
 # window arrangement fixes
 for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable
 for_window [class="Yad"] floating enable
+for_window [class="Pinentry"] floating enable
 
 ## modes
 set $mode_music "music control"

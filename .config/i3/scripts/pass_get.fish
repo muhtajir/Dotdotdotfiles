@@ -4,7 +4,7 @@
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
 set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' $active_line)
 set -l name_line (string match -r 'WM_NAME\([^)]+\).+' (xprop -id $active_id))
-set -l name (string match -r '"[^"]+"' $name_line)
+set -l name (string match -r '".+?"$' $name_line)
 set name (string replace -a ' ' '_' $name)
 
 # get list of all pass files

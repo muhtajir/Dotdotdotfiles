@@ -97,7 +97,7 @@ set inccommand=nosplit
 set foldmethod=syntax
 set foldnestmax=2
 
-"" set what to ignore when using wildcards (mainly relevant for ctrlP
+"" set what to ignore when using wildcards (mainly relevant for ctrlP)
 set wildignore+=*/__pycache__/*
 
 
@@ -271,7 +271,7 @@ set cursorline
 let base16colorspace=256  " Access colors present in 256 colorspace
 let g:base16_transparent_background = 1
 let g:base16_airline = 1
-colorscheme oceanicnext
+colorscheme ocean
 Base16Highlight Pmenu bg=dark1
 Base16Highlight PmenuSel bg=dark3
 Base16Highlight NeomakeWarningSign fg=yellow

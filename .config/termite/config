@@ -10,54 +10,53 @@ cursor_blink = on
 urgent_on_bell = true
 
 [colors]
-# Base16 OceanicNext
-# Author: https://github.com/voronianski/oceanic-next-color-scheme
+# Base16 Ocean
+# Author: Chris Kempson (http:&#x2F;&#x2F;chriskempson.com)
 
-foreground      = #C0C5CE
-foreground_bold = #CDD3DE
-cursor          = #CDD3DE
-cursor_foreground   = #1B2B34
-background      = rgba(27, 43, 52, 0.95)
+foreground          = #c0c5ce
+foreground_bold     = #dfe1e8
+cursor              = #dfe1e8
+cursor_foreground   = #2b303b
+background          = rgba(43, 48, 59, 0.93)
 
 # 16 color space
 
 # Black, Gray, Silver, White
-color0  = #1B2B34
-color8  = #65737E
-color7  = #C0C5CE
-color15 = #D8DEE9
+color0  = #2b303b
+color8  = #65737e
+color7  = #c0c5ce
+color15 = #eff1f5
 
 # Red
-color1  = #EC5f67
-color9  = #EC5f67
+color1  = #bf616a
+color9  = #bf616a
 
 # Green
-color2  = #99C794
-color10 = #99C794
+color2  = #a3be8c
+color10 = #a3be8c
 
 # Yellow
-color3  = #FAC863
-color11 = #FAC863
+color3  = #ebcb8b
+color11 = #ebcb8b
 
 # Blue
-color4  = #6699CC
-color12 = #6699CC
+color4  = #8fa1b3
+color12 = #8fa1b3
 
 # Purple
-color5  = #C594C5
-color13 = #C594C5
+color5  = #b48ead
+color13 = #b48ead
 
 # Teal
-color6  = #5FB3B3
-color14 = #5FB3B3
+color6  = #96b5b4
+color14 = #96b5b4
 
 # Extra colors
-color15 = #D8DEE9
-color16 = #F99157
-color17 = #AB7967
-color18 = #343D46
-color19 = #4F5B66
-color20 = #A7ADBA
-color21 = #CDD3DE
+color16 = #d08770
+color17 = #ab7967
+color18 = #343d46
+color19 = #4f5b66
+color20 = #a7adba
+color21 = #dfe1e8
 
 # vim: ft=cfg commentstring=#\ %s

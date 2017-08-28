@@ -13,4 +13,5 @@ function fish_set_user_abbreviations
     abbr --add py python
     abbr --add py2 python2
     abbr --add bpy bpython
+    abbr --add o open
 end

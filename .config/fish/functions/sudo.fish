@@ -2,6 +2,7 @@ function sudo --description 'A wrapper for sudo that looks up aliases if the spe
     set -l arg_num (count $argv)
     set -l command
     set -l args
+
     if test $arg_num -eq 0
         command sudo
         return
@@ -18,7 +19,7 @@ function sudo --description 'A wrapper for sudo that looks up aliases if the spe
 
         # loop through aliases and try to get a match for $command
         for al in (alias ^ /dev/null)
-            set new_command (string replace -fr '^alias\s'$command'(=|\s)(.+)$' '$2' $al)
+            string replace -fr '^alias\s'$command'(=|\s)(.+)$' '$2' $al | read -a new_command
             test -n "$new_command"; and break
 
         end
@@ -27,5 +28,5 @@ function sudo --description 'A wrapper for sudo that looks up aliases if the spe
     end
 
     # finally run the command + args with sudo
-    eval "command sudo $command $args"
+    command sudo $command $args
 end

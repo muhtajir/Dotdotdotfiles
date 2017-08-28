@@ -4,5 +4,5 @@ function fish_set_user_aliases
     alias setua fish_add_universal_variable
     alias dc fish_cd_history
     alias vim nvim
-    alias maninex='python ~/Code/maninex/maninex.py'
+    alias maninex=python\ $HOME/Code/maninex/maninex.py
 end

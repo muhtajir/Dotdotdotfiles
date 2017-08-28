@@ -16,8 +16,9 @@ function shan
         for line in $gio_out[$match_pos..-1]
             if string match -q "Device*" $line
                 break
-            else
-
+            end
+        end
+    end
 
 end
 

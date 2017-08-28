@@ -1,4 +1,9 @@
 function fish_add_user_abbreviation
+    if test (count $argv) -eq 0
+        abbr
+        return
+    end
+
 	set -l abbr_file ~/.config/fish/functions/fish_set_user_abbreviations.fish
     sed -ri '/^end$/d' $abbr_file
     echo "    abbr --add $argv" >> $abbr_file

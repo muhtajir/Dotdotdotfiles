@@ -3,7 +3,9 @@
 !Code/
 Code/*
 !Code/Scripts
-!Code/Scripts/*
+Code/Scripts/*
+!Code/Scripts/global
+!Code/Scripts/global/*
 
 !.config/
 .config/*

@@ -11,9 +11,9 @@ if [[ -n $WIRED_INSTANCE ]]; then
 
     if [[ $STATE == "up" ]]; then
         if [[ $(ip route | grep ${WIRED_INSTANCE}) ]]; then
-            wired='<span foreground="#8ca06b"></span>'
+            wired="<span foreground=\"${color01}\"></span>"
         else
-            wired='<span foreground="#fdcc59"></span>'
+            wired="<span foreground=\"${color02}\"></span>"
         fi
     fi
 fi

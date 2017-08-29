@@ -1,5 +1,6 @@
 #!/usr/bin/env fish
 
+test (count $argv) -eq 1; and test $argv[1] = '-l'; and set -l login_mode
 # get name of currently active window
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
 set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' $active_line)
@@ -24,7 +25,12 @@ end
 set -l cand_num (count $candidates)
 if test $cand_num -eq 1
     notify-send "Found $candidates"
-    pass -c $candidates
+
+    if set -q login_mode
+        pass show $candidates | string replace -rf '^login:\s?(.+)$' '$1' | xclip -selection clipboard -i
+    else
+        pass show -c $candidates
+    end
 else if test $cand_num -gt 1
     notify-send 'Too many candidates.'
 else

@@ -10,10 +10,6 @@ Code/Scripts/*
 !.config/
 .config/*
 
-!.config/beets
-!.config/beets/config.yaml.skel
-!.config/beets/skeletify.sh
-
 !.config/cower
 !.config/cower/config
 

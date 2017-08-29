@@ -41,6 +41,8 @@ client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 
 
+set $font Liberation Sans
+
 set $i3confdir "$HOME/.config/i3"
 set $mod Mod4
 
@@ -50,18 +52,18 @@ focus_on_window_activation urgent
 ## configure window decorations
 # first the border
 hide_edge_borders smart
-new_window pixel 3
+new_window pixel 5
 
 # next the title font
-font pango:Muli 8
+font pango:$font 8
 
 # Format the window title beyond the font
 for_window [class=".*"] title_format "     %title"
 
 # Gaps
 # gaps edge_gaps on
-gaps inner 9
-gaps outer 0
+gaps inner 15
+gaps outer -6
 smart_gaps on
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -88,7 +90,7 @@ bindsym $mod+q kill
 bindsym --release button2 kill
 
 # start a program launcher
-bindsym $mod+r exec j4-dmenu-desktop --no-generic --usage-log=$i3confdir/j4-dmenu-desktop.log --dmenu="dmenu -fn Lato -i -b -nb \\$base01 -nf \\$base05 -sb \\$base0D -sf \\$base00"
+bindsym $mod+r exec j4-dmenu-desktop --no-generic --usage-log=$i3confdir/j4-dmenu-desktop.log --dmenu="dmenu -fn '$font' -i -b -nb \\$base01 -nf \\$base05 -sb \\$base0D -sf \\$base00"
 
 # start the password finder
 bindsym $mod+Shift+x exec fish $i3confdir/scripts/pass_get.fish -l
@@ -270,7 +272,7 @@ bindsym $mod+m mode $mode_music
 bar {
         status_command i3blocks
         position top
-        font pango:Muli 11
+        font pango:$font, FontAwesome 11
 
         colors {
             background $base00

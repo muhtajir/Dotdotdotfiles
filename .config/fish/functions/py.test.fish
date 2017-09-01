@@ -1,4 +1,4 @@
 function py.test
     set -lx PYTHONPATH (pwd)
-    pytest
+    pytest $argv
 end

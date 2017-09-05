@@ -6,6 +6,7 @@ call plug#begin()
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
+    Plug 'ervandew/supertab'
     Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
     Plug 'kshenoy/vim-signature'
@@ -13,7 +14,8 @@ call plug#begin()
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'SirVer/ultisnips'
+    Plug 'Shougo/neosnippet'
+    Plug 'Shougo/neosnippet-snippets'
     Plug 'skywind3000/asyncrun.vim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
@@ -29,8 +31,8 @@ call plug#begin()
     Plug 'Shougo/neco-syntax'
     Plug 'Soares/base16.nvim'
     Plug 'zchee/deoplete-jedi'
-    " ultisnips snippets
-    Plug 'honza/vim-snippets'
+    " snippets
+    " Plug 'honza/vim-snippets'
 call plug#end()
 
 
@@ -222,6 +224,10 @@ nnoremap <silent> <A-o> :Explore<CR>
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
+" neosnippet
+imap <C-K> <Plug>(neosnippet_expand_or_jump)
+smap <C-K> <Plug>(neosnippet_expand_or_jump)
+
 " Quickrun
 nnoremap <F12> :QuickRun<CR>
 
@@ -258,6 +264,9 @@ let g:neomake_autolint_events = {
     \ 'BufWritePost': {'delay': 0},
     \ }
 
+" neosnippet
+let g:neosnippet#snippets_directory = '~/.config/nvim/snippets_custom'
+
 " scratch
 let g:scratch_insert_autohide = 0
 
@@ -265,10 +274,8 @@ let g:scratch_insert_autohide = 0
 let g:SimpylFold_fold_docstring = 0
 let g:SimpylFold_fold_import = 0
 
-" ultisnips
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsListSnippets = '<C-E>'
-let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
+" supertab
+let g:SuperTabDefaultCompletionType = '<C-N>'
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1

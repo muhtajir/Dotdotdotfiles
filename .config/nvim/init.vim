@@ -13,6 +13,7 @@ call plug#begin()
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'SirVer/ultisnips'
     Plug 'skywind3000/asyncrun.vim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
@@ -28,6 +29,8 @@ call plug#begin()
     Plug 'Shougo/neco-syntax'
     Plug 'Soares/base16.nvim'
     Plug 'zchee/deoplete-jedi'
+    " ultisnips snippets
+    Plug 'honza/vim-snippets'
 call plug#end()
 
 
@@ -97,9 +100,11 @@ set inccommand=nosplit
 set foldmethod=syntax
 set foldnestmax=2
 
-"" set what to ignore when using wildcards (mainly relevant for ctrlP)
+" set what to ignore when using wildcards (mainly relevant for ctrlP)
 set wildignore+=*/__pycache__/*
 
+" make vim find hidden ctags files
+set tags+=./.tags;
 
 "" autocommands
 " source the .vimrc/init.vim automatically after saving
@@ -259,6 +264,11 @@ let g:scratch_insert_autohide = 0
 " simpylfold (what's with the name?)
 let g:SimpylFold_fold_docstring = 0
 let g:SimpylFold_fold_import = 0
+
+" ultisnips
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsListSnippets = '<C-E>'
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1

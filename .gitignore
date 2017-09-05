@@ -59,10 +59,10 @@ Code/Scripts/*
 !.config/nvim
 .config/nvim/*
 !.config/nvim/init.vim
-!.config/nvim/colors/
-!.config/nvim/colors/*
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
+!.config/nvim/UltiSnips/
+!.config/nvim/UltiSnips/*
 
 !.config/pacman
 !.config/pacman/makepkg.conf

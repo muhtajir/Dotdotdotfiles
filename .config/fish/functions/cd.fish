@@ -24,7 +24,7 @@ function cd --description "Allow cd'ing to files"
         return $status
     end
 
-    if test -n "$argv[-1]" -a -f "$argv[-1]"
+    if test -n "$argv[-1]" -a ! -d "$argv[-1]"
         set -l parent (dirname $argv[-1])
         if test -d $parent
             printf 'cd %s\n' $parent

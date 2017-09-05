@@ -31,6 +31,9 @@ Code/Scripts/*
 !.config/git
 !.config/git/config
 
+!.config/gnupg
+!.config/gnupg/gpg-agent.conf
+
 !.config/i3
 .config/i3/*
 !.config/i3/config.skel

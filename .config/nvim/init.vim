@@ -14,9 +14,9 @@ call plug#begin()
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/neosnippet'
-    Plug 'Shougo/neosnippet-snippets'
+    Plug 'SirVer/ultisnips'
     Plug 'skywind3000/asyncrun.vim'
+    Plug 'Soares/base16.nvim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
     Plug 'tpope/vim-commentary'
@@ -29,10 +29,7 @@ call plug#begin()
     Plug 'vim-scripts/vis'
     " deoplete completions
     Plug 'Shougo/neco-syntax'
-    Plug 'Soares/base16.nvim'
     Plug 'zchee/deoplete-jedi'
-    " snippets
-    " Plug 'honza/vim-snippets'
 call plug#end()
 
 
@@ -109,8 +106,8 @@ set wildignore+=*/__pycache__/*
 set tags+=./.tags;
 
 "" autocommands
-" source the .vimrc/init.vim automatically after saving
-autocmd bufwritepost init.vim source $MYVIMRC | AirlineRefresh
+" source $MYVIMRC automatically after saving
+autocmd bufwritepost init.vim source $MYVIMRC
 " close preview window after leaving insert mode
 autocmd InsertLeave * silent! pclose!
 
@@ -156,7 +153,7 @@ nnoremap <silent> <F3> :call <SID>FindTrailingWhitespaces()<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
 
 " turn off search highlighting until next search
-nnoremap <silent> <F4> :nohlsearch<CR>
+nnoremap <silent> ´ :nohlsearch<CR>
 
 " run Neomake
 nnoremap <silent> <F5> :Neomake<CR>
@@ -174,14 +171,22 @@ nnoremap <leader>Y "+y$
 nnoremap <leader>P "+P
 nnoremap <leader>d "+d
 nnoremap <leader>D "+D
-nmap <leader>gr "+gr
-nmap <leader>gR "+gR
+onoremap <leader>y "+y
+onoremap <leader>p "+p
+onoremap <leader>Y "+y$
+onoremap <leader>P "+P
+onoremap <leader>d "+d
+onoremap <leader>D "+D
 vnoremap <leader>y "+y
 vnoremap <leader>p "+p
 vnoremap <leader>Y "+y$
 vnoremap <leader>P "+P
+nmap <leader>gr "+gr
+nmap <leader>gR "+gR
 vmap <leader>gr "+gr
 vmap <leader>gR "+gR
+omap <leader>gr "+gr
+omap <leader>gR "+gR
 
 " window navigation with alt key
 nnoremap <A-h> <C-w>h
@@ -224,10 +229,6 @@ nnoremap <silent> <A-o> :Explore<CR>
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
-" neosnippet
-imap <C-K> <Plug>(neosnippet_expand_or_jump)
-smap <C-K> <Plug>(neosnippet_expand_or_jump)
-
 " Quickrun
 nnoremap <F12> :QuickRun<CR>
 
@@ -264,9 +265,6 @@ let g:neomake_autolint_events = {
     \ 'BufWritePost': {'delay': 0},
     \ }
 
-" neosnippet
-let g:neosnippet#snippets_directory = '~/.config/nvim/snippets_custom'
-
 " scratch
 let g:scratch_insert_autohide = 0
 
@@ -276,6 +274,17 @@ let g:SimpylFold_fold_import = 0
 
 " supertab
 let g:SuperTabDefaultCompletionType = '<C-N>'
+
+"" ultisnips
+" keybinds
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets_custom'
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snippets_custom"]
+" keybinds
+let g:UltiSnipsExpandTrigger = '<C-L>'
+let g:UltiSnipsBackwardTrigger = '<C-K>'
+let g:UltiSnipsForwardTrigger = '<C-J>'
+let g:UltiSnipsListSnippets = '<C-E>'
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1

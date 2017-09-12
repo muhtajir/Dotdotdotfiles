@@ -92,6 +92,7 @@ Code/Scripts/*
 !.vimperator/*
 
 !.bashrc
+!.ctags
 !.gitignore
 !.pam_environment
 !.XCompose

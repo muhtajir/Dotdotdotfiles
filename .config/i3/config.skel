@@ -9,8 +9,9 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
+# %%base16_template: i3##colors-only%%
 ## Base16 Ocean
-# Author: Chris Kempson (http:&#x2F;&#x2F;chriskempson.com)
+# Author: Chris Kempson (http://chriskempson.com)
 #
 # You can use these variables anywhere in the i3 configuration file.
 
@@ -30,6 +31,7 @@ set $base0C #96b5b4
 set $base0D #8fa1b3
 set $base0E #b48ead
 set $base0F #ab7967
+# %%base16_template_end%%
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border

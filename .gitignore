@@ -85,14 +85,13 @@ Code/Scripts/*
 .config/vifm/*
 !.config/vifm/vifmrc
 
-!.vimperatorrc
-!.vimperator/
-!.vimperator/plugin/
-!.vimperator/plugin/*
-!.vimperator/*
+!.config/zathura
+.config/zathura/*
+!.config/zathura/zathurarc
 
 !.bashrc
 !.ctags
 !.gitignore
+!.gtkrc-2.0.mine
 !.pam_environment
 !.XCompose

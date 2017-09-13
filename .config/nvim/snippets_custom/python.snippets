@@ -33,3 +33,10 @@ endsnippet
 snippet pdb "Run debugger from here" b
 import pdb; pdb.set_trace()
 endsnippet
+
+
+snippet def "Function with docstring" b
+def ${1:function_name}($2):
+	"""${3:Docstring}"""
+	$0
+endsnippet

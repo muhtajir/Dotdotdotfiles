@@ -245,6 +245,7 @@ let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("j")':    ['<A-j>'],
     \ 'PrtSelectMove("k")':    ['<A-k>'],
     \ }
+let g:ctrlp_working_path_mode = ''
 
 " deoplete
 let g:deoplete#enable_at_startup = 1

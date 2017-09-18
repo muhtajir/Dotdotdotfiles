@@ -87,6 +87,8 @@ set mouse=a
 set ttimeout
 set ttimeoutlen=10
 set linebreak
+set showbreak=…
+set breakindent
 set hidden
 set hlsearch
 set ignorecase

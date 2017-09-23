@@ -14,7 +14,7 @@ l_value=$(light | sed -r 's/\..+//')
 if (( $l_value > 99 )); then
     echo ""
 elif (( $l_value > 0 )); then
-    echo "<span size='xx-small'>${l_value}</span>"
+    echo "<span size='x-small'>${l_value}</span>"
 else
     echo ""
 fi

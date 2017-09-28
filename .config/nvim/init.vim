@@ -96,6 +96,7 @@ set smartcase
 set relativenumber
 set splitbelow
 set inccommand=nosplit
+set wildmode=longest,list,full
 
 " enable folding
 set foldmethod=syntax
@@ -161,8 +162,8 @@ nnoremap <silent> ´ :nohlsearch<CR>
 nnoremap <silent> <F5> :Neomake<CR>
 
 " insert blank links without entering insert mode
-nnoremap ö o<ESC>k
-nnoremap Ö O<ESC>j
+nnoremap <silent> ö :call append(line('.'),'')<CR>
+nnoremap <silent> Ö :call append(line('.')-1,'')<CR>
 nnoremap <leader>ö o<ESC>
 nnoremap <leader>Ö O<ESC>
 

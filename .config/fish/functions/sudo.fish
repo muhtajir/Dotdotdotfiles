@@ -3,8 +3,8 @@ function sudo --description 'A wrapper for sudo that looks up aliases if the spe
     set -l command
     set -l args
 
-    if test $arg_num -eq 0
-        command sudo
+    if test $arg_num -eq 0 -o (string sub -l 1 -- "$argv") = '-'
+        command sudo $argv
         return
     else if test $arg_num -eq 1
         set command $argv[1]

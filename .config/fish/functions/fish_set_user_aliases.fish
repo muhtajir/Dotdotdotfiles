@@ -4,4 +4,5 @@ function fish_set_user_aliases
     alias setua fish_add_universal_variable
     alias dc fish_cd_history
     alias vim nvim
+    alias cls echo\ -e\ \'\\0033\\0143\'
 end

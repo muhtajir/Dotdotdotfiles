@@ -7,6 +7,8 @@ call plug#begin()
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
     Plug 'ervandew/supertab'
+    Plug 'jsfaint/gen_tags.vim'
+    Plug 'kassio/neoterm'
     Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
     Plug 'kshenoy/vim-signature'
@@ -197,6 +199,7 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 nnoremap <silent> <A-c> :clo<CR>
+nnoremap <silent> <S-A-c> :bp<bar>sp<bar>bn<bar>bd<bar>clo<CR>
 
 " also in terminal mode
 tnoremap <A-h> <C-\><C-n><C-w>h
@@ -204,6 +207,7 @@ tnoremap <A-j> <C-\><C-n><C-w>j
 tnoremap <A-k> <C-\><C-n><C-w>k
 tnoremap <A-l> <C-\><C-n><C-w>l
 tnoremap <silent> <A-c> <C-\><C-n>:clo<CR>
+tnoremap <silent> <S-A-c> :bp<bar>sp<bar>bn<bar>bd<bar>clo<CR>
 
 " jump to end of line in insert mode
 inoremap æ <Esc>A
@@ -255,6 +259,10 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 call deoplete#custom#set('jedi', 'rank', 1000)
 
+" gen_tags
+let g:loaded_gentags#gtags = 1
+let g:gen_tags#gtags_auto_gen = 1
+
 " netrw
 let g:netrw_banner = 0
 
@@ -268,6 +276,13 @@ let g:neomake_autolint_events = {
     \ 'TextChanged': {'delay': 0},
     \ 'BufWritePost': {'delay': 0},
     \ }
+
+" neoterm
+let g:neoterm_position = 'vertical'
+nnoremap <silent> <leader>tc :call neoterm#close()<CR>
+nnoremap <silent> <leader>tk :call neoterm#kill()<CR>
+nnoremap <silent> <leader>tl :call neoterm#clear()<CR>
+nnoremap <silent> <leader>tp :T python %:p<CR>
 
 " scratch
 let g:scratch_insert_autohide = 0

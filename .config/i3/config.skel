@@ -214,12 +214,9 @@ assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
 assign [class="TelegramDesktop"] $ws3
 assign [class="Thunderbird"] $ws3
-assign [class="Thunar"] $ws4
 assign [title="LibreOffice" window_type="splash"] $ws5
 assign [class="(?i).*libreoffice.*"] $ws5
-assign [class="keepassx" window_type="normal"] $ws9
-assign [class="Guayadeque"] $ws10
-assign [class="Vlc"] $ws10
+assign [class="Soffice"] $ws5
 
 # window arrangement fixes
 for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable

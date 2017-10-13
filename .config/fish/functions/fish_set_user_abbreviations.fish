@@ -15,4 +15,5 @@ function fish_set_user_abbreviations
     abbr --add bpy bpython
     abbr --add o open
     abbr --add g git
+    abbr --add g git
 end

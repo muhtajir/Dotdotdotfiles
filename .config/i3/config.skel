@@ -217,6 +217,7 @@ assign [class="Thunderbird"] $ws3
 assign [title="LibreOffice" window_type="splash"] $ws5
 assign [class="(?i).*libreoffice.*"] $ws5
 assign [class="Soffice"] $ws5
+assign [class="mpv"] $ws10
 
 # window arrangement fixes
 for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable

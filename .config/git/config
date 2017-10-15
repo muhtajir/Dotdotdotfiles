@@ -10,4 +10,4 @@
     co = checkout
     l = log
     ps = push
-    pl = pl
+    pl = pull

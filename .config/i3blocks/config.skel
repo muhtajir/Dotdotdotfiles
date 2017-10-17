@@ -15,6 +15,12 @@ label=
 interval=5
 markup=pango
 
+[freespace]
+label=
+interval=60
+instance=/dev/sda4
+markup=pango
+
 [todo.txt]
 command=python ${HOME}/.config/i3blocks/blocklets/todo.txt
 label=

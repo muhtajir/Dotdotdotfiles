@@ -17,9 +17,12 @@ function fish_user_key_bindings
     bind -M replace-one -m default \e cancel force-repaint
 
     # prepend sudo to cmdline and run it
-    bind -M insert \ep fish_plz_bind
+    bind -M insert \ep __fish_plz_bind
 
     # better line editing
     bind -M insert \cE edit_command_buffer
     bind \cE edit_command_buffer
+
+    # file selection with vifm
+    bind -M insert \cF __fish_vifm_bind
 end

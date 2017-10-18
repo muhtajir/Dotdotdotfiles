@@ -62,6 +62,7 @@ Code/Scripts/*
 !.config/nvim
 .config/nvim/*
 !.config/nvim/init.vim
+!.config/nvim/minimal_init.vim
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 !.config/nvim/snippets_custom/

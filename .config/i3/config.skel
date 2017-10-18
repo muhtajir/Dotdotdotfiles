@@ -10,27 +10,27 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 #
 # %%base16_template: i3##colors-only%%
-## Base16 Ocean
-# Author: Chris Kempson (http://chriskempson.com)
+## Base16 Gruvbox dark, pale
+# Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 #
 # You can use these variables anywhere in the i3 configuration file.
 
-set $base00 #2b303b
-set $base01 #343d46
-set $base02 #4f5b66
-set $base03 #65737e
-set $base04 #a7adba
-set $base05 #c0c5ce
-set $base06 #dfe1e8
-set $base07 #eff1f5
-set $base08 #bf616a
-set $base09 #d08770
-set $base0A #ebcb8b
-set $base0B #a3be8c
-set $base0C #96b5b4
-set $base0D #8fa1b3
-set $base0E #b48ead
-set $base0F #ab7967
+set $base00 #262626
+set $base01 #3a3a3a
+set $base02 #4e4e4e
+set $base03 #8a8a8a
+set $base04 #949494
+set $base05 #dab997
+set $base06 #d5c4a1
+set $base07 #ebdbb2
+set $base08 #d75f5f
+set $base09 #ff8700
+set $base0A #ffaf00
+set $base0B #afaf00
+set $base0C #85ad85
+set $base0D #83adad
+set $base0E #d485ad
+set $base0F #d65d0e
 # %%base16_template_end%%
 
 # Basic color configuration using the Base16 variables for windows and borders.

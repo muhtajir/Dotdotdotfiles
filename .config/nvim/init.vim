@@ -7,6 +7,7 @@ call plug#begin()
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
     Plug 'ervandew/supertab'
+    Plug 'InspectorMustache/base16.nvim'
     Plug 'jsfaint/gen_tags.vim'
     Plug 'kassio/neoterm'
     Plug 'kana/vim-textobj-indent'
@@ -18,7 +19,6 @@ call plug#begin()
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'SirVer/ultisnips'
     Plug 'skywind3000/asyncrun.vim'
-    Plug 'Soares/base16.nvim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
     Plug 'tpope/vim-commentary'
@@ -317,7 +317,7 @@ set background=dark
 set cursorline
 let base16colorspace=256  " Access colors present in 256 colorspace
 let g:base16_airline = 1
-colorscheme ocean
+colorscheme base16-gruvbox-dark-pale
 Base16Highlight Pmenu bg=dark1
 Base16Highlight PmenuSel bg=dark3
 Base16Highlight NeomakeWarningSign fg=yellow

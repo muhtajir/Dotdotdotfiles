@@ -104,6 +104,11 @@ set wildmode=longest,list,full
 set foldmethod=syntax
 set foldnestmax=2
 
+" set cursor shape
+set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
+            \,n-v-c:block-blinkon0,i-ci-ve:ver20-blinkon0
+            \,r-cr:hor20-blinkon0,o:hor50-blinkon0
+
 " set what to ignore when using wildcards (mainly relevant for ctrlP)
 set wildignore+=*/__pycache__/*
 

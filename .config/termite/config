@@ -9,7 +9,6 @@ cursor_shape = underline
 cursor_blink = on
 urgent_on_bell = true
 
-[colors]
 # %%base16_template: termite%%
 [colors]
 # Base16 Gruvbox dark, pale
@@ -18,6 +17,7 @@ urgent_on_bell = true
 foreground      = #dab997
 foreground_bold = #d5c4a1
 cursor          = #d5c4a1
+cursor_foreground = #262626
 background      = #262626
 
 # 16 color space

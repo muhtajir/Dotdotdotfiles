@@ -131,10 +131,12 @@ cnoreabbrev <silent> here lcd %:p:h
 let mapleader=','
 
 " restore functionality lost by mapping ',' as leader
-nnoremap - ,
+nnoremap + ,
 
 " general
 nnoremap Y y$
+nnoremap - g,
+nnoremap _ g;
 
 " more comfortable fold navigation on QWERTZ
 nnoremap <leader>j zj

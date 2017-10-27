@@ -16,4 +16,5 @@ function fish_set_user_abbreviations
     abbr --add o open
     abbr --add g git
     abbr --add g git
+    abbr --add z zathura
 end

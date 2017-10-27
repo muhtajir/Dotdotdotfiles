@@ -5,7 +5,7 @@ ext=mp3
 #zwei Funktionen: 1.: Coredump erstellen; 2. Coredump parsen
 #1. Coredump erstellen: "p_handle"
 p_handle() {
-	[[ ! $pid ]] && pid=$(pgrep -n $1)
+	[[ ! $pid ]] && pid=$1
 	if [ ! $pid ]
 	then
 		printf "Prozess nicht gefunden oder kein Prozess angegeben.\n" >&2

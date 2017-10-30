@@ -9,7 +9,11 @@ function glob
 
     # include a check for a hidden switch at some point
     set -l hidden -not -name '.*'
-    set args $argv[2..(count $argv)]
+    # save non-option arguments in $args
+    set -l args
+    if test (count $argv) -ge 2
+        set args $argv[2..(count $argv)]
+    end
 
     switch $mode
         case 'x'
@@ -18,7 +22,10 @@ function glob
             for arg in $args
                 set params $params -not -name {$arg}
             end
-            find . -maxdepth 1 $params $hidden | sed -n 's/^\.\///p'
+            find . -maxdepth 1 $params $hidden | string replace -r '^./' ''
+        case 'd'
+            # only match directories
+            find . -maxdepth 1 -type d $hidden | string replace -r '^./' ''
         case '*'
             return
     end

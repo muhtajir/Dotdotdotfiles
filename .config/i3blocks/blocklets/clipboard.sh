@@ -5,19 +5,21 @@
 # blocklet is clicked (with any mouse button), the clipboard is emptied and the
 # blocklet disappears.
 
-if [[ -e /usr/bin/xsel ]]; then
+if [[ -e /usr/bin/xclip ]]; then
+    function clip_out {
+        xclip -selection clipboard -o
+    }
+    function clip_clear {
+        xclip -selection clipboard /dev/null
+        # this is the only way with xclip or the script won't terminate
+        killall xclip
+    }
+elif [[ -e /usr/bin/xsel ]]; then
     function clip_out {
         xsel -bo
     }
     function clip_clear {
         xsel -bc
-    }
-elif [[ -e /usr/bin/xclip ]]; then
-    function clip_out {
-        xclip -selection clipboard -o
-    }
-    function clip_clear {
-        echo -n "" | xclip -selection clipboard -i
     }
 else
     exit

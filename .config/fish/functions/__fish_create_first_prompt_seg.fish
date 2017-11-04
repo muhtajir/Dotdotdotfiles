@@ -10,7 +10,7 @@ function __fish_create_first_prompt_seg --description 'Put together first prompt
     else if test $return_code -gt 0
         __fish_draw_first_prompt_seg red " $return_code "
     # least important is active jobs
-    else if jobs > /dev/null ^ /dev/null
+    else if jobs > /dev/null 2> /dev/null
         set -l fish_last_job (jobs -lc | tail -n 1)
         __fish_draw_first_prompt_seg cyan " $fish_last_job "
     # and after that it's just a percent sign

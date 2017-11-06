@@ -8,5 +8,3 @@ XKB_DEFAULT_LAYOUT          DEFAULT=de
 XKB_DEFAULT_VARIANT         DEFAULT=nodeadkeys
 XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape
 GNUPGHOME                   DEFAULT=~/.config/gnupg
-SSH_AGENT_PID               DEFAULT=
-SSH_AUTH_SOCK               DEFAULT="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"

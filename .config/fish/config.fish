@@ -21,4 +21,4 @@ fish_load_event_handlers
 set -x fish_escape_delay_ms 10
 
 # initialize SSH agent
-fish__initialize_ssh_agent
+fish_initialize_ssh_agent

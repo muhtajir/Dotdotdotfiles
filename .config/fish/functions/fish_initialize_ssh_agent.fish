@@ -1,4 +1,4 @@
-function fish__initialize_ssh_agent
+function fish_initialize_ssh_agent
     if test -z "$SSH_ENV"
         set -xg SSH_ENV $HOME/.ssh/environment
     end

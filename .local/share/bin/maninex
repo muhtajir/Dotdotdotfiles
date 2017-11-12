@@ -1,0 +1,10 @@
+#!/usr/bin/env python
+
+import os, sys
+
+USER = os.getenv("SUDO_USER") or os.getenv("USER")
+SCRIPT_DIR = os.path.join('/', 'home', USER, "Code", "maninex")
+sys.path.append(SCRIPT_DIR)
+
+import maninex
+maninex.main()

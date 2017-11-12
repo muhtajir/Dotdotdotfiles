@@ -1,0 +1,8 @@
+[Unit]
+Description=Start Nextcloud on demand
+
+[Service]
+ExecStart=%h/.local/share/bin/nc_monitor %h/Nextcloud
+
+[Install]
+WantedBy=default.target

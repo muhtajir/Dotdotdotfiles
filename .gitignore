@@ -98,7 +98,7 @@ Code/Scripts/*
 !.local/share/bin/*
 
 !.bashrc
-!.bash_profile
+!.profile
 !.ctags
 !.gitignore
 !.gtkrc-2.0.mine

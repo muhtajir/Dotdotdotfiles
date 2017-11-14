@@ -14,11 +14,11 @@ urgent_on_bell = true
 # Base16 Gruvbox dark, pale
 # Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
 
-foreground      = #dab997
-foreground_bold = #d5c4a1
-cursor          = #d5c4a1
-cursor_foreground = #262626
-background      = #262626
+foreground          = #dab997
+foreground_bold     = #d5c4a1
+cursor              = #d5c4a1
+cursor_foreground   = #262626
+background          = rgba(38, 38, 38, 0.92)
 
 # 16 color space
 

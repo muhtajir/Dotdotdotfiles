@@ -39,7 +39,11 @@ if [[ -n $WIFI_INSTANCE ]]; then
     fi
 fi
 
+# simple test for VPN
+systemctl | grep -qi openvpn-client &&
+    vpn="${wifi}<span foreground=\"${color04}\" size='x-small'>VPN</span>"
+
 # full text
-echo "${wired}${wifi:+${wired:+ }$wifi${WIFI_SSID:+ <span size='small'>${WIFI_SSID}</span>}}"
+echo "${wired}${wifi:+${wired:+ }$wifi${WIFI_SSID:+ <span size='small'>${WIFI_SSID}</span>}}${vpn:+ }$vpn"
 # short text
 echo "${wired}${wifi:+${wired:+ }$wifi}"

@@ -5,4 +5,4 @@ if test (count $argv) -lt 1
 end
 
 command inotifywait -r -e attrib -e modify -e move -e create -e delete $argv 1>/dev/null 2>/dev/null
-nextcloud
+and nextcloud

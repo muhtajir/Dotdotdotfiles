@@ -1,6 +1,6 @@
 #!/bin/bash
 
-folder_list=( "$HOME/.config/i3"  "$HOME/.config/sway"  "$HOME/.config/i3blocks")
+folder_list=( "$HOME/.config/i3"  "$HOME/.config/i3blocks")
 for folder in ${folder_list[@]}; do
     cd $folder
     if [[ ! -L config ]]; then

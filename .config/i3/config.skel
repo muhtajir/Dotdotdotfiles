@@ -297,3 +297,4 @@ exec ibus-daemon -drx
 exec xset -b
 exec numlockx on
 exec setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape
+exec nc_monitor $HOME/Nextcloud

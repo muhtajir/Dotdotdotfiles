@@ -1,3 +1,7 @@
+# general settings
+
+set selection-clipboard clipboard
+
 # %%base16_template: zathura%%
 # Base16 Gruvbox dark, pale
 # Author: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)

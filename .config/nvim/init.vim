@@ -14,6 +14,7 @@ call plug#begin()
     Plug 'kana/vim-textobj-user'
     Plug 'kshenoy/vim-signature'
     Plug 'mtth/scratch.vim'
+    Plug 'machakann/vim-highlightedyank'
     Plug 'neomake/neomake'
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -97,12 +98,13 @@ set ignorecase
 set smartcase
 set relativenumber
 set splitbelow
-set inccommand=nosplit
+set inccommand=split
 set wildmode=longest,list,full
 
 " enable folding
 set foldmethod=syntax
-set foldnestmax=2
+set foldnestmax=1
+set foldlevel=1
 
 " set cursor shape
 set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
@@ -317,6 +319,9 @@ let g:UltiSnipsListSnippets = '<C-E>'
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+
+" vim-highlightedyank
+let g:highlightedyank_highlight_duration = 600
 
 " base16.nvim color settings
 set termguicolors

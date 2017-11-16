@@ -22,10 +22,13 @@ function glob
             for arg in $args
                 set params $params -not -name {$arg}
             end
-            find . -maxdepth 1 $params $hidden | string replace -r '^./' ''
+            find . -maxdepth 1 $params $hidden
         case 'd'
             # only match directories
-            find . -maxdepth 1 -type d $hidden | string replace -r '^./' ''
+            find . -maxdepth 1 -type d $hidden
+        case 'f'
+            # only match directories
+            find . -maxdepth 1 -type f $hidden
         case '*'
             return
     end

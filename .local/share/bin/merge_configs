@@ -1,9 +1,29 @@
-#!/bin/bash
+#!/bin/fish
 
-folder_list=( "$HOME/.config/i3"  "$HOME/.config/i3blocks")
-for folder in ${folder_list[@]}; do
-    cd $folder
-    if [[ ! -L config ]]; then
-        echo -e "$(cat config.skel)\n\n# CUSTOM CONFIG\n\n$(cat custom)" > config
-    fi
-done
+function merge_config -a skel_file custom_file out_file
+    test ! -e $skel_file; and return
+    set -l skel_lines
+    cat $skel_file | while read -l line
+        set skel_lines $skel_lines $line
+    end
+
+    set -l custom_lines
+    # if there's no custom_file, an empty custom_lines variable will just result in a copy of the skel_file, which is okay
+    if test -e $custom_file
+        cat $custom_file | while read -l line
+            set custom_lines $custom_lines $line
+        end
+    end
+
+    echo "" > $out_file
+    for line in $skel_lines
+        echo $line >> $out_file
+        string match -qe '{{{custom}}}' $line; and begin
+            printf "%s\n" $custom_lines >> $out_file
+        end; or true # so this doesn't create an exit code of 1 even though nothing's wrong
+    end
+end
+
+# run all configs that need to be merged together here
+merge_config $HOME/.config/i3blocks/config.skel $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
+merge_config $HOME/.config/i3/config.skel $HOME/.config/i3/custom $HOME/.config/i3/config

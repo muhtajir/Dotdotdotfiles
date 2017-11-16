@@ -42,13 +42,15 @@ client.urgent           $base08 $base08 $base00 $base08 $base08
 client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 
-
-set $font Liberation Sans
-
+set $font Quicksand Medium
 set $i3confdir "$HOME/.config/i3"
 set $mod Mod4
-
 set $i3b_up20 "pkill -RTMIN+20 i3blocks"
+
+# {{{custom}}}
+
+# end of custom settings
+
 # never let windows take focus
 focus_on_window_activation urgent
 ## configure window decorations
@@ -226,20 +228,7 @@ for_window [class="Yad"] floating enable
 for_window [class="Pinentry"] floating enable
 
 ## modes
-set $mode_music "music control"
 set $mode_resize "resize"
-# dedicated mode to control the audio player
-mode $mode_music {
-        bindsym h exec playerctl previous; exec $i3b_up20
-        bindsym l exec playerctl next; exec $i3b_up20
-        bindsym space exec playerctl play-pause; exec $i3b_up20
-        bindsym g exec guayadeque
-        bindsym Return exec guayadeque; workspace $ws10; mode "default"
-
-        # back to normal: Enter or Escape or repeat mode keysequence
-        bindsym Escape mode "default"
-        bindsym $mod+m mode "default"
-}
 
 # resize window (you can also use the mouse for that)
 mode $mode_resize {

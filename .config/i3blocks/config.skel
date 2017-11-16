@@ -3,13 +3,6 @@ command=${HOME}/.config/i3blocks/blocklets/${BLOCK_NAME}.sh
 separator_block_width=15
 markup=none
 
-# [mediadata]
-# label=
-# instance=guayadeque
-# interval=5
-# markup=pango
-# signal=20
-
 [clipboard]
 label=
 interval=5
@@ -21,8 +14,13 @@ label=
 interval=60
 markup=pango
 
+# {{{custom}}}
+
 [time]
 label=
 interval=30
 signal=25
 markup=pango
+
+[shutdown]
+interval=once

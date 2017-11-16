@@ -43,25 +43,23 @@ echo $candidates
 
 # send candidate to pass; use dmenu to select one if there are too many
 set -l cand_num (count $candidates)
+set -l final_candidate
+
 if test $cand_num -eq 1
-    notify-send "Found $candidates"
+    set final_candidate $candidates
+    notify-send "Found $final_candidate"
 
     if set -q login_mode
-        pass show $candidates | string replace -rf '^login:\s?(.+)$' '$1' | xclip -selection clipboard -i
+        pass show $final_candidate | string replace -rf '^login:\s?(.+)$' '$1' | xclip -selection clipboard -i
     else
-        pass show -c $candidates
+        pass show -c $final_candidate
     end
 else if test $cand_num -gt 1
     notify-send 'Too many candidates.'
+    false
 else
     notify-send 'Nothing found.'
+    false
 end
 
-
-# for passfile in (find ~/.password-store -name '*.gpg')
-#     # set -l passname (command basename $passfile | string replace -r '.gpg$' '')
-#     set passes $passes $passfile
-# end
-
-# echo $name
-# echo $passes
+and notify-send -u low "Moved data to clipboard."

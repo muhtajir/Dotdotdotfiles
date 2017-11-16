@@ -128,7 +128,6 @@ mark D /dev sdc
 mark c ~/.config
 mark l ~/.local/share
 mark m /run/media/
-mark s ~/SpiderOak\ Hive
 mark d ~/Downloads
 
 " ------------------------------------------------------------------------------

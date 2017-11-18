@@ -2,8 +2,18 @@ function __fish_vifm_bind -d 'Open vifm in CWD'
     if test (commandline) = ''
         vifm -c only --select (pwd)
     else
+        set -l start_dir
+        set -l cmd_token (commandline -t)
+        if test -e $cmd_token
+            set start_dir $cmd_token
+        else if test -e (dirname $cmd_token)
+            set start_dir (dirname $cmd_token)
+        else
+            set start_dir (pwd)
+        end
+                
         set -l files
-        vifm -c only --select (pwd) --choose-files - | while read -l file
+        vifm -c only --select $start_dir --choose-files - | while read -l file
             set files $files (string escape $file)
         end
 

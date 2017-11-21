@@ -400,10 +400,6 @@ nnoremap ,d :!gvfs-mount -d %c:p %S<CR>
 " unmount file under cursor
 nnoremap ,u ::!gvfs-mount -u %c:p %S<CR>
 
-" Select and enter file under cursor (useful for returning directories to the
-" commandline
-nnoremap <CR> tl
-
 " ------------------------------------------------------------------------------
 
 " Various customization examples

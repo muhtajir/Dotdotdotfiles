@@ -12,7 +12,7 @@ function fish_set_universal_variables
     set -Ux LESS_TERMCAP_md (printf "\e[01;36m")
     set -Ux LESS_TERMCAP_me (printf "\e[0m")
     set -Ux LESS_TERMCAP_se (printf "\e[0m")
-    set -Ux LESS_TERMCAP_so (printf "\e[01;40;92m")
+    set -Ux LESS_TERMCAP_so (printf "\e[01;47;41m")
     set -Ux LESS_TERMCAP_ue (printf "\e[0m")
     set -Ux LESS_TERMCAP_us (printf "\e[01;35m")
 end

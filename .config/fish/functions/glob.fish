@@ -27,7 +27,7 @@ function glob
             # only match directories
             find . -maxdepth 1 -type d $hidden
         case 'f'
-            # only match directories
+            # only match files
             find . -maxdepth 1 -type f $hidden
         case '*'
             return

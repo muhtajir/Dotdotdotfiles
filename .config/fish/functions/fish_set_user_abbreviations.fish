@@ -18,4 +18,5 @@ function fish_set_user_abbreviations
     abbr --add g git
     abbr --add z zathura
     abbr --add pm pacman
+    abbr --add pm pacman
 end

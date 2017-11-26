@@ -8,7 +8,7 @@ function fish_set_universal_variables
     # FZF
     set -U FZF_TMUX_HEIGHT 60%
     set -U FZF_ALT_C_COMMAND "command find -P \$dir -mindepth 1 \( -wholename '*.config/*' -or \( -wholename '*.local/share/*' -and -not -wholename '*.local/share/Steam/*' \) \) -or -not -path '*/\.*' 2> /dev/null"
-    set -U FZF_CTRL_T_COMMAND "command find -P \$dir -mindepth 1 \( -wholename '*.config/*' \) -or -not -path '*/\.*' 2> /dev/null"
+    set -U FZF_CTRL_T_COMMAND "command find -P \$dir -mindepth 1 \( -wholename '*.config/*' -or \( -wholename '*.local/share/*' -and -not -wholename '*.local/share/Steam/*' \) \) -or -not -path '*/\.*' 2> /dev/null"
     # pass
     set -Ux PASSWORD_STORE_DIR $HOME/.local/share/.password-store
 

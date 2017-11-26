@@ -4,6 +4,13 @@ test (count $argv) -eq 1; and test $argv[1] = '-l'; and set -l login_mode
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set -l PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 
+# set up theme settings for the dmenu prompt
+set -l base00 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base00\s(#\S+)' '$1')
+set -l base01 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base01\s(#\S+)' '$1')
+set -l base05 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base05\s(#\S+)' '$1')
+set -l base0D (cat $HOME/.config/i3/config | string replace -fr '^set \\$base0D\s(#\S+)' '$1')
+set -l dmenu_font (cat $HOME/.config/i3/config | string replace -fr '^set \\$font\s(.+?)$' '$1')
+
 # get name of currently active window
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
 set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' $active_line)
@@ -30,8 +37,6 @@ if test -z "$candidates"
         set -l barepass (command basename $password)
         set -l subs (string split "$PASS_SUBNAME_SPLIT_CHAR" "$barepass")
         test $status -eq 0; and for sub in $subs
-            echo $sub
-            echo $name
             string match -qi "*$sub*" $name
             if test $status -eq 0
                 set candidates $password
@@ -40,27 +45,32 @@ if test -z "$candidates"
     end
 end
 
-echo $candidates
 
 # send candidate to pass; use dmenu to select one if there are too many
 set -l cand_num (count $candidates)
 set -l final_candidate
 
 if test $cand_num -eq 1
+    # if there was only one password found set that to final candidate
     set final_candidate $candidates
     notify-send "Found $final_candidate"
+else if test $cand_num -gt 1
+    # if there's more than one, select one with dmenu
+    notify-send 'Too many candidates.'
+    for candidate in $candidates
+        printf '%s\n' $candidate
+    end | dmenu -fn $font -i -b -nb $base01 -nf $base05 -sb $base0D -sf $base00 | read final_candidate
+end
 
+if test -n "$final_candidate"
+    # in login_mode get the string after "login:" in the file
     if set -q login_mode
         pass show $final_candidate | string replace -rf '^login:\s?(.+)$' '$1' | xclip -selection clipboard -i
+    # otherwise just get the password
     else
         pass show -c $final_candidate
     end
-else if test $cand_num -gt 1
-    notify-send 'Too many candidates.'
-    false
+    and notify-send -u low 'Moved data to clipboard'
 else
     notify-send 'Nothing found.'
-    false
 end
-
-and notify-send -u low "Moved data to clipboard."

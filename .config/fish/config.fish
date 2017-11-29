@@ -17,8 +17,5 @@ fish_set_user_aliases
 # initialize event handlers
 fish_load_event_handlers
 
-# work around for fish_escape_delay_ms
-set -x fish_escape_delay_ms 10
-
 # initialize SSH agent
 fish_initialize_ssh_agent

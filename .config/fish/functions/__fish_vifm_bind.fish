@@ -15,8 +15,6 @@ function __fish_vifm_bind -d 'Open vifm in CWD'
         else
             set start_dir (pwd)
         end
-        echo $cmd_token
-        echo $start_dir
 
         set -l files
         vifm -c only --select $start_dir --choose-files - | while read -l file
@@ -25,7 +23,7 @@ function __fish_vifm_bind -d 'Open vifm in CWD'
 
         set files (string join ' ' $files)
         if test -n "$files"
-            commandline -a $files
+            commandline -t $files
 
             # move cursor to final position
             set pos (string length (commandline))

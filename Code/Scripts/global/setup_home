@@ -57,9 +57,12 @@ cp *.ttf $HOME/.local/share/fonts
 cd $tmp_dir
 rm -rf *
 
+# setup firejail
+sudo firecfg
+sudo rm /usr/bin/local/ssh-agent
+
 echo -e "\nLeft to do:"
 echo -e "\tSet-up password store"
 echo -e "\tSet-up GPG"
 echo -e "\tSet-up SSH"
 echo -e "\tSet-up Nextcloud"
-echo -e "\tRun firecfg"

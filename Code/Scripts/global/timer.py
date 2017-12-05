@@ -1,3 +1,5 @@
+#!/bin/env python
+
 import sys
 import time
 timer_time = 0

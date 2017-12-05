@@ -292,8 +292,8 @@ let g:neoterm_keep_term_open = 0
 nnoremap <silent> <leader>tc :call neoterm#close()<CR>
 nnoremap <silent> <leader>tk :call neoterm#kill()<CR>
 nnoremap <silent> <leader>tl :call neoterm#clear()<CR>
+nnoremap <silent> <leader>ts :T %:p<CR>
 nnoremap <silent> <leader>tp :T python %:p<CR>
-nnoremap <silent> <leader>tb :T bash %:p<CR>
 
 " scratch
 let g:scratch_insert_autohide = 0

@@ -8,6 +8,12 @@ label=
 interval=5
 markup=pango
 
+[mpd]
+label=
+interval=15
+markup=pango
+instance=localhost; 6600
+
 [todo.txt]
 command=python ${HOME}/.config/i3blocks/blocklets/todo.txt
 label=

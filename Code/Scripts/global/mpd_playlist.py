@@ -37,6 +37,8 @@ class Menu():
         self.update_screen()
         self.event_loop()
 
+        self.play_pos = 0
+
     @property
     def current_page(self):
         return self.pages_dict[self.current_page_num]
@@ -175,10 +177,20 @@ class Menu():
         self.status_line.noutrefresh()
         curses.doupdate()
 
+    def load_playlist(self, playlist, append=True, play=False):
+        self.play_pos = 0
+        if not append:
+            self.mpd_client.clear()
+        else:
+            self.play_pos = len(self.mpd_client.playlist())
+
+        self.mpd_client.load(playlist)
+
+        if play:
+            self.mpd_client.play(self.play_pos)
+
     def event_loop(self):
         """Wait for input and process it."""
-        play_pos = 0
-
         while True:
             key_input = self.stdscr.getch()
 
@@ -191,13 +203,18 @@ class Menu():
             elif key_input == ord('u'):
                 self.move_selection(-5)
             elif key_input == ord('s'):
-                self.mpd_client.clear()
-                self.mpd_client.load(self.entry_dict[self.current_pos].value)
+                self.load_playlist(self.entry_dict[self.current_pos].value,
+                                   append=False)
+            elif key_input == ord('S'):
+                self.load_playlist(self.entry_dict[self.current_pos].value,
+                                   append=False, play=True)
             elif key_input == ord('a'):
-                play_pos = len(self.mpd_client.playlist())
-                self.mpd_client.load(self.entry_dict[self.current_pos].value)
+                self.load_playlist(self.entry_dict[self.current_pos].value)
+            elif key_input == ord('A'):
+                self.load_playlist(self.entry_dict[self.current_pos].value,
+                                   play=True)
             elif key_input == ord(' '):
-                self.mpd_client.play(play_pos)
+                self.mpd_client.play(self.play_pos)
             elif key_input == ord('q'):
                 break
 

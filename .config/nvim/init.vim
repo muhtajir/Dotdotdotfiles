@@ -139,6 +139,8 @@ nnoremap + ,
 nnoremap Y y$
 nnoremap - g,
 nnoremap _ g;
+" use dot repetition in visual mode
+vnoremap . :normal .<CR>
 
 " more comfortable fold navigation on QWERTZ
 nnoremap <leader>j zj

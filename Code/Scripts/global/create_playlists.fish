@@ -1,6 +1,6 @@
 #!/bin/env fish
 
-set new_since "2017-06-07"
+set new_since "2017-12-11"
 set new_since (date -d $new_since +%s)
 
 set playlist_folder "$HOME/.config/mpd/playlists"

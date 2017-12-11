@@ -230,7 +230,8 @@ for_window [class="Yad"] floating enable
 for_window [class="Pinentry"] floating enable
 
 ## modes
-set $mode_resize "resize"
+set $mode_resize " resize"
+set $mode_music " music"
 
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
@@ -255,6 +256,17 @@ mode $mode_resize {
         bindsym Escape mode "default"
         bindsym $mod+plus mode "default"
 }
+
+mode $mode_music {
+        bindsym space exec python $i3confdir/scripts/simple_mpc.py playpause
+        bindsym l exec python $i3confdir/scripts/simple_mpc.py next
+        bindsym h exec python $i3confdir/scripts/simple_mpc.py previous
+
+        # back to normal: Enter or Escape
+        bindsym Escape mode "default"
+        bindsym $mod+m mode "default"
+}
+
 
 bindsym $mod+plus mode $mode_resize
 bindsym $mod+m mode $mode_music

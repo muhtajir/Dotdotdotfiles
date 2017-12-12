@@ -95,6 +95,9 @@ bindsym $mod+q kill
 # kill window by middle-clicking its title bar
 bindsym --release button2 kill
 
+# start customized i3lock
+bindsym $mod+Pause exec i3lock --blur=1 --indicator --clock --ringcolor "$base0C"FF --ringvercolor "$base0D"FF --ringwrongcolor "$base08"FF --insidecolor "$base01"BB --insidevercolor "$base0D"AA --insidewrongcolor "$base08"AA --textcolor "$base05"FF --timecolor "$base07"FF --datecolor "$base05"FF --keyhlcolor "$base0B"FF --bshlcolor "$base08"FF --veriftext "..." --wrongtext "!" --radius 130 --timefont $font --datefont $font
+
 # start a program launcher
 bindsym $mod+r exec j4-dmenu-desktop --display-binary --no-generic --usage-log=$i3confdir/j4-dmenu-desktop.log --dmenu="dmenu -fn '$font' -i -b -nb \\$base01 -nf \\$base05 -sb \\$base0D -sf \\$base00"
 
@@ -291,7 +294,6 @@ bar {
             binding_mode        $base0A $base0A $base00
         }
 }
-
 
 exec compton -f
 exec unclutter

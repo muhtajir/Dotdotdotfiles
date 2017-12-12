@@ -46,7 +46,7 @@ client.background       $base07
 set $font Quicksand Medium
 set $i3confdir "$HOME/.config/i3"
 set $mod Mod4
-set $i3b_up20 "pkill -RTMIN+20 i3blocks"
+set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 
 # {{{custom}}}
 
@@ -262,8 +262,8 @@ mode $mode_resize {
 
 mode $mode_music {
         bindsym space exec python $i3confdir/scripts/simple_mpc.py playpause
-        bindsym l exec python $i3confdir/scripts/simple_mpc.py next
-        bindsym h exec python $i3confdir/scripts/simple_mpc.py previous
+        bindsym l exec python $i3confdir/scripts/simple_mpc.py next; exec $i3b_up10
+        bindsym h exec python $i3confdir/scripts/simple_mpc.py previous; exec $i3b_up10
 
         # back to normal: Enter or Escape
         bindsym Escape mode "default"

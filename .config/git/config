@@ -4,10 +4,11 @@
 [core]
     editor = nvim
 [alias]
-    c = commit
-    s = status
     a = add
+    c = commit
     co = checkout
+    f = fetch
     l = log
-    ps = push
     pl = pull
+    ps = push
+    s = status

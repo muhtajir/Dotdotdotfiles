@@ -3,5 +3,5 @@
 echo -n $(date +%H:%M)
 
 if [[ ${BLOCK_BUTTON} -eq 1 ]]; then
-    notify-send "$(date +%A,\ %d.%m.%Y)" "$(cal)"
+    notify-send --icon=none "$(date +%A,\ %d.%m.%Y)" "\n$(cal)"
 fi

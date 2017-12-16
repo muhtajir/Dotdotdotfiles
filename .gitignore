@@ -54,10 +54,19 @@ Code/Scripts/*
 .config/inox/extensions/mouseless/*
 !.config/inox/extensions/mouseless/mouselessrc
 
+!.config/mpd
+.config/mpd/*
+!.config/mpd/mpd.conf
+
 !.config/mpv
 !.config/mpv/*
 
 !.config/maninex.conf
+
+!.config/ncmpcpp
+.config/ncmpcpp/*
+!.config/ncmpcpp/config
+!.config/ncmpcpp/bindings
 
 !.config/nvim
 .config/nvim/*

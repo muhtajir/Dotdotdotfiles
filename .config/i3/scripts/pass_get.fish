@@ -65,7 +65,13 @@ end
 if test -n "$final_candidate"
     # in login_mode get the string after "login:" in the file
     if set -q login_mode
-        pass show $final_candidate | string replace -rf '^login:\s?(.+)$' '$1' | xclip -selection clipboard -i
+        pass show $final_candidate | string replace -rf '^login:\s?(.+)$' '$1' | read -l login
+        if test -n "$login"
+            echo $login | xclip -selection clipboard -i
+        else
+            notify-send 'File contains no login info.'
+            false
+        end
     # otherwise just get the password
     else
         pass show -c $final_candidate

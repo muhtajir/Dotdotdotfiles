@@ -99,6 +99,10 @@ Code/Scripts/*
 .config/zathura/*
 !.config/zathura/zathurarc
 
+!.emacs.d/
+.emacs.d/*
+!.emacs.d/init.el
+
 !.local
 .local/*
 !.local/share

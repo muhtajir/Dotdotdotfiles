@@ -1,4 +1,4 @@
-function fish_load_event_handlers
+function __fish_load_event_handlers
     set -l handler_list __fish_vi_cursor_handle_preexec\
                         __fish_vi_cursor_handle\
                         __fish_bell_on_completion_handle

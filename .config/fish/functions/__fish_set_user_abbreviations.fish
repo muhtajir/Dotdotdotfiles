@@ -1,4 +1,4 @@
-function fish_set_user_abbreviations
+function __fish_set_user_abbreviations
     abbr --add v nvim
     abbr --add q exit
     abbr --add sctl systemctl

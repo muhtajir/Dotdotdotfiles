@@ -1,4 +1,4 @@
-function fish_set_universal_variables
+function __fish_set_universal_variables
     set -U fish_greeting
     set -U fish_default_variables_set
     set -U fish_escape_delay_ms 10
@@ -20,4 +20,8 @@ function fish_set_universal_variables
     set -Ux LESS_TERMCAP_so (printf "\e[01;47;41m")
     set -Ux LESS_TERMCAP_ue (printf "\e[0m")
     set -Ux LESS_TERMCAP_us (printf "\e[01;35m")
+
+    # make base16 colors available as variables
+    __fish_set_base16_variables
+
 end

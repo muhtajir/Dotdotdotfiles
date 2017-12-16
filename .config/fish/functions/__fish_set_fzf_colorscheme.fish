@@ -1,4 +1,4 @@
-function fish_set_fzf_colorscheme
+function __fish_set_fzf_colorscheme
 
 # %%base16_template: fzf##fish%%
 # Base16 Gruvbox dark, pale

@@ -1,4 +1,4 @@
-function fish_initialize_ssh_agent
+function __fish_initialize_ssh_agent
     # if ssh isn't installed/set-up, do nothing
     if not which ssh 1>&- 2>&-; or not test -e $HOME/.ssh
         return

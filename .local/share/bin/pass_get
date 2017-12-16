@@ -4,12 +4,8 @@ test (count $argv) -eq 1; and test $argv[1] = '-l'; and set -l login_mode
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set -l PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 
-# set up theme settings for the dmenu prompt
-set -l base00 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base00\s(#\S+)' '$1')
-set -l base01 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base01\s(#\S+)' '$1')
-set -l base05 (cat $HOME/.config/i3/config | string replace -fr '^set \\$base05\s(#\S+)' '$1')
-set -l base0D (cat $HOME/.config/i3/config | string replace -fr '^set \\$base0D\s(#\S+)' '$1')
-set -l dmenu_font (cat $HOME/.config/i3/config | string replace -fr '^set \\$font\s(.+?)$' '$1')
+# read dmenu_font from the i3 config
+set -l dmenu_font (string replace -fr '^set \\$font\s(.+?)$' '$1' < $HOME/.config/i3/config)
 
 # get name of currently active window
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
@@ -59,7 +55,7 @@ else if test $cand_num -gt 1
     notify-send 'Too many candidates.'
     for candidate in $candidates
         printf '%s\n' $candidate
-    end | dmenu -fn $font -i -b -nb $base01 -nf $base05 -sb $base0D -sf $base00 | read final_candidate
+    end | dmenu -fn $dmenu_font -i -b -nb "#"$BASE01 -nf "#"$BASE05 -sb "#"$BASE0D -sf "#"$BASE00 | read final_candidate
 end
 
 if test -n "$final_candidate"

@@ -20,4 +20,7 @@ function __fish_set_user_abbreviations
     abbr --add pm pacman
     abbr --add pm pacman
     abbr --add feh feh -.
+    abbr --add mctl musicctl
+    abbr --add mctl musicctl
+    abbr --add plctl playlistctl
 end

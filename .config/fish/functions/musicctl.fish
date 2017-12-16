@@ -1,4 +1,4 @@
-function plctl
+function musicctl
     # start mpd if it isn't running
     if not systemctl --user is-active mpd.service >/dev/null
         systemctl --user start mpd.service
@@ -9,5 +9,5 @@ function plctl
         mpdscribble
     end
 
-    ~/Code/Scripts/global/mpd_playlist.py
+    ncmpcpp
 end

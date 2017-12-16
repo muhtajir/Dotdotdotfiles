@@ -1,4 +1,4 @@
-function mctl
+function playlistctl
     # start mpd if it isn't running
     if not systemctl --user is-active mpd.service >/dev/null
         systemctl --user start mpd.service
@@ -9,5 +9,5 @@ function mctl
         mpdscribble
     end
 
-    ncmpcpp
+    command playlistctl
 end

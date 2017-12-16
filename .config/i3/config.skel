@@ -102,8 +102,8 @@ bindsym $mod+Pause exec i3lock --blur=1 --indicator --clock --ringcolor "$base0C
 bindsym $mod+r exec j4-dmenu-desktop --display-binary --no-generic --usage-log=$i3confdir/j4-dmenu-desktop.log --dmenu="dmenu -fn '$font' -i -b -nb \\$base01 -nf \\$base05 -sb \\$base0D -sf \\$base00"
 
 # start the password finder
-bindsym $mod+y exec fish $i3confdir/scripts/pass_get.fish -l
-bindsym $mod+x exec fish $i3confdir/scripts/pass_get.fish
+bindsym $mod+y exec pass_get -l
+bindsym $mod+x exec pass_get
 
 # change focus
 bindsym $mod+h focus left

@@ -2,6 +2,17 @@
 
 set -q PASSWORD_STORE_DIR; or set -l PASSWORD_STORE_DIR "$HOME/.password-store"
 
+function cp_to_cell -a file sub_dir
+    set -l tmp_dir (mktemp -d "/dev/shm/XXXXXXXXXXXX")
+    set -l tmp_file (mktemp -u "$tmp_dir/XXXXXXXXXXXX")
+    gpg -d -r 234E81E6 -o $tmp_file $file
+    set -l new_file "$tmp_dir/"(basename $file)
+    gpg -e -r EFBC72E8 -o $new_file $tmp_file
+    adb push $new_file "/sdcard/.password-store/$sub_dir/"(basename $file)
+    rm -rf $tmp_dir
+end
+
+# copy marked random passes
 set -l portable_files
 for line in (pass grep "portable: true")
     set line (string replace -ra '\e\[(K|[\d;]+m)' '' $line)
@@ -11,20 +22,11 @@ for line in (pass grep "portable: true")
     end
 end
 
-echo "Fetched portable passwords…"
-sleep .5
-
 for file in $portable_files
-    set -l tmp_dir (mktemp -d "/dev/shm/XXXXXXXXXXXX")
-    set -l tmp_file (mktemp -u "$tmp_dir/XXXXXXXXXXXX")
-    gpg -d -r 234E81E6 -o $tmp_file $file
-    set -l new_file "$tmp_dir/"(basename $file)
-    gpg -e -r EFBC72E8 -o $new_file $tmp_file
-    adb push $new_file "/sdcard/.password-store/random/"(basename $file)
-    rm -rf $tmp_dir
+    cp_to_cell $file "random"
 end
 
-echo "Pushing non-random passwords…"
-sleep .5
-
-adb push $PASSWORD_STORE_DIR/non-random/*.gpg /sdcard/.password-store/non-random/
+# copy non-random passes
+for file in $PASSWORD_STORE_DIR/non-random/*.gpg
+    cp_to_cell $file "non-random"
+end

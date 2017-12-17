@@ -1,0 +1,13 @@
+#!/bin/env fish
+
+if systemctl --user is-active mpd.service > /dev/null
+    systemctl --user stop mpd.service
+else
+    systemctl --user start mpd.service
+end
+
+if pgrep mpdscribble >/dev/null
+    killall mpdscribble
+else
+    mpdscribble
+end

@@ -264,6 +264,7 @@ mode $mode_music {
         bindsym space exec python $i3confdir/scripts/simple_mpc.py playpause
         bindsym l exec python $i3confdir/scripts/simple_mpc.py next; exec $i3b_up10
         bindsym h exec python $i3confdir/scripts/simple_mpc.py previous; exec $i3b_up10
+        bindsym Tab exec mpd_toggle
 
         # back to normal: Enter or Escape
         bindsym Escape mode "default"

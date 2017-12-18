@@ -1,6 +1,5 @@
 #!/usr/bin/env fish
 
-test (count $argv) -eq 1; and test $argv[1] = '-l'; and set -l login_mode
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set -l PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 
@@ -8,11 +7,41 @@ test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 set -l dmenu_font (string replace -fr '^set \\$font\s(.+?)$' '$1' < $HOME/.config/i3/config)
 
 # get name of currently active window
+test -z "$argv"; and set -l argv ""
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
 set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' $active_line)
 set -l name_line (string match -r 'WM_NAME\([^)]+\).+' (xprop -id $active_id))
 set -l name (string match -r '".+?"$' $name_line)
 set name (string replace -a ' ' '_' $name)
+
+
+function get_login -a pass copy
+    # get the string after "login:" in the file
+    pass show $pass | string replace -rf '^login:\s?(.+)$' '$1' | read -l login
+    if test -n "$login"
+        if eval $copy
+            echo $login | xclip -selection clipboard -i
+        else
+            echo $login
+        end
+    else
+        notify-send 'No login info found in respective pass file.'
+        false
+    end
+end
+
+
+function xdo_pass_entry -a pass
+    xdotool keyup Super
+    xdotool type --clearmodifiers (get_login $pass false)
+    xdotool keyup Super
+    xdotool key Tab --clearmodifiers
+    xdotool keyup Super
+    xdotool type --clearmodifiers (pass show $pass | head -n 1)
+    xdotool keyup Super
+    xdotool key --clearmodifiers Return
+end
+
 
 # get list of all pass files
 set -l passes (string replace -r '^.+?\.password-store/(.+?)\.gpg$' '$1' $PASSWORD_STORE_DIR/**/*)
@@ -49,7 +78,7 @@ set -l final_candidate
 if test $cand_num -eq 1
     # if there was only one password found set that to final candidate
     set final_candidate $candidates
-    notify-send "Found $final_candidate"
+    notify-send "Found $final_candidate."
 else if test $cand_num -gt 1
     # if there's more than one, select one with dmenu
     notify-send 'Too many candidates.'
@@ -59,20 +88,16 @@ else if test $cand_num -gt 1
 end
 
 if test -n "$final_candidate"
-    # in login_mode get the string after "login:" in the file
-    if set -q login_mode
-        pass show $final_candidate | string replace -rf '^login:\s?(.+)$' '$1' | read -l login
-        if test -n "$login"
-            echo $login | xclip -selection clipboard -i
-        else
-            notify-send 'File contains no login info.'
-            false
-        end
-    # otherwise just get the password
-    else
-        pass show -c $final_candidate
+    # handle different command flags
+    switch $argv
+        case "-l"
+            get_login $final_candidate true
+        case "-x"
+            xdo_pass_entry $final_candidate
+        case "*"
+            pass show -c $final_candidate
     end
-    and notify-send -u low 'Moved data to clipboard'
+    and notify-send -u low 'Retrieved password data.'
 else
     notify-send 'Nothing found.'
 end

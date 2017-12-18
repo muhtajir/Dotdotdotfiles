@@ -36,7 +36,7 @@
     format = "<b>%s %p</b>\n%b"
 
     # Sort messages by urgency.
-    sort = yes
+    sort = no
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -62,6 +62,9 @@
 
     # Ignore newlines '\n' in notifications.
     ignore_newline = no
+
+    # Merge multiple notifications with the same content
+    stack_duplicates = false
 
 
     # The geometry of the window:

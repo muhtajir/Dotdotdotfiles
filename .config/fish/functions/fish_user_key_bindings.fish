@@ -25,4 +25,7 @@ function fish_user_key_bindings
 
     # file selection with vifm
     bind -M insert \cF __fish_vifm_bind
+
+    # update history but keep commandline
+    bind -M insert \cH 'history merge'
 end

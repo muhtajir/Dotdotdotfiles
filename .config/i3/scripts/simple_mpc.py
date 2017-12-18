@@ -34,3 +34,8 @@ elif command == 'next':
     mpd_client.next()
 elif command == 'previous':
     mpd_client.previous()
+elif command == 'random_toggle':
+    if mpd_client.status()['random'] == 0:
+        mpd_client.random(1)
+    elif mpd_client.status()['random'] == 1:
+        mpd_client.random(0)

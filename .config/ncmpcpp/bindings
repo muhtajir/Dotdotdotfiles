@@ -155,15 +155,7 @@
 def_key "k"
   scroll_up
 
-def_key "shift-k"
-  select_item
-  scroll_up
-
 def_key "j"
-  scroll_down
-
-def_key "shift-j"
-  select_item
   scroll_down
 
 def_key "l"
@@ -178,6 +170,18 @@ def_key "h"
 def_key "h"
   master_screen
 
+def_key "L"
+  enter_directory
+
+def_key "L"
+  toggle_output
+
+def_key "L"
+  run_action
+
+def_key "L"
+  play_item
+
 def_key "K"
   scroll_up_album
 
@@ -191,10 +195,10 @@ def_key ")"
   scroll_down_artist
 
 def_key "ctrl-d"
-  page_up
+  page_down
 
 def_key "ctrl-u"
-  page_down
+  page_up
 
 def_key "g"
   move_home
@@ -204,18 +208,6 @@ def_key "G"
 #
 #def_key "insert"
 #  select_item
-#
-#def_key "enter"
-#  enter_directory
-#
-#def_key "enter"
-#  toggle_output
-#
-#def_key "enter"
-#  run_action
-#
-#def_key "enter"
-#  play_item
 #
 #def_key "space"
 #  add_item_to_playlist

@@ -6,8 +6,10 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
-;; get rid of the custom blabla
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; get rid of the custom blabla by using custom-file
+(defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p custom-file)
+  (write-region "" "" custom-file))
 (load custom-file)
 
 (show-paren-mode 1)
@@ -16,10 +18,11 @@
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
+(setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(setq use-package-always-ensure t)
+(require 'use-package)
 
 (use-package ivy
              :config

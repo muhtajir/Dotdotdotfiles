@@ -102,6 +102,8 @@ Code/Scripts/*
 !.emacs.d/
 .emacs.d/*
 !.emacs.d/init.el
+!.emacs.d/subinits
+!.emacs.d/subinits/*
 
 !.local
 .local/*

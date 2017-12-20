@@ -25,19 +25,21 @@ function get_login -a pass copy
             echo $login
         end
     else
-        notify-send 'No login info found in respective pass file.'
+        notify-send 'Unable to retrieve login info'
         false
     end
 end
 
 
 function xdo_pass_entry -a pass
+    set -l login (get_login $pass false); or return
+    set -l pass_string (pass show $pass | head -n 1); or return
     xdotool keyup Super
-    xdotool type --clearmodifiers (get_login $pass false)
+    xdotool type --clearmodifiers $login
     xdotool keyup Super
     xdotool key Tab --clearmodifiers
     xdotool keyup Super
-    xdotool type --clearmodifiers (pass show $pass | head -n 1)
+    xdotool type --clearmodifiers $pass_string
     xdotool keyup Super
     xdotool key --clearmodifiers Return
 end

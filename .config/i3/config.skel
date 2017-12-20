@@ -44,7 +44,7 @@ client.background       $base07
 
 set $font Quicksand Medium
 set $i3confdir $HOME/.config/i3
-set $i3scriptsdir $i3confdir/scripts
+set $i3scriptsdir $HOME/.config/i3/scripts
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
 set $mod Mod4
 set $i3b_up10 "pkill -RTMIN+10 i3blocks"

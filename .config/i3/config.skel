@@ -45,6 +45,7 @@ client.background       $base07
 set $font Quicksand Medium
 set $i3confdir $HOME/.config/i3
 set $i3scriptsdir $i3confdir/scripts
+set $i3blockletsdir $HOME/.config/i3blocks/blocklets
 set $mod Mod4
 set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 
@@ -55,6 +56,8 @@ set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 
 # never let windows take focus
 focus_on_window_activation urgent
+# don't move focus with mouse
+focus_follows_mouse no
 ## configure window decorations
 # first the border
 hide_edge_borders smart
@@ -212,9 +215,6 @@ bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
 bindsym $mod+Shift+Ctrl+r exec merge_configs; restart
 bindsym $mod+Shift+r exec merge_configs; reload
-# shortcuts for clicking blocklets
-bindsym $mod+Escape exec BLOCK_BUTTON=1 ${HOME}/.config/i3blocks/blocklets/shutdown.sh
-bindsym $mod+t exec BLOCK_BUTTON=1 python ${HOME}/.config/i3blocks/blocklets/todo.txt
 
 # workspace assignments
 assign [class="Inox"] $ws2
@@ -236,6 +236,7 @@ for_window [class="Pinentry"] floating enable
 ## modes
 set $mode_resize " resize"
 set $mode_music " music"
+set $mode_blocks " blocks"
 
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
@@ -261,6 +262,7 @@ mode $mode_resize {
         bindsym $mod+plus mode "default"
 }
 
+# control mpd
 mode $mode_music {
         bindsym space exec $i3scriptsdir/simple_mpc playpause
         bindsym l exec $i3scriptsdir/simple_mpc next; exec $i3b_up10
@@ -273,12 +275,22 @@ mode $mode_music {
         bindsym $mod+m mode "default"
 }
 
+# access i3blocks features without using the mouse
+mode $mode_blocks {
+        bindsym s exec BLOCK_BUTTON=1 $i3blockletsdir/shutdown.sh; mode "default"
+        bindsym t exec BLOCK_BUTTON=1 python $i3blockletsdir/todo.txt; mode "default"
+        bindsym d exec BLOCK_BUTTON=1 $i3blockletsdir/time.sh; mode "default"
 
+        bindsym Escape mode "default"
+        bindsym $mod+b mode "default"
+}
+
+# bind modes to keys
 bindsym $mod+plus mode $mode_resize
 bindsym $mod+m mode $mode_music
+bindsym $mod+b mode $mode_blocks
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# Start i3bar to display a workspace bar
 bar {
         status_command i3blocks
         position top

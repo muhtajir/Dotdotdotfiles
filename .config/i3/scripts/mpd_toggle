@@ -11,3 +11,5 @@ if pgrep mpdscribble >/dev/null
 else
     mpdscribble
 end
+
+eval (dirname (status current-filename))/i3b_up 10 0

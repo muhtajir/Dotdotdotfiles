@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+
+test (count $argv) -eq 2; or exit
+
+sleep $argv[2]
+pkill -RTMIN+{$argv[1]} i3blocks

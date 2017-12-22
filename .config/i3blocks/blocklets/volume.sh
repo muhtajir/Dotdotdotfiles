@@ -21,7 +21,7 @@ if [[ $(amixer -c ${BLOCK_INSTANCE} -M -D pulse get Master | grep -E '^\s*Front.
 fi
 
 if (( ${volume%%%} > 100 )); then
-    echo "<span foreground=\"${color04}\"></span><span size='x-small'>${volume%%%}</span>"
+    echo "<span foreground=\"#${BASE08}\"></span><span size='x-small'>${volume%%%}</span>"
 elif (( ${volume%%%} > 99 )); then
     echo ""
 elif (( ${volume%%%} > 0 )); then

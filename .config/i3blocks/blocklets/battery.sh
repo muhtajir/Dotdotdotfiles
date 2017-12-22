@@ -16,7 +16,7 @@ if (( $charge < 5 )); then
     echo ""
     # change color if critical charge is reached
     echo ""
-    echo $color04
+    echo \#$BASE08
 elif (( $charge < 13 )); then
     echo ""
 elif (( $charge < 36 )); then
@@ -36,14 +36,14 @@ if [[ $status != 'Charging' ]]; then
         [[ -e /tmp/batwarning_low.i3blocks ]] && rm /tmp/batwarning_low.i3blocks
         [[ -e /tmp/batwarning_critical.i3blocks ]] && rm /tmp/batwarning_critical.i3blocks
     elif [[ $charge -le 10 && ! -e /tmp/batwarning_low.i3blocks ]]; then
-        notify-send -u normal 'Batterie' "$charge Prozent verbleiben!"
+        notify-send -u normal 'Battery' "$charge percent remaining!"
         [[ -e /tmp/batwarning_critical.i3blocks ]] && rm /tmp/batwarning_critical.i3blocks
     elif [[ $charge -le 5 && ! -e /tmp/batwarning_critical.i3blocks ]]; then
-        notify-send -u critical 'Batterie' "Nur noch $charge Prozent verbleiben!"
+        notify-send -u critical 'Battery' "Only $charge percent remaining!"
     fi
 fi
 
 # also send notification on click
 if [[ -n "$BLOCK_BUTTON" ]]; then
-    notify-send -u normal 'Batterie' "$charge Prozent verbleiben."
+    notify-send -u normal 'Batterie' "$charge percent remaining."
 fi

@@ -11,9 +11,9 @@ if [[ -n $WIRED_INSTANCE ]]; then
 
     if [[ $STATE == "up" ]]; then
         if [[ $(ip route | grep ${WIRED_INSTANCE}) ]]; then
-            wired="<span foreground=\"${color01}\"></span>"
+            wired="<span foreground=\"#${BASE0B}\"></span>"
         else
-            wired="<span foreground=\"${color02}\"></span>"
+            wired="<span foreground=\"#${BASE0A}\"></span>"
         fi
     fi
 fi
@@ -27,13 +27,13 @@ if [[ -n $WIFI_INSTANCE ]]; then
         WIFI_SSID=$(iwgetid -r)
 
         if [[ $QUALITY -ge 80 ]]; then
-            mark_front="<span foreground=\"${color01}\">"
+            mark_front="<span foreground=\"#${BASE0B}\">"
         elif [[ $QUALITY -ge 60 ]]; then
-            mark_front="<span foreground=\"${color02}\">"
+            mark_front="<span foreground=\"#${BASE0A}\">"
         elif [[ $QUALITY -ge 40 ]]; then
-            mark_front="<span foreground=\"${color03}\">"
+            mark_front="<span foreground=\"#${BASE09}\">"
         else
-            mark_front="<span foreground=\"${color04}\">"
+            mark_front="<span foreground=\"#${BASE08}\">"
         fi
         wifi="${mark_front}</span>"
     fi
@@ -41,7 +41,7 @@ fi
 
 # simple test for VPN
 systemctl | grep -qi openvpn-client &&
-    vpn="${wifi}<span foreground=\"${color04}\" size='x-small'>VPN</span>"
+    vpn="${wifi}<span foreground=\"#${BASE08}\" size='x-small'>VPN</span>"
 
 # full text
 echo "${wired}${wifi:+${wired:+ }$wifi${WIFI_SSID:+ <span size='small'>${WIFI_SSID}</span>}}${vpn:+ }$vpn"

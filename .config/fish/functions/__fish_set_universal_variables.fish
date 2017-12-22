@@ -21,7 +21,4 @@ function __fish_set_universal_variables
     set -Ux LESS_TERMCAP_ue (printf "\e[0m")
     set -Ux LESS_TERMCAP_us (printf "\e[01;35m")
 
-    # make base16 colors available as variables
-    __fish_set_base16_variables
-
 end

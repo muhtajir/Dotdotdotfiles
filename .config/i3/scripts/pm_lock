@@ -1,0 +1,7 @@
+#!/usr/bin/env fish
+
+i3lock --blur=1 --indicator --clock --ringcolor "$BASE0C"FF --ringvercolor "$BASE0D"FF --ringwrongcolor "$BASE08"FF --insidecolor "$BASE01"BB --insidevercolor "$BASE0D"AA --insidewrongcolor "$BASE08"AA --textcolor "$BASE05"FF --timecolor "$BASE07"FF --datecolor "$BASE05"FF --keyhlcolor "$BASE0B"FF --bshlcolor "$BASE08"FF --veriftext "..." --wrongtext "!" --radius 130 --timefont $font --datefont $font
+
+if test -n "$argv"
+    systemctl $argv
+end

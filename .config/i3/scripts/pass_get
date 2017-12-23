@@ -37,7 +37,7 @@ function xdo_pass_entry -a pass
     xdotool keyup Super
     xdotool type --clearmodifiers $login
     xdotool keyup Super
-    xdotool key Tab --clearmodifiers
+    xdotool key --clearmodifiers Tab
     xdotool keyup Super
     xdotool type --clearmodifiers $pass_string
     xdotool keyup Super

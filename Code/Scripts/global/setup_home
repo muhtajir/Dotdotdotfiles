@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/usr/bin/env fish
 
 function install_cower
     cd $tmp_dir
@@ -60,6 +60,9 @@ rm -rf *
 # setup firejail
 sudo firecfg
 sudo rm /usr/bin/local/ssh-agent
+
+# finally, merge configs
+merge_configs
 
 echo -e "\nLeft to do:"
 echo -e "\tSet-up password store"

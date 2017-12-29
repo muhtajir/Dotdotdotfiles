@@ -1,71 +1,129 @@
 #!/usr/bin/env fish
 
+eval $HOME/.local/share/bin/merge_configs
+
+# move to base tmp_directory
+set tmp_dir (mktemp -d)
+cd $tmp_dir
+
+function print_bold
+    echo ''
+    echo -e "\033[1m"$argv"\033[0m"
+end
+
 function install_cower
-    cd $tmp_dir
+    print_bold "Building cower…"
+    cd (mktemp -d -p $tmp_dir)
     git clone 'https://aur.archlinux.org/cower.git'
     cd cower
     makepkg -sri
-    cd $tmp_dir
-    rm -rf cower
 end
 
-# some AUR stuff, if it's not installed already
-which cower > /dev/null 2>/dev/null; or install_cower
-which nextcloud > /dev/null 2>/dev/null; or cowmake nextcloud-client
-which i3 > /dev/null 2>/dev/null; or cowmake i3-gaps
-which unclutter > /dev/null 2>/dev/null; or cowmake unclutter-xfixes-git
+function install_font_awesome
+    print_bold "Building FontAwesome 4…"
+    cower -d ttf-font-awesome-4
+    cd $HOME/Downloads/AUR/ttf-font-awesome-4
+    makepkg -ri
+    sudo pacman -U otf-*
+end
 
+function update_mirrorlist
+    print_bold "Retrieving up-to-date pacman mirrorlist…"
+    set -l tmp_ml (mktemp -p $tmp_dir -u --suffix .mirrorlist)
+    set -l tmp_clean_ml (mktemp -p $tmp_dir -u --suffix .mirrorlist)
+    curl "https://www.archlinux.org/mirrorlist/?country=DE&protocol=http&ip_version=4&use_mirror_status=on" -o $tmp_ml
+    string replace -ra '^#Server' 'Server' < $tmp_ml > $tmp_clean_ml
+
+    # backup old mirrorlist
+    test -e /etc/pacman.d/mirrorlist; and sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+    sudo mv $tmp_clean_ml /etc/pacman.d/mirrorlist
+end
+
+function download_google_fonts
+    # abort if all fonts are already installed
+    set -l installed 0
+    set -l fc_out (fc-list : family)
+    for font in $argv
+        string match -qe $font $fc_out; and set installed (math $installed + 1)
+    end
+    test (count $argv) -eq $installed; and return
+
+    print_bold "Installing Google fonts…"
+    cd (mktemp -d -p $tmp_dir)
+    set -l dl_string (string join '|' $argv | string replace -a ' ' '%20')
+    curl -O -J 'https://fonts.google.com/download?family='$dl_string
+    unzip fonts.zip
+    cp **.?tf $HOME/.local/share/fonts
+end
+
+# download google fonts
+download_google_fonts Quicksand Merriweather 'Source Code Pro'
+
+# before anything get up-to-date mirrors
+update_mirrorlist
+
+# some AUR stuff, if it's not installed already
+print_bold "Building specific AUR packages…"
+which cower > /dev/null 2>/dev/null; or install_cower
+which i3 > /dev/null 2>/dev/null; or cowmake i3-gaps
+which i3lock > /dev/null 2>/dev/null; or cowmake i3lock-color
+which j4-dmenu-desktop > /dev/null 2>/dev/null; or cowmake j4-dmenu-desktop
+which unclutter > /dev/null 2>/dev/null; or cowmake unclutter-xfixes-git
+which nextcloud > /dev/null 2>/dev/null; or cowmake nextcloud-client
+fc-list : family | string match -qe mononoki; or cowmake ttf-mononoki
+fc-list : family | string match -qe FontAwesome; or install_font_awesome
+
+# powerlinesymbols
+fc-list : family | string match -qe powerline; or begin
+    cd $tmp_dir
+    print_bold "Installing Powerline Symbols…"
+    curl -O -J 'https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf'
+    mv PowerlineSymbols.otf $HOME/.local/share/fonts
+end
+
+print_bold "Download essential packages from the official repositiories…"
 # some basic packages and globally acessible fonts
 sudo pacman -S --needed \
+    pulseaudio \
+    alsa-utils \
+    pulseaudio-alsa \
     openssh \
     numlockx \
     firejail \
     fzf \
+    dunst \
     feh \
     compton \
     termite \
     pass \
     unzip \
+    i3blocks \
     ttf-liberation \
     noto-fonts-cjk \
     ttf-freefont \
-    ttf-font-awesome \
-     
-# move to base directory
-set -l tmp_dir (mktemp -d)
-cd $tmp_dir
-
-# install fonts from Google
-curl -O -J 'https://fonts.google.com/download?family=Quicksand|Merriweather|Source%20Code%20Pro'
-unzip fonts.zip
-for dir in (glob -d)
-    cd $dir
-    cp *.ttf $HOME/.local/share/fonts
-    cd $tmp_dir
-end
-rm -r *
-
-# powerlinesymbols
-curl -O -J 'https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf'
-mv PowerlineSymbols.otf $HOME/.local/share/fonts
-
-# install mononoki font
-git clone 'https://github.com/madmalik/mononoki.git'
-cd mononoki/export
-unzip mononoki.zip
-cp *.ttf $HOME/.local/share/fonts
-cd $tmp_dir
-rm -rf *
+    adobe-source-code-pro-fonts \
+    arc-gtk-theme
 
 # setup firejail
+print_bold "Creating firejail config…"
 sudo firecfg
-sudo rm /usr/bin/local/ssh-agent
 
-# finally, merge configs
-merge_configs
+# once more why not
+eval $HOME/.local/share/bin/merge_configs
 
-echo -e "\nLeft to do:"
-echo -e "\tSet-up password store"
-echo -e "\tSet-up GPG"
-echo -e "\tSet-up SSH"
-echo -e "\tSet-up Nextcloud"
+# clean up
+print_bold "Deleting temporary directories…"
+rm -rf $tmp_dir
+
+print_bold "Updating font cache…"
+fc-cache -fv
+
+print_bold "Enabling user systemd services…"
+systemctl --user enable dunst
+
+print_bold "Done!"
+print_bold "\nLeft to do:"
+print_bold "\tSet-up password store"
+print_bold "\tSet-up GPG"
+print_bold "\tSet-up SSH"
+print_bold "\tSet-up Nextcloud"

@@ -34,6 +34,10 @@ Code/Scripts/*
 !.config/gnupg
 !.config/gnupg/gpg-agent.conf
 
+!.config/gtk-3.0
+!.config/gtk-3.0/settings.ini
+!.config/gtk-3.0/*
+
 !.config/i3
 .config/i3/*
 !.config/i3/config.skel
@@ -116,6 +120,6 @@ Code/Scripts/*
 !.profile
 !.ctags
 !.gitignore
-!.gtkrc-2.0.mine
+!.gtkrc-2.0
 !.pam_environment
 !.XCompose

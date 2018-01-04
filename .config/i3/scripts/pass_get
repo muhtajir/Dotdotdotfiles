@@ -87,6 +87,12 @@ else if test $cand_num -gt 1
     for candidate in $candidates
         printf '%s\n' $candidate
     end | dmenu -fn $dmenu_font -i -b -nb "#"$BASE01 -nf "#"$BASE05 -sb "#"$BASE0D -sf "#"$BASE00 | read final_candidate
+else 
+    # if there's none, also select one with dmenu
+    notify-send 'Nothing found. Please select manually.'
+    for candidate in $passes
+        printf '%s\n' $candidate
+    end | dmenu -fn $dmenu_font -i -b -nb "#"$BASE01 -nf "#"$BASE05 -sb "#"$BASE0D -sf "#"$BASE00 | read final_candidate
 end
 
 if test -n "$final_candidate"
@@ -99,7 +105,7 @@ if test -n "$final_candidate"
         case "*"
             pass show -c $final_candidate
     end
-    and notify-send -u low 'Retrieved password data.'
+    and notify-send -u low "Retrieved data from $final_candidate."
 else
-    notify-send 'Nothing found.'
+    notify-send 'No password selected.'
 end

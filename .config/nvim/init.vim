@@ -6,7 +6,6 @@ call plug#begin()
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
-    Plug 'ervandew/supertab'
     Plug 'InspectorMustache/base16.nvim'
     Plug 'jsfaint/gen_tags.vim'
     Plug 'kassio/neoterm'
@@ -303,9 +302,6 @@ let g:scratch_insert_autohide = 0
 " simpylfold (what's with the name?)
 let g:SimpylFold_fold_docstring = 0
 let g:SimpylFold_fold_import = 0
-
-" supertab
-let g:SuperTabDefaultCompletionType = '<C-N>'
 
 "" ultisnips
 " keybinds

@@ -1,5 +1,4 @@
 #!/bin/bash
-source $(dirname $(realpath $0))/colors
 
 calc() {
     awk "BEGIN { print "$*" }";

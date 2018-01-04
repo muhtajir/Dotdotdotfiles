@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source $(dirname $(realpath $0))/colors
-
 # beware: unlike amixer, pactl allows raising the volume above 100%
 case $BLOCK_BUTTON in
     4)

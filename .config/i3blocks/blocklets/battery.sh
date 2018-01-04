@@ -1,5 +1,3 @@
-source $(dirname $(realpath $0))/colors
-
 battery=/sys/class/power_supply/${BLOCK_INSTANCE}
 charge=$(grep '^POWER_SUPPLY_CAPACITY=' ${battery}/uevent | sed -r 's/^.+=//')
 status=$(grep '^POWER_SUPPLY_STATUS=' ${battery}/uevent | sed -r 's/^.+=//')

@@ -84,6 +84,11 @@ Code/Scripts/*
 !.config/pacman
 !.config/pacman/makepkg.conf
 
+!.config/qutebrowser
+.config/qutebrowser/*
+!.config/qutebrowser/config.py
+!.config/qutebrowser/quickmarks
+
 !.config/sway
 .config/sway/*
 !.config/sway/config.skel

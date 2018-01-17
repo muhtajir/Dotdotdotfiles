@@ -32,6 +32,7 @@ try:
     mpd_client.connect('localhost', 6600)
 except ConnectionRefusedError:
     start_mpd()
+    subprocess.run(['notify-send', 'MPD server started.'])
 
 # parse start-up parameter
 try:

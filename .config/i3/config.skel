@@ -221,6 +221,7 @@ bindsym $mod+Shift+Ctrl+r exec merge_configs; restart
 bindsym $mod+Shift+r exec merge_configs; reload
 
 # workspace assignments
+assign [class="qutebrowser"] $ws2
 assign [class="Inox"] $ws2
 assign [class="Firefox"] $ws2
 assign [class="Chromium"] $ws2
@@ -229,7 +230,6 @@ assign [class="Thunderbird"] $ws3
 assign [title="LibreOffice" window_type="splash"] $ws5
 assign [class="(?i).*libreoffice.*"] $ws5
 assign [class="Soffice"] $ws5
-assign [class="mpv"] $ws10
 assign [class="jetbrains.*"] $ws6
 
 # window arrangement fixes
@@ -244,18 +244,11 @@ set $mode_blocks " blocks"
 
 # resize window (you can also use the mouse for that)
 mode $mode_resize {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 8 px or 3 ppt
         bindsym j resize grow height 8 px or 3 ppt
         bindsym k resize shrink height 8 px or 3 ppt
         bindsym l resize grow width 8 px or 3 ppt
 
-        # same bindings, but for the arrow keys
         bindsym Shift+h resize shrink width 13 px or 7 ppt
         bindsym Shift+j resize grow height 13 px or 7 ppt
         bindsym Shift+k resize shrink height 13 px or 7 ppt
@@ -317,7 +310,7 @@ bar {
 
 exec --no-startup-id compton -f
 exec --no-startup-id unclutter
-exec --no-startup-id feh --no-startu-id --bg-fill $HOME/Bilder/wallpaper.jpg
+exec --no-startup-id feh --bg-fill $HOME/Bilder/wallpaper.jpg
 exec --no-startup-id fcitx -r
 exec --no-startup-id xset -b
 exec --no-startup-id numlockx on

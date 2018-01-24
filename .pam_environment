@@ -1,13 +1,13 @@
 EDITOR                      DEFAULT=nvim
 TERMINAL                    DEFAULT=termite
-QT_QPA_PLATFORMTHEME        DEFAULT=gtk2
+QT_STYLE_OVERRIDE           DEFAULT=adwaita
 GTK_IM_MODULE               DEFAULT=fcitx
 XMODIFIERS                  DEFAULT=@im=fcitx
 QT_IM_MODULE                DEFAULT=fcitx
 XKB_DEFAULT_LAYOUT          DEFAULT=de
 XKB_DEFAULT_VARIANT         DEFAULT=nodeadkeys
 XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape
-GNUPGHOME                   DEFAULT=~/.config/gnupg
+GNUPGHOME                   DEFAULT=@{HOME}/.config/gnupg
 BASE00                      DEFAULT=262626
 BASE01                      DEFAULT=3a3a3a
 BASE02                      DEFAULT=4e4e4e
@@ -24,3 +24,4 @@ BASE0C                      DEFAULT=85ad85
 BASE0D                      DEFAULT=83adad
 BASE0E                      DEFAULT=d485ad
 BASE0F                      DEFAULT=d65d0e
+NOTMUCH_CONFIG              DEFAULT=@{HOME}/.config/notmuch/notmuch-config

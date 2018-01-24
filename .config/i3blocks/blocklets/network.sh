@@ -39,7 +39,7 @@ fi
 
 # simple test for VPN
 systemctl | grep -qi openvpn-client &&
-    vpn="${wifi}<span foreground=\"#${BASE08}\" size='x-small'>VPN</span>"
+    vpn="<span foreground=\"#${BASE08}\" size='x-small'>VPN</span>"
 
 # full text
 echo "${wired}${wifi:+${wired:+ }$wifi${WIFI_SSID:+ <span size='small'>${WIFI_SSID}</span>}}${vpn:+ }$vpn"

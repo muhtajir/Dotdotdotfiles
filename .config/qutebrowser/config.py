@@ -190,6 +190,11 @@ c.colors.tabs.selected.odd.fg = BASE00
 # Background color for webpages if unset (or empty to use the theme's
 # color)
 c.colors.webpage.bg = 'white'
+# Background color of the statusbar in passthrough mode.
+c.colors.statusbar.passthrough.bg = BASE07
+# Foreground color of the statusbar in passthrough mode.
+c.colors.statusbar.passthrough.fg = BASE00
+
 
 ## Font settings
 # Only let completion use up as little space as possible
@@ -253,6 +258,7 @@ c.editor.command = ['nvim', '{}']
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'aw': 'https://wiki.archlinux.org/index.php?search={}',
                        'bc': 'https://bandcamp.com/search?q={}',
+                       'fm': 'https://www.last.fm/search?q={}',
                        'g': 'https://encrypted.google.com/search?q={}',
                        'gh': 'https://github.com/search?utf8=%E2%9C%93&q={}',
                        'lc': 'https://dict.leo.org/chinesisch-deutsch/{}',
@@ -266,8 +272,9 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 ## Key bindings
 # Deletion
 config.unbind('d', mode='normal')
+config.unbind('D', mode='normal')
 config.bind('dd', 'tab-close')
-config.bind('DD', 'tab-only')
+config.bind('dD', 'tab-only')
 config.bind('dl', 'download-cancel')
 # Quickmark/Bookmark handling
 config.unbind('ad', mode='normal')

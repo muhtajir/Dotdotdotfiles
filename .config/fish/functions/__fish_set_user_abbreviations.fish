@@ -20,4 +20,5 @@ function __fish_set_user_abbreviations
     abbr --add pm pacman
     abbr --add pm pacman
     abbr --add feh feh -.
+    abbr --add m mymail
 end

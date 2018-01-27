@@ -60,11 +60,11 @@ c.colors.downloads.error.fg = BASE07
 # Color gradient start for download backgrounds.
 c.colors.downloads.start.bg = BASE0D
 # Color gradient start for download text.
-c.colors.downloads.start.fg = BASE07
+c.colors.downloads.start.fg = BASE00
 # Color gradient stop for download backgrounds.
 c.colors.downloads.stop.bg = BASE0B
 # Color gradient end for download text.
-c.colors.downloads.stop.fg = BASE07
+c.colors.downloads.stop.fg = BASE00
 # Color gradient interpolation system for download backgrounds.
 # Valid values:
 c.colors.downloads.system.bg = 'rgb'
@@ -125,7 +125,7 @@ c.colors.statusbar.command.bg = BASE00
 # Foreground color of the statusbar in command mode.
 c.colors.statusbar.command.fg = BASE07
 # Background color of the statusbar in private browsing + command mode.
-c.colors.statusbar.command.private.bg = BASE03
+c.colors.statusbar.command.private.bg = BASE02
 # Foreground color of the statusbar in private browsing + command mode.
 c.colors.statusbar.command.private.fg = BASE07
 # Background color of the statusbar in insert mode.
@@ -137,7 +137,7 @@ c.colors.statusbar.normal.bg = BASE00
 # Foreground color of the statusbar.
 c.colors.statusbar.normal.fg = BASE07
 # Background color of the statusbar in private browsing mode.
-c.colors.statusbar.private.bg = BASE03
+c.colors.statusbar.private.bg = BASE02
 # Foreground color of the statusbar in private browsing mode.
 c.colors.statusbar.private.fg = BASE07
 # Background color of the progress bar.
@@ -276,10 +276,8 @@ config.unbind('D', mode='normal')
 config.bind('dd', 'tab-close')
 config.bind('dD', 'tab-only')
 config.bind('dl', 'download-cancel')
-# Quickmark/Bookmark handling
-config.unbind('ad', mode='normal')
-config.bind('aq', 'set-cmd-text --space :quickmark-add {url:pretty}')
-config.bind('ab', 'set-cmd-text --space :bookmark-add {url:pretty}')
+# Quickmark/Bookmark opening (mostly redundant, replace e bindings if
+# necessary)
 config.bind('eq', 'set-cmd-text --space :quickmark-load')
 config.bind('eb', 'set-cmd-text --space :bookmark-load')
 # Completion navigation command mode
@@ -292,6 +290,9 @@ config.bind(',f', 'hint all hover')
 config.bind(',O', 'set-cmd-text --space :open -b')
 config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
 config.bind(';a', 'hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}')
+# Open current url in new windows
+config.unbind('wO', mode='normal')
+config.bind('gw', 'set-cmd-text --space :open -w {url:pretty}')
 # Buffer navigation
 config.bind('b', 'set-cmd-text --space :buffer')
 # Source config

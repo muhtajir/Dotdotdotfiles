@@ -1,5 +1,6 @@
 function mymail
 	mbsync -a
-notmuch new 2> /dev/null
-neomutt
+    notmuch new 2> /dev/null
+    neomutt
+	mbsync -a
 end

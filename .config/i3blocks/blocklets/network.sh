@@ -38,7 +38,7 @@ if [[ -n $WIFI_INSTANCE ]]; then
 fi
 
 # simple test for VPN
-systemctl | grep -qi openvpn-client &&
+systemctl is-active openvpn-client@client > /dev/null &&
     vpn="<span foreground=\"#${BASE08}\" size='x-small'>VPN</span>"
 
 # full text

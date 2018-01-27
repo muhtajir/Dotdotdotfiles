@@ -268,6 +268,8 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'wd': 'https://de.wikipedia.org/w/index.php?search={}',
                        'yt': 'https://www.youtube.com/results?search_query={}'}
 
+# Which tab to select when the focused tab is removed.
+c.tabs.select_on_remove = 'last-used'
 
 ## Key bindings
 # Deletion

@@ -2,10 +2,9 @@
 
 test -n "$argv"
 and test "$argv" -eq "$argv" 2>/dev/null
-or echo "We needs a proper epoch integer."; and exit 1
+or begin; echo "We needs a proper epoch integer."; and exit 1; end
 
 set new_since $argv
-# set new_since (date -d $new_since +%s)
 
 set playlist_folder "$HOME/.config/mpd/playlists"
 
@@ -25,7 +24,7 @@ function add_to_playlist -a playlist_name file_path shuffled
 
     # fill array of files for the playlist
     for file in (get_files $file_path)
-        if test (stat -c '%X' $file) -gt $new_since
+        if test (stat -c '%Y' $file) -gt $new_since
           and not contains $file $playlist_lines
             echo $file
             set playlist_array $playlist_array $file
@@ -48,7 +47,7 @@ function add_to_playlist -a playlist_name file_path shuffled
 end
 
 # build "recent singles"
-set playlist_name 'Recent: Singles' 
+set playlist_name 'Recent: !Singles' 
 add_to_playlist $playlist_name "$HOME/Musik/Singles" "true"
 
 # build "recent records"

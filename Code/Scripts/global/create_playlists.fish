@@ -1,7 +1,11 @@
 #!/bin/env fish
 
-set new_since "2017-12-11"
-set new_since (date -d $new_since +%s)
+test -n "$argv"
+and test "$argv" -eq "$argv" 2>/dev/null
+or echo "We needs a proper epoch integer."; and exit 1
+
+set new_since $argv
+# set new_since (date -d $new_since +%s)
 
 set playlist_folder "$HOME/.config/mpd/playlists"
 

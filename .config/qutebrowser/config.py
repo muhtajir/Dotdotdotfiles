@@ -264,6 +264,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'lc': 'https://dict.leo.org/chinesisch-deutsch/{}',
                        'le': 'https://dict.leo.org/german-english/{}',
                        'lf': 'https://dict.leo.org/französisch-deutsch/{}',
+                       'py': 'https://docs.python.org/3.6/search.html?q={}',
                        'w': 'https://en.wikipedia.org/w/index.php?search={}',
                        'wd': 'https://de.wikipedia.org/w/index.php?search={}',
                        'yt': 'https://www.youtube.com/results?search_query={}'}
@@ -278,6 +279,8 @@ config.unbind('D', mode='normal')
 config.bind('dd', 'tab-close')
 config.bind('dD', 'tab-only')
 config.bind('dl', 'download-cancel')
+config.bind('dq', 'set-cmd-text --space :quickmark-del')
+config.bind('db', 'set-cmd-text --space :bookmark-del')
 # Quickmark/Bookmark opening (mostly redundant, replace e bindings if
 # necessary)
 config.bind('eq', 'set-cmd-text --space :quickmark-load')

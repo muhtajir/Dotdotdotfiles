@@ -272,6 +272,9 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 # Which tab to select when the focused tab is removed.
 c.tabs.select_on_remove = 'last-used'
 
+# Aliases
+c.aliases['ssh-tunnel'] = 'set content.proxy socks://localhost:4711 ;; message-info "Tunnel proxy set."'
+
 ## Key bindings
 # Deletion
 config.unbind('d', mode='normal')

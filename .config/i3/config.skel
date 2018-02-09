@@ -316,3 +316,4 @@ exec --no-startup-id xset -b
 exec --no-startup-id numlockx on
 exec --no-startup-id setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape
 exec --no-startup-id nc_monitor $HOME/Nextcloud
+exec --no-startup-id xss-lock -- $HOME/.config/i3/scripts/pm_lock

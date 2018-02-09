@@ -265,6 +265,7 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'le': 'https://dict.leo.org/german-english/{}',
                        'lf': 'https://dict.leo.org/französisch-deutsch/{}',
                        'py': 'https://docs.python.org/3.6/search.html?q={}',
+                       'ug': 'https://www.ultimate-guitar.com/search.php?search_type=title&value={}',
                        'w': 'https://en.wikipedia.org/w/index.php?search={}',
                        'wd': 'https://de.wikipedia.org/w/index.php?search={}',
                        'yt': 'https://www.youtube.com/results?search_query={}'}
@@ -300,7 +301,7 @@ config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
 config.bind(';a', 'hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}')
 # Open current url in new windows
 config.unbind('wO', mode='normal')
-config.bind('gw', 'set-cmd-text --space :open -w {url:pretty}')
+config.bind('gw', 'set-cmd-text :open -w {url:pretty}')
 # Buffer navigation
 config.bind('b', 'set-cmd-text --space :buffer')
 # Source config

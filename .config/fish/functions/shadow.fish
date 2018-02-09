@@ -1,15 +1,29 @@
-function shadow -d "Stop logging commannd line entries to the history file"
+function shadow -d "Stop logging command line entries to the history file"
+    history delete --exact --case-sensitive shadow
     set -l shadow_file $HOME/.local/share/fish/shadow_history
     set -l link_target (readlink $HOME/.local/share/fish/shadow_history)
 
-    if test -e $shadow_file; and test "$link_target" != '/dev/null'
-        echo 'There is already a shadow history file.. Delete before proceeding.'
-        return 1
+    function handle_shadow_file -S
+        if test ! -e $shadow_file
+            return
+        else if test "$link_target" = '/dev/null'
+            rm $shadow_file
+        else
+            echo 'There is a foreign history file with the name "shadow". Delete before proceeding.'
+            return 1
+        end
     end
 
-    test ! -e $shadow_file; and ln -s /dev/null $shadow_file
-    true
-
-    set -gx fish_history shadow
-    set -gx __fish_shadow_mode 1
+    if test $__fish_shadow_mode -eq 0
+        set -g __fish_backup_history_var $fish_history
+        handle_shadow_file; or return 1
+        ln -s /dev/null $shadow_file
+        set -g fish_history shadow
+        set -g __fish_shadow_mode 1
+    else if test $__fish_shadow_mode -eq 1
+        set -g fish_history $__fish_backup_history_var
+        set -e __fish_backup_history_var
+        set -g __fish_shadow_mode 0
+        handle_shadow_file; or return 1
+    end
 end

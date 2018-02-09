@@ -28,4 +28,7 @@ function fish_user_key_bindings
 
     # update history but keep commandline
     bind -M insert \cH 'history merge'
+
+    # toggle shadow mode
+    bind -M insert \cs 'shadow; commandline -f force-repaint force-repaint'
 end

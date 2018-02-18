@@ -29,7 +29,7 @@ def random_toggle(mpd_client):
 # initialize mpd connection
 mpd_client = MPDClient()
 try:
-    mpd_client.connect('localhost', 6600)
+    mpd_client.connect('127.0.0.1', 6600)
 except ConnectionRefusedError:
     start_mpd()
     subprocess.run(['notify-send', 'MPD server started.'])

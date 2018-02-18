@@ -102,7 +102,9 @@ sudo pacman -S --needed \
     noto-fonts-cjk \
     ttf-freefont \
     adobe-source-code-pro-fonts \
-    arc-gtk-theme
+    arc-gtk-theme \
+    fcitx-im \
+    fcitx-sunpinyin
 
 # setup firejail
 print_bold "Creating firejail config…"

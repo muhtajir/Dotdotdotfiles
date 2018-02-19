@@ -1,30 +1,53 @@
 #!/bin/fish
 
-function merge_config -a skel_file custom_file out_file
-    test ! -e $skel_file; and return
+function merge_config -a skel_file custom_path out_path
+    set -l skel_path $HOME/.local/share/skel/$skel_file.skel
+    test ! -e $skel_path; and return
+
     set -l skel_lines
-    cat $skel_file | while read -l line
+    cat $skel_path | while read -l line
         set skel_lines $skel_lines $line
     end
 
     set -l custom_lines
-    # if there's no custom_file, an empty custom_lines variable will just result in a copy of the skel_file, which is okay
-    # however, this requires that the actual config file is not a symbolic link to the skel_file
-    if test -e $custom_file
-        cat $custom_file | while read -l line
+    # if there's no custom_path, an empty custom_lines variable will just result in a copy of the skel_path, which is okay
+    if test -e $custom_path
+        cat $custom_path | while read -l line
             set custom_lines $custom_lines $line
         end
     end
 
-    echo -n "" > $out_file
+    mkdir -p (dirname $out_path)
+    echo -n "" > $out_path
     for line in $skel_lines
-        echo $line >> $out_file
+        echo $line >> $out_path
         string match -qe '{{{custom}}}' $line; and begin
-            string join \n $custom_lines >> $out_file
+            string join \n $custom_lines >> $out_path
         end; or true # so this doesn't create an exit code of 1 even though nothing's wrong
     end
 end
 
+function mail_merge -a skel_file out_path
+    set -l skel_path $HOME/.local/share/skel/$skel_file.skel
+    test ! -e $skel_path; and return
+
+    if not set -q REAL_NAME MAIL_USER_NAME
+        echo "Set variables REAL_NAME, MAIL_USER_NAME for merging $skel_file.skel."
+        return
+    end
+
+    mkdir -p (dirname $out_path)
+    echo -n "" > $out_path
+    cat $skel_path | while read -l line
+        set line (string replace '{{{REAL_NAME}}}' $REAL_NAME $line)
+        set line (string replace '{{{MAIL_USER_NAME}}}' $MAIL_USER_NAME $line)
+        echo $line >> $out_path
+    end; or true # dito
+end
+
 # run all configs that need to be merged together here
-merge_config $HOME/.config/i3blocks/config.skel $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
-merge_config $HOME/.config/i3/config.skel $HOME/.config/i3/custom $HOME/.config/i3/config
+merge_config i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
+merge_config i3 $HOME/.config/i3/custom $HOME/.config/i3/config
+mail_merge mbsync $HOME/.mbsyncrc
+mail_merge msmtp $HOME/.msmtprc
+mail_merge neomutt $HOME/.config/neomutt/neomuttrc

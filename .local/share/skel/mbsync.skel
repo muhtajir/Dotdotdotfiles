@@ -1,0 +1,21 @@
+IMAPAccount posteo
+Host posteo.de
+User {{{MAIL_USER_NAME}}}@posteo.de
+PassCmd "pass show random/posteo | head -n 1"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore posteo-remote
+Account posteo
+
+MaildirStore posteo-local
+Path ~/.local/share/mail/posteo/
+Inbox ~/.local/share/mail/posteo/Inbox
+SubFolders Verbatim
+
+Channel posteo
+Master :posteo-remote:
+Slave :posteo-local:
+Patterns *
+Create Both
+SyncState *

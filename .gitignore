@@ -40,23 +40,13 @@ Code/Scripts/*
 
 !.config/i3
 .config/i3/*
-!.config/i3/config.skel
 !.config/i3/scripts
 !.config/i3/scripts/*
 
 !.config/i3blocks
-!.config/i3blocks/config.skel
 !.config/i3blocks/blocklets/
 !.config/i3blocks/blocklets/*
 .config/i3blocks/blocklets/todo.txt
-
-!.config/inox/
-.config/inox/*
-!.config/inox/extensions
-.config/inox/extensions/*
-!.config/inox/extensions/mouseless
-.config/inox/extensions/mouseless/*
-!.config/inox/extensions/mouseless/mouselessrc
 
 !.config/mpd
 .config/mpd/*
@@ -65,12 +55,14 @@ Code/Scripts/*
 !.config/mpv
 !.config/mpv/*
 
-!.config/maninex.conf
-
 !.config/ncmpcpp
 .config/ncmpcpp/*
 !.config/ncmpcpp/config
 !.config/ncmpcpp/bindings
+
+!.config/neomutt
+.config/neomutt/*
+!.config/neomutt/mailcap
 
 !.config/nvim
 .config/nvim/*
@@ -88,14 +80,6 @@ Code/Scripts/*
 .config/qutebrowser/*
 !.config/qutebrowser/config.py
 !.config/qutebrowser/quickmarks
-
-!.config/sway
-.config/sway/*
-!.config/sway/config.skel
-
-!.config/systemd
-!.config/systemd/user
-!.config/systemd/user/nc_monitor.service
 
 !.config/termite/
 !.config/termite/config
@@ -118,8 +102,12 @@ Code/Scripts/*
 .local/*
 !.local/share
 .local/share/*
+
 !.local/share/bin
 !.local/share/bin/*
+
+!.local/share/skel
+!.local/share/skel/*
 
 !.bashrc
 !.profile

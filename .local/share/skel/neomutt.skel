@@ -1,0 +1,38 @@
+set realname='{{{REAL_NAME}}}'
+
+# settings for sending mail
+set sendmail="/usr/bin/msmtp"
+set from="{{{REAL_NAME}}} <{{{MAIL_USER_NAME}}}@posteo.de>"
+
+# maildir settings
+set mbox_type = Maildir
+set folder = ~/.local/share/mail/posteo
+set spoolfile = +Inbox
+set record = +Sent
+set trash = +Trash
+set postponed = +Drafts
+set header_cache = ~/.cache/neomutt
+
+# view HTML mails within mutt
+set mailcap_path = ~/.config/neomutt/mailcap
+alternative_order text/plain text/html
+auto_view text/html
+
+# don't show headers in pager
+ignore *
+
+# set up keychains by ignoring single keypresses
+bind attach,index,pager g noop
+
+# general keybinds
+bind pager j next-line
+bind pager k previous-line
+bind pager h exit
+bind attach,index,pager \CD next-page
+bind attach,index,pager \CU previous-page
+bind pager G bottom
+bind pager gg top
+bind attach,index gg first-entry
+bind attach,index G last-entry
+bind index - limit
+bind index l display-message

@@ -1,0 +1,16 @@
+defaults
+auth            on
+tls             on
+tls_trust_file  /etc/ssl/certs/ca-certificates.crt
+tls_starttls    off
+logfile         ~/.local/share/mail/msmtp.log
+
+# Posteo
+account         posteo
+host            posteo.de
+port            465
+from            {{{MAIL_USER_NAME}}}@posteo.de
+user            {{{MAIL_USER_NAME}}}@posteo.de
+passwordeval    "pass show random/posteo | head -n 1"
+
+account default : posteo

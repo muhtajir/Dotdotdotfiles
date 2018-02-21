@@ -129,7 +129,7 @@ c.colors.statusbar.command.private.bg = BASE02
 # Foreground color of the statusbar in private browsing + command mode.
 c.colors.statusbar.command.private.fg = BASE07
 # Background color of the statusbar in insert mode.
-c.colors.statusbar.insert.bg = BASE0E
+c.colors.statusbar.insert.bg = BASE0F
 # Foreground color of the statusbar in insert mode.
 c.colors.statusbar.insert.fg = BASE07
 # Background color of the statusbar.
@@ -258,6 +258,7 @@ c.editor.command = ['nvim', '{}']
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'aw': 'https://wiki.archlinux.org/index.php?search={}',
                        'bc': 'https://bandcamp.com/search?q={}',
+                       'bgg': 'https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={}',
                        'fm': 'https://www.last.fm/search?q={}',
                        'g': 'https://encrypted.google.com/search?q={}',
                        'gh': 'https://github.com/search?utf8=%E2%9C%93&q={}',

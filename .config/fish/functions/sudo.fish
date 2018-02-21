@@ -18,7 +18,7 @@ function sudo --description 'A wrapper for sudo that looks up aliases if the spe
         set -l new_command
 
         # loop through aliases and try to get a match for $command
-        for al in (alias ^ /dev/null)
+        for al in (alias 2> /dev/null)
             string replace -fr '^alias\s'$command'(=|\s)(.+)$' '$2' $al | read -a new_command
             test -n "$new_command"; and break
 

@@ -122,7 +122,7 @@ autocmd bufwritepost init.vim source $MYVIMRC
 " close preview window after leaving insert mode
 autocmd InsertLeave * silent! pclose!
 " retain clipboard content after closing vim
-autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -se c')
+autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
 
 
 "" aliases
@@ -237,10 +237,14 @@ nnoremap ( {
 nnoremap ) }
 onoremap ( {
 onoremap ) }
+vnoremap ( {
+vnoremap ) }
 nnoremap { (
 nnoremap } )
 onoremap { (
 onoremap } )
+vnoremap { (
+vnoremap } )
 
 " file navigation
 nnoremap <silent> <A-o> :Explore<CR>

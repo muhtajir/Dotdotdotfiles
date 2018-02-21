@@ -104,7 +104,8 @@ sudo pacman -S --needed \
     adobe-source-code-pro-fonts \
     arc-gtk-theme \
     fcitx-im \
-    fcitx-sunpinyin
+    fcitx-sunpinyin \
+    w3m
 
 # setup firejail
 print_bold "Creating firejail config…"

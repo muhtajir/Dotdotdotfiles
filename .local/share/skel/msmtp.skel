@@ -9,8 +9,8 @@ logfile         ~/.local/share/mail/msmtp.log
 account         posteo
 host            posteo.de
 port            465
-from            {{{MAIL_USER_NAME}}}@posteo.de
-user            {{{MAIL_USER_NAME}}}@posteo.de
+from            {{{MAIL_ADDRESS}}}
+user            {{{MAIL_ADDRESS}}}
 passwordeval    "pass show random/posteo | head -n 1"
 
 account default : posteo

@@ -27,12 +27,12 @@ function merge_config -a skel_file custom_path out_path
     end
 end
 
-function mail_merge -a skel_file out_path
+function var_merge -a skel_file out_path
     set -l skel_path $HOME/.local/share/skel/$skel_file.skel
     test ! -e $skel_path; and return
 
-    if not set -q REAL_NAME MAIL_USER_NAME
-        echo "Set variables REAL_NAME, MAIL_USER_NAME for merging $skel_file.skel."
+    if not set -q REAL_NAME MAIL_ADDRESS
+        echo "Set variables REAL_NAME, MAIL_ADDRESS for merging $skel_file.skel."
         return
     end
 
@@ -40,7 +40,8 @@ function mail_merge -a skel_file out_path
     echo -n "" > $out_path
     cat $skel_path | while read -l line
         set line (string replace '{{{REAL_NAME}}}' $REAL_NAME $line)
-        set line (string replace '{{{MAIL_USER_NAME}}}' $MAIL_USER_NAME $line)
+        set line (string replace '{{{MAIL_ADDRESS}}}' $MAIL_ADDRESS $line)
+        set line (string replace '{{{HOME}}}' $HOME $line)
         echo $line >> $out_path
     end; or true # dito
 end
@@ -48,6 +49,7 @@ end
 # run all configs that need to be merged together here
 merge_config i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
 merge_config i3 $HOME/.config/i3/custom $HOME/.config/i3/config
-mail_merge mbsync $HOME/.mbsyncrc
-mail_merge msmtp $HOME/.msmtprc
-mail_merge neomutt $HOME/.config/neomutt/neomuttrc
+var_merge mbsync $HOME/.mbsyncrc
+var_merge msmtp $HOME/.msmtprc
+var_merge neomutt $HOME/.config/neomutt/neomuttrc
+var_merge notmuch-config $HOME/.config/notmuch/notmuch-config

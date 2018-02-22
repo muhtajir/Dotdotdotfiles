@@ -2,7 +2,7 @@ set realname='{{{REAL_NAME}}}'
 
 # settings for sending mail
 set sendmail="/usr/bin/msmtp"
-set from="{{{REAL_NAME}}} <{{{MAIL_USER_NAME}}}@posteo.de>"
+set from="{{{REAL_NAME}}} <{{{MAIL_ADDRESS}}}>"
 
 # maildir settings
 set mbox_type = Maildir

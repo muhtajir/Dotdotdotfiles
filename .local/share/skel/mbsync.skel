@@ -1,6 +1,6 @@
 IMAPAccount posteo
 Host posteo.de
-User {{{MAIL_USER_NAME}}}@posteo.de
+User {{{MAIL_ADDRESS}}}
 PassCmd "pass show random/posteo | head -n 1"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt

@@ -122,7 +122,7 @@ autocmd bufwritepost init.vim source $MYVIMRC
 " close preview window after leaving insert mode
 autocmd InsertLeave * silent! pclose!
 " retain clipboard content after closing vim
-autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
+autocmd VimLeave * call system(getreg('+'), " | xclip -se c -i <<<")
 
 
 "" aliases

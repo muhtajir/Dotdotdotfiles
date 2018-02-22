@@ -252,7 +252,8 @@ c.tabs.background = True
 c.content.cookies.store = False
 
 # Set editor
-c.editor.command = ['nvim', '{}']
+# c.editor.command = ['termite', '--exec=\'nvim -c "normal {line}G{column0}l" -- {file}\'']
+c.editor.command = ['termite', '-e', 'nvim -c "normal {line}G{column0}l" {file}']
 
 # Definitions of search engines which can be used via the address bar.
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',

@@ -4,14 +4,8 @@ set realname='{{{REAL_NAME}}}'
 set sendmail="/usr/bin/msmtp"
 set from="{{{REAL_NAME}}} <{{{MAIL_ADDRESS}}}>"
 
-# maildir settings
-set mbox_type = Maildir
-set folder = ~/.local/share/mail/posteo
-set spoolfile = +Inbox
-set record = +Sent
-set trash = +Trash
-set postponed = +Drafts
-set header_cache = ~/.cache/neomutt
+# don't ask for confirmation when deleting
+set delete
 
 # view HTML mails within mutt
 set mailcap_path = ~/.config/neomutt/mailcap
@@ -36,3 +30,12 @@ bind attach,index gg first-entry
 bind attach,index G last-entry
 bind index - limit
 bind index l display-message
+
+# maildir settings
+set mbox_type = Maildir
+set folder = ~/.local/share/mail/posteo
+set spoolfile = +Inbox
+set record = +Sent
+set trash = +Trash
+set postponed = +Drafts
+set header_cache = ~/.cache/neomutt

@@ -1,15 +1,27 @@
 #!/usr/bin/env fish
 
 set cache_file $HOME/.cache/pacupdate
+set repo_updates
+set aur_updates
+set git_updates
+
 # create a cache file if there isn't already one
 if test ! -e $cache_file
     touch $cache_file
 end
 
 
-function echo_head -a msg
-    set_color -o green
-    echo -n '-> '
+function test_sudo
+    if not command -s sudo > /dev/null
+        echo "Sudo not found on system. Aborting…"
+        return 1
+    end
+end
+
+
+function formatted_echo -a color prefix msg
+    set_color -o $color
+    echo -n "$prefix "
     set_color normal
     set_color -o
     echo $msg
@@ -17,19 +29,31 @@ function echo_head -a msg
 end
 
 
+function echo_head -a msg no_lb
+    # if $no_lb is non-zero, skip the linebreak
+    test -z "$no_lb"; and echo ""
+    formatted_echo green "==>" $msg
+end
+
+
+function echo_important -a msg
+    formatted_echo blue "  ->" $msg
+end
+
+
 function yn_prompt -a msg
-    set -l answer
-    while test "$answer" != 'y' -a "$answer" != 'n'
+    set -l answer "0" # set answer to anything to keep the while loop running
+    while test "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer"
         read -P "$msg " answer
         set answer (string lower $answer)
     end
-    test "$answer" = 'y'; and return 0; or return 1
+    test "$answer" = 'y' -o -z "$answer"; and return 0; or return 1
 end
 
 
 function set_cache_var -a key value
-    if string match -r "^$key\s*=" < $cache_file
-        string replace '^('$key'\s*=\s*).+$' '$1'$value < $cache_file > $cache_file
+    if string match -qr "^$key\s*=" < $cache_file
+        string replace -r '^('$key'\s*=\s*).+$' '${1}'$value < $cache_file > $cache_file
     else
         echo "$key = $value" > $cache_file
     end
@@ -67,12 +91,12 @@ function print_msg -a msg_id msg_file
 end
 
 
-function check_for_updates
-    echo_head "News in the Arch Mailing List?"
+function check_mailing_list
+    echo_head "News in the Arch Mailing List?" 1
     set -l last_update_msg_id (get_cache_var last_update_msg_id)
     set -l mail_list_file (mktemp)
     echo -e "Retrieving current copy…"
-    curl --progress-bar https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
+    curl -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
 
     # get most recent message id from arch mailing list
     set -l msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
@@ -82,22 +106,50 @@ function check_for_updates
         echo "There are no previously recorded visits to the Arch Mailing List."
         yn_prompt "Continue anyway?"; and return 0; or return 1
     else if test $last_update_msg_id = $msg_id_list[-1]
-        echo "No news."
+        echo_important "No news."
         return
     else
         set -l last_update_msg_id_pos (contains -i $last_update_msg_id $msg_id_list)
-        echo (count $msg_id_list[$last_update_msg_id_pos..-1])' new entries in the mailing list.'
+        echo_important 'Yes, '(count $msg_id_list[$last_update_msg_id_pos..-1])' unread news items.'
 
         # collect all msg_ids for messages between now and $last_update_msg_id
         for msg_id in $msg_id_list[$last_update_msg_id_pos..-1]
             print_msg $msg_id $mail_list_file
             read -p "set_color -i; echo -n 'Press Enter to continue.'; set_color normal"
         end
+        set_cache_var last_update_msg_id $msg_id_list[-1]
+        yn_prompt "Continue with the updating process?"; and return 0; or return 1
     end
 end
 
 
-check_for_updates
+function check_repo_updates
+    echo_head "Updates in Pacman's repos?"
+    sudo pacman -Sy > /dev/null; or return 1
+    set repo_updates (count (pacman -Qu))
+    if test $repo_updates -gt 0
+        echo_important 'Yes, '$repo_updates' new updates.'
+    else
+        echo_important "None."
+    end
+end
+
+
+function check_aur_updates
+    echo_head "Updates in the AUR?"
+    set aur_updates (count (auracle sync -q))
+    if test $aur_updates -gt 0
+        echo_important 'Yes, '$aur_updates' new updates.'
+    else
+        echo_important "None."
+    end
+end
+
+
+test_sudo
+and check_mailing_list
+and check_repo_updates
+and check_aur_updates
 
 
 #import re

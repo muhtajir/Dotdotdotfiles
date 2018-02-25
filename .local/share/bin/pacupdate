@@ -1,9 +1,16 @@
 #!/usr/bin/env fish
 
 set cache_file $HOME/.cache/pacupdate
+# create a cache file if there isn't already one
+if test ! -e $cache_file
+    touch $cache_file
+end
 
 
-function echo_bold -a msg
+function echo_head -a msg
+    set_color -o green
+    echo -n '-> '
+    set_color normal
     set_color -o
     echo $msg
     set_color normal
@@ -11,23 +18,17 @@ end
 
 
 function yn_prompt -a msg
+    set -l answer
     while test "$answer" != 'y' -a "$answer" != 'n'
-        read -P $msg -l answer
+        read -P "$msg " answer
         set answer (string lower $answer)
     end
     test "$answer" = 'y'; and return 0; or return 1
 end
 
 
-function parse_cache_file -S
-    if test ! -e $cache_file
-        touch $cache_file
-    end
-end
-
-
 function set_cache_var -a key value
-    if string match -r "^$key\s*="
+    if string match -r "^$key\s*=" < $cache_file
         string replace '^('$key'\s*=\s*).+$' '$1'$value < $cache_file > $cache_file
     else
         echo "$key = $value" > $cache_file
@@ -36,19 +37,7 @@ end
 
 
 function get_cache_var -a key
-    string replace -rf '^'$key'\s*=\s*(.+)$' '$1'
-end
-
-
-function get_item_pos -a item list
-    # get the position of $item in $list
-    set -l pos 0
-    for list_item in list
-        set pos (math $pos +1)
-        test "$item" = "$list_item"; and break
-    end
-    or set pos -1
-    echo $pos
+    string replace -rf '^'$key'\s*=\s*(.+)$' '$1' < $cache_file
 end
 
 
@@ -72,40 +61,43 @@ function print_msg -a msg_id msg_file
         end
     end < $msg_file
 
-    # exclude leading and trailing empty lines
-    string join \n $msg_chunk[2..-2]
+    # leave leading and trailing empty lines for now
+    string join \n $msg_chunk
 
 end
 
 
 function check_for_updates
-    echo_bold "News in the Arch Mailing List?"
+    echo_head "News in the Arch Mailing List?"
     set -l last_update_msg_id (get_cache_var last_update_msg_id)
     set -l mail_list_file (mktemp)
     echo -e "Retrieving current copy…"
-    curl https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
+    curl --progress-bar https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
 
     # get most recent message id from arch mailing list
     set -l msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
 
     if test -z $last_update_msg_id
-        echo "There are no previously recorded visits to the Arch Mailing List."
-        yn_prompt "Continue anyway?"; or return 1
         set_cache_var last_update_msg_id $msg_id_list[-1]
+        echo "There are no previously recorded visits to the Arch Mailing List."
+        yn_prompt "Continue anyway?"; and return 0; or return 1
     else if test $last_update_msg_id = $msg_id_list[-1]
         echo "No news."
         return
     else
-        set -l last_update_msg_id_pos (get_item_pos $last_update_msg_id $msg_id_list)
-        echo (count $msg_id_list[$last_update_msg_id..-1])'new entries in the mailing list.'
+        set -l last_update_msg_id_pos (contains -i $last_update_msg_id $msg_id_list)
+        echo (count $msg_id_list[$last_update_msg_id_pos..-1])' new entries in the mailing list.'
 
         # collect all msg_ids for messages between now and $last_update_msg_id
-        for msg_id in $msg_id_list[$last_update_msg_id..-1]
+        for msg_id in $msg_id_list[$last_update_msg_id_pos..-1]
             print_msg $msg_id $mail_list_file
             read -p "set_color -i; echo -n 'Press Enter to continue.'; set_color normal"
         end
     end
 end
+
+
+check_for_updates
 
 
 #import re

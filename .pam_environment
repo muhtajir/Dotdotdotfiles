@@ -17,7 +17,6 @@ BASE0F                      DEFAULT=d65d0e
 EDITOR                      DEFAULT=nvim
 GNUPGHOME                   DEFAULT=@{HOME}/.config/gnupg
 GTK_IM_MODULE               DEFAULT=fcitx
-LESS                        DEFAULT=-i
 NOTMUCH_CONFIG              DEFAULT=@{HOME}/.config/notmuch/notmuch-config
 QT_IM_MODULE                DEFAULT=fcitx
 QT_STYLE_OVERRIDE           DEFAULT=adwaita

@@ -1,8 +1,13 @@
 [user]
     name = Pu Anlai
     email = inspectormustache@users.noreply.github.com
+
 [core]
     editor = nvim
+
+[push]
+    default = current
+
 [alias]
     a = add
     c = commit

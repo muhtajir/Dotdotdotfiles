@@ -5,6 +5,9 @@ set repo_updates
 set aur_updates
 set git_updates
 
+# setup a shorthand for 'command'
+alias c command
+
 # create a cache file if there isn't already one
 if test ! -e $cache_file
     touch $cache_file
@@ -12,10 +15,16 @@ end
 
 
 function test_sudo
-    if not command -s sudo > /dev/null
+    if not c -s sudo > /dev/null
         echo "Sudo not found on system. Aborting…"
         return 1
     end
+end
+
+
+function ring_bell
+    # ring the terminal bell, call this before any interactive command
+    printf \b
 end
 
 
@@ -42,6 +51,7 @@ end
 
 
 function yn_prompt -a msg
+    ring_bell
     set -l answer "0" # set answer to anything to keep the while loop running
     while test "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer"
         read -P "$msg " answer
@@ -125,8 +135,8 @@ end
 
 function check_repo_updates
     echo_head "Updates in Pacman's repos?"
-    sudo pacman -Sy > /dev/null; or return 1
-    set repo_updates (count (pacman -Qu))
+    c sudo pacman -Sy > /dev/null; or return 1
+    set repo_updates (count (c pacman -Qu))
     if test $repo_updates -gt 0
         echo_important 'Yes, '$repo_updates' new updates.'
     else
@@ -146,8 +156,48 @@ function check_aur_updates
 end
 
 
+function install_repo_updates
+    # skip if there are no aur_updates
+    count $repo_updates 2>/dev/null; or return 0
+
+    c sudo -n true 2>/dev/null; or ring_bell
+    echo_head "Installing updates from Pacman's repos…"
+    c sudo pacman -Su
+end
+
+
+function install_aur_updates
+    # skip if there are no aur_updates
+    count $aur_updates 2>/dev/null; or return 0
+
+    echo_head "Installing updates from the AUR…"
+
+    # skip if auracle's not installed
+    if not c -s auracle
+        echo_important "Auracle not installed. Skipping…"
+        return 0
+    end
+end
+
+
+function install_git_updates
+    # skip if git's not installed
+    if not c -s git
+        echo_important "Git not installed. Skipping…"
+        return 0
+    end
+end
+
+function install_updates
+    yn_prompt "Install updates?"; or return 1
+    install_repo_updates; or return 1
+    install_aur_updates; or return 1
+end
+
+
 test_sudo
 and check_mailing_list
+and update_pacman_mirrorlist
 and check_repo_updates
 and check_aur_updates
 

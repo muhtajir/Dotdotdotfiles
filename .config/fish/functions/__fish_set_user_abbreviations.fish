@@ -21,4 +21,7 @@ function __fish_set_user_abbreviations
     abbr --add pm pacman
     abbr --add feh feh -.
     abbr --add m mymail
+    abbr --add aur auracle
+    abbr --add aurs auracle search
+    abbr --add aurd auracle download
 end

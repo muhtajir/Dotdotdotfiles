@@ -1,22 +1,57 @@
 set realname='{{{REAL_NAME}}}'
 
+# sync mails upon startup
+exec sync-mailbox
+
 # settings for sending mail
 set sendmail="/usr/bin/msmtp"
 set from="{{{REAL_NAME}}} <{{{MAIL_ADDRESS}}}>"
 
-# don't ask for confirmation when deleting
+## speed up things
+# don't ask for confirmation when deleting or moving
 set delete
+set confirmappend = no
+# switch folders quicker
+set sleep_time = 0
+# create replies quicker
+set fast_reply = yes
+set include = yes
+
+# enable scrolling
+set menu_scroll
 
 # view HTML mails within mutt
 set mailcap_path = ~/.config/neomutt/mailcap
 alternative_order text/plain text/html
 auto_view text/html
 
+# define alias file settings
+set alias_file = ~/.config/neomutt/aliases
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+
+# source the colors file
+source ~/.config/neomutt/colors
+
 # don't show headers in pager
 ignore *
 
 # set up keychains by ignoring single keypresses
 bind attach,index,pager g noop
+
+# maildir settings
+set mbox_type = Maildir
+set folder = ~/.local/share/mail/posteo
+set spoolfile = +Inbox
+set record = +Sent
+set trash = +Trash
+set postponed = +Drafts
+set header_cache = ~/.cache/neomutt
+mailboxes = +Inbox +Sent +Drafts +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
+
+# sidebar settings
+set sidebar_visible
 
 # general keybinds
 bind pager j next-line
@@ -30,12 +65,3 @@ bind attach,index gg first-entry
 bind attach,index G last-entry
 bind index - limit
 bind index l display-message
-
-# maildir settings
-set mbox_type = Maildir
-set folder = ~/.local/share/mail/posteo
-set spoolfile = +Inbox
-set record = +Sent
-set trash = +Trash
-set postponed = +Drafts
-set header_cache = ~/.cache/neomutt

@@ -63,6 +63,7 @@ Code/Scripts/*
 !.config/neomutt
 .config/neomutt/*
 !.config/neomutt/mailcap
+!.config/neomutt/colors
 
 !.config/nvim
 .config/nvim/*

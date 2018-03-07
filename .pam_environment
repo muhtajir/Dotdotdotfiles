@@ -17,6 +17,8 @@ XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape
 
 # define config locations by environment variable
 GNUPGHOME                   DEFAULT=@{HOME}/.config/gnupg
+HISTFILE                    DEFAULT=@{HOME}/.local/share/.bash_history
+LESSHISTFILE                DEFAULT=@{HOME}/.local/share/.lesshst
 NOTMUCH_CONFIG              DEFAULT=@{HOME}/.config/notmuch/notmuch-config
 
 # setup base16 colors as environment variables

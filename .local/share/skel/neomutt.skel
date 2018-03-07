@@ -17,8 +17,10 @@ set sleep_time = 0
 set fast_reply = yes
 set include = yes
 
-# enable scrolling
+# menu navigation
 set menu_scroll
+set menu_context = 10
+unset menu_move_off
 
 # view HTML mails within mutt
 set mailcap_path = ~/.config/neomutt/mailcap
@@ -37,21 +39,35 @@ source ~/.config/neomutt/colors
 # don't show headers in pager
 ignore *
 
-# set up keychains by ignoring single keypresses
-bind attach,index,pager g noop
-
 # maildir settings
 set mbox_type = Maildir
 set folder = ~/.local/share/mail/posteo
+set mbox = +mbox
 set spoolfile = +Inbox
 set record = +Sent
 set trash = +Trash
 set postponed = +Drafts
 set header_cache = ~/.cache/neomutt
-mailboxes = +Inbox +Sent +Drafts +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
+mailboxes = +Inbox +Sent +Drafts +-------------------------------- +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
 
 # sidebar settings
 set sidebar_visible
+set sidebar_width = 30
+set sidebar_new_mail_only
+sidebar_whitelist +Inbox
+sidebar_whitelist +Sent
+sidebar_whitelist +Drafts
+sidebar_whitelist +Archiv
+sidebar_whitelist +Following
+sidebar_whitelist +Privat
+sidebar_whitelist +Transaktionen
+sidebar_whitelist +Arbeit+Bildung
+sidebar_whitelist +--------------------------------
+
+# set up keychains by ignoring single keypresses
+bind attach,index,pager g noop
+bind index s noop
+bind index,pager c noop
 
 # general keybinds
 bind pager j next-line
@@ -65,3 +81,29 @@ bind attach,index gg first-entry
 bind attach,index G last-entry
 bind index - limit
 bind index l display-message
+macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
+
+## mailbox switching and moving
+# first switching
+bind index,pager C change-folder
+bind index \CN sidebar-next
+bind index \CP sidebar-prev
+bind index \CO sidebar-open
+macro index,pager ca "<change-folder>=Archiv<enter>" "Zur Archiv Mailbox wechseln"
+macro index,pager cb "<change-folder>=Arbeit+Bildung<enter>" "Zur Arbeit+Bildung mailbox wechseln"
+macro index,pager cd "<change-folder>=Drafts<enter>" "Zur Drafts Mailbox wechseln"
+macro index,pager cf "<change-folder>=Following<enter>" "Zur Following Mailbox wechseln"
+macro index,pager ci "<change-folder>=Inbox<enter>" "Zur Inbox Mailbox wechseln"
+macro index,pager cp "<change-folder>=Privat<enter>" "Zur Privat Mailbox wechseln"
+macro index,pager cs "<change-folder>=Sent<enter>" "Zur Sent Mailbox wechseln"
+macro index,pager ct "<change-folder>=Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
+# then moving
+bind index,pager S save-message
+macro index sa "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Archiv<enter>" "In die Archiv Mailbox speichern"
+macro index sb "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
+macro index sd "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
+macro index sf "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Following<enter>" "In die Following Mailbox speichern"
+macro index si "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
+macro index sp "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Privat<enter>" "In die Privat Mailbox speichern"
+macro index ss "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Sent<enter>" "In die Sent Mailbox speichern"
+macro index st "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"

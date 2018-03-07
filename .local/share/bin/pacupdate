@@ -1,9 +1,10 @@
 #!/usr/bin/env fish
 
+
 set cache_file $HOME/.cache/pacupdate
-set repo_updates
-set aur_updates
-set git_updates
+set repo_updates 0
+set aur_updates 0
+set git_updates 0
 
 # setup fallbacks for envar settings
 function set_or_fallback -S -a var fallback
@@ -22,14 +23,8 @@ if test ! -e $cache_file
 end
 
 
-# setup a shorthand for 'command'
-function c
-    eval command $argv
-end
-
-
 function test_sudo
-    if not c -s sudo > /dev/null
+    if not command -s sudo > /dev/null
         echo "Sudo not found on system. Aborting…"
         return 1
     end
@@ -42,9 +37,10 @@ function ring_bell
 end
 
 
-function ring_for_sudo
-    # ring the terminal bell if there are no sudo credentials in cache
-    c sudo -n true 2>/dev/null; or ring_bell
+function s
+    # shorthand for sudo that also rings the terminal bell when credentials aren't cached
+    sudo -n true 2>/dev/null; or ring_bell
+    sudo $argv;
 end
 
 
@@ -86,9 +82,10 @@ function yn_prompt -a msg
     ring_bell
     set -l answer "0" # set answer to anything to keep the while loop running
     while test "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer"
-        read -P "$msg " answer
+        read -n 1 -p "set_color -o; echo -n "(string escape $msg)"; set_color normal" answer
         set answer (string lower $answer)
     end
+    stty echo # workaround for a fixed bug that will disappear in future fish versions
     test "$answer" = 'y' -o -z "$answer"; and return 0; or return 1
 end
 
@@ -137,10 +134,10 @@ function update_pacman_mirrorlist
     echo_head "Pacman mirrorlist outdated?" 1
     set -l last_update_mirrorlist (get_cache_var last_update_mirrorlist)
     if test -z $last_update_mirrorlist
-        set_cache_var last_update_mirrorlist (c date +%s)
+        set_cache_var last_update_mirrorlist (date +%s)
         echo "There are no previous update checks for the mirrorlist."
-    else if test (math (c date +%s) - $last_update_mirrorlist) -ge $PACUPDATE_MIRRORLIST_INTERVAL
-        set_cache_var last_update_mirrorlist (c date +%s)
+    else if test (math (date +%s) - $last_update_mirrorlist) -ge $PACUPDATE_MIRRORLIST_INTERVAL
+        set_cache_var last_update_mirrorlist (date +%s)
         echo_important "Yes."
     else
         echo "No."
@@ -149,7 +146,7 @@ function update_pacman_mirrorlist
 
     echo "Retrieving current copy…"
     set -l mirrorlist_temp (mktemp)
-    c curl -s 'https://www.archlinux.org/mirrorlist/'(string escape $PACUPDATE_MIRRORLIST_STRING) > $mirrorlist_temp 2>/dev/null
+    curl -s 'https://www.archlinux.org/mirrorlist/'(string escape $PACUPDATE_MIRRORLIST_STRING) > $mirrorlist_temp 2>/dev/null
     or begin
         echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set up?'
         return 1
@@ -159,9 +156,8 @@ function update_pacman_mirrorlist
     string replace -r '^#Server' 'Server' < $mirrorlist_temp > $mirrorlist_temp
 
     # backing up the old mirrorlist and setting the new one in place
-    ring_for_sudo
-    c sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup; or return 1
-    c sudo mv $mirrorlist_temp /etc/pacman.d/mirrorlist; or return 1
+    s cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup; or return 1
+    s mv $mirrorlist_temp /etc/pacman.d/mirrorlist; or return 1
     echo_important "Mirrorlist updated."
 end
 
@@ -171,7 +167,7 @@ function check_mailing_list
     set -l last_update_msg_id (get_cache_var last_update_msg_id)
     set -l mail_list_file (mktemp)
     echo "Retrieving current copy…"
-    c curl -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
+    curl -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
 
     # get most recent message id from arch mailing list
     set -l msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
@@ -200,9 +196,8 @@ end
 
 function check_repo_updates
     echo_head "Updates in Pacman's repos?"
-    ring_for_sudo
-    c sudo pacman -Sy > /dev/null; or return 1
-    set repo_updates (count (c pacman -Qu))
+    s pacman -Sy > /dev/null; or return 1
+    set repo_updates (count (pacman -Qu))
     if test $repo_updates -gt 0
         echo_important 'Yes, '$repo_updates' new updates.'
     else
@@ -224,22 +219,30 @@ end
 
 function install_repo_updates
     # skip if there are no aur_updates
-    count $repo_updates 2>/dev/null; or return 0
+    test $repo_updates -gt 0; or return 0
+
+    set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf)
+    set -l pacman_old_log (mktemp)
+    set -l pacman_new_log (mktemp)
+    if test -z $pacman_log
+        set pacman_log "/var/log/pacman.log"
+    end
+    cp $pacman_log $pacman_old_log; or return 1
 
     echo_head "Installing updates from Pacman's repos…"
-    ring_for_sudo
-    c sudo pacman -Su
+    s pacman -Su; or return 1
+    comm -13 $pacman_old_log $pacman_log > $pacman_new_log
 end
 
 
 function install_aur_updates
     # skip if there are no aur_updates
-    count $aur_updates 2>/dev/null; or return 0
+    test $aur_updates -gt 0; or return 0
 
     echo_head "Installing updates from the AUR…"
 
     # skip if auracle's not installed
-    if not c -s auracle
+    if not command -s auracle
         echo_important "Auracle not installed. Skipping…"
         return 0
     end
@@ -247,18 +250,27 @@ end
 
 
 function install_git_updates
+    test $git_updates -gt 0; or return 0
+
     echo_head "Installing Git updates…"
     # skip if git's not installed
-    if not c -s git
+    if not command -s git
         echo_important "Git not installed. Skipping…"
         return 0
     end
 end
 
 function install_updates
-    yn_prompt "Install updates?"; or return 1
+    # skip if there are no updates
+    set -l total_updates (math $repo_updates + $aur_updates + $git_updates)
+    if not test $total_updates -gt 0
+        return
+    end
+
+    yn_prompt "Install total of $total_updates updates?"; or return 1
     install_repo_updates; or return 1
     install_aur_updates; or return 1
+    install_git_updates; or return 1
 end
 
 
@@ -267,3 +279,4 @@ and update_pacman_mirrorlist
 and check_mailing_list
 and check_repo_updates
 and check_aur_updates
+and install_updates

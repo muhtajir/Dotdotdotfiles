@@ -110,6 +110,7 @@ Code/Scripts/*
 !.local/share/skel
 !.local/share/skel/*
 
+!.audiotools.cfg
 !.bashrc
 !.profile
 !.ctags

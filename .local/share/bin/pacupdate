@@ -70,6 +70,18 @@ function echo_important -a msg
 end
 
 
+function confirm -a msg
+    # show a confirm prompt that doesn't print user input
+    set_color -i
+    echo -n $msg
+    set_color normal
+    stty -echo
+    head -n 1 - | read -l _ #throwaway var
+    stty echo
+    echo
+end
+
+
 function yn_prompt -a msg
     ring_bell
     set -l answer "0" # set answer to anything to keep the while loop running
@@ -178,7 +190,7 @@ function check_mailing_list
         # collect all msg_ids for messages between now and $last_update_msg_id
         for msg_id in $msg_id_list[$last_update_msg_id_pos..-1]
             print_msg $msg_id $mail_list_file
-            read -p "set_color -i; echo -n 'Press Enter to continue.'; set_color normal"
+            confirm 'Press Enter to continue.'
         end
         set_cache_var last_update_msg_id $msg_id_list[-1]
         yn_prompt "Continue with the updating process?"; and return 0; or return 1

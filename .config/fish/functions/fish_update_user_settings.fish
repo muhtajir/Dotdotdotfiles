@@ -50,6 +50,4 @@ function fish_update_user_settings
     end
 
     __fish_set_user_abbreviations
-
-    __fish_set_fzf_colorscheme
 end

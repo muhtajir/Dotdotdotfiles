@@ -69,3 +69,4 @@ merge_var msmtp $HOME/.msmtprc
 merge_var neomutt $HOME/.config/neomutt/neomuttrc
 merge_var notmuch-config $HOME/.config/notmuch/notmuch-config
 merge_var mpv $HOME/.config/mpv/mpv.conf
+merge_var fish-variables $HOME/.config/fish/functions/__fish_set_universal_variables.fish

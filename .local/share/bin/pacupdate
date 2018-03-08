@@ -82,7 +82,7 @@ function yn_prompt -a msg
     ring_bell
     set -l answer "0" # set answer to anything to keep the while loop running
     while test "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer"
-        read -n 1 -p "set_color -o; echo -n "(string escape $msg)"; set_color normal" answer
+        read -n 1 -p "set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
         set answer (string lower $answer)
     end
     stty echo # workaround for a fixed bug that will disappear in future fish versions
@@ -146,7 +146,7 @@ function update_pacman_mirrorlist
 
     echo "Retrieving current copy…"
     set -l mirrorlist_temp (mktemp)
-    curl -s 'https://www.archlinux.org/mirrorlist/'(string escape $PACUPDATE_MIRRORLIST_STRING) > $mirrorlist_temp 2>/dev/null
+    curl -s "https://www.archlinux.org/mirrorlist/$PACUPDATE_MIRRORLIST_STRING" > $mirrorlist_temp 2>/dev/null
     or begin
         echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set up?'
         return 1

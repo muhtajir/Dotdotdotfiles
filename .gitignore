@@ -53,7 +53,7 @@ Code/Scripts/*
 !.config/mpd/mpd.conf
 
 !.config/mpv
-!.config/mpv/*
+!.config/mpv/input.conf
 
 !.config/ncmpcpp
 .config/ncmpcpp/*

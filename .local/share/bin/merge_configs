@@ -1,6 +1,15 @@
 #!/bin/fish
+set base_vars BASE00 BASE01 BASE02 BASE03 BASE04 BASE05 BASE06 BASE07 \
+              BASE08 BASE09 BASE0A BASE0B BASE0C BASE0D BASE0E BASE0F
+set required_vars REAL_NAME MAIL_ADDRESS HOME $base_vars
 
-function merge_config -a skel_file custom_path out_path
+# add base variables with '#' prepended
+for var in $base_vars
+    set {$var}_HASH '#'$$var
+    set required_vars $required_vars {$var}_HASH
+end
+
+function merge_files -a skel_file custom_path out_path
     set -l skel_path $HOME/.local/share/skel/$skel_file.skel
     test ! -e $skel_path; and return
 
@@ -27,29 +36,36 @@ function merge_config -a skel_file custom_path out_path
     end
 end
 
-function var_merge -a skel_file out_path
+function test_vars
+    for var in $required_vars
+        if not set -q $var
+            echo "Variable $var not set for merging based on variables."
+            return 1
+        end
+    end
+end
+
+function merge_var -a skel_file out_path
     set -l skel_path $HOME/.local/share/skel/$skel_file.skel
     test ! -e $skel_path; and return
 
-    if not set -q REAL_NAME MAIL_ADDRESS
-        echo "Set variables REAL_NAME, MAIL_ADDRESS for merging $skel_file.skel."
-        return
-    end
-
     mkdir -p (dirname $out_path)
     echo -n "" > $out_path
-    cat $skel_path | while read -l line
-        set line (string replace '{{{REAL_NAME}}}' $REAL_NAME $line)
-        set line (string replace '{{{MAIL_ADDRESS}}}' $MAIL_ADDRESS $line)
-        set line (string replace '{{{HOME}}}' $HOME $line)
-        echo $line >> $out_path
-    end; or true # dito
+    set skel_file_content (cat $skel_path)
+    for var in $required_vars
+        set skel_file_content (string replace '{{{'$var'}}}' "$$var" $skel_file_content)
+    end
+    string join \n $skel_file_content > $out_path
 end
 
-# run all configs that need to be merged together here
-merge_config i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
-merge_config i3 $HOME/.config/i3/custom $HOME/.config/i3/config
-var_merge mbsync $HOME/.mbsyncrc
-var_merge msmtp $HOME/.msmtprc
-var_merge neomutt $HOME/.config/neomutt/neomuttrc
-var_merge notmuch-config $HOME/.config/notmuch/notmuch-config
+# merge configs that have dedicated custom files
+merge_files i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
+merge_files i3 $HOME/.config/i3/custom $HOME/.config/i3/config
+
+# merge vars into configs
+test_vars; or exit
+merge_var mbsync $HOME/.mbsyncrc
+merge_var msmtp $HOME/.msmtprc
+merge_var neomutt $HOME/.config/neomutt/neomuttrc
+merge_var notmuch-config $HOME/.config/notmuch/notmuch-config
+merge_var mpv $HOME/.config/mpv/mpv.conf

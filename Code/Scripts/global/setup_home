@@ -6,6 +6,12 @@ eval $HOME/.local/share/bin/merge_configs
 set tmp_dir (mktemp -d)
 cd $tmp_dir
 
+function install_from_aur
+    if not pacman -Q $argv > /dev/null 2>/dev/null
+        cowmake $argv
+    end
+end
+
 function print_bold
     echo ''
     echo -e "\033[1m"$argv"\033[0m"
@@ -65,11 +71,10 @@ update_mirrorlist
 # some AUR stuff, if it's not installed already
 print_bold "Building specific AUR packages…"
 which cower > /dev/null 2>/dev/null; or install_cower
-which i3 > /dev/null 2>/dev/null; or cowmake i3-gaps
-which i3lock > /dev/null 2>/dev/null; or cowmake i3lock-color
-which j4-dmenu-desktop > /dev/null 2>/dev/null; or cowmake j4-dmenu-desktop
-which unclutter > /dev/null 2>/dev/null; or cowmake unclutter-xfixes-git
-which nextcloud > /dev/null 2>/dev/null; or cowmake nextcloud-client
+install_from_aur i3lock-color
+install_from_aur j4-dmenu-desktop
+install_from_aur unclutter-xfixes-git
+install_from_aur nextcloud-client
 fc-list : family | string match -qe mononoki; or cowmake ttf-mononoki
 fc-list : family | string match -qe FontAwesome; or install_font_awesome
 
@@ -93,6 +98,7 @@ sudo pacman -S --needed \
     fzf \
     dunst \
     feh \
+    i3-gaps \
     compton \
     termite \
     pass \

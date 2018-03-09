@@ -7,7 +7,7 @@ function __fish_set_universal_variables
     # environment variables used by other programs
     # FZF
     set -U FZF_DEFAULT_OPTS "
-      --height 48% --border
+      --height 60% --border
       --color=bg+:'#3a3a3a',bg:'#262626',spinner:'#85ad85',hl:'#83adad'
       --color=fg:'#949494',header:'#83adad',info:'#ffaf00',pointer:'#85ad85'
       --color=marker:'#85ad85',fg+:'#d5c4a1',prompt:'#ffaf00',hl+:'#83adad'

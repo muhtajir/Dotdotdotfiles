@@ -24,8 +24,8 @@ unset menu_move_off
 
 # view HTML mails within mutt
 set mailcap_path = ~/.config/neomutt/mailcap
-alternative_order text/plain text/html
 auto_view text/html
+alternative_order text/plain text/enriched text/html
 
 # define alias file settings
 set alias_file = ~/.config/neomutt/aliases

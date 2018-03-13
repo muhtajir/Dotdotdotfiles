@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+cd (mktemp -d)
+curl -O "$QUTE_URL"
+xdg-open *

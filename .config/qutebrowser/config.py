@@ -301,6 +301,7 @@ config.bind(',f', 'hint all hover')
 config.bind(',O', 'set-cmd-text --space :open -b')
 config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
 config.bind(';a', 'hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}')
+config.bind(';x', 'hint links userscript xdg-open')
 # Open current url in new windows
 config.unbind('wO', mode='normal')
 config.bind('gw', 'set-cmd-text :open -w {url:pretty}')

@@ -107,6 +107,11 @@ Code/Scripts/*
 !.local/share/bin
 !.local/share/bin/*
 
+!.local/share/qutebrowser
+.local/share/qutebrowser/*
+!.local/share/qutebrowser/userscripts
+!.local/share/qutebrowser/userscripts/*
+
 !.local/share/skel
 !.local/share/skel/*
 

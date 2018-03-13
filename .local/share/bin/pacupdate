@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 
+set parent_tmp_dir (mktemp -d)
 set cache_file $HOME/.cache/pacupdate
 set repo_updates 0
 set aur_updates 0
@@ -28,6 +29,20 @@ function test_sudo
         echo "Sudo not found on system. Aborting…"
         return 1
     end
+end
+
+
+function test_installed -a cmd
+    if not command -s $cmd
+        echo_important "$cmd not installed. Skipping…"
+        return 1
+    end
+end
+
+
+function mktemp
+    # override mktemp to use $parent_tmp_dir as a sort of sandbox
+    command mktemp -p "$parent_tmp_dir" $argv
 end
 
 
@@ -235,6 +250,22 @@ function install_repo_updates
 end
 
 
+function install_aur_package -a pkg
+    set -l orig_dir (pwd)
+    set -l deps (auracle buildorder $pkg | string replace 'BUILD ' ''); or return 1
+
+    # build dependencies and $pkg in correct order
+    for dep_pkg in $deps
+        echo_important "Building and installing $dep_pkg…"
+        cd (mktemp -d --suffix "-$dep_pkg")
+        git clone "https://aur.archlinux.org/$dep_pkg.git" .; or return 1
+        makepkg -sri; or return 1
+    end
+
+    cd $orig_dir
+end
+
+
 function install_aur_updates
     # skip if there are no aur_updates
     test $aur_updates -gt 0; or return 0
@@ -242,9 +273,11 @@ function install_aur_updates
     echo_head "Installing updates from the AUR…"
 
     # skip if auracle's not installed
-    if not command -s auracle
-        echo_important "Auracle not installed. Skipping…"
-        return 0
+    test_installed auracle; or return 0
+
+    for aur_pkg in $aur_updates
+        install_aur_package
+        or yn_prompt "Error installing $aur_pkg. Continue anyway? "; or return 1
     end
 end
 
@@ -253,12 +286,11 @@ function install_git_updates
     test $git_updates -gt 0; or return 0
 
     echo_head "Installing Git updates…"
+
     # skip if git's not installed
-    if not command -s git
-        echo_important "Git not installed. Skipping…"
-        return 0
-    end
+    test_installed git; or return 0
 end
+
 
 function install_updates
     # skip if there are no updates
@@ -280,3 +312,5 @@ and check_mailing_list
 and check_repo_updates
 and check_aur_updates
 and install_updates
+
+rm -rf $parent_tmp_dir

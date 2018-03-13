@@ -21,6 +21,7 @@ set include = yes
 set menu_scroll
 set menu_context = 10
 unset menu_move_off
+set resolve = no
 
 # view HTML mails within mutt
 set mailcap_path = ~/.config/neomutt/mailcap

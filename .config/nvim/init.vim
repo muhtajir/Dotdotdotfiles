@@ -181,7 +181,7 @@ nnoremap <silent> Ö :call append(line('.')-1,'')<CR>
 nnoremap <leader>ö o<ESC>
 nnoremap <leader>Ö O<ESC>
 
-" system clipboard accesible by prepending leader key
+" system clipboard accessible by prepending leader key
 nnoremap <leader>y "+y
 nnoremap <leader>p "+p
 nnoremap <leader>Y "+y$
@@ -248,6 +248,18 @@ vnoremap } )
 
 " file navigation
 nnoremap <silent> <A-o> :Explore<CR>
+
+" search for visually selected text in file
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>

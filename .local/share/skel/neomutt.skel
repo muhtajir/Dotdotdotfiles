@@ -67,7 +67,7 @@ sidebar_whitelist +--------------------------------
 
 # set up keychains by ignoring single keypresses
 bind attach,index,pager g noop
-bind index s noop
+bind index,pager s noop
 bind index,pager c noop
 
 # general keybinds
@@ -100,6 +100,7 @@ macro index,pager cs "<change-folder>=Sent<enter>" "Zur Sent Mailbox wechseln"
 macro index,pager ct "<change-folder>=Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
 # then moving
 bind index,pager S save-message
+# moving from the index (supporting prefix)
 macro index sa "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Archiv<enter>" "In die Archiv Mailbox speichern"
 macro index sb "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
 macro index sd "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
@@ -108,3 +109,14 @@ macro index si "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Inbox<enter>
 macro index sp "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Privat<enter>" "In die Privat Mailbox speichern"
 macro index ss "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Sent<enter>" "In die Sent Mailbox speichern"
 macro index st "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+# moving from the pager
+macro pager sa "<change-folder>=Archiv<enter>" "In die Archiv Mailbox wechseln"
+macro pager sb "<save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
+macro pager sd "<save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
+macro pager sf "<save-message>=Following<enter>" "In die Following Mailbox speichern"
+macro pager si "<save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
+macro pager sp "<save-message>=Privat<enter>" "In die Privat Mailbox speichern"
+macro pager ss "<save-message>=Sent<enter>" "In die Sent Mailbox speichern"
+macro pager st "<save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+
+# vim:ft=neomuttrc

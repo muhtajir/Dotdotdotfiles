@@ -4,7 +4,7 @@ function __fish_set_user_abbreviations
     abbr --add g git
     abbr --add jctl journalctl
     abbr --add m mymail
-    abbr --add mksri makepkg --sri
+    abbr --add mksri makepkg -sri
     abbr --add nd nextd
     abbr --add o open
     abbr --add pd prevd

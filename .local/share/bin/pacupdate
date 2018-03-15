@@ -10,6 +10,12 @@ set aur_updates_count
 set git_updates
 set git_updates_count
 
+# create a cache file if there isn't already one
+if [ ! -e $cache_file ]
+    mkdir -p (dirname $cache_file)
+    touch $cache_file
+end
+
 # setup fallbacks for envar settings
 function set_or_fallback -S -a var fallback
     if not set -gq $var
@@ -20,11 +26,6 @@ end
 
 set_or_fallback PACUPDATE_MIRRORLIST_STRING "?country=all&protocol=http&protocol=https&ip_version=4"
 set_or_fallback PACUPDATE_MIRRORLIST_INTERVAL 1209600
-
-# create a cache file if there isn't already one
-if [ ! -e $cache_file ]
-    touch $cache_file
-end
 
 
 function test_sudo

@@ -1,11 +1,14 @@
-#!/usr/bin/env fish
+#!/bin/fish
 
 
 set parent_tmp_dir (mktemp -d)
 set cache_file $HOME/.cache/pacupdate
-set repo_updates 0
-set aur_updates 0
-set git_updates 0
+set repo_updates
+set repo_updates_count
+set aur_updates
+set aur_updates_count
+set git_updates
+set git_updates_count
 
 # setup fallbacks for envar settings
 function set_or_fallback -S -a var fallback
@@ -19,13 +22,13 @@ set_or_fallback PACUPDATE_MIRRORLIST_STRING "?country=all&protocol=http&protocol
 set_or_fallback PACUPDATE_MIRRORLIST_INTERVAL 1209600
 
 # create a cache file if there isn't already one
-if test ! -e $cache_file
+if [ ! -e $cache_file ]
     touch $cache_file
 end
 
 
 function test_sudo
-    if not command -s sudo > /dev/null
+    if not command -sq sudo
         echo "Sudo not found on system. Aborting…"
         return 1
     end
@@ -33,7 +36,7 @@ end
 
 
 function test_installed -a cmd
-    if not command -s $cmd
+    if not command -sq $cmd
         echo_important "$cmd not installed. Skipping…"
         return 1
     end
@@ -71,7 +74,7 @@ end
 
 function echo_head -a msg no_lb
     # if $no_lb is non-zero, skip the linebreak
-    test -z "$no_lb"; and echo ""
+    [ -z "$no_lb" ]; and echo ""
     formatted_echo green "==>" $msg
 end
 
@@ -83,6 +86,7 @@ end
 
 function confirm -a msg
     # show a confirm prompt that doesn't print user input
+    ring_bell
     set_color -i
     echo -n $msg
     set_color normal
@@ -96,12 +100,12 @@ end
 function yn_prompt -a msg
     ring_bell
     set -l answer "0" # set answer to anything to keep the while loop running
-    while test "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer"
+    while [ "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer" ]
         read -n 1 -p "set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
         set answer (string lower $answer)
     end
     stty echo # workaround for a fixed bug that will disappear in future fish versions
-    test "$answer" = 'y' -o -z "$answer"; and return 0; or return 1
+    [ "$answer" = 'y' -o -z "$answer" ]; and return 0; or return 1
 end
 
 
@@ -148,10 +152,10 @@ end
 function update_pacman_mirrorlist
     echo_head "Pacman mirrorlist outdated?" 1
     set -l last_update_mirrorlist (get_cache_var last_update_mirrorlist)
-    if test -z $last_update_mirrorlist
+    if [ -z $last_update_mirrorlist ]
         set_cache_var last_update_mirrorlist (date +%s)
         echo "There are no previous update checks for the mirrorlist."
-    else if test (math (date +%s) - $last_update_mirrorlist) -ge $PACUPDATE_MIRRORLIST_INTERVAL
+    else if [ (math (date +%s) - $last_update_mirrorlist) -ge $PACUPDATE_MIRRORLIST_INTERVAL ]
         set_cache_var last_update_mirrorlist (date +%s)
         echo_important "Yes."
     else
@@ -187,11 +191,11 @@ function check_mailing_list
     # get most recent message id from arch mailing list
     set -l msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
 
-    if test -z $last_update_msg_id
+    if [ -z $last_update_msg_id ]
         set_cache_var last_update_msg_id $msg_id_list[-1]
         echo "There are no previously recorded visits to the Arch Mailing List."
         yn_prompt "Continue anyway?"; and return 0; or return 1
-    else if test $last_update_msg_id = $msg_id_list[-1]
+    else if [ $last_update_msg_id = $msg_id_list[-1] ]
         echo_important "No news."
         return
     else
@@ -209,12 +213,51 @@ function check_mailing_list
 end
 
 
+function get_package_buildtime -a pkg
+    set -l orig_lang $LANG
+    set -lx LANG en_US.UTF-8
+
+    pacman -Qi $pkg | \
+    string replace -rf 'Build Date\s+:\s+(.+)$' '$1' | \
+    read -l builddate_time; or return 1
+    set -lx LANG $orig_lang
+    date -d $builddate_time +%s
+end
+
+
+function check_git_package -a pkg
+    # check a single git package for updates and return without status if there are any
+    # don't use a random dir for git packages so we can reuse them
+    set -l orig_dir (pwd)
+
+    cd (mktemp -d)
+    git clone "https://aur.archlinux.org/$pkg.git" . >/dev/null 2>&1; or return 1
+    set -l git_repo_urls (string match -r '\Wgit\+(.+?\.git)\W' < PKGBUILD)
+
+    cd (mktemp -d)
+    # the second list entry is the first matched subgroup and therefore the
+    # first cleaned up git url
+    git clone "$git_repo_urls[2]" . --depth=1 >/dev/null 2>&1; or return 1
+    set -l last_git_commit_date (git log -1 --format=format:%at)
+
+    if [ $last_git_commit_date -gt (get_package_buildtime $pkg) ]
+        return 0
+    else
+        return 1
+    end
+
+    cd $orig_dir
+end
+
+
 function check_repo_updates
     echo_head "Updates in Pacman's repos?"
     s pacman -Sy > /dev/null; or return 1
-    set repo_updates (count (pacman -Qu))
-    if test $repo_updates -gt 0
-        echo_important 'Yes, '$repo_updates' new updates.'
+    set repo_updates (pacman -Qu)
+    set repo_updates_count (count $repo_updates)
+
+    if [ $repo_updates_count -gt 0 ]
+        echo_important "Yes, $repo_updates_count new updates."
     else
         echo_important "None."
     end
@@ -223,9 +266,43 @@ end
 
 function check_aur_updates
     echo_head "Updates in the AUR?"
-    set aur_updates (count (auracle sync -q))
-    if test $aur_updates -gt 0
-        echo_important 'Yes, '$aur_updates' new updates.'
+
+    # skip if auracle's not installed
+    test_installed auracle; or return 0
+
+    for pkg in (auracle sync -q)
+        # this is for packages that get moved from the aur to the official repos
+        not contains $pkg $repo_updates; and set aur_updates $pkg
+    end
+    set aur_updates_count (count $aur_updates)
+
+    if [ $aur_updates_count -gt 0 ]
+        echo_important "Yes, $aur_updates_count new updates."
+    else
+        echo_important "None."
+    end
+end
+
+
+function check_git_updates
+    echo_head "Outdated git-packages?"
+
+    # skip if git's not installed
+    test_installed git; or return 0
+
+    # TODO: integrate a check that only looks up git updates in certain intervals
+
+    set git_pkgs (pacman -Qq | string match -er -- '-git$')
+    for pkg in $git_pkgs
+        if not contains $pkg $aur_updates; and check_git_package $pkg
+            set git_updates $git_updates $pkg
+        end
+    end
+
+    set git_updates_count (count $git_updates)
+
+    if [ $git_updates_count -gt 0 ]
+        echo_important 'Yes, '$git_updates_count' new updates.'
     else
         echo_important "None."
     end
@@ -233,13 +310,13 @@ end
 
 
 function install_repo_updates
-    # skip if there are no aur_updates
-    test $repo_updates -gt 0; or return 0
+    # skip if there are no updates
+    [ $repo_updates -gt 0 ]; or return 0
 
     set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf)
     set -l pacman_old_log (mktemp)
     set -l pacman_new_log (mktemp)
-    if test -z $pacman_log
+    if [ -z $pacman_log ]
         set pacman_log "/var/log/pacman.log"
     end
     cp $pacman_log $pacman_old_log; or return 1
@@ -258,7 +335,7 @@ function install_aur_package -a pkg
     for dep_pkg in $deps
         echo_important "Building and installing $dep_pkg…"
         cd (mktemp -d --suffix "-$dep_pkg")
-        git clone "https://aur.archlinux.org/$dep_pkg.git" .; or return 1
+        git clone "https://aur.archlinux.org/$dep_pkg.git" . >/dev/null 2>&1; or return 1
         makepkg -sri; or return 1
     end
 
@@ -268,12 +345,12 @@ end
 
 function install_aur_updates
     # skip if there are no aur_updates
-    test $aur_updates -gt 0; or return 0
+    [ $aur_updates_count -gt 0 ]; or return 0
 
     echo_head "Installing updates from the AUR…"
 
-    # skip if auracle's not installed
-    test_installed auracle; or return 0
+    # skip if git's not installed
+    test_installed git; or return 0
 
     for aur_pkg in $aur_updates
         install_aur_package
@@ -283,23 +360,22 @@ end
 
 
 function install_git_updates
-    test $git_updates -gt 0; or return 0
+    [ $git_updates_count -gt 0 ]; or return 0
 
     echo_head "Installing Git updates…"
 
-    # skip if git's not installed
-    test_installed git; or return 0
+    # TODO: procedure for actually installing git updates… should be as simple as doing install_aur_package though
 end
 
 
 function install_updates
     # skip if there are no updates
-    set -l total_updates (math $repo_updates + $aur_updates + $git_updates)
-    if not test $total_updates -gt 0
+    set -l total_updates_count (math $repo_updates_count + $aur_updates_count + $git_updates_count)
+    if not [ $total_updates_count -gt 0 ]
         return
     end
 
-    yn_prompt "Install total of $total_updates updates?"; or return 1
+    yn_prompt "Install total of $total_updates_count updates?"; or return 1
     install_repo_updates; or return 1
     install_aur_updates; or return 1
     install_git_updates; or return 1
@@ -311,6 +387,9 @@ and update_pacman_mirrorlist
 and check_mailing_list
 and check_repo_updates
 and check_aur_updates
+and check_git_updates
+breakpoint
+echo skipped
 and install_updates
 
 rm -rf $parent_tmp_dir

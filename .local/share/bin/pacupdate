@@ -61,14 +61,15 @@ end
 
 function ring_bell
     # ring the terminal bell, call this before any interactive command
-    printf \b
+    printf "\a" >&2
 end
 
 
 function s
     # shorthand for sudo that also rings the terminal bell when credentials aren't cached
-    sudo -n true 2>/dev/null
-        or ring_bell
+    if not sudo -n true 2>/dev/null
+        ring_bell
+    end
     sudo $argv
 end
 
@@ -83,11 +84,16 @@ function formatted_echo -a color prefix msg
 end
 
 
-function echo_head -a msg no_lb
-    # if $no_lb is non-zero, skip the linebreak
-    [ -z "$no_lb" ]
+function echo_head
+    argparse 'n-nolb' 'c=' -- $argv
+    [ -z "$_flag_c" ]
+        and set _flag_c green
+
+    # skip linebreak on nolb flag
+    [ ! $_flag_nolb ]
         and echo ""
-    formatted_echo green "==>" $msg
+
+    formatted_echo $_flag_c "==>" "$argv"
 end
 
 
@@ -164,7 +170,7 @@ end
 
 
 function update_pacman_mirrorlist
-    echo_head "Pacman mirrorlist outdated?" 1
+    echo_head --nolb "Pacman mirrorlist outdated?"
     set -l last_update_mirrorlist (get_cache_var last_update_mirrorlist)
     # convert PACUPDATE_MIRRORLIST_INTERVAL to seconds
     set -l update_interval (math $PACUPDATE_MIRRORLIST_INTERVAL \* 86400)
@@ -420,7 +426,7 @@ function install_repo_updates
 
     set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf)
     set -l pacman_old_log (mktemp)
-    set -l pacman_new_log (mktemp)
+    set -l pacman_new_log "/tmp/pacupdate_checklog"
     if [ -z $pacman_log ]
         set pacman_log "/var/log/pacman.log"
     end
@@ -495,7 +501,6 @@ end
 function install_updates
     # skip if there are no updates
     set -l total_updates_count (math $repo_updates_count + $aur_updates_count + $git_updates_count)
-    decho $total_updates_count
     if not [ $total_updates_count -gt 0 ]
         return 0
     end
@@ -518,6 +523,8 @@ and check_repo_updates
 and check_aur_updates
 and check_git_updates
 and install_updates
-or echo_head "Update aborted."
+or echo_head -c red "Update aborted."
+    and set exit_status 1
 
 rm -rf $parent_tmp_dir
+exit $exit_status

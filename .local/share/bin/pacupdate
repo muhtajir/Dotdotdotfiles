@@ -117,15 +117,22 @@ end
 
 function yn_prompt -a msg
     ring_bell
-    set -l answer "0" # set answer to anything to keep the while loop running
-    while [ "$answer" != 'y' -a "$answer" != 'n' -a -n "$answer" ]
-        read -n 1 -p "set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
+    set -l answer
+    while true
+        read -n 1 --prompt="set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
         set answer (string lower $answer)
+        if [ $answer = 'y' -o $answer = 'n' ]
+            break
+        end
     end
+
     stty echo # workaround for a fixed bug that will disappear in future fish versions
-    [ "$answer" = 'y' -o -z "$answer" ]
-        and return 0
-        or return 1
+
+    if [ "$answer" = 'y' -o -z "$answer" ]
+        return 0
+    else
+        return 1
+    end
 end
 
 
@@ -421,7 +428,7 @@ end
 
 function install_repo_updates
     # skip if there are no updates
-    [ $repo_updates -gt 0 ]
+    [ $repo_updates_count -gt 0 ]
         or return 0
 
     set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf)

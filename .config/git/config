@@ -12,6 +12,7 @@
     a = add
     c = commit
     co = checkout
+    d = diff
     f = fetch
     l = log
     pl = pull

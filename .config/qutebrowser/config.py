@@ -1,3 +1,31 @@
+# pylint: disable=C0111
+import os
+from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
+from qutebrowser.config.config import ConfigContainer  # noqa: F401
+config = config  # type: ConfigAPI # noqa: F821 pylint: disable=E0602,C0103
+c = c  # type: ConfigContainer # noqa: F821 pylint: disable=E0602,C0103
+
+
+def merge_bookmarks():
+    """Merge bookmarks from the cloud with those kept by qutebrowser."""
+    int_bookmarks = os.path.join(config.configdir, 'bookmarks', 'urls')
+    ext_bookmarks = os.path.join(os.getenv('HOME'), 'Nextcloud', 'Diverses',
+                                 'Bookmarks', 'qute_urls')
+
+    try:
+        with open(ext_bookmarks) as f:
+            ext_urls = f.readlines()
+    except FileNotFoundError:
+        return
+
+    f_mode = 'r+' if os.path.exists(int_bookmarks) else 'w+'
+    with open(int_bookmarks, f_mode) as f:
+        int_urls = f.readlines()
+        f.seek(0)
+        f.truncate()
+        f.writelines(sorted(set(ext_urls + int_urls)))
+
+
 BASE00 = "#262626"  # black0
 BASE01 = "#3a3a3a"  # black1
 BASE02 = "#4e4e4e"  # black2
@@ -18,9 +46,7 @@ BASE0F = "#d65d0e"  # dark_orange
 FONT_SANS_SERIF = 'Quicksand Medium'
 FONT_MONO = 'Source Code Pro'
 
-# satisfy (kind of) flake8 warning messages
-c = c
-config = config
+merge_bookmarks()
 
 ## Color settings
 # Background color of the completion widget category headers.
@@ -242,41 +268,41 @@ c.keyhint.delay = 200
 # successful auto-follow.
 c.hints.auto_follow_timeout = 300
 
-# Where to show the downloaded files.
-c.downloads.position = 'bottom'
-
-# Open new tabs in background
-c.tabs.background = True
-
-# Don't store cookies because I don't like them
-c.content.cookies.store = False
-
-# Set editor
-# c.editor.command = ['termite', '--exec=\'nvim -c "normal {line}G{column0}l" -- {file}\'']
-c.editor.command = ['termite', '-e', 'nvim -c "normal {line}G{column0}l" {file}']
-
+## Address bar shortcut settings
 # Definitions of search engines which can be used via the address bar.
-c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
-                       'aw': 'https://wiki.archlinux.org/index.php?search={}',
-                       'bc': 'https://bandcamp.com/search?q={}',
-                       'bgg': 'https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={}',
-                       'fm': 'https://www.last.fm/search?q={}',
-                       'g': 'https://encrypted.google.com/search?q={}',
-                       'gh': 'https://github.com/search?utf8=%E2%9C%93&q={}',
-                       'lc': 'https://dict.leo.org/chinesisch-deutsch/{}',
-                       'le': 'https://dict.leo.org/german-english/{}',
-                       'lf': 'https://dict.leo.org/französisch-deutsch/{}',
-                       'py': 'https://docs.python.org/3.6/search.html?q={}',
-                       'ug': 'https://www.ultimate-guitar.com/search.php?search_type=title&value={}',
-                       'w': 'https://en.wikipedia.org/w/index.php?search={}',
-                       'wd': 'https://de.wikipedia.org/w/index.php?search={}',
-                       'yt': 'https://www.youtube.com/results?search_query={}'}
-
-# Which tab to select when the focused tab is removed.
-c.tabs.select_on_remove = 'last-used'
-
+c.url.searchengines = {
+    'DEFAULT': 'https://duckduckgo.com/?q={}',
+    'aw': 'https://wiki.archlinux.org/index.php?search={}',
+    'bc': 'https://bandcamp.com/search?q={}',
+    'bgg': 'https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={}',
+    'fm': 'https://www.last.fm/search?q={}',
+    'g': 'https://encrypted.google.com/search?q={}',
+    'gh': 'https://github.com/search?utf8=%E2%9C%93&q={}',
+    'lc': 'https://dict.leo.org/chinesisch-deutsch/{}',
+    'le': 'https://dict.leo.org/german-english/{}',
+    'lf': 'https://dict.leo.org/französisch-deutsch/{}',
+    'py': 'https://docs.python.org/3.6/search.html?q={}',
+    'ug': 'https://www.ultimate-guitar.com/search.php?search_type=title&value={}',
+    'w': 'https://en.wikipedia.org/w/index.php?search={}',
+    'wd': 'https://de.wikipedia.org/w/index.php?search={}',
+    'yt': 'https://www.youtube.com/results?search_query={}'}
 # Aliases
 c.aliases['ssh-tunnel'] = 'set content.proxy socks://localhost:4711 ;; message-info "Tunnel proxy set."'
+
+## Miscellaneous settings
+# Where to show the downloaded files.
+c.downloads.position = 'bottom'
+# Open new tabs in background
+c.tabs.background = True
+# Don't store cookies because I don't like them
+c.content.cookies.store = False
+# Set editor
+c.editor.command = ['termite', '-e',
+                    'nvim -c "normal {line}G{column0}l" {file}']
+# Which tab to select when the focused tab is removed.
+c.tabs.select_on_remove = 'last-used'
+# Confirm exit when there's downloads running
+c.confirm_quit = ['downloads']
 
 ## Key bindings
 # Deletion

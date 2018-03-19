@@ -9,6 +9,7 @@ set aur_updates
 set aur_updates_count
 set git_updates
 set git_updates_count
+set exit_status 0
 
 # create a cache file if there isn't already one
 if [ ! -e $cache_file ]
@@ -71,6 +72,13 @@ function s
         ring_bell
     end
     sudo $argv
+end
+
+
+function remove_from_list -a key var -S
+    # remove an entry from a list by referencing it directly
+    set -l pos (contains -i $key $$var)
+    set -e "$var"[$pos]
 end
 
 
@@ -197,8 +205,8 @@ function update_pacman_mirrorlist
     set -l mirrorlist_temp (mktemp)
     curl -s "https://www.archlinux.org/mirrorlist/$PACUPDATE_MIRRORLIST_STRING" > $mirrorlist_temp 2>/dev/null
         or begin
-        echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set?' >&2
-        return 1
+            echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set?' >&2
+            return 1
         end
 
     # cleaning up mirrorlist
@@ -286,8 +294,8 @@ function get_git_url -a pkg
     set -l git_dir (mktemp -d)
     git clone "https://aur.archlinux.org/$pkg.git" "$git_dir" >/dev/null 2>&1
         or begin
-        echo "Error retrieving package $pkg from AUR." >&2
-        return 1
+            echo "Error retrieving package $pkg from AUR." >&2
+            return 1
         end
     set git_urls (bash --norc -c "source $git_dir/PKGBUILD && echo \$source")
 
@@ -328,8 +336,8 @@ function get_last_git_commit -a git_url
 
     git clone "$git_url" "$git_dir" -b "$git_branch_arg" --depth=1 >/dev/null 2>&1
         or begin
-        echo "Error cloning from $git_url." >&2
-        return 1
+            echo "Error cloning from $git_url." >&2
+            return 1
         end
 
     # this is the return value
@@ -447,26 +455,38 @@ function install_repo_updates
 end
 
 
+function build_aur_pkg
+    argparse 'p/pkg=' 'd/dep' -- $argv
+    set -l makepkg_args ""
+    [ $_flag_dep ]; and set makepkg_args "--asdeps"
+    echo_important "Building and installing $_flag_pkg…"
+    cd (mktemp -d --suffix "-$_flag_pkg")
+    git clone "https://aur.archlinux.org/$_flag_pkg.git" . >/dev/null 2>&1
+        or begin
+            echo "Error retrieving package $_flag_pkg from AUR." >&2
+            return 1
+        end
+    makepkg -sri $makepkg_args
+        or return 1
+end
+
+
 function install_aur_package -a pkg
     set -l orig_dir (pwd)
-    set -l deps (auracle buildorder $pkg | string replace 'BUILD ' '')
-        or begin
-        echo "Error setting up build process for $pkg." >&2
-        return 1
-        end
+
+    set -l deps (auracle buildorder $pkg)
+    # format dependency lines if there are any; also remove the original
+    # package so it can be explicitly installed
+    if count $deps >/dev/null
+        set deps (string replace 'BUILD ' '' $deps)
+        remove_from_list $pkg $deps
+    end
 
     # build dependencies and $pkg in correct order
     for dep_pkg in $deps
-        echo_important "Building and installing $dep_pkg…"
-        cd (mktemp -d --suffix "-$dep_pkg")
-        git clone "https://aur.archlinux.org/$dep_pkg.git" . >/dev/null 2>&1
-            or begin
-            echo "Error retrieving package $dep_pkg from AUR." >&2
-            return 1
-            end
-        makepkg -sri
-            or return 1
+        build_aur_pkg --dep --pkg $dep_pkg
     end
+    build_aur_pkg --pkg $pkg
 
     cd $orig_dir
 end
@@ -484,7 +504,7 @@ function install_aur_updates
         or return 0
 
     for aur_pkg in $aur_updates
-        install_aur_package
+        install_aur_package $aur_pkg
             or yn_prompt "Error installing $aur_pkg. Continue anyway? "
                 or return 1
     end
@@ -498,7 +518,7 @@ function install_git_updates
     echo_head "Installing Git updates…"
 
     for pkg in $git_updates
-        install_aur_package
+        install_aur_package $pkg
             or yn_prompt "Error installing $aur_pkg. Continue anyway? "
                 or return 1
     end
@@ -530,8 +550,10 @@ and check_repo_updates
 and check_aur_updates
 and check_git_updates
 and install_updates
-or echo_head -c red "Update aborted."
+or begin
+    echo_head -c red "Update aborted."
     and set exit_status 1
+end
 
 rm -rf $parent_tmp_dir
 exit $exit_status

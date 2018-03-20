@@ -1,7 +1,7 @@
 #!/bin/fish
 
 
-set parent_tmp_dir (mktemp --suffix='pacupdate' -d)
+set parent_tmp_dir (mktemp --suffix='-pacupdate' -d)
 set cache_file $HOME/.cache/pacupdate
 set repo_updates
 set repo_updates_count
@@ -184,6 +184,21 @@ function print_msg -a msg_id msg_file
 end
 
 
+function simple_diff_print -a file1 file2
+    # show all lines that are present in file2 but not in file1
+    set -l lines1 (cat $file1)
+    set -l lines2 (cat $file2)
+    set -l diff_lines
+
+    for line in $lines2
+        if not contains $line $lines1
+            set diff_lines $diff_lines $line
+        end
+    end
+    string join \n $diff_lines
+end
+
+
 function update_pacman_mirrorlist
     echo_head --nolb "Pacman mirrorlist outdated?"
     set -l last_update_mirrorlist (get_cache_var last_update_mirrorlist)
@@ -202,7 +217,7 @@ function update_pacman_mirrorlist
     end
 
     echo "Retrieving current copy…"
-    set -l mirrorlist_temp (mktemp)
+    set -l mirrorlist_temp (mktemp --suffix="-mirrorlist")
     curl -s "https://www.archlinux.org/mirrorlist/$PACUPDATE_MIRRORLIST_STRING" > $mirrorlist_temp 2>/dev/null
         or begin
             echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set?' >&2
@@ -224,7 +239,7 @@ end
 function check_mailing_list
     echo_head "News in the Arch Mailing List?"
     set -l last_update_msg_id (get_cache_var last_update_msg_id)
-    set -l mail_list_file (mktemp)
+    set -l mail_list_file (mktemp --suffix="-maillist")
     echo "Retrieving current copy…"
     curl -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
 
@@ -291,7 +306,7 @@ end
 
 function get_git_url -a pkg
     # get the git_url for pkg
-    set -l git_dir (mktemp -d)
+    set -l git_dir (mktemp -d --suffix="-$pkg")
     git clone "https://aur.archlinux.org/$pkg.git" "$git_dir" >/dev/null 2>&1
         or begin
             echo "Error retrieving package $pkg from AUR." >&2
@@ -439,19 +454,19 @@ function install_repo_updates
     [ $repo_updates_count -gt 0 ]
         or return 0
 
-    set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf)
-    set -l pacman_old_log (mktemp)
-    set -l pacman_new_log "/tmp/pacupdate_checklog"
-    if [ -z $pacman_log ]
-        set pacman_log "/var/log/pacman.log"
-    end
+    set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf
+        or echo "/var/log/pacman.log")
+    set -l pacman_old_log (mktemp --suffix=".log.old")
+    set -l pacman_new_log (mktemp --suffix=".log.new")
     cp $pacman_log $pacman_old_log
         or return 1
 
     echo_head "Installing updates from Pacman's repos…"
     s pacman -Su
         or return 1
-    comm -13 $pacman_old_log $pacman_log > $pacman_new_log
+
+    simple_diff_print $pacman_old_log $pacman_log > $pacman_new_log
+    # TODO: process new log entries
 end
 
 
@@ -460,7 +475,7 @@ function build_aur_pkg
     set -l makepkg_args ""
     [ $_flag_dep ]; and set makepkg_args "--asdeps"
     echo_important "Building and installing $_flag_pkg…"
-    cd (mktemp -d --suffix "-$_flag_pkg")
+    cd (mktemp -d --suffix="-$_flag_pkg")
     git clone "https://aur.archlinux.org/$_flag_pkg.git" . >/dev/null 2>&1
         or begin
             echo "Error retrieving package $_flag_pkg from AUR." >&2
@@ -555,5 +570,5 @@ or begin
     and set exit_status 1
 end
 
-rm -rf $parent_tmp_dir
+# rm -rf $parent_tmp_dir
 exit $exit_status

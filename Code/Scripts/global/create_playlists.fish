@@ -9,7 +9,7 @@ set new_since $argv
 set playlist_folder "$HOME/.config/mpd/playlists"
 
 function get_files -a file_path
-    find $file_path -name '*.flac' -or -name '*.ogg' -or -name '*.mp3'
+    find $file_path -name '*.flac' -or -name '*.ogg' -or -name '*.mp3' -or -name '*.m4a'
 end
 
 function add_to_playlist -a playlist_name file_path shuffled

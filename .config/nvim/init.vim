@@ -306,7 +306,7 @@ let g:neomake_autolint_events = {
     \ }
 
 " neoterm
-let g:neoterm_position = 'vertical'
+let g:neoterm_default_mod = ':vertical'
 let g:neoterm_keep_term_open = 0
 nnoremap <silent> <leader>tc :call neoterm#close()<CR>
 nnoremap <silent> <leader>tk :call neoterm#kill()<CR>

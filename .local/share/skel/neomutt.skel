@@ -29,7 +29,7 @@ auto_view text/html
 alternative_order text/plain text/enriched text/html
 
 # define alias file settings
-set alias_file = ~/.config/neomutt/aliases
+set alias_file = ~/Nextcloud/Diverses/Bookmarks/neomutt_aliases
 set sort_alias = alias
 set reverse_alias = yes
 source $alias_file
@@ -70,18 +70,20 @@ bind attach,index,pager g noop
 bind index,pager s noop
 bind index,pager c noop
 
-# general keybinds
+# Moving around
 bind pager j next-line
 bind pager k previous-line
 bind pager h exit
-bind attach,index,pager \CD next-page
-bind attach,index,pager \CU previous-page
+bind browser h goto-parent
+bind index l display-message
+bind browser l select-entry
+bind attach,index,pager,browser \CD next-page
+bind attach,index,pager,browser \CU previous-page
 bind pager G bottom
 bind pager gg top
-bind attach,index gg first-entry
-bind attach,index G last-entry
+bind attach,index,browser gg first-entry
+bind attach,index,browser G last-entry
 bind index - limit
-bind index l display-message
 macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
 
 ## mailbox switching and moving

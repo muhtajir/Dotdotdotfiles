@@ -3,10 +3,14 @@ set base_vars BASE00 BASE01 BASE02 BASE03 BASE04 BASE05 BASE06 BASE07 \
               BASE08 BASE09 BASE0A BASE0B BASE0C BASE0D BASE0E BASE0F
 set required_vars REAL_NAME MAIL_ADDRESS HOME $base_vars
 
-# add base variables with '#' prepended
+# add base variables with '#' prepended and rgb values
 for var in $base_vars
     set {$var}_HASH '#'$$var
-    set required_vars $required_vars {$var}_HASH
+
+    set {$var}_R (printf '%d' 0x(string sub -l 2 $$var))
+    set {$var}_G (printf '%d' 0x(string sub -s 3 -l 2 $$var))
+    set {$var}_B (printf '%d' 0x(string sub -s 5 -l 2 $$var))
+    set required_vars $required_vars {$var}_HASH {$var}_R {$var}_G {$var}_B
 end
 
 function merge_files -a skel_file custom_path out_path
@@ -70,3 +74,4 @@ merge_var neomutt $HOME/.config/neomutt/neomuttrc
 merge_var notmuch-config $HOME/.config/notmuch/notmuch-config
 merge_var mpv $HOME/.config/mpv/mpv.conf
 merge_var fish-variables $HOME/.config/fish/functions/__fish_set_universal_variables.fish
+merge_var rofi-theme $HOME/.config/rofi/theme.rasi

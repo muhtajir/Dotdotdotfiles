@@ -12,3 +12,5 @@ sub-shadow-color = '{{{BASE01_HASH}}}'
 osd-color = '{{{BASE07_HASH}}}'
 osd-border-color = '{{{BASE00_HASH}}}'
 osd-shadow-color = '{{{BASE01_HASH}}}'
+
+# vim:ft=conf

@@ -147,12 +147,14 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Shift+s split h; layout stacking
+bindsym $mod+Shift+w split v; layout tabbed
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Insert floating toggle
+bindsym $mod+g floating toggle
 
 # change focus between tiling / floating windows
 # bindsym $mod+space focus mode_toggle
@@ -317,3 +319,5 @@ exec --no-startup-id numlockx on
 exec --no-startup-id setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape
 exec --no-startup-id nc_monitor $HOME/Nextcloud
 exec --no-startup-id xss-lock -- $HOME/.config/i3/scripts/pm_lock
+
+# vim:ft=conf

@@ -30,3 +30,5 @@ markup=pango
 
 [shutdown]
 interval=once
+
+# vim:ft=dosini

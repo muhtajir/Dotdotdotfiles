@@ -28,3 +28,5 @@ function __fish_set_universal_variables
     set -Ux LESS_TERMCAP_us (printf "\e[01;35m")
 
 end
+
+# vim:ft=fish

@@ -97,3 +97,5 @@ synchronize_flags=true
 #
 [crypto]
 gpg_path=gpg
+
+# vim:ft=dosini

@@ -198,10 +198,11 @@ class Menu():
                 self.move_selection(1)
             elif key_input == ord('k') or key_input == curses.KEY_UP:
                 self.move_selection(-1)
-            elif key_input == ord('d'):
-                self.move_selection(5)
-            elif key_input == ord('u'):
-                self.move_selection(-5)
+            # 4 = Ctrl+d / 21 = Ctrl+U
+            elif key_input == 4:
+                self.move_selection(10)
+            elif key_input == 21:
+                self.move_selection(-10)
             elif key_input == ord('s'):
                 self.load_playlist(self.entry_dict[self.current_pos].value,
                                    append=False)

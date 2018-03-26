@@ -73,10 +73,11 @@ bind index,pager c noop
 # Moving around
 bind pager j next-line
 bind pager k previous-line
-bind pager h exit
+bind pager,attach h exit
 bind browser h goto-parent
 bind index l display-message
 bind browser l select-entry
+bind attach l view-attach
 bind attach,index,pager,browser \CD next-page
 bind attach,index,pager,browser \CU previous-page
 bind pager G bottom

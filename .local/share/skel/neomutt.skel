@@ -37,8 +37,9 @@ source $alias_file
 # source the colors file
 source ~/.config/neomutt/colors
 
-# don't show headers in pager
+# customize shown header contents
 ignore *
+unignore from date subject to cc bcc
 
 # maildir settings
 set mbox_type = Maildir
@@ -52,9 +53,11 @@ set header_cache = ~/.cache/neomutt
 mailboxes = +Inbox +Sent +Drafts +-------------------------------- +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
 
 # sidebar settings
+set mail_check_stats
 set sidebar_visible
 set sidebar_width = 30
 set sidebar_new_mail_only
+set sidebar_format = " %B (%S)%* %?N?[%N]?"
 sidebar_whitelist +Inbox
 sidebar_whitelist +Sent
 sidebar_whitelist +Drafts
@@ -121,5 +124,8 @@ macro pager si "<save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
 macro pager sp "<save-message>=Privat<enter>" "In die Privat Mailbox speichern"
 macro pager ss "<save-message>=Sent<enter>" "In die Sent Mailbox speichern"
 macro pager st "<save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+
+# hiding or showing the sidebar
+macro index <Space> "<enter-command>toggle sidebar_visible<enter>"
 
 # vim:ft=neomuttrc

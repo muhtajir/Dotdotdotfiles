@@ -1,5 +1,6 @@
 # pylint: disable=C0111
 import os
+import tempfile
 from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
 from qutebrowser.config.config import ConfigContainer  # noqa: F401
 config = config  # type: ConfigAPI # noqa: F821 pylint: disable=E0602,C0103
@@ -292,6 +293,8 @@ c.aliases['ssh-tunnel'] = 'set content.proxy socks://localhost:4711 ;; message-i
 ## Miscellaneous settings
 # Where to show the downloaded files.
 c.downloads.position = 'bottom'
+# Default download location
+c.downloads.location.directory = tempfile.gettempdir()
 # Open new tabs in background
 c.tabs.background = True
 # Don't store cookies because I don't like them

@@ -1,7 +1,7 @@
 #!/bin/fish
 set base_vars BASE00 BASE01 BASE02 BASE03 BASE04 BASE05 BASE06 BASE07 \
               BASE08 BASE09 BASE0A BASE0B BASE0C BASE0D BASE0E BASE0F
-set required_vars REAL_NAME MAIL_ADDRESS HOME $base_vars
+set required_vars REAL_NAME MAIL_ADDRESS HOME FONT_SANS FONT_SERIF FONT_MONO $base_vars
 
 # add base variables with '#' prepended and rgb values
 for var in $base_vars
@@ -14,16 +14,18 @@ for var in $base_vars
 end
 
 function merge_files -a skel_file custom_path out_path
-    set -l skel_path $HOME/.local/share/skel/$skel_file.skel
-    test ! -e $skel_path; and return
+    if [ ! -f $skel_file ]
+        set skel_file $HOME/.local/share/skel/$skel_file.skel
+    end
+    test ! -e $skel_file; and return
 
     set -l skel_lines
-    cat $skel_path | while read -l line
+    cat $skel_file | while read -l line
         set skel_lines $skel_lines $line
     end
 
     set -l custom_lines
-    # if there's no custom_path, an empty custom_lines variable will just result in a copy of the skel_path, which is okay
+    # if there's no custom_path, an empty custom_lines variable will just result in a copy of the skel_file, which is okay
     if test -e $custom_path
         cat $custom_path | while read -l line
             set custom_lines $custom_lines $line
@@ -50,23 +52,35 @@ function test_vars
 end
 
 function merge_var -a skel_file out_path
-    set -l skel_path $HOME/.local/share/skel/$skel_file.skel
-    test ! -e $skel_path; and return
+    if [ ! -f $skel_file ]
+        set skel_file $HOME/.local/share/skel/$skel_file.skel
+    end
+    test ! -e $skel_file; and return
+
+    if test ! -e $skel_file
+        echo "File $skel_file.skel missing."
+        return
+    end
 
     mkdir -p (dirname $out_path)
     echo -n "" > $out_path
-    set skel_file_content (cat $skel_path)
+    set skel_file_content (cat $skel_file)
     for var in $required_vars
         set skel_file_content (string replace '{{{'$var'}}}' "$$var" $skel_file_content)
     end
     string join \n $skel_file_content > $out_path
 end
 
-# merge configs that have dedicated custom files
-merge_files i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
-merge_files i3 $HOME/.config/i3/custom $HOME/.config/i3/config
+function merge_both -a skel_file custom_path out_path
+    set -l tmp_out (mktemp)
+    merge_var $skel_file $tmp_out
+    merge_files $tmp_out $custom_path $out_path
+end
 
-# merge vars into configs
+# merge configs that have custom files
+merge_files i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
+
+# merge configs that have variable placeholders
 test_vars; or exit
 merge_var mbsync $HOME/.mbsyncrc
 merge_var msmtp $HOME/.msmtprc
@@ -75,3 +89,6 @@ merge_var notmuch-config $HOME/.config/notmuch/notmuch-config
 merge_var mpv $HOME/.config/mpv/mpv.conf
 merge_var fish-variables $HOME/.config/fish/functions/__fish_set_universal_variables.fish
 merge_var rofi-theme $HOME/.config/rofi/theme.rasi
+
+# merge configs that have both
+merge_both i3 $HOME/.config/i3/custom $HOME/.config/i3/config

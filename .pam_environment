@@ -38,3 +38,8 @@ BASE0C                      DEFAULT=85ad85
 BASE0D                      DEFAULT=83adad
 BASE0E                      DEFAULT=d485ad
 BASE0F                      DEFAULT=d65d0e
+
+# setup font settings for accessing them from the shell
+FONT_SANS                   DEFAULT="Quicksand Medium"
+FONT_SERIF                  DEFAULT=Merriweather
+FONT_MONO                   DEFAULT=Mononoki

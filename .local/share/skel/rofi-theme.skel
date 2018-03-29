@@ -1,0 +1,149 @@
+* {
+    selected-normal-foreground:     @lightbg;
+    foreground:                     rgba ( {{{BASE05_R}}}, {{{BASE05_G}}}, {{{BASE05_B}}}, 100 % );
+    normal-foreground:              @foreground;
+    alternate-normal-background:    @lightbg;
+    red:                            rgba ( {{{BASE08_R}}}, {{{BASE08_G}}}, {{{BASE08_B}}}, 100 % );
+    selected-urgent-foreground:     @background;
+    blue:                           rgba ( {{{BASE0D_R}}}, {{{BASE0D_G}}}, {{{BASE0D_B}}}, 100 % );
+    urgent-foreground:              @red;
+    alternate-urgent-background:    @lightbg;
+    active-foreground:              @blue;
+    lightbg:                        rgba ( {{{BASE01_R}}}, {{{BASE01_G}}}, {{{BASE01_B}}}, 100 % );
+    selected-active-foreground:     @background;
+    alternate-active-background:    @lightbg;
+    background:                     rgba ( {{{BASE00_R}}}, {{{BASE00_G}}}, {{{BASE00_B}}}, 80 % );
+    alternate-normal-foreground:    @foreground;
+    normal-background:              @background;
+    lightfg:                        rgba ( {{{BASE06_R}}}, {{{BASE06_G}}}, {{{BASE06_B}}}, 100 % );
+    selected-normal-background:     @blue;
+    border-color:                   @foreground;
+    separatorcolor:                 @foreground;
+    urgent-background:              @background;
+    selected-urgent-background:     @red;
+    alternate-urgent-foreground:    @red;
+    background-color:               rgba ( {{{BASE00_R}}}, {{{BASE00_G}}}, {{{BASE00_B}}}, 0 % );
+    alternate-active-foreground:    @blue;
+    active-background:              @background;
+    selected-active-background:     @blue;
+    transparent:                    rgba (0, 0, 0, 0);
+}
+
+window {
+    padding:                    22px 0px 0px 0px;
+    font:                       "{{{FONT_SANS}}} 18";
+    fullscreen:                 true;
+    location:                   west;
+    anchor:                     west;
+    orientation:                horizontal;
+    background-color:           @transparent;
+    children:                   [mainbox, dummy];
+}
+
+dummy {
+    expand:                     true;
+}
+
+mainbox {
+    expand:             false;
+    spacing:            3px;
+    background-color:   @background;
+}
+
+inputbar {
+    orientation:    horizontal;
+    spacing:        0px;
+    text-color:     @normal-foreground;
+    padding:        1px ;
+    children:       [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+
+prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0px 0.3000em 0.0000em 0.0000em ;
+    text-color: inherit;
+}
+
+entry {
+    width:      20em;
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+textbox {
+    text-color:                 @foreground;
+}
+
+listview {
+    dynamic:        false;
+    spacing:                    0px ;
+    lines:          0;
+}
+
+element {
+    padding:                1px ;
+}
+element normal.normal {
+        text-color:       @normal-foreground;
+}
+element normal.urgent {
+        text-color:       @urgent-foreground;
+}
+element normal.active {
+        text-color:       @active-foreground;
+}
+element selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+element selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+element selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+element alternate.normal {
+        text-color:       @normal-foreground;
+}
+element alternate.urgent {
+        text-color:       @urgent-foreground;
+}
+element alternate.active {
+        text-color:       @active-foreground;
+}
+
+scrollbar {
+    width:        4px ;
+    border:       0;
+    handle-color: @normal-foreground;
+    handle-width: 8px ;
+    padding:      0;
+}
+
+sidebar {
+    /* border:       2px dash 0px 0px ; */
+    border-color: @separatorcolor;
+}
+
+button {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+button selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}

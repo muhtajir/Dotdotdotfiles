@@ -1,7 +1,7 @@
 ################
 # OSD settings #
 ################
-osd-font = Quicksand Medium
+osd-font = {{{FONT_SANS}}}
 osd-border-size = 1
 osd-font-size = 28
 osd-bar-w = 95

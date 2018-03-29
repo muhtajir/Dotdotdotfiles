@@ -111,7 +111,7 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,r-cr:hor20-blinkon0,o:hor50-blinkon0
 
 " set what to ignore when using wildcards (mainly relevant for ctrlP)
-set wildignore+=*/__pycache__/*
+set wildignore+=*/__pycache__/*,*/.git/*
 
 " make vim find hidden ctags files
 set tags+=./.tags;
@@ -281,6 +281,7 @@ let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("k")':    ['<A-k>'],
     \ }
 let g:ctrlp_working_path_mode = ''
+let g:ctrlp_show_hidden = 1
 
 " deoplete
 let g:deoplete#enable_at_startup = 1

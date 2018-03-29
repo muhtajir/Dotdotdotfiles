@@ -291,6 +291,8 @@ c.url.searchengines = {
 c.aliases['ssh-tunnel'] = 'set content.proxy socks://localhost:4711 ;; message-info "Tunnel proxy set."'
 
 ## Miscellaneous settings
+# Start page
+c.url.start_pages = 'https://www.punknews.org/'
 # Where to show the downloaded files.
 c.downloads.position = 'bottom'
 # Default download location

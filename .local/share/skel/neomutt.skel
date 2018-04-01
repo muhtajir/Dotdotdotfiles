@@ -1,3 +1,4 @@
+# %-LOCATION:$HOME/.config/neomutt/neomuttrc-%
 set realname='{{{REAL_NAME}}}'
 
 # sync mails upon startup

@@ -1,3 +1,4 @@
+# %-LOCATION:$HOME/.config/mpv/mpv.conf-%
 ################
 # OSD settings #
 ################
@@ -6,11 +7,11 @@ osd-border-size = 1
 osd-font-size = 28
 osd-bar-w = 95
 osd-bar-h = 1.2
-sub-color = '{{{BASE07_HASH}}}'
-sub-border-color = '{{{BASE00_HASH}}}'
-sub-shadow-color = '{{{BASE01_HASH}}}'
-osd-color = '{{{BASE07_HASH}}}'
-osd-border-color = '{{{BASE00_HASH}}}'
-osd-shadow-color = '{{{BASE01_HASH}}}'
+sub-color = '{{{__BASE07_HASH}}}'
+sub-border-color = '{{{__BASE00_HASH}}}'
+sub-shadow-color = '{{{__BASE01_HASH}}}'
+osd-color = '{{{__BASE07_HASH}}}'
+osd-border-color = '{{{__BASE00_HASH}}}'
+osd-shadow-color = '{{{__BASE01_HASH}}}'
 
 # vim:ft=conf

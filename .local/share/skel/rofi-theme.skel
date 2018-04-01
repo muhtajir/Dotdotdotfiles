@@ -1,17 +1,18 @@
+// %-LOCATION:$HOME/.config/rofi/theme.rasi-%
 /**
  * Author: Bla
  */
 * {
 
-    foreground:                  {{{BASE00_HASH}}};
-    background:                  {{{BASE06_HASH}}};
-    lightbg:                     {{{BASE04_HASH}}};
-    red:                         {{{BASE08_HASH}}};
-    orange:                      {{{BASE09_HASH}}}; 
-    dark-orange:                 {{{BASE0F_HASH}}}; 
-    blue:                        {{{BASE0D_HASH}}}; 
-    cyan:                        {{{BASE0C_HASH}}}; 
-    magenta:                     {{{BASE0E_HASH}}}; 
+    foreground:                  {{{__BASE00_HASH}}};
+    background:                  {{{__BASE06_HASH}}};
+    lightbg:                     {{{__BASE04_HASH}}};
+    red:                         {{{__BASE08_HASH}}};
+    orange:                      {{{__BASE09_HASH}}}; 
+    dark-orange:                 {{{__BASE0F_HASH}}}; 
+    blue:                        {{{__BASE0D_HASH}}}; 
+    cyan:                        {{{__BASE0C_HASH}}}; 
+    magenta:                     {{{__BASE0E_HASH}}}; 
 
     background-color:            @background;
     normal-foreground:           @foreground;
@@ -34,7 +35,7 @@
     selected-urgent-background:  @selected-normal-background;
 
     transparent:                 rgba (0, 0, 0, 0);
-    border-color:                rgba ({{{BASE00_R}}}, {{{BASE00_G}}}, {{{BASE00_B}}}, 85%);
+    border-color:                rgba ({{{__BASE00_R}}}, {{{__BASE00_G}}}, {{{__BASE00_B}}}, 85%);
     separatorcolor:              @orange;
     spacing:                     2;
 }
@@ -166,3 +167,5 @@
 #button normal {
     text-color: @foreground;
 }
+
+# vim:ft=cpp

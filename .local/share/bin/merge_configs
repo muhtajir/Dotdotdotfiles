@@ -1,94 +1,58 @@
 #!/bin/fish
-set base_vars BASE00 BASE01 BASE02 BASE03 BASE04 BASE05 BASE06 BASE07 \
-              BASE08 BASE09 BASE0A BASE0B BASE0C BASE0D BASE0E BASE0F
-set required_vars REAL_NAME MAIL_ADDRESS HOME FONT_SANS FONT_SERIF FONT_MONO $base_vars
 
-# add base variables with '#' prepended and rgb values
-for var in $base_vars
-    set {$var}_HASH '#'$$var
+set SKEL_FILES_PATH "$HOME/.local/share/skel/"
 
-    set {$var}_R (printf '%d' 0x(string sub -l 2 $$var))
-    set {$var}_G (printf '%d' 0x(string sub -s 3 -l 2 $$var))
-    set {$var}_B (printf '%d' 0x(string sub -s 5 -l 2 $$var))
-    set required_vars $required_vars {$var}_HASH {$var}_R {$var}_G {$var}_B
-end
+function inject_custom
+    # inject the contents of custom_file into target_lines at the specified point
 
-function merge_files -a skel_file custom_path out_path
-    if [ ! -f $skel_file ]
-        set skel_file $HOME/.local/share/skel/$skel_file.skel
-    end
-    test ! -e $skel_file; and return
+    argparse 'c=' -- $argv
 
-    set -l skel_lines
-    cat $skel_file | while read -l line
-        set skel_lines $skel_lines $line
-    end
+    set custom_file $_flag_c
+    set target_lines $argv
 
-    set -l custom_lines
-    # if there's no custom_path, an empty custom_lines variable will just result in a copy of the skel_file, which is okay
-    if test -e $custom_path
-        cat $custom_path | while read -l line
-            set custom_lines $custom_lines $line
-        end
-    end
-
-    mkdir -p (dirname $out_path)
-    echo -n "" > $out_path
-    for line in $skel_lines
-        echo $line >> $out_path
-        string match -qe '{{{custom}}}' $line; and begin
-            string join \n $custom_lines >> $out_path
-        end; or true # so this doesn't create an exit code of 1 even though nothing's wrong
-    end
-end
-
-function test_vars
-    for var in $required_vars
-        if not set -q $var
-            echo "Variable $var not set for merging based on variables."
-            return 1
+    # do the replacing
+    for line in $target_lines
+        if string match -eq '{{{custom}}}' $line
+            for custom_line in (cat $custom_file)
+                echo $custom_line
+            end
+        else
+            echo $line
         end
     end
 end
 
-function merge_var -a skel_file out_path
-    if [ ! -f $skel_file ]
-        set skel_file $HOME/.local/share/skel/$skel_file.skel
-    end
-    test ! -e $skel_file; and return
+function safe_write
+    # only write to file if there were no errors
 
-    if test ! -e $skel_file
-        echo "File $skel_file.skel missing."
-        return
-    end
+    argparse 'f=' -- $argv
 
-    mkdir -p (dirname $out_path)
-    echo -n "" > $out_path
-    set skel_file_content (cat $skel_file)
-    for var in $required_vars
-        set skel_file_content (string replace '{{{'$var'}}}' "$$var" $skel_file_content)
+    set write_file $_flag_f
+    set target_lines $argv
+
+    if [ -z "$argv" ]
+        echo "Skipping merging for $write_file…" >&2
+    else
+        string join \n $target_lines > $write_file
     end
-    string join \n $skel_file_content > $out_path
 end
 
-function merge_both -a skel_file custom_path out_path
-    set -l tmp_out (mktemp)
-    merge_var $skel_file $tmp_out
-    merge_files $tmp_out $custom_path $out_path
+function process_skel -a skel_file
+    set location (head -n 1 $skel_file | string match -r '(?<=%-LOCATION:).+?(?=-%)')
+    set custom (head -n 1 $skel_file | string match -r '(?<=%-CUSTOM:).+?(?=-%)')
+    # resolve variables in string
+    set location (eval echo $location)
+    set custom (eval echo $custom)
+
+    if [ -z "$custom" ]
+        safe_write -f $location -- (mergevars $skel_file | tail -n +2)
+    else
+        set merged_var_lines (mergevars -i custom $skel_file 2>/dev/null | tail -n +2)
+        safe_write -f $location -- (inject_custom -c $custom -- $merged_var_lines)
+    end
 end
 
-# merge configs that have custom files
-merge_files i3blocks $HOME/.config/i3blocks/custom $HOME/.config/i3blocks/config
 
-# merge configs that have variable placeholders
-test_vars; or exit
-merge_var mbsync $HOME/.mbsyncrc
-merge_var msmtp $HOME/.msmtprc
-merge_var neomutt $HOME/.config/neomutt/neomuttrc
-merge_var notmuch-config $HOME/.config/notmuch/notmuch-config
-merge_var mpv $HOME/.config/mpv/mpv.conf
-merge_var fish-variables $HOME/.config/fish/functions/__fish_set_universal_variables.fish
-merge_var rofi-theme $HOME/.config/rofi/theme.rasi
-
-# merge configs that have both
-merge_both i3 $HOME/.config/i3/custom $HOME/.config/i3/config
+for file in $SKEL_FILES_PATH/*
+    process_skel $file
+end

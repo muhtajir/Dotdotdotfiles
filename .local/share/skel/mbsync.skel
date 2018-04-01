@@ -1,3 +1,4 @@
+# %-LOCATION:$HOME/.mbsyncrc-%
 IMAPAccount posteo
 Host posteo.de
 User {{{MAIL_ADDRESS}}}

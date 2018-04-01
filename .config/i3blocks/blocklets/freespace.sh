@@ -20,5 +20,5 @@ echo "${percentage%.*}% <span size='x-small'>($left)</span>"
 echo ${percentage%.*}%
 
 if (( ${percentage%.*} > 92 )); then
-    echo \#$BASE08
+    echo \#$__BASE08
 fi

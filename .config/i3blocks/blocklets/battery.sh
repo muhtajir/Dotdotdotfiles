@@ -16,7 +16,7 @@ if (( $charge < 5 )); then
     echo ""
     # change color if critical charge is reached
     echo ""
-    echo \#$BASE08
+    echo \#$__BASE08
 elif (( $charge < 13 )); then
     echo ""
 elif (( $charge < 36 )); then

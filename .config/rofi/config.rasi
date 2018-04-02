@@ -1,5 +1,5 @@
 configuration {
-	modi: "window,drun,ssh";
+	modi: "window,drun";
 	theme: "~/.config/rofi/theme.rasi";
 	fixed-num-lines: false;
 	scroll-method: 1;

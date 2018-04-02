@@ -72,7 +72,6 @@ update_mirrorlist
 print_bold "Building specific AUR packages…"
 which cower > /dev/null 2>/dev/null; or install_cower
 install_from_aur i3lock-color
-install_from_aur j4-dmenu-desktop
 install_from_aur unclutter-xfixes-git
 install_from_aur nextcloud-client
 fc-list : family | string match -qe mononoki; or cowmake ttf-mononoki
@@ -111,6 +110,7 @@ sudo pacman -S --needed \
     arc-gtk-theme \
     fcitx-im \
     fcitx-sunpinyin \
+    rofi \
     w3m
 
 # setup firejail

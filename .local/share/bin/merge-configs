@@ -44,18 +44,21 @@ function process_skel -a skel_file
     set location (eval echo $location)
     set custom (eval echo $custom)
 
+    if [ -n "$custom" -a ! -f "$custom" ]
+        echo "$skel_file points to a custom file that does not exist." >&2
+        echo "Skipping custom file merging…" >&2
+        set custom ''
+    end
+
     if [ -z "$location" ]
-        echo "$skel_file has no line specifying its target location" >&2
+        echo "$skel_file has no line specifying its target location." >&2
     else if [ -z "$custom" ]
         safe_write -f $location -- (mergevars $skel_file | tail -n +2)
-    else if [ -f "$custom" ]
+    else
         set merged_var_lines (mergevars -i custom $skel_file 2>/dev/null | tail -n +2)
         safe_write -f $location -- (inject_custom -c $custom -- $merged_var_lines)
-    else
-        echo "$skel_file points to a custom file that does not exist" >&2
     end
 end
-
 
 for file in $SKEL_FILES_PATH/*
     process_skel $file

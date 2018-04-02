@@ -1,4 +1,6 @@
-function cd --description "Allow cd'ing to files"
+function cd
+    # allow cd'ing to files
+
     set -l MAX_DIR_HIST 25
 
     if test (count $argv) -gt 1

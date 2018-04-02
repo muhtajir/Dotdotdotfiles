@@ -6,7 +6,7 @@ function fish_user_key_bindings
     fish_default_key_bindings -M insert
     fzf_key_bindings
 
-	bind -M insert \ek up-or-search
+    bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
     bind -M insert \el accept-autosuggestion
 

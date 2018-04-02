@@ -1,5 +1,5 @@
 function fish_update_user_settings
-	set -l uvars
+    set -l uvars
     set -l uvars_all (set -Un)
     set -l uvar_native __fish_init_2_39_8 \
         __fish_init_2_3_0 \

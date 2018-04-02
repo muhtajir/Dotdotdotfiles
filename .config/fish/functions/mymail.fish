@@ -5,10 +5,10 @@ function mymail
     mkdir -p $mutt_dir
     cd $mutt_dir
 
-	mbsync -a
+    mbsync -a
     notmuch new 2> /dev/null
     neomutt
-	and mbsync -a
+    and mbsync -a
 
     cd $current_dir
 end

@@ -1,4 +1,4 @@
-function __fish_create_first_prompt_seg --description 'Put together first prompt segment'
+function __fish_create_first_prompt_seg
     # catch the exit status before anything else or it will be lost
     set -l return_code $status
 

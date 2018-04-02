@@ -1,4 +1,4 @@
-function __fish_chcol -a fg bg --description 'Change foreground and optionally background color'
+function __fish_chcol -a fg bg
     if test -n "$bg"
         set_color -b $bg $fg
     else

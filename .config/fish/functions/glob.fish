@@ -1,7 +1,7 @@
 function glob
-	set -l first_param_char (string sub -s 1 -l 1 -- $argv[1])
+    set -l first_param_char (string sub -s 1 -l 1 -- $argv[1])
     set -l mode
-	if test "$first_param_char" = '-'
+    if test "$first_param_char" = '-'
         set mode (string sub -s 2 -- $argv[1])
     else
         return

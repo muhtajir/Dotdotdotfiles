@@ -4,8 +4,8 @@ function fish_add_universal_variable
         return
     end
 
-	set -l abbr_file "$HOME/.config/fish/functions/__fish_set_universal_variables.fish"
-	set -l abbr_skel_file "$HOME/.local/share/skel/fish-variables.skel"
+    set -l abbr_file "$HOME/.config/fish/functions/__fish_set_universal_variables.fish"
+    set -l abbr_skel_file "$HOME/.local/share/skel/fish-variables.skel"
     sed -ri '/^end$/d' $abbr_file
     sed -ri '/^end$/d' $abbr_skel_file
     echo "    set -U $argv" >> $abbr_file

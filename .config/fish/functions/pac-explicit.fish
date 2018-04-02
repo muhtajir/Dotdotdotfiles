@@ -1,5 +1,5 @@
 function pac-explicit
-	set -l pacs (pacman -Qetq)
+    set -l pacs (pacman -Qetq)
     set -l explicits
     for pac in $pacs
         set -l group (pacman -Qi $pac | grep '^Gruppen' | string replace -r '^[^:]+:\s+(.+)$' '$1')

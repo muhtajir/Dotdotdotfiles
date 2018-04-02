@@ -1,4 +1,4 @@
-function __fish_create_second_prompt_seg --description 'Put together second prompt segment'
+function __fish_create_second_prompt_seg
     set -l shell_pwd (basename (prompt_pwd))
     # if we're in a git repository display git prompt segment
     __fish_git_test

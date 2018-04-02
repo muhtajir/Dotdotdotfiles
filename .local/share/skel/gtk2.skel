@@ -1,0 +1,17 @@
+# %-LOCATION:$HOME/.gtkrc-2.0-%
+gtk-theme-name="Arc"
+gtk-icon-theme-name="Adwaita"
+gtk-font-name="Cantarell 11"
+gtk-cursor-theme-name="Adwaita"
+gtk-cursor-theme-size=0
+gtk-toolbar-style=GTK_TOOLBAR_BOTH_HORIZ
+gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
+gtk-button-images=0
+gtk-menu-images=0
+gtk-enable-event-sounds=1
+gtk-enable-input-feedback-sounds=1
+gtk-xft-antialias=1
+gtk-xft-hinting=1
+gtk-xft-hintstyle="hintmedium"
+
+gtk-color-scheme = "bg_color:{{{__BASE00_HASH}}}\nfg_color:{{{__BASE05_HASH}}}\nbase_color:{{{__BASE00_HASH}}}\ntext_color:{{{__BASE05_HASH}}}\nselected_bg_color:{{{__BASE02_HASH}}}\nselected_fg_color:{{{__BASE05_HASH}}}\ntooltip_bg_color:{{{__BASE00_HASH}}}\ntooltip_fg_color:{{{__BASE04_HASH}}}\ntitlebar_bg_color:{{{__BASE00_HASH}}}\ntitlebar_fg_color:{{{__BASE0D_HASH}}}\nmenubar_bg_color:{{{__BASE00_HASH}}}\nmenubar_fg_color:{{{__BASE0D_HASH}}}\ntoolbar_bg_color:{{{__BASE00_HASH}}}\ntoolbar_fg_color:{{{__BASE0A_HASH}}}\nmenu_bg_color:{{{__BASE00_HASH}}}\nmenu_fg_color:{{{__BASE05_HASH}}}\npanel_bg_color:{{{__BASE00_HASH}}}\npanel_fg_color:{{{__BASE0B_HASH}}}\nlink_color:{{{__BASE09_HASH}}}"

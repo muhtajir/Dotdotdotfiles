@@ -11,9 +11,6 @@
 !.config/cower
 !.config/cower/config
 
-!.config/dunst
-!.config/dunst/dunstrc
-
 !.config/fish
 !.config/fish/config.fish
 !.config/fish/functions
@@ -75,14 +72,8 @@
 !.config/rofi/
 !.config/rofi/config.rasi
 
-!.config/termite/
-!.config/termite/config
-
 !.config/vifm
 !.config/vifm/vifmrc
-
-!.config/zathura
-!.config/zathura/zathurarc
 
 !.emacs.d/
 !.emacs.d/init.el
@@ -108,6 +99,5 @@
 !.profile
 !.ctags
 !.gitignore
-!.gtkrc-2.0
 !.pam_environment
 !.XCompose

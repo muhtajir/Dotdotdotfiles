@@ -1,0 +1,37 @@
+# %-LOCATION:$HOME/.config/zathura/zathurarc-%
+# general settings
+set selection-clipboard clipboard
+
+# colors
+set default-bg                  "{{{__BASE00_HASH}}}"
+set default-fg                  "{{{__BASE01_HASH}}}"
+
+set statusbar-fg                "{{{__BASE04_HASH}}}"
+set statusbar-bg                "{{{__BASE02_HASH}}}"
+
+set inputbar-bg                 "{{{__BASE00_HASH}}}"
+set inputbar-fg                 "{{{__BASE07_HASH}}}"
+
+set notification-bg             "{{{__BASE00_HASH}}}"
+set notification-fg             "{{{__BASE07_HASH}}}"
+
+set notification-error-bg       "{{{__BASE00_HASH}}}"
+set notification-error-fg       "{{{__BASE08_HASH}}}"
+
+set notification-warning-bg     "{{{__BASE00_HASH}}}"
+set notification-warning-fg     "{{{__BASE08_HASH}}}"
+
+set highlight-color             "{{{__BASE0A_HASH}}}"
+set highlight-active-color      "{{{__BASE0D_HASH}}}"
+
+set completion-bg               "{{{__BASE01_HASH}}}"
+set completion-fg               "{{{__BASE0D_HASH}}}"
+
+set completion-highlight-fg     "{{{__BASE07_HASH}}}"
+set completion-highlight-bg     "{{{__BASE0D_HASH}}}"
+
+set recolor-lightcolor          "{{{__BASE00_HASH}}}"
+set recolor-darkcolor           "{{{__BASE06_HASH}}}"
+
+set recolor                     "false"
+set recolor-keephue             "false"

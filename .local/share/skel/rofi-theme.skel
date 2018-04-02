@@ -4,168 +4,177 @@
  */
 * {
 
-    foreground:                  {{{__BASE00_HASH}}};
-    background:                  {{{__BASE06_HASH}}};
-    lightbg:                     {{{__BASE04_HASH}}};
-    red:                         {{{__BASE08_HASH}}};
-    orange:                      {{{__BASE09_HASH}}}; 
-    dark-orange:                 {{{__BASE0F_HASH}}}; 
-    blue:                        {{{__BASE0D_HASH}}}; 
-    cyan:                        {{{__BASE0C_HASH}}}; 
-    magenta:                     {{{__BASE0E_HASH}}}; 
+    foreground:                                 {{{__BASE00_HASH}}};
+    lightfg:                                    {{{__BASE01_HASH}}};
+    background:                                 {{{__BASE06_HASH}}};
+    lightbg:                                    {{{__BASE05_HASH}}};
 
-    background-color:            @background;
-    normal-foreground:           @foreground;
-    normal-background:           @background;
-    alternate-normal-foreground: @normal-background;
-    alternate-normal-background: @normal-foreground;
-    selected-normal-foreground:  @normal-foreground;
-    selected-normal-background:  @cyan;
-    active-foreground:           @dark-orange;
-    active-background:           @background;
-    alternate-active-foreground: @active-background;
-    alternate-active-background: @active-foreground;
-    selected-active-foreground:  @active-foreground;
-    selected-active-background:  @selected-normal-background;
-    urgent-foreground:           @foreground;
-    urgent-background:           @red;
-    alternate-urgent-foreground: @urgent-background;
-    alternate-urgent-background: @urgent-foreground;
-    selected-urgent-foreground:  @urgent-background;
-    selected-urgent-background:  @selected-normal-background;
+    lightgrey:                                  {{{__BASE04_HASH}}};
+    red:                                        {{{__BASE08_HASH}}};
+    orange:                                     {{{__BASE09_HASH}}}; 
+    green:                                      {{{__BASE0B_HASH}}}; 
+    cyan:                                       {{{__BASE0C_HASH}}}; 
+    blue:                                       {{{__BASE0D_HASH}}}; 
+    magenta:                                    {{{__BASE0E_HASH}}}; 
+    dark-orange:                                {{{__BASE0F_HASH}}}; 
 
-    transparent:                 rgba (0, 0, 0, 0);
-    border-color:                rgba ({{{__BASE00_R}}}, {{{__BASE00_G}}}, {{{__BASE00_B}}}, 85%);
-    separatorcolor:              @orange;
-    spacing:                     2;
+    background-color:                           @background;
+    normal-foreground:                          @foreground;
+    normal-background:                          @background;
+    alternate-normal-foreground:                @normal-background;
+    alternate-normal-background:                @normal-foreground;
+    selected-normal-foreground:                 @normal-foreground;
+    selected-normal-background:                 @cyan;
+    alternate-selected-normal-foreground:       @normal-foreground;
+    alternate-selected-normal-background:       @blue;
+    active-foreground:                          @dark-orange;
+    active-background:                          @background;
+    alternate-active-foreground:                @active-background;
+    alternate-active-background:                @active-foreground;
+    selected-active-foreground:                 @active-foreground;
+    selected-active-background:                 @selected-normal-background;
+    urgent-foreground:                          @foreground;
+    urgent-background:                          @red;
+    alternate-urgent-foreground:                @urgent-background;
+    alternate-urgent-background:                @urgent-foreground;
+    selected-urgent-foreground:                 @urgent-background;
+    selected-urgent-background:                 @selected-normal-background;
+
+    transparent:                                rgba (0, 0, 0, 0);
+    border-color:                               rgba ({{{__BASE00_R}}}, {{{__BASE00_G}}}, {{{__BASE00_B}}}, 85%);
+    separatorcolor:                             @orange;
+    spacing:                                    0;
+    oneside-padding:                            0px 6px;
+    twoside-padding:                            1px 6px;
 }
 
 #window {
+    width:          100%;
     font:           "{{{FONT_SANS}}} 13";
     location:       south;
     anchor:         south;
-    border:         6px solid 6px 0px 6px;
 }
 
 #mainbox {
     orientation:    vertical;
-    children:       [upperbox, inputbar];
+    children:       [upperbox, inputbar, sidebar];
 }
 
 #upperbox {
     orientation:    vertical;
-    children:       [sidebar, listview, message];
+    children:       [listview, message];
 }
 
 #sidebar {
-    border: 0px dash 0px 2px ;
-    border-color: @selected-normal-background;
+    spacing:            2px;
+    background-color:   @alternate-normal-background;
 }
 
 #listview {
-    scrollbar:      false;
-    border-color:   @foreground;
-    text-color:     @separatorcolor;
+    scrollbar:          false;
+    border-color:       @background;
+    background-color:   @lightbg;
+    spacing:            1px;
 }
 
 #message {
-    border:     1px dash 0px 0px ;
-    text-color: @separatorcolor;
-    padding:    2px 0px 0px ;
+    border:             0.2em solid 0px 0px ;
 }
 
 #inputbar {
-    border:         0.2em solid 0px 0px;
-    border-color:   @lightbg;
+    border:             0.2em solid 0px 0px;
+    padding:            @oneside-padding;
+    border-color:       @lightgrey;
     background-color:   @alternate-normal-background;
-    text-color:   @alternate-normal-foreground;
-    children:       [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    text-color:         @alternate-normal-foreground;
+    children:           [prompt,textbox-prompt-colon,entry,case-indicator];
 }
 
 #prompt{
-    background-color: inherit;
-    text-color:   inherit;
+    background-color:   inherit;
+    text-color:         @alternate-selected-normal-background;
 }
 
 #textbox-prompt-colon {
-    expand:     false;
-    str:        ":";
-    margin:     0px 0.3em 0em 0em ;
-    text-color: @normal-foreground;
+    expand:             false;
+    str:                ":";
+    margin:             0px 0.3em 0em 0em ;
+    text-color:         @normal-foreground;
     background-color:   inherit;
-    text-color:   inherit;
+    text-color:         inherit;
 }
 
 #entry{
-    background-color: inherit;
-    text-color:   inherit;
+    background-color:   inherit;
+    text-color:         inherit;
 }
 
 #case-indicator{
-    background-color: inherit;
-    text-color:   inherit;
+    background-color:   inherit;
+    text-color:         @red;
 }
 
 #textbox {
-    text-color: @foreground;
+    text-color:         @foreground;
 }
 
 #element {
-    border: 0;
+    padding:            @twoside-padding;
 }
 
 #element.normal.normal {
-    text-color: @normal-foreground;
-    background-color: @normal-background;
+    text-color:         @normal-foreground;
+    background-color:   @normal-background;
 }
 
 #element.normal.urgent {
-    text-color: @urgent-foreground;
-    background-color: @urgent-background;
+    text-color:         @urgent-foreground;
+    background-color:   @urgent-background;
 }
 
 #element.normal.active {
-    text-color: @active-foreground;
-    background-color: @active-background;
+    text-color:         @active-foreground;
+    background-color:   @active-background;
 }
 
 #element.selected.normal {
-    text-color: @selected-normal-foreground;
-    background-color: @selected-normal-background;
+    text-color:         @selected-normal-foreground;
+    background-color:   @selected-normal-background;
 }
 
 #element.selected.urgent {
-    text-color: @selected-urgent-foreground;
-    background-color: @selected-urgent-background;
+    text-color:         @selected-urgent-foreground;
+    background-color:   @selected-urgent-background;
 }
 
 #element.selected.active {
-    text-color: @selected-active-foreground;
-    background-color: @selected-active-background;
+    text-color:         @selected-active-foreground;
+    background-color:   @selected-active-background;
 }
 
 #element.alternate.normal {
-    text-color: @normal-foreground;
-    background-color: @normal-background;
+    text-color:         @normal-foreground;
+    background-color:   @normal-background;
 }
 
 #element.alternate.urgent {
-    text-color: @urgent-foreground;
-    background-color: @urgent-background;
+    text-color:         @urgent-foreground;
+    background-color:   @urgent-background;
 }
 
 #element.alternate.active {
-    text-color: @active-foreground;
-    background-color: @active-background;
+    text-color:         @active-foreground;
+    background-color:   @active-background;
 }
 
 #button selected {
-    text-color: @selected-normal-foreground;
-    background-color: @selected-normal-background;
+    text-color:         @alternate-selected-normal-foreground;
+    background-color:   @alternate-selected-normal-background;
 }
 
 #button normal {
-    text-color: @foreground;
+    background-color:   @lightfg;
+    text-color:         @lightbg;
 }
 
-# vim:ft=cpp
+// vim:ft=cpp

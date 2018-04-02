@@ -1,9 +1,7 @@
 *
 
 !Code/
-Code/*
 !Code/Scripts
-Code/Scripts/*
 !Code/Scripts/global
 !Code/Scripts/global/*
 
@@ -17,7 +15,6 @@ Code/Scripts/*
 !.config/dunst/dunstrc
 
 !.config/fish
-.config/fish/*
 !.config/fish/config.fish
 !.config/fish/functions
 !.config/fish/functions/*
@@ -35,21 +32,17 @@ Code/Scripts/*
 !.config/gnupg/gpg-agent.conf
 
 !.config/gtk-3.0
-.config/gtk-3.0/*
 !.config/gtk-3.0/settings.ini
 
 !.config/i3
-.config/i3/*
 !.config/i3/scripts
 !.config/i3/scripts/*
 
 !.config/i3blocks
 !.config/i3blocks/blocklets/
 !.config/i3blocks/blocklets/*
-.config/i3blocks/blocklets/todo.txt
 
 !.config/mpd
-.config/mpd/*
 !.config/mpd/mpd.conf
 
 !.config/mpv
@@ -66,9 +59,7 @@ Code/Scripts/*
 !.config/neomutt/colors
 
 !.config/nvim
-.config/nvim/*
 !.config/nvim/init.vim
-!.config/nvim/minimal_init.vim
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
 !.config/nvim/snippets_custom/
@@ -78,29 +69,27 @@ Code/Scripts/*
 !.config/pacman/makepkg.conf
 
 !.config/qutebrowser
-.config/qutebrowser/*
 !.config/qutebrowser/config.py
 !.config/qutebrowser/quickmarks
+
+!.config/rofi/
+!.config/rofi/config.rasi
 
 !.config/termite/
 !.config/termite/config
 
 !.config/vifm
-.config/vifm/*
 !.config/vifm/vifmrc
 
 !.config/zathura
-.config/zathura/*
 !.config/zathura/zathurarc
 
 !.emacs.d/
-.emacs.d/*
 !.emacs.d/init.el
 !.emacs.d/subinits
 !.emacs.d/subinits/*
 
 !.local
-.local/*
 !.local/share
 .local/share/*
 
@@ -108,7 +97,6 @@ Code/Scripts/*
 !.local/share/bin/*
 
 !.local/share/qutebrowser
-.local/share/qutebrowser/*
 !.local/share/qutebrowser/userscripts
 !.local/share/qutebrowser/userscripts/*
 

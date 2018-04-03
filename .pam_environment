@@ -1,3 +1,7 @@
+# define PATHs
+PATH                        DEFAULT=${PATH}:@{HOME}/.local/bin
+GOPATH                      DEFAULT=@{HOME}/.local/share/go
+
 # define default applications with some common variables
 EDITOR                      DEFAULT=nvim
 TERMINAL                    DEFAULT=termite

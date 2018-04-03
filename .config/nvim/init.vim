@@ -5,6 +5,7 @@ call plug#begin()
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
+    Plug 'donRaphaco/neotex', { 'for': 'tex' }
     Plug 'InspectorMustache/base16.nvim'
     Plug 'jsfaint/gen_tags.vim'
     Plug 'kassio/neoterm'
@@ -18,18 +19,18 @@ call plug#begin()
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'SirVer/ultisnips'
     Plug 'thinca/vim-quickrun'
-    Plug 'tmhedberg/SimpylFold'
+    Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     Plug 'vim-airline/vim-airline'
-    Plug 'Vimjas/vim-python-pep8-indent'
+    Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'vim-scripts/vis'
     " deoplete completions
     Plug 'Shougo/neco-syntax'
-    Plug 'zchee/deoplete-jedi'
+    Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 call plug#end()
 
 " add plugins that come with locally installed packages
@@ -115,6 +116,9 @@ set wildignore+=*/__pycache__/*,*/.git/*
 
 " make vim find hidden ctags files
 set tags+=./.tags;
+
+" set tex flavor to latex
+let g:tex_flavor = 'latex'
 
 "" autocommands
 " source $MYVIMRC automatically after saving

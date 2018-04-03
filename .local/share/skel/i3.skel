@@ -204,7 +204,7 @@ bindsym $mod+Shift+Ctrl+Tab move container to workspace back_and_forth; workspac
 bindsym $mod+space [urgent=latest] focus
 # restart/reload i3 inplace
 bindsym $mod+Shift+Ctrl+r exec sh -c 'merge-configs && i3-msg restart'
-bindsym $mod+Shift+rexec sh -c 'merge-configs && i3-msg reload'
+bindsym $mod+Shift+r exec sh -c 'merge-configs && i3-msg reload'
 
 # workspace assignments
 assign [class="qutebrowser"] $ws2

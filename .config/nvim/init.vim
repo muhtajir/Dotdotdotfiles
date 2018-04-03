@@ -2,7 +2,6 @@
 
 call plug#begin()
     Plug 'chrisbra/SudoEdit.vim'
-    Plug 'ctrlpvim/ctrlp.vim'
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
     Plug 'dojoteef/neomake-autolint'
@@ -18,7 +17,6 @@ call plug#begin()
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'SirVer/ultisnips'
-    Plug 'skywind3000/asyncrun.vim'
     Plug 'thinca/vim-quickrun'
     Plug 'tmhedberg/SimpylFold'
     Plug 'tpope/vim-commentary'
@@ -34,6 +32,8 @@ call plug#begin()
     Plug 'zchee/deoplete-jedi'
 call plug#end()
 
+" add plugins that come with locally installed packages
+set runtimepath+=/usr/share/vim/vimfiles
 
 " make nvim use bash if started from fish
 if &shell =~# 'fish$'
@@ -110,7 +110,7 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,n-v-c:block-blinkon0,i-ci-ve:ver20-blinkon0
             \,r-cr:hor20-blinkon0,o:hor50-blinkon0
 
-" set what to ignore when using wildcards (mainly relevant for ctrlP)
+" set what to ignore when using wildcards
 set wildignore+=*/__pycache__/*,*/.git/*
 
 " make vim find hidden ctags files
@@ -157,9 +157,6 @@ nnoremap <leader>b :buffer
 nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
-
-" ctrlP buffer mode shortcut
-nnoremap <C-B> :CtrlPBuffer<CR>
 
 " split commands closer to i3
 nnoremap <silent> <leader>hs :vsplit<CR>
@@ -261,28 +258,19 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+" fzf
+nnoremap <silent> <C-P> :FZF<CR>
+
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
 " Quickrun
 nnoremap <F12> :QuickRun<CR>
 
-" create ctags
-nnoremap <silent> <C-C> :AsyncRun ctags -R .<CR>
-
 " shortcut for pytest
 nnoremap <F9> :terminal PYTHONPATH=$(pwd) pytest<CR>
 
 "" plugin configuration
-" ctrlp
-" keybinds consistent with command mode
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("j")':    ['<A-j>'],
-    \ 'PrtSelectMove("k")':    ['<A-k>'],
-    \ }
-let g:ctrlp_working_path_mode = ''
-let g:ctrlp_show_hidden = 1
-
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1

@@ -15,3 +15,5 @@ user            {{{MAIL_ADDRESS}}}
 passwordeval    "pass show random/posteo | head -n 1"
 
 account default : posteo
+
+# vim:ft=msmtp

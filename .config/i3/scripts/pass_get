@@ -3,9 +3,6 @@
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set -l PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 
-# read dmenu_font from the i3 config
-set -l dmenu_font (string replace -fr '^set \\$font\s(.+?)$' '$1' < $HOME/.config/i3/config)
-
 # get name of currently active window
 test -z "$argv"; and set -l argv ""
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
@@ -86,13 +83,13 @@ else if test $cand_num -gt 1
     notify-send 'Too many candidates.'
     for candidate in $candidates
         printf '%s\n' $candidate
-    end | dmenu -fn $dmenu_font -i -b -nb "#"$BASE01 -nf "#"$BASE05 -sb "#"$BASE0D -sf "#"$BASE00 | read final_candidate
+    end | dmenu | read final_candidate
 else 
     # if there's none, also select one with dmenu
     notify-send 'Nothing found. Please select manually.'
     for candidate in $passes
         printf '%s\n' $candidate
-    end | dmenu -fn $dmenu_font -i -b -nb "#"$BASE01 -nf "#"$BASE05 -sb "#"$BASE0D -sf "#"$BASE00 | read final_candidate
+    end | dmenu | read final_candidate
 end
 
 if test -n "$final_candidate"

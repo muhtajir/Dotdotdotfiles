@@ -52,7 +52,13 @@ function process_skel -a skel_file
 
     if [ -z "$location" ]
         echo "$skel_file has no line specifying its target location." >&2
-    else if [ -z "$custom" ]
+        return 1
+    else
+        # create directory structure for $location in case it doesn't exist
+        mkdir -p (dirname $location)
+    end
+
+    if [ -z "$custom" ]
         safe_write -f $location -- (mergevars $skel_file | tail -n +2)
     else
         set merged_var_lines (mergevars -i custom $skel_file 2>/dev/null | tail -n +2)

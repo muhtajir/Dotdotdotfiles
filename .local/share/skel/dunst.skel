@@ -1,6 +1,6 @@
 # %-LOCATION:$HOME/.config/dunst/dunstrc-%
 [global]
-    font = Source Code Pro 10
+    font = {{{FONT_MONO}}} 10
 
     # Possible values are:
     # full: Allow a small subset of html markup in notifications:

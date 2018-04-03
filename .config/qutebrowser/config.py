@@ -45,7 +45,7 @@ BASE0E = '#{}'.format(os.getenv('__BASE0E'))  # magenta
 BASE0F = '#{}'.format(os.getenv('__BASE0F'))  # dark_orange
 
 FONT_SANS = os.getenv('FONT_SANS')
-FONT_MONO = 'Source Code Pro'
+FONT_MONO = os.getenv('FONT_MONO')
 
 merge_bookmarks()
 

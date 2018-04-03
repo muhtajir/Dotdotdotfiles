@@ -84,8 +84,8 @@
 !.local/share
 .local/share/*
 
-!.local/share/bin
-!.local/share/bin/*
+!.local/bin
+!.local/bin/*
 
 !.local/share/qutebrowser
 !.local/share/qutebrowser/userscripts

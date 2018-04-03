@@ -27,11 +27,11 @@
     selected-normal-background:                 @cyan;
     alternate-selected-normal-foreground:       @normal-foreground;
     alternate-selected-normal-background:       @blue;
-    active-foreground:                          @dark-orange;
-    active-background:                          @background;
+    active-foreground:                          @foreground;
+    active-background:                          @dark-orange;
     alternate-active-foreground:                @active-background;
     alternate-active-background:                @active-foreground;
-    selected-active-foreground:                 @active-foreground;
+    selected-active-foreground:                 @active-background;
     selected-active-background:                 @selected-normal-background;
     urgent-foreground:                          @foreground;
     urgent-background:                          @red;

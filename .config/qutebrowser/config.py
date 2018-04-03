@@ -27,24 +27,24 @@ def merge_bookmarks():
         f.writelines(sorted(set(ext_urls + int_urls)))
 
 
-BASE00 = "#262626"  # black0
-BASE01 = "#3a3a3a"  # black1
-BASE02 = "#4e4e4e"  # black2
-BASE03 = "#8a8a8a"  # black3
-BASE04 = "#949494"  # black4
-BASE05 = "#dab997"  # white0
-BASE06 = "#d5c4a1"  # white1
-BASE07 = "#ebdbb2"  # white2
-BASE08 = "#d75f5f"  # red
-BASE09 = "#ff8700"  # light_orange
-BASE0A = "#ffaf00"  # yellow
-BASE0B = "#afaf00"  # green
-BASE0C = "#85ad85"  # cyan
-BASE0D = "#83adad"  # blue
-BASE0E = "#d485ad"  # magenta
-BASE0F = "#d65d0e"  # dark_orange
+BASE00 = '#{}'.format(os.getenv('__BASE00'))  # black0
+BASE01 = '#{}'.format(os.getenv('__BASE01'))  # black1
+BASE02 = '#{}'.format(os.getenv('__BASE02'))  # black2
+BASE03 = '#{}'.format(os.getenv('__BASE03'))  # black3
+BASE04 = '#{}'.format(os.getenv('__BASE04'))  # black4
+BASE05 = '#{}'.format(os.getenv('__BASE05'))  # white0
+BASE06 = '#{}'.format(os.getenv('__BASE06'))  # white1
+BASE07 = '#{}'.format(os.getenv('__BASE07'))  # white2
+BASE08 = '#{}'.format(os.getenv('__BASE08'))  # red
+BASE09 = '#{}'.format(os.getenv('__BASE09'))  # light_orange
+BASE0A = '#{}'.format(os.getenv('__BASE0A'))  # yellow
+BASE0B = '#{}'.format(os.getenv('__BASE0B'))  # green
+BASE0C = '#{}'.format(os.getenv('__BASE0C'))  # cyan
+BASE0D = '#{}'.format(os.getenv('__BASE0D'))  # blue
+BASE0E = '#{}'.format(os.getenv('__BASE0E'))  # magenta
+BASE0F = '#{}'.format(os.getenv('__BASE0F'))  # dark_orange
 
-FONT_SANS_SERIF = 'Quicksand Medium'
+FONT_SANS = os.getenv('FONT_SANS')
 FONT_MONO = 'Source Code Pro'
 
 merge_bookmarks()
@@ -227,29 +227,29 @@ c.colors.statusbar.passthrough.fg = BASE00
 # Only let completion use up as little space as possible
 c.completion.shrink = True
 # Font used in the completion categories.
-c.fonts.completion.category = 'bold 8pt {}'.format(FONT_MONO)
+c.fonts.completion.category = 'bold 9pt {}'.format(FONT_MONO)
 # Font used in the completion widget.
-c.fonts.completion.entry = '8pt {}'.format(FONT_MONO)
+c.fonts.completion.entry = '9pt {}'.format(FONT_MONO)
 # Font used for the debugging console.
-c.fonts.debug_console = '8pt {}'.format(FONT_MONO)
+c.fonts.debug_console = '9pt {}'.format(FONT_MONO)
 # Font used for the downloadbar.
-c.fonts.downloads = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.downloads = '9pt {}'.format(FONT_SANS)
 # Font used for the hints.
-c.fonts.hints = 'bold 10pt {}'.format(FONT_SANS_SERIF)
+c.fonts.hints = 'bold 10pt {}'.format(FONT_SANS)
 # Font used in the keyhint widget.
-c.fonts.keyhint = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.keyhint = '9pt {}'.format(FONT_SANS)
 # Font used for error messages.
-c.fonts.messages.error = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.messages.error = '9pt {}'.format(FONT_SANS)
 # Font used for info messages.
-c.fonts.messages.info = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.messages.info = '9pt {}'.format(FONT_SANS)
 # Font used for warning messages.
-c.fonts.messages.warning = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.messages.warning = '9pt {}'.format(FONT_SANS)
 # Font used for prompts.
-c.fonts.prompts = '8pt {}'.format(FONT_SANS_SERIF)
+c.fonts.prompts = '9pt {}'.format(FONT_SANS)
 # Font used in the statusbar.
-c.fonts.statusbar = '8pt {}'.format(FONT_MONO)
+c.fonts.statusbar = '9pt {}'.format(FONT_MONO)
 # Font used in the tab bar.
-c.fonts.tabs = '10pt {}'.format(FONT_SANS_SERIF)
+c.fonts.tabs = '10pt {}'.format(FONT_SANS)
 # Nice looking padding for tabs headers
 c.tabs.padding = {'top': 2, 'bottom': 2, 'left': 3, 'right': 3}
 
@@ -318,6 +318,8 @@ config.bind('dD', 'tab-only')
 config.bind('dl', 'download-cancel')
 config.bind('dq', 'set-cmd-text --space :quickmark-del')
 config.bind('db', 'set-cmd-text --space :bookmark-del')
+# Clear search highlightingg
+config.bind('<Ctrl-´>', 'search')
 # Quickmark/Bookmark opening (mostly redundant, replace e bindings if
 # necessary)
 config.bind('eq', 'set-cmd-text --space :quickmark-load')

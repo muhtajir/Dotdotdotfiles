@@ -2,7 +2,7 @@
 [options]
 allow_bold = true
 fullscreen = true
-font = Mononoki 12
+font = {{{FONT_MONO}}} 12
 geometry = 85x25
 dynamic_title = true
 size_hints = true

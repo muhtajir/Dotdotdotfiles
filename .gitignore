@@ -71,6 +71,8 @@
 
 !.config/rofi/
 !.config/rofi/config.rasi
+!.config/rofi/custom_modes/
+!.config/rofi/custom_modes/*
 
 !.config/vifm
 !.config/vifm/vifmrc

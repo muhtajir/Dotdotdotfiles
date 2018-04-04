@@ -32,6 +32,7 @@ set $i3confdir $HOME/.config/i3
 set $i3scriptsdir $HOME/.config/i3/scripts
 set $i3b_up $HOME/.config/i3/scripts/i3b_up
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
+set $rofimodedir $HOME/.config/rofi/custom_modes
 set $mod Mod4
 set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 
@@ -252,6 +253,9 @@ mode $mode_music {
         bindsym h exec mpc prev; exec $i3b_up 10 0
         bindsym r exec mpc random; exec $i3b_up 10 0
         bindsym Tab exec $i3scriptsdir/mpd_toggle
+        # sexy rofi modes
+        bindsym p exec "rofi -modi \\"queue:$rofimodedir/mpc_qu.fish,playlists:$rofimodedir/mpc_pl.fish\\" -show playlists -sidebar-mode"; mode "default"
+        bindsym q exec "rofi -modi \\"queue:$rofimodedir/mpc_qu.fish,playlists:$rofimodedir/mpc_pl.fish\\" -show queue -sidebar-mode"; mode "default"
 
         # back to normal: Enter or Escape
         bindsym Escape mode "default"

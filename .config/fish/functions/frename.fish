@@ -3,7 +3,7 @@ function frename
 
     # validate input
     if [ ! (count $argv) -ge 3 ]
-        echo "Required format: PATTERN REPLACEMENT FILE(S)"
+        echo "Required format: (-n) PATTERN REPLACEMENT FILE(S)"
         return 2
     end
 

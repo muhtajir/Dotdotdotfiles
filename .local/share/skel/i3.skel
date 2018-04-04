@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-% 
+# %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-%
 
 # Base16 color setup
 set $base00 {{{__BASE00_HASH}}}
@@ -247,10 +247,10 @@ mode $mode_resize {
 
 # control mpd
 mode $mode_music {
-        bindsym space exec $i3scriptsdir/simple_mpc playpause
-        bindsym l exec $i3scriptsdir/simple_mpc next; exec $i3b_up 10 0
-        bindsym h exec $i3scriptsdir/simple_mpc previous; exec $i3b_up 10 0
-        bindsym r exec $i3scriptsdir/simple_mpc random_toggle
+        bindsym space exec mpc toggle
+        bindsym l exec mpc next; exec $i3b_up 10 0
+        bindsym h exec mpc prev; exec $i3b_up 10 0
+        bindsym r exec mpc random; exec $i3b_up 10 0
         bindsym Tab exec $i3scriptsdir/mpd_toggle
 
         # back to normal: Enter or Escape
@@ -261,7 +261,6 @@ mode $mode_music {
 # access i3blocks features without using the mouse
 mode $mode_blocks {
         bindsym s exec BLOCK_BUTTON=1 $i3blockletsdir/shutdown.sh; mode "default"
-        bindsym t exec BLOCK_BUTTON=1 python $i3blockletsdir/todo.txt; mode "default"
         bindsym d exec BLOCK_BUTTON=1 $i3blockletsdir/time.sh; mode "default"
         bindsym c exec BLOCK_BUTTON=1 $i3blockletsdir/clipboard.sh; mode "default"
 

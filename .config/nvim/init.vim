@@ -30,6 +30,7 @@ call plug#begin()
     Plug 'vim-scripts/vis'
     " deoplete completions
     Plug 'Shougo/neco-syntax'
+    Plug 'Shougo/deoplete-go', {'for': 'go'}
     Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 call plug#end()
 
@@ -278,6 +279,8 @@ nnoremap <F9> :terminal PYTHONPATH=$(pwd) pytest<CR>
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#sources#go#gocode_binary = '/usr/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 call deoplete#custom#set('jedi', 'rank', 1000)
 
 " gen_tags

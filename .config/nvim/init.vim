@@ -263,6 +263,9 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
+" delimitMate
+let g:delimitMate_expand_cr = 1
+
 " fzf
 nnoremap <silent> <C-P> :FZF<CR>
 

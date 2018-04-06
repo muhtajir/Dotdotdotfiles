@@ -132,9 +132,9 @@ c.colors.messages.warning.border = BASE0F
 # Foreground color a warning message.
 c.colors.messages.warning.fg = BASE07
 # Background color for prompts.
-c.colors.prompts.bg = BASE0C
+c.colors.prompts.bg = BASE02
 # Border used around UI elements in prompts.
-c.colors.prompts.border = '1px {}'.format(BASE02)
+c.colors.prompts.border = '1px {}'.format(BASE07)
 # Foreground color for prompts.
 c.colors.prompts.fg = BASE07
 # Background color for the selected item in filename prompts.
@@ -155,6 +155,10 @@ c.colors.statusbar.command.fg = BASE07
 c.colors.statusbar.command.private.bg = BASE02
 # Foreground color of the statusbar in private browsing + command mode.
 c.colors.statusbar.command.private.fg = BASE07
+# Background color of the statusbar in private browsing mode.
+c.colors.statusbar.private.bg = BASE02
+# Foreground color of the statusbar in private browsing mode.
+c.colors.statusbar.private.fg = BASE07
 # Background color of the statusbar in insert mode.
 c.colors.statusbar.insert.bg = BASE0F
 # Foreground color of the statusbar in insert mode.
@@ -163,10 +167,6 @@ c.colors.statusbar.insert.fg = BASE07
 c.colors.statusbar.normal.bg = BASE00
 # Foreground color of the statusbar.
 c.colors.statusbar.normal.fg = BASE07
-# Background color of the statusbar in private browsing mode.
-c.colors.statusbar.private.bg = BASE02
-# Foreground color of the statusbar in private browsing mode.
-c.colors.statusbar.private.fg = BASE07
 # Background color of the progress bar.
 c.colors.statusbar.progress.bg = BASE07
 # Foreground color of the URL in the statusbar on error.

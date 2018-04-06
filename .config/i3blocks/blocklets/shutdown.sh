@@ -1,3 +1,4 @@
+#!/bin/bash
 echo ''
 
 sys_shutdown='systemctl poweroff'
@@ -42,10 +43,29 @@ function nagbar_sd {
               --b '  Herunterfahren' "eval $sys_shutdown"
 }
 
+function dmenu_sd {
+    options=$(printf '%s\n' '  Bereitschaft' '  Neustarten' '  Herunterfahren')
+    response=$(echo -e "$options" | dmenu -p shutdown -i)
+
+    case $response in
+        '  Bereitschaft')
+            eval $sys_shutdown
+            ;;
+        '  Neustarten')
+            eval $sys_reboot
+            ;;
+        '  Herunterfahren')
+            eval $sys_suspend
+            ;;
+    esac
+}
+
 if [[ $BLOCK_BUTTON = 1 ]]; then
-    if [[ -e /usr/bin/yad ]]; then
+    if which yad >/dev/null 2>&1; then
         yad_sd
-    elif [[ -e /usr/bin/zenity ]]; then
+    elif which dmenu >/dev/null 2>&1; then
+        dmenu_sd
+    elif which zenity >/dev/null 2>&1; then
         zenity_sd
     else
         nagbar_sd

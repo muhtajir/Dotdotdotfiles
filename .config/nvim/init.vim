@@ -4,7 +4,6 @@ call plug#begin()
     Plug 'chrisbra/SudoEdit.vim'
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
-    Plug 'dojoteef/neomake-autolint'
     Plug 'donRaphaco/neotex', { 'for': 'tex' }
     Plug 'InspectorMustache/base16.nvim'
     Plug 'jsfaint/gen_tags.vim'
@@ -284,7 +283,7 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
 let g:deoplete#sources#go#gocode_binary = '/usr/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-call deoplete#custom#set('jedi', 'rank', 1000)
+call deoplete#custom#source('jedi', 'rank', 1000)
 
 " gen_tags
 let g:loaded_gentags#gtags = 1
@@ -295,14 +294,12 @@ let g:netrw_banner = 0
 
 " neomake
 let g:neomake_python_enabled_makers = ['flake8']
-
-" neomake-autolint
-let g:neomake_autolint_sign_column_always = 1
-let g:neomake_autolint_events = {
-    \ 'InsertLeave': {'delay': 0},
-    \ 'TextChanged': {'delay': 0},
-    \ 'BufWritePost': {'delay': 0},
-    \ }
+let g:neomake_go_enabled_makers = ['go']
+call neomake#configure#automake({
+            \ 'InsertLeave': {},
+            \ 'TextChanged': {},
+            \ 'BufWritePost': {},
+            \ }, 0)
 
 " neoterm
 let g:neoterm_default_mod = ':vertical'

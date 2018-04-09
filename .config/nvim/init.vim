@@ -310,6 +310,10 @@ nnoremap <silent> <leader>tl :call neoterm#clear()<CR>
 nnoremap <silent> <leader>ts :T %:p<CR>
 nnoremap <silent> <leader>tp :T python %:p<CR>
 
+" quickrun
+" subtler window size
+let g:quickrun_config = {'_': {'outputter/buffer/split': '%{winwidth(0) * 2 < winheight(0) * 5 ? "8" : "vertical 8"}'}}
+
 " scratch
 let g:scratch_insert_autohide = 0
 

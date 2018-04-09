@@ -63,10 +63,10 @@ function dmenu_sd {
 if [[ $BLOCK_BUTTON = 1 ]]; then
     if which yad >/dev/null 2>&1; then
         yad_sd
-    elif which dmenu >/dev/null 2>&1; then
-        dmenu_sd
     elif which zenity >/dev/null 2>&1; then
         zenity_sd
+    elif which dmenu >/dev/null 2>&1; then
+        dmenu_sd
     else
         nagbar_sd
     fi

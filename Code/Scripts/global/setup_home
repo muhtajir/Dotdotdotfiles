@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-eval $HOME/.local/share/bin/merge_configs
+~/.local/bin/merge-configs
 
 # move to base tmp_directory
 set tmp_dir (mktemp -d)
@@ -118,7 +118,7 @@ print_bold "Creating firejail config…"
 sudo firecfg
 
 # once more why not
-eval $HOME/.local/share/bin/merge_configs
+~/.local/bin/merge-configs
 
 # clean up
 print_bold "Deleting temporary directories…"

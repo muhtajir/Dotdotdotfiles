@@ -7,6 +7,15 @@ set ERR_STRING "Error"
 set SEC_ERR_STRING "Error connecting to"
 set ENTER_STRING "Enter password for WIFI network"
 
+function success_feedback -a exit_code
+    if [ $exit_code -eq 0 ]
+        notify-send "$CONN_STRING" "$SEC_CONN_STRING $ssid"
+    else
+        notify-send "$ERR_STRING" "$SEC_ERR_STRING $ssid"
+    end
+    exit
+end
+
 printf '%s (%s) %s\n' (
     nmcli -e no -g SSID,BSSID,SECURITY device wifi list \
     | string split -r -m 1 ':' \
@@ -26,16 +35,18 @@ else
     set bssid $parsed[3]
     set sec $parsed[4]
 
+    # first try to activate the connection profile in case a connection has been previously established
+    nmcli connection up id "$ssid"
+    success_feedback $status
+
     if string match -qr '(WPA|WEP)' $sec
         set -l pass (
             printf '%s\n' "SETPROMPT $ENTER_STRING $ssid: " "GETPIN" | pinentry | string match -r '(?<=^D ).+'
             )
-        nmcli device wifi connect "$bssid" password "$pass"
-            and notify-send "$CONN_STRING" "$SEC_CONN_STRING $ssid"
-            or notify-send "$ERR_STRING" "$SEC_ERR_STRING $ssid"
+        nmcli device wifi connect "$bssid" password (string escape "$pass")
+        success_feedback $status
     else
         nmcli device wifi connect "$bssid"
-            and notify-send "$CONN_STRING" "$SEC_CONN_STRING $ssid"
-            or notify-send "$ERR_STRING" "$SEC_ERR_STRING $ssid"
+        success_feedback $status
     end
 end

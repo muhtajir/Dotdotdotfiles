@@ -8,7 +8,6 @@ call plug#begin()
     Plug 'InspectorMustache/base16.nvim'
     Plug 'jsfaint/gen_tags.vim'
     Plug 'kassio/neoterm'
-    Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
     Plug 'kshenoy/vim-signature'
     Plug 'mtth/scratch.vim'
@@ -31,6 +30,10 @@ call plug#begin()
     Plug 'Shougo/neco-syntax'
     Plug 'Shougo/deoplete-go', {'for': 'go'}
     Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+    " custom text objects
+    Plug 'Julian/vim-textobj-variable-segment'
+    Plug 'kana/vim-textobj-indent'
+    Plug 'thinca/vim-textobj-between'
 call plug#end()
 
 " add plugins that come with locally installed packages

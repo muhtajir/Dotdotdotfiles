@@ -342,8 +342,9 @@ config.bind('gw', 'set-cmd-text :open -w {url:pretty}')
 config.bind('b', 'set-cmd-text --space :buffer')
 # Source config
 config.bind('<Ctrl-R>', 'config-source')
-# Enter/exit passthrough
+# Passthrough settings
 config.unbind('<Ctrl-v>', mode='normal')
 config.unbind('<Ctrl-v>', mode='passthrough')
 config.bind('<Ctrl-\>', 'enter-mode passthrough')
 config.bind('<Ctrl-\>', 'leave-mode', mode='passthrough')
+config.bind('<Shift-Escape>', 'fake-key <Escape>')

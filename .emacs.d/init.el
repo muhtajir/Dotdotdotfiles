@@ -15,7 +15,8 @@
 (show-paren-mode 1)
 
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
 (setq use-package-always-ensure t)
@@ -28,9 +29,8 @@
              :config
              (ivy-mode 1))
 
-(use-package base16-theme
-             :init
-             :config
-             (load-theme 'base16-gruvbox-dark-pale t))
-
+(require 'init-base16-generic-theme)
 (require 'init-evil)
+
+;; turn of blinking cursor
+(blink-cursor-mode 0)

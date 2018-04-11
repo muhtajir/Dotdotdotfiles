@@ -1,0 +1,32 @@
+;; %-LOCATION:$HOME/.emacs.d/subinits/init-base16-generic-theme.el-%
+;; Generic base16 theme into which base16 environment vars have been inserted
+
+(require 'base16-theme)
+
+(defvar base16-generic-colors
+  '(:base00 "#{{{__BASE00}}}"
+    :base01 "#{{{__BASE01}}}"
+    :base02 "#{{{__BASE02}}}"
+    :base03 "#{{{__BASE03}}}"
+    :base04 "#{{{__BASE04}}}"
+    :base05 "#{{{__BASE05}}}"
+    :base06 "#{{{__BASE06}}}"
+    :base07 "#{{{__BASE07}}}"
+    :base08 "#{{{__BASE08}}}"
+    :base09 "#{{{__BASE09}}}"
+    :base0A "#{{{__BASE0A}}}"
+    :base0B "#{{{__BASE0B}}}"
+    :base0C "#{{{__BASE0C}}}"
+    :base0D "#{{{__BASE0D}}}"
+    :base0E "#{{{__BASE0E}}}"
+    :base0F "#{{{__BASE0F}}}"))
+
+(add-to-list 'default-frame-alist '(font . "mononoki-12"))
+
+(deftheme base16-generic)
+(base16-theme-define 'base16-generic base16-generic-colors)
+(provide-theme 'base16-generic)
+
+(provide 'init-base16-generic-theme)
+
+;; vim: ft=lisp

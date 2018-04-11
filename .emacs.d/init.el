@@ -5,6 +5,9 @@
 ;; unclutter the ui
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+;; turn of blinking cursor
+(blink-cursor-mode 0)
 
 ;; get rid of the custom blabla by using custom-file
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -19,18 +22,40 @@
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
+;; why isn't everyone setting this one?
 (setq use-package-always-ensure t)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
 
-(use-package ivy
+;; counsel pulls in ivy and swiper as dependencies
+(use-package counsel
              :config
-             (ivy-mode 1))
+             (counsel-mode 1))
+
+(use-package try)
+
+(use-package powerline)
+(use-package powerline-evil
+             :config
+             (powerline-evil-vim-theme))
+
+(use-package nlinum-relative
+             :config
+             (nlinum-relative-setup-evil)
+             (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+             (setq nlinum-relative-redisplay-delay 0)
+             (setq nlinum-relative-current-symbol ""))
+
+(use-package smartparens
+             :config
+             (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (require 'init-base16-generic-theme)
+
 (require 'init-evil)
 
-;; turn of blinking cursor
-(blink-cursor-mode 0)
+(use-package general)
+
+(require 'init-keybinds)

@@ -1,5 +1,8 @@
 function frename
-    argparse 'n/dry-run' -- $argv
+    argparse 'n/dry-run' 'I/non-interactive' -- $argv
+
+    set mv_options "-i"
+    [ -n "$_flag_I" ]; and set mv_options ""
 
     # validate input
     if [ ! (count $argv) -ge 3 ]
@@ -24,7 +27,9 @@ function frename
         if set -ql _flag_n
             echo "$file --> $new_name"
         else
-            mv "$file" "$new_name"
+            if [ "$file" != "$new_name" ]
+                mv $mv_options "$file" "$new_name"
+            end
         end
     end
 end

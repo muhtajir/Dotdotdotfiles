@@ -41,12 +41,17 @@
              :config
              (powerline-evil-vim-theme))
 
+;; define a global mode for nlinum-relative because linenumbers are super
+;; everywhere
+(define-globalized-minor-mode global-nlinum-relative-mode
+                              nlinum-relative-mode
+                              (nlinum-relative-mode 1))
 (use-package nlinum-relative
              :config
              (nlinum-relative-setup-evil)
-             (add-hook 'prog-mode-hook 'nlinum-relative-mode)
              (setq nlinum-relative-redisplay-delay 0)
-             (setq nlinum-relative-current-symbol ""))
+             (setq nlinum-relative-current-symbol "")
+             (global-nlinum-relative-mode 1))
 
 (use-package smartparens
              :config

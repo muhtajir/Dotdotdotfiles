@@ -32,11 +32,6 @@
 (require 'init-base16-generic-theme)
 (require 'init-evil)
 
-;; counsel pulls in ivy and swiper as dependencies
-(use-package counsel
-             :config
-             (counsel-mode 1))
-
 (use-package try)
 
 ;; define a global mode for nlinum-relative because linenumbers are super
@@ -56,7 +51,11 @@
              :config
              (add-hook 'prog-mode-hook 'smartparens-mode))
 
-(require 'init-powerline)
 (use-package general)
 
+(use-package helm
+             :config
+             (helm-mode 1))
+
+(require 'init-powerline)
 (require 'init-keybinds)

@@ -5,7 +5,7 @@ if systemctl --user is-active mpd.service > /dev/null; then
         mpc toggle >&2
     fi
 
-    song=$(mpc -f '%artist% - %title%'| head -n 1)
+    song=$(mpc -f '%artist% - %title%' current)
     random=$(mpc | grep -Eo 'random:[[:space:]]+on')
     echo "$song${random:+ <span size=\"small\" foreground=\"#${__BASE0E}\">R</span>}"
 fi

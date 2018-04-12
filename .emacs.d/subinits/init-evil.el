@@ -11,12 +11,23 @@
 (use-package undo-tree
              :pin elpa)
 
-(use-package evil
+(use-package evil-goggles
+             :init
+             (setq evil-goggles-duration 0.600)
+             (setq evil-goggles-enable-delete nil)
+             (setq evil-goggles-enable-undo nil)
              :config
-             (require 'evil)
+             (evil-goggles-mode 1))
+
+(use-package evil
+             :ensure t
+             :init
+             (setq evil-want-Y-yank-to-eol t)
+             :config
              (evil-mode 1))
 
 (use-package evil-surround
-             :config(global-evil-surround-mode 1))
+             :config
+             (global-evil-surround-mode 1))
 
 (provide 'init-evil)

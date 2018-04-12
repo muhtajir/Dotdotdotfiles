@@ -27,7 +27,10 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+
 (require 'use-package)
+(require 'init-base16-generic-theme)
+(require 'init-evil)
 
 ;; counsel pulls in ivy and swiper as dependencies
 (use-package counsel
@@ -36,16 +39,12 @@
 
 (use-package try)
 
-(use-package powerline)
-(use-package powerline-evil
-             :config
-             (powerline-evil-vim-theme))
-
 ;; define a global mode for nlinum-relative because linenumbers are super
 ;; everywhere
 (define-globalized-minor-mode global-nlinum-relative-mode
                               nlinum-relative-mode
-                              (nlinum-relative-mode 1))
+                              (lambda() (nlinum-relative-mode 1)))
+
 (use-package nlinum-relative
              :config
              (nlinum-relative-setup-evil)
@@ -57,10 +56,7 @@
              :config
              (add-hook 'prog-mode-hook 'smartparens-mode))
 
-(require 'init-base16-generic-theme)
-
-(require 'init-evil)
-
+(require 'init-powerline)
 (use-package general)
 
 (require 'init-keybinds)

@@ -561,6 +561,9 @@ settings and will be for very specific cases."
 ;;;; linum-mode
      (linum                                        :foreground base03 :background fringe-bg)
 
+;;;; nlinum-relative-mode
+     (nlinum-relative-current-face                 :foreground base0A :background fringe-bg)
+
 ;;;; magit
      (magit-blame-culprit                          :background base01)
      (magit-blame-heading                          :background base01 :foreground base05)

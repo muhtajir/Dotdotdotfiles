@@ -1,6 +1,5 @@
-(use-package powerline)
-(use-package powerline-evil
+(use-package powerline
              :config
-             (powerline-evil-vim-theme))
+             (powerline-center-evil-theme))
 
 (provide 'init-powerline)

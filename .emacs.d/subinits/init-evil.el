@@ -30,4 +30,6 @@
              :config
              (global-evil-surround-mode 1))
 
+(nlinum-relative-setup-evil)
+
 (provide 'init-evil)

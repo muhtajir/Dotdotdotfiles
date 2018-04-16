@@ -1,11 +1,5 @@
 ;; Generic base16 theme into which base16 environment vars have been inserted
-
-;; base16-theme.el -- base16 themes for emacs
-;; Author: Kaleb Elwert <belak@coded.io>
-;;         Neil Bhakta
-;; Maintainer: Kaleb Elwert <belak@coded.io>
-;; Version: 1.1
-;;; Code:
+;; Based on base16 package by Kaleb Elwert
 
 (defvar base16-generic-colors
   '(:base00 "#262626"
@@ -229,11 +223,11 @@ settings and will be for very specific cases."
    (line-number-current-line                     :inverse-video t)
 
 ;; mode-line
-   (mode-line                                    :foreground base04 :background base02 :box nil)
-   (mode-line-buffer-id                          :foreground base0B :background nil)
+   (mode-line                                    :foreground base07 :background base01 :box nil)
+   (mode-line-buffer-id                          :foreground base0A :background nil)
    (mode-line-emphasis                           :foreground base06 :slant italic)
    (mode-line-highlight                          :foreground base0E :box nil :weight bold)
-   (mode-line-inactive                           :foreground base03 :background base01 :box nil)
+   (mode-line-inactive                           :foreground base05 :background base01 :box nil)
 
 ; Third-party
 
@@ -741,6 +735,16 @@ settings and will be for very specific cases."
    (shm-current-face                             :inherit region)
    (shm-quarantine-face                          :underline (:style wave :color base08))
 
+;; telephone-line
+    (telephone-line-accent-active               :foreground base06  :background base03)
+    (telephone-line-accent-inactive             :foreground base05  :background base02)
+    (telephone-line-evil-normal                 :foreground base01  :background base0B :weight bold)
+    (telephone-line-evil-insert                 :foreground base01  :background base0D :weight bold)
+    (telephone-line-evil-visual                 :foreground base06  :background base0E :weight bold)
+    (telephone-line-evil-replace                :foreground base01  :background base08 :weight bold)
+    (telephone-line-evil-operator               :foreground base0B  :background base01 :weight bold)
+    (telephone-line-evil-motion                 :foreground base00  :background base0C :weight bold)
+
 ;; term and ansi-term
    (term                                         :foreground base05 :background base00)
    (term-color-black                             :foreground base02 :background base00)
@@ -831,5 +835,3 @@ settings and will be for very specific cases."
 (provide-theme 'base16-generic)
 
 (provide 'init-base16-generic-theme)
-
-;;; base16-theme.el ends here

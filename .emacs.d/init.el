@@ -22,19 +22,17 @@
 (require 'use-package)
 
 ;; UI settings
-(require 'init-powerline)
 (setq inhibit-startup-message t)
+(fringe-mode '(8 . 0))
+(scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
-; turn of blinking cursor
-(blink-cursor-mode 0)
 (show-paren-mode 1)
+; turn off blinking cursor
+(blink-cursor-mode 0)
+(require 'init-mode-line)
 
 (require 'init-base16-generic-theme)
-(require 'init-evil)
-
-(use-package try)
 
 ;; define a global mode for nlinum-relative because linenumbers are super
 ;; everywhere
@@ -44,7 +42,7 @@
 
 (use-package nlinum-relative
              :config
-             (nlinum-relative-setup-evil)
+             (setq nlinum-format "%3d")
              (setq nlinum-relative-redisplay-delay 0)
              (setq nlinum-relative-current-symbol "")
              (global-nlinum-relative-mode 1))
@@ -58,5 +56,9 @@
 (use-package helm
              :config
              (helm-mode 1))
+
+(use-package try)
+
+(require 'init-evil)
 
 (require 'init-keybinds)

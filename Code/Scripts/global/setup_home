@@ -110,6 +110,7 @@ sudo pacman -S --needed \
     arc-gtk-theme \
     fcitx-im \
     fcitx-sunpinyin \
+    xss-lock \
     rofi \
     w3m
 

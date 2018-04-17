@@ -20,4 +20,13 @@ function __fish_set_user_abbreviations
     abbr --add aurd auracle download
     abbr --add aurs auracle search
     abbr --add aur auracle
+    abbr --add ga git add
+    abbr --add gc git commit
+    abbr --add gco git checkout
+    abbr --add gd git diff
+    abbr --add gf git fetch
+    abbr --add gl git log
+    abbr --add gpl git pull
+    abbr --add gps git push
+    abbr --add gst git status
 end

@@ -21,10 +21,10 @@
 ;; motion state keybinds
 (general-def
     :states 'motion
-    "M-h"   'evil-window-right
+    "M-h"   'evil-window-left
     "M-j"   'evil-window-down
     "M-k"   'evil-window-up
-    "M-l"   'evil-window-left
+    "M-l"   'evil-window-right
     "M-c"   'delete-window
     "C-u"   'evil-scroll-up
 )

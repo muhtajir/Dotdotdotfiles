@@ -1,4 +1,4 @@
-;; enable sourcing from init scripts in emacs.d/subinits
+; enable sourcing from init scripts in emacs.d/subinits
 (add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
 ; get rid of the custom blabla by using custom-file
@@ -7,7 +7,8 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
-;; use-package setup
+
+;; use-package setup with auto-package-update
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
@@ -21,6 +22,12 @@
 
 (require 'use-package)
 
+(use-package auto-package-update
+             :config
+             (setq auto-package-update-hide-results t)
+             (auto-package-update-maybe))
+
+
 ;; UI settings
 (setq inhibit-startup-message t)
 (fringe-mode '(8 . 0))
@@ -33,6 +40,7 @@
 (require 'init-mode-line)
 
 (require 'init-base16-generic-theme)
+
 
 ;; define a global mode for nlinum-relative because linenumbers are super
 ;; everywhere

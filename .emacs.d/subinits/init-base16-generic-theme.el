@@ -1,25 +1,27 @@
 ;; Generic base16 theme into which base16 environment vars have been inserted
-;; Based on base16 package by Kaleb Elwert
 
 (defvar base16-generic-colors
-  '(:base00 "#262626"
-    :base01 "#3a3a3a"
-    :base02 "#4e4e4e"
-    :base03 "#8a8a8a"
-    :base04 "#949494"
-    :base05 "#dab997"
-    :base06 "#d5c4a1"
-    :base07 "#ebdbb2"
-    :base08 "#d75f5f"
-    :base09 "#ff8700"
-    :base0A "#ffaf00"
-    :base0B "#afaf00"
-    :base0C "#85ad85"
-    :base0D "#83adad"
-    :base0E "#d485ad"
-    :base0F "#d65d0e"))
-
-(add-to-list 'default-frame-alist '(font . "mononoki-12"))
+  '(:base00     "#262626"
+    :base01     "#3a3a3a"
+    :base02     "#4e4e4e"
+    :base03     "#8a8a8a"
+    :base04     "#949494"
+    :base05     "#dab997"
+    :base06     "#d5c4a1"
+    :base07     "#ebdbb2"
+    :base08     "#d75f5f"
+    :base09     "#ff8700"
+    :base0A     "#ffaf00"
+    :base0B     "#afaf00"
+    :base0C     "#85ad85"
+    :base0D     "#83adad"
+    :base0E     "#d485ad"
+    :base0F     "#d65d0e"
+    ; :font-mono  "Source Code Pro"
+    :font-mono  "mononoki"
+    :font-sans  "Quicksand Medium"
+    :font-serif "Merriweather"
+    ))
 
 (deftheme base16-generic)
 
@@ -163,7 +165,7 @@ settings and will be for very specific cases."
 ;; basic colors
    (border                                       :background base03)
    (cursor                                       :background base08)
-   (default                                      :foreground base05 :background base00)
+   (default                                      :foreground base05 :background base00 :family font-mono :height 120)
    (fringe                                       :background fringe-bg)
    (gui-element                                  :background base01)
    (header-line                                  :foreground base0E :background nil :inherit mode-line)
@@ -195,10 +197,10 @@ settings and will be for very specific cases."
    (custom-state                                 :foreground base0B)
 
 ;; font-lock
-   (font-lock-builtin-face                       :foreground base0C)
+   (font-lock-builtin-face                       :foreground base0F)
    (font-lock-comment-delimiter-face             :foreground base02)
    (font-lock-comment-face                       :foreground base03)
-   (font-lock-constant-face                      :foreground base0F)
+   (font-lock-constant-face                      :foreground base0C)
    (font-lock-doc-face                           :foreground base04)
    (font-lock-doc-string-face                    :foreground base03)
    (font-lock-function-name-face                 :foreground base0D)
@@ -471,13 +473,13 @@ settings and will be for very specific cases."
    (helm-grep-lineno                             :foreground base03)
    (helm-grep-match                              :foreground base0A)
    (helm-grep-running                            :foreground base09)
-   (helm-header                                  :foreground base0A :background base00 :underline nil)
+   (helm-header                                  :foreground base0A :background base00 :family font-sans :underline nil :height 110)
    (helm-match                                   :foreground base0A)
    (helm-moccur-buffer                           :foreground base0C)
    (helm-selection                               :foreground nil :background base02 :underline nil)
    (helm-selection-line                          :foreground nil :background base02)
    (helm-separator                               :foreground base02)
-   (helm-source-header                           :foreground base01 :background base0D :weight bold)
+   (helm-source-header                           :foreground base01 :background base0D :family font-sans :height 140)
    (helm-visible-mark                            :foreground base00 :background base0B)
 
 ;; highlight-indentation minor mode
@@ -744,6 +746,7 @@ settings and will be for very specific cases."
     (telephone-line-evil-replace                :foreground base01  :background base08 :weight bold)
     (telephone-line-evil-operator               :foreground base0B  :background base01 :weight bold)
     (telephone-line-evil-motion                 :foreground base00  :background base0C :weight bold)
+    (telephone-line-evil-emacs                  :foreground base0E  :background base07 :weight bold)
 
 ;; term and ansi-term
    (term                                         :foreground base05 :background base00)
@@ -835,3 +838,5 @@ settings and will be for very specific cases."
 (provide-theme 'base16-generic)
 
 (provide 'init-base16-generic-theme)
+
+;; vim: ft=lisp

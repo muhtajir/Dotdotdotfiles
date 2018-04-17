@@ -28,18 +28,28 @@
              (auto-package-update-maybe))
 
 
-;; UI settings
+;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
 (fringe-mode '(8 . 0))
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(setq show-paren-delay 0)
 (show-paren-mode 1)
-; turn off blinking cursor
+(global-hl-line-mode 1)
 (blink-cursor-mode 0)
+(setq-default cursor-in-non-selected-windows nil)
 (require 'init-mode-line)
-
 (require 'init-base16-generic-theme)
+
+
+;; Parens matching
+(use-package highlight-parentheses
+	     :config
+	     (setq hl-paren-delay 0))
+
+(add-hook 'prog-mode-hook 'electric-pair-local-mode)
+(add-hook 'prog-mode-hook 'highlight-parentheses-mode)
 
 
 ;; define a global mode for nlinum-relative because linenumbers are super
@@ -54,10 +64,6 @@
              (setq nlinum-relative-redisplay-delay 0)
              (setq nlinum-relative-current-symbol "")
              (global-nlinum-relative-mode 1))
-
-(use-package smartparens
-             :config
-             (add-hook 'prog-mode-hook 'smartparens-mode))
 
 (use-package general)
 

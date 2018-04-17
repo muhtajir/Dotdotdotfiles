@@ -10,6 +10,7 @@
 (general-def
     :states 'normal
     "M-x"   'helm-M-x
+    "C-p"   'helm-find-files
 )
 
 (general-def-leader

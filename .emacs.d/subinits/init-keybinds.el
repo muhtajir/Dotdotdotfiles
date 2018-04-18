@@ -1,12 +1,16 @@
+(general-auto-unbind-keys)
+
+(general-create-definer general-def-leader
+                        :prefix ",")
+
+(general-create-definer general-def-goleader
+                        :prefix "g")
+
+;; helper functions to bind keys to
 (defun close-current-window ()
   (interactive)
   (delete-window))
 
-(general-auto-unbind-keys)
-(general-create-definer general-def-leader
-                        :prefix ",")
-
-;; helper functions to bind keys to
 (defun evil-dry-open-below(line)
   (interactive "P")
   (let ((pos (evil-column)))
@@ -25,6 +29,7 @@
     (evil-move-to-column pos)
     ))
 
+
 ;; normal state keybinds
 (general-def
   :states 'normal
@@ -34,12 +39,16 @@
   "M-y"       'helm-show-kill-ring
   "C-t"       'helm-find-files)
 
+(general-def-goleader
+  :states 'normal
+  "o"         'delete-other-windows
+  "b"         'helm-mini)
+
 (general-def-leader
   :states 'normal
   "TAB"       'next-buffer
-  "backtab"   'previous-buffer
-  "o"         'delete-other-windows
-  "b"         'helm-mini)
+  "backtab"   'previous-buffer)
+
 
 ;; motion state keybinds
 (general-def
@@ -50,6 +59,7 @@
   "M-l"       'evil-window-right
   "M-c"       'delete-window
   "C-u"       'evil-scroll-up)
+
 
 ;; helm keybinds
 (general-def

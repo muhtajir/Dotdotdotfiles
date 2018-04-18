@@ -47,16 +47,15 @@
 (use-package highlight-parentheses
              :init
              (setq hl-paren-colors (list
-                                     (plist-get base16-generic-colors :base0D)
-                                     (plist-get base16-generic-colors :base08)
-                                     (plist-get base16-generic-colors :base0E)
-                                     (plist-get base16-generic-colors :base0F)))
-             ; (setq hl-paren-background-colors (list
-                                                ; (plist-get base16-generic-colors :base0C)
-                                                ; (plist-get base16-generic-colors :base0A)
-                                                ; (plist-get base16-generic-colors :base09)
-                                                ; (plist-get base16-generic-colors :base0F)
-                                                ; (plist-get base16-generic-colors :base08)))
+                                     (plist-get base16-generic-colors :base07)
+                                     (plist-get base16-generic-colors :base07)
+                                     (plist-get base16-generic-colors :base07)
+                                     (plist-get base16-generic-colors :base07)))
+             (setq hl-paren-background-colors (list
+                                                (plist-get base16-generic-colors :base08)
+                                                (plist-get base16-generic-colors :base03)
+                                                (plist-get base16-generic-colors :base03)
+                                                (plist-get base16-generic-colors :base03)))
              (setq hl-paren-delay 0))
 
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)

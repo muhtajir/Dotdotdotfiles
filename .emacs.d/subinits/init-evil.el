@@ -20,6 +20,9 @@
 
 ; add vertigo here
 
+(use-package evil-commentary
+	     :after evil)
+
 (use-package evil-goggles
              :after evil
              :init

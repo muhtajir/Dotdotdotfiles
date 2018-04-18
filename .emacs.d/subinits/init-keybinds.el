@@ -7,11 +7,7 @@
                         :prefix "g")
 
 ;; helper functions to bind keys to
-(defun close-current-window ()
-  (interactive)
-  (delete-window))
-
-(defun evil-dry-open-below(line)
+(defun my/evil-dry-open-below(line)
   (interactive "P")
   (let ((pos (evil-column)))
     (evil-open-below line)
@@ -20,7 +16,7 @@
     (evil-move-to-column pos)
     ))
 
-(defun evil-dry-open-above(line)
+(defun my/evil-dry-open-above(line)
   (interactive "P")
   (let ((pos (evil-column)))
     (evil-open-above line)
@@ -33,8 +29,8 @@
 ;; normal state keybinds
 (general-def
   :states 'normal
-  "ö"         'evil-dry-open-below
-  "Ö"         'evil-dry-open-above
+  "ö"         'my/evil-dry-open-below
+  "Ö"         'my/evil-dry-open-above
   "M-x"       'helm-M-x
   "M-y"       'helm-show-kill-ring
   "C-t"       'helm-find-files)

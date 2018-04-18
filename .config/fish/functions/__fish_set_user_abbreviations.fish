@@ -1,7 +1,22 @@
 function __fish_set_user_abbreviations
+    abbr --add aur auracle
+    abbr --add aurd auracle download
+    abbr --add aurs auracle search
     abbr --add bpy bpython
     abbr --add feh feh -.
     abbr --add g git
+    abbr --add ga git add
+    abbr --add ga. git add .
+    abbr --add gc git commit
+    abbr --add gcam git commit -am
+    abbr --add gcm git commit -m
+    abbr --add gco git checkout
+    abbr --add gd git diff
+    abbr --add gf git fetch
+    abbr --add gl git log
+    abbr --add gpl git pull
+    abbr --add gps git push
+    abbr --add gst git status
     abbr --add jctl journalctl
     abbr --add m mymail
     abbr --add mksri makepkg -sri
@@ -9,6 +24,7 @@ function __fish_set_user_abbreviations
     abbr --add o open
     abbr --add pd prevd
     abbr --add pm pacman
+    abbr --add psa ps -A
     abbr --add py python
     abbr --add py2 python2
     abbr --add q exit
@@ -17,16 +33,4 @@ function __fish_set_user_abbreviations
     abbr --add v nvim
     abbr --add yt mpsyt /
     abbr --add z zathura
-    abbr --add aurd auracle download
-    abbr --add aurs auracle search
-    abbr --add aur auracle
-    abbr --add ga git add
-    abbr --add gc git commit
-    abbr --add gco git checkout
-    abbr --add gd git diff
-    abbr --add gf git fetch
-    abbr --add gl git log
-    abbr --add gpl git pull
-    abbr --add gps git push
-    abbr --add gst git status
 end

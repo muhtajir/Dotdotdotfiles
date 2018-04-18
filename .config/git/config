@@ -17,4 +17,4 @@
     l = log
     pl = pull
     ps = push
-    s = status
+    st = status

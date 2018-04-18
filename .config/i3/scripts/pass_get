@@ -6,10 +6,13 @@ test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
 # get name of currently active window
 test -z "$argv"; and set -l argv ""
 set -l active_line (string match -ri '^_NET_ACTIVE_WINDOW\(WINDOW\).+' (xprop -root))
-set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' $active_line)
+set -l active_id (string replace -r '^[^#]+#\s(\S+)' '$1' "$active_line")
 set -l name_line (string match -r 'WM_NAME\([^)]+\).+' (xprop -id $active_id))
-set -l name (string match -r '".+?"$' $name_line)
-set name (string replace -a ' ' '_' $name)
+set -l class_line (string match -r 'WM_CLASS\([^)]+\).+' (xprop -id $active_id))
+set -l name (string match -r '"[^"]+"$' "$name_line")
+set -l class (string match -r '"[^"]+"$' "$class_line")
+set name (string replace -a ' ' '_' "$name")
+set class (string replace -a ' ' '_' "$class")
 
 
 function get_login -a pass copy
@@ -41,18 +44,26 @@ function xdo_pass_entry -a pass
     xdotool key --clearmodifiers Return
 end
 
+function loop_candidates -S -a prop
+    # loop through candidates and find one that matches $prop
+    for password in $passes
+        set -l barepass (command basename $password)
+        string match -qi "*$barepass*" $prop
+        if test $status -eq 0
+            set candidates $candidates $password
+        end
+    end
+end
 
 # get list of all pass files
 set -l passes (string replace -r '^.+?\.password-store/(.+?)\.gpg$' '$1' $PASSWORD_STORE_DIR/**/*)
 
-# loop through files and find one that matches
+# loop through files and find one that matches based on name property or if
+# that doesn't work class property
 set -l candidates
-for password in $passes
-    set -l barepass (command basename $password)
-    string match -qi "*$barepass*" $name
-    if test $status -eq 0
-        set candidates $candidates $password
-    end
+loop_candidates $name
+if test -z "$candidates"
+    loop_candidates $class
 end
 
 # if there are no matches try secondary names

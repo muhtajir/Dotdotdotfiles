@@ -81,6 +81,8 @@
 !.emacs.d/init.el
 !.emacs.d/subinits
 !.emacs.d/subinits/*
+.emacs.d/subinits/init-base16-generic-theme.el
+.emacs.d/subinits/#*
 
 !.local
 !.local/share

@@ -1,10 +1,10 @@
 (general-auto-unbind-keys)
 
 (general-create-definer general-def-leader
-                        :prefix ",")
+  :prefix ",")
 
 (general-create-definer general-def-goleader
-                        :prefix "g")
+  :prefix "g")
 
 ;; helper functions to bind keys to
 (defun my/evil-dry-open-below(line)
@@ -13,8 +13,7 @@
     (evil-open-below line)
     (evil-normal-state nil)
     (evil-previous-line line)
-    (evil-move-to-column pos)
-    ))
+    (evil-move-to-column pos)))
 
 (defun my/evil-dry-open-above(line)
   (interactive "P")
@@ -22,8 +21,7 @@
     (evil-open-above line)
     (evil-normal-state nil)
     (evil-next-line)
-    (evil-move-to-column pos)
-    ))
+    (evil-move-to-column pos)))
 
 
 ;; normal state keybinds
@@ -31,19 +29,19 @@
   :states 'normal
   "ö"         'my/evil-dry-open-below
   "Ö"         'my/evil-dry-open-above
-  "M-x"       'helm-M-x
   "M-y"       'helm-show-kill-ring
   "C-t"       'helm-find-files)
 
 (general-def-goleader
   :states 'normal
   "o"         'delete-other-windows
+  "r"         'evil-replace-with-register
   "b"         'helm-mini)
 
 (general-def-leader
   :states 'normal
   "TAB"       'next-buffer
-  "backtab"   'previous-buffer)
+  "<backtab>"   'previous-buffer)
 
 
 ;; motion state keybinds
@@ -53,8 +51,19 @@
   "M-j"       'evil-window-down
   "M-k"       'evil-window-up
   "M-l"       'evil-window-right
+  "M-x"       'helm-M-x
   "M-c"       'delete-window
+  "("         'evil-backward-paragraph
+  ")"         'evil-forward-paragraph
+  "{"         'evil-backward-sentence-begin
+  "}"         'evil-forward-sentence-begin
   "C-u"       'evil-scroll-up)
+
+
+;; insert keybinds
+(general-def
+  :states 'insert
+  "<backtab>"  'indent-relative)
 
 
 ;; helm keybinds
@@ -65,5 +74,6 @@
   "C-d"       'helm-next-page
   "M-k"       'helm-previous-line
   "M-j"       'helm-next-line)
+
 
 (provide 'init-keybinds)

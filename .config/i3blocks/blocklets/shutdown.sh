@@ -49,13 +49,13 @@ function dmenu_sd {
 
     case $response in
         '  Bereitschaft')
-            eval $sys_shutdown
+            eval $sys_suspend
             ;;
         '  Neustarten')
             eval $sys_reboot
             ;;
         '  Herunterfahren')
-            eval $sys_suspend
+            eval $sys_shutdown
             ;;
     esac
 }

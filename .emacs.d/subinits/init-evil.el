@@ -12,13 +12,16 @@
              :pin elpa)
 
 (use-package evil
-             :ensure t
+             :after (undo-tree nlinum-relative)
              :init
              (setq evil-want-Y-yank-to-eol t)
              :config
              (evil-mode 1))
 
+; add vertigo here
+
 (use-package evil-goggles
+             :after evil
              :init
              (setq evil-goggles-duration 0.500)
              (setq evil-goggles-enable-delete nil)
@@ -27,6 +30,7 @@
              (evil-goggles-mode 1))
 
 (use-package evil-surround
+             :after evil
              :config
              (global-evil-surround-mode 1))
 

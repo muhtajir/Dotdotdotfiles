@@ -45,8 +45,19 @@
 
 ;; Parens matching
 (use-package highlight-parentheses
-	     :config
-	     (setq hl-paren-delay 0))
+             :init
+             (setq hl-paren-colors (list
+                                     (plist-get base16-generic-colors :base0D)
+                                     (plist-get base16-generic-colors :base08)
+                                     (plist-get base16-generic-colors :base0E)
+                                     (plist-get base16-generic-colors :base0F)))
+             ; (setq hl-paren-background-colors (list
+                                                ; (plist-get base16-generic-colors :base0C)
+                                                ; (plist-get base16-generic-colors :base0A)
+                                                ; (plist-get base16-generic-colors :base09)
+                                                ; (plist-get base16-generic-colors :base0F)
+                                                ; (plist-get base16-generic-colors :base08)))
+             (setq hl-paren-delay 0))
 
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 (add-hook 'prog-mode-hook 'highlight-parentheses-mode)
@@ -67,11 +78,27 @@
 
 (use-package general)
 
-(use-package helm
-             :config
-             (helm-mode 1))
-
 (use-package try)
+
+(use-package helm
+             :init
+             (setq helm-mode-fuzzy-match t)
+             (setq helm-completion-in-region-fuzzy-match t)
+             (setq helm-recentf-fuzzy-match t)
+             (setq helm-buffers-fuzzy-matching t)
+             (setq helm-recentf-fuzzy-match t)
+             (setq helm-buffers-fuzzy-matching t)
+             (setq helm-locate-fuzzy-match t)
+             (setq helm-M-x-fuzzy-match t)
+             (setq helm-semantic-fuzzy-match t)
+             (setq helm-imenu-fuzzy-match t)
+             (setq helm-apropos-fuzzy-match t)
+             (setq helm-lisp-fuzzy-completion t)
+             (setq helm-session-fuzzy-match t)
+             (setq helm-etags-fuzzy-match t)
+             :config
+             (helm-autoresize-mode 1)
+             (helm-mode 1))
 
 (require 'init-evil)
 

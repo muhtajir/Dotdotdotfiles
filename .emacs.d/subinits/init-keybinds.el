@@ -59,6 +59,12 @@
   "}"         'evil-forward-sentence-begin
   "C-u"       'evil-scroll-up)
 
+(general-def-leader
+  :states 'motion
+  "rc"    (lambda ()
+            (interactive)
+            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el"))))
+
 
 ;; insert keybinds
 (general-def

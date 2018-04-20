@@ -13,11 +13,11 @@ call plug#begin()
     Plug 'mtth/scratch.vim'
     Plug 'machakann/vim-highlightedyank'
     Plug 'neomake/neomake'
+    Plug 'prendradjaja/vim-vertigo'
     Plug 'raimondi/delimitmate'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'SirVer/ultisnips'
     Plug 'thinca/vim-quickrun'
-    Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
@@ -104,11 +104,6 @@ set splitbelow
 set inccommand=split
 set wildmode=longest,list,full
 
-" enable folding
-set foldmethod=syntax
-set foldnestmax=1
-set foldlevel=1
-
 " set cursor shape
 set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,n-v-c:block-blinkon0,i-ci-ve:ver20-blinkon0
@@ -138,10 +133,7 @@ cnoreabbrev <silent> here lcd %:p:h
 
 
 "" keybinds
-let mapleader=','
-
-" restore functionality lost by mapping ',' as leader
-nnoremap + ,
+let mapleader=' '
 
 " general
 nnoremap Y y$
@@ -149,12 +141,6 @@ nnoremap - g,
 nnoremap _ g;
 " use dot repetition in visual mode
 vnoremap . :normal .<CR>
-
-" more comfortable fold navigation on QWERTZ
-nnoremap <leader>j zj
-nnoremap <leader>k zk
-nnoremap <Space> za
-nnoremap <C-Space> zA
 
 " buffer navigation
 nnoremap <silent> <leader><Tab> :bn<CR>
@@ -265,11 +251,8 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-" delimitMate
-let g:delimitMate_expand_cr = 1
-
 " fzf
-nnoremap <silent> <C-P> :FZF<CR>
+nnoremap <silent> <C-T> :FZF<CR>
 
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
@@ -277,10 +260,21 @@ nnoremap <leader>sw :SudoWrite<CR>
 " Quickrun
 nnoremap <F12> :QuickRun<CR>
 
+" vertigo
+nnoremap <silent> <leader>j :<C-U>VertigoDown n<CR>
+nnoremap <silent> <leader>k :<C-U>VertigoUp n<CR>
+vnoremap <silent> <leader>j :<C-U>VertigoDown v<CR>
+vnoremap <silent> <leader>k :<C-U>VertigoUp v<CR>
+onoremap <silent> <leader>j :<C-U>VertigoDown o<CR>
+onoremap <silent> <leader>k :<C-U>VertigoUp o<CR>
+
 " shortcut for pytest
 nnoremap <F9> :terminal PYTHONPATH=$(pwd) pytest<CR>
 
 "" plugin configuration
+" delimitMate
+let g:delimitMate_expand_cr = 1
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 1
@@ -320,10 +314,6 @@ let g:quickrun_config = {'_': {'outputter/buffer/split': '%{winwidth(0) * 2 < wi
 " scratch
 let g:scratch_insert_autohide = 0
 
-" simpylfold (what's with the name?)
-let g:SimpylFold_fold_docstring = 0
-let g:SimpylFold_fold_import = 0
-
 "" ultisnips
 " keybinds
 let g:UltiSnipsEditSplit = 'vertical'
@@ -334,6 +324,9 @@ let g:UltiSnipsExpandTrigger = '<C-L>'
 let g:UltiSnipsBackwardTrigger = '<C-K>'
 let g:UltiSnipsForwardTrigger = '<C-J>'
 let g:UltiSnipsListSnippets = '<C-E>'
+
+"vertigo
+let g:Vertigo_homerow = 'asdfghjklö'
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1

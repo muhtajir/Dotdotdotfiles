@@ -18,7 +18,9 @@
   :config
   (evil-mode 1))
 
-;; add vertigo here
+(use-package vertigo
+  :init
+  (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?k ?l ?ö)))
 
 (use-package evil-commentary
   :after evil

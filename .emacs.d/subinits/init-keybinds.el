@@ -1,7 +1,7 @@
 (general-auto-unbind-keys)
 
 (general-create-definer general-def-leader
-  :prefix ",")
+  :prefix "SPC")
 
 (general-create-definer general-def-goleader
   :prefix "g")
@@ -34,14 +34,7 @@
 
 (general-def-goleader
   :states 'normal
-  "o"         'delete-other-windows
-  "r"         'evil-replace-with-register
-  "b"         'helm-mini)
-
-(general-def-leader
-  :states 'normal
-  "TAB"       'next-buffer
-  "<backtab>"   'previous-buffer)
+  "r"         'evil-replace-with-register)
 
 
 ;; motion state keybinds
@@ -63,7 +56,11 @@
   :states 'motion
   "rc"    (lambda ()
             (interactive)
-            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el"))))
+            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+  "b"           'helm-mini
+  "o"           'delete-other-windows
+  "TAB"         'next-buffer
+  "<backtab>"   'previous-buffer)
 
 
 ;; insert keybinds

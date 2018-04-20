@@ -9,7 +9,7 @@
 
 ;; undo-tree is a dependency but not available in melpa so get it from elpa
 (use-package undo-tree
-  :pin elpa)
+  :pin gnu)
 
 (use-package evil
   :after (undo-tree nlinum-relative)

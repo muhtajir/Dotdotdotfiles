@@ -1,3 +1,4 @@
+;; -*- no-byte-compile: t; -*-
 ;; enable sourcing from init scripts in emacs.d/subinits
 (add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
@@ -10,12 +11,12 @@
 
 ;; use-package setup with auto-package-update
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;; why isn't everyone setting this one?
 (setq use-package-always-ensure t)
+(setq use-package-always-pin "melpa")
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -39,6 +40,7 @@
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
+(setq echo-keystrokes .01)
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
 
@@ -79,8 +81,6 @@
   (setq nlinum-relative-redisplay-delay 0)
   (setq nlinum-relative-current-symbol "")
   (global-nlinum-relative-mode 1))
-
-(use-package general)
 
 (use-package try)
 

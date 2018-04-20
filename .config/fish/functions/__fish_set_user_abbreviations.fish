@@ -8,6 +8,7 @@ function __fish_set_user_abbreviations
     abbr --add ga git add
     abbr --add ga. git add .
     abbr --add gc git commit
+    abbr --add gca git commit -a
     abbr --add gcam git commit -am
     abbr --add gcm git commit -m
     abbr --add gco git checkout

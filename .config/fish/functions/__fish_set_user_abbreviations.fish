@@ -17,6 +17,13 @@ function __fish_set_user_abbreviations
     abbr --add gpl git pull
     abbr --add gps git push
     abbr --add gst git status
+    abbr --add pg pass git
+    abbr --add pgd pass git diff
+    abbr --add pgf pass git fetch
+    abbr --add pgl pass git log
+    abbr --add pgpl pass git pull
+    abbr --add pgps pass git push
+    abbr --add pgst pass git status
     abbr --add jctl journalctl
     abbr --add m mymail
     abbr --add mksri makepkg -sri

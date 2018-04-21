@@ -42,32 +42,31 @@ source ~/.config/neomutt/colors
 ignore *
 unignore from date subject to cc bcc
 
-# maildir settings
+# maildir and notmuch settings
+set nm_default_uri = "notmuch://{{{HOME}}}/.local/share/mail"
+set virtual_spoolfile = yes
+virtual-mailboxes "Inbox" "notmuch://?query=folder:posteo/Inbox"
+virtual-mailboxes "Sent" "notmuch://?query=folder:posteo/Sent"
+virtual-mailboxes "Drafts" "notmuch://?query=folder:posteo/Drafts"
+virtual-mailboxes "Archiv" "notmuch://?query=folder:posteo/Archiv"
+virtual-mailboxes "Following" "notmuch://?query=folder:posteo/Following"
+virtual-mailboxes "Privat" "notmuch://?query=folder:posteo/Privat"
+virtual-mailboxes "Transaktionen" "notmuch://?query=folder:posteo/Transaktionen"
+virtual-mailboxes "Arbeit+Bildung" "notmuch://?query=folder:posteo/Arbeit+Bildung"
+virtual-mailboxes "*Gesamt*" "notmuch://?query=tag:inbox"
 set mbox_type = Maildir
 set folder = ~/.local/share/mail/posteo
 set mbox = +mbox
-set spoolfile = +Inbox
 set record = +Sent
 set trash = +Trash
 set postponed = +Drafts
 set header_cache = ~/.cache/neomutt
-mailboxes = +Inbox +Sent +Drafts +-------------------------------- +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
 
 # sidebar settings
-set mail_check_stats
-set sidebar_visible
+set mail_check_stats = yes
+set sidebar_visible = yes
 set sidebar_width = 30
-set sidebar_new_mail_only
 set sidebar_format = " %B (%S)%* %?N?[%N]?"
-sidebar_whitelist +Inbox
-sidebar_whitelist +Sent
-sidebar_whitelist +Drafts
-sidebar_whitelist +Archiv
-sidebar_whitelist +Following
-sidebar_whitelist +Privat
-sidebar_whitelist +Transaktionen
-sidebar_whitelist +Arbeit+Bildung
-sidebar_whitelist +--------------------------------
 
 # set up keychains by ignoring single keypresses
 bind attach,index,pager g noop
@@ -91,40 +90,45 @@ bind attach,index,browser G last-entry
 bind index - limit
 macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
 
+# replace regular search with notmuch query
+bind index / vfolder-from-query
+bind index \\ search
+
 ## mailbox switching and moving
 # first switching
 bind index,pager C change-folder
 bind index \CN sidebar-next
 bind index \CP sidebar-prev
 bind index \CO sidebar-open
-macro index,pager ca "<change-folder>=Archiv<enter>" "Zur Archiv Mailbox wechseln"
-macro index,pager cb "<change-folder>=Arbeit+Bildung<enter>" "Zur Arbeit+Bildung mailbox wechseln"
-macro index,pager cd "<change-folder>=Drafts<enter>" "Zur Drafts Mailbox wechseln"
-macro index,pager cf "<change-folder>=Following<enter>" "Zur Following Mailbox wechseln"
-macro index,pager ci "<change-folder>=Inbox<enter>" "Zur Inbox Mailbox wechseln"
-macro index,pager cp "<change-folder>=Privat<enter>" "Zur Privat Mailbox wechseln"
-macro index,pager cs "<change-folder>=Sent<enter>" "Zur Sent Mailbox wechseln"
-macro index,pager ct "<change-folder>=Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
+macro index,pager ca "<change-vfolder>Archiv<enter>" "Zur Archiv Mailbox wechseln"
+macro index,pager cb "<change-vfolder>Arbeit+Bildung<enter>" "Zur Arbeit+Bildung mailbox wechseln"
+macro index,pager cd "<change-vfolder>Drafts<enter>" "Zur Drafts Mailbox wechseln"
+macro index,pager cf "<change-vfolder>Following<enter>" "Zur Following Mailbox wechseln"
+macro index,pager cg "<change-vfolder>*Gesamt*<enter>" "Zur *Gesamt* Mailbox wechseln"
+macro index,pager ci "<change-vfolder>Inbox<enter>" "Zur Inbox Mailbox wechseln"
+macro index,pager cp "<change-vfolder>Privat<enter>" "Zur Privat Mailbox wechseln"
+macro index,pager cs "<change-vfolder>Sent<enter>" "Zur Sent Mailbox wechseln"
+macro index,pager ct "<change-vfolder>Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
 # then moving
 bind index,pager S save-message
 # moving from the index (supporting prefix)
-macro index sa "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Archiv<enter>" "In die Archiv Mailbox speichern"
-macro index sb "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
-macro index sd "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
-macro index sf "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Following<enter>" "In die Following Mailbox speichern"
-macro index si "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
-macro index sp "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Privat<enter>" "In die Privat Mailbox speichern"
-macro index ss "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Sent<enter>" "In die Sent Mailbox speichern"
-macro index st "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+macro index sa "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Archiv<enter><sync-mailbox>" "In die Archiv Mailbox speichern"
+macro index sb "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Arbeit+Bildung<enter><sync-mailbox>" "In die Arbeit+Bildung Mailbox speichern"
+macro index sd "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Drafts<enter><sync-mailbox>" "In die Drafts Mailbox speichern"
+macro index sf "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Following<enter><sync-mailbox>" "In die Following Mailbox speichern"
+macro index si "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Inbox<enter><sync-mailbox>" "In die Inbox Mailbox speichern"
+macro index sp "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Privat<enter><sync-mailbox>" "In die Privat Mailbox speichern"
+macro index ss "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Sent<enter><sync-mailbox>" "In die Sent Mailbox speichern"
+macro index st "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Transaktionen<enter><sync-mailbox>" "In die Transaktionen Mailbox speichern"
 # moving from the pager
-macro pager sa "<change-folder>=Archiv<enter>" "In die Archiv Mailbox wechseln"
-macro pager sb "<save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
-macro pager sd "<save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
-macro pager sf "<save-message>=Following<enter>" "In die Following Mailbox speichern"
-macro pager si "<save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
-macro pager sp "<save-message>=Privat<enter>" "In die Privat Mailbox speichern"
-macro pager ss "<save-message>=Sent<enter>" "In die Sent Mailbox speichern"
-macro pager st "<save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+macro pager sa "<save-message>=Archiv<enter><sync-mailbox>" "In die Archiv Mailbox speichern"
+macro pager sb "<save-message>=Arbeit+Bildung<enter><sync-mailbox>" "In die Arbeit+Bildung Mailbox speichern"
+macro pager sd "<save-message>=Drafts<enter><sync-mailbox>" "In die Drafts Mailbox speichern"
+macro pager sf "<save-message>=Following<enter><sync-mailbox>" "In die Following Mailbox speichern"
+macro pager si "<save-message>=Inbox<enter><sync-mailbox>" "In die Inbox Mailbox speichern"
+macro pager sp "<save-message>=Privat<enter><sync-mailbox>" "In die Privat Mailbox speichern"
+macro pager ss "<save-message>=Sent<enter><sync-mailbox>" "In die Sent Mailbox speichern"
+macro pager st "<save-message>=Transaktionen<enter><sync-mailbox>" "In die Transaktionen Mailbox speichern"
 
 # hiding or showing the sidebar
 macro index <Space> "<enter-command>toggle sidebar_visible<enter>"

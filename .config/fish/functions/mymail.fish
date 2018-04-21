@@ -6,7 +6,7 @@ function mymail
     cd $mutt_dir
 
     mbsync -a
-    notmuch new 2> /dev/null
+    notmuch new 2>/dev/null
     neomutt
     and mbsync -a
 

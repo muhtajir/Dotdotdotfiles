@@ -9,7 +9,7 @@
                           :prefix "g")
 
   ;; helper functions to bind keys to
-  (defun my/evil-dry-open-below(line)
+  (defun my/evil-dry-open-below (line)
     (interactive "P")
     (let ((pos (evil-column)))
       (evil-open-below line)
@@ -17,7 +17,7 @@
       (evil-previous-line line)
       (evil-move-to-column pos)))
 
-  (defun my/evil-dry-open-above(line)
+  (defun my/evil-dry-open-above (line)
     (interactive "P")
     (let ((pos (evil-column)))
       (evil-open-above line)
@@ -25,6 +25,19 @@
       (evil-next-line)
       (evil-move-to-column pos)))
 
+  (defun my/eval-visual-region ()
+    (interactive)
+    (when (> (mark) (point))
+      (exchange-point-and-mark))
+    (eval-region (mark) (point))
+    (evil-normal-state))
+
+  (defun my/eval-normal-line
+      (interactive)
+    (let ((pos (evil-column)))
+      (evil-end-of-line)
+      (eval-last-sexp)
+      (evil-move-to-column pos)))
 
   ;; normal state keybinds
   (general-def
@@ -33,6 +46,11 @@
     "Ö"         'my/evil-dry-open-above
     "M-y"       'helm-show-kill-ring
     "C-t"       'helm-find-files)
+
+  (general-def-leader
+    :states 'normal
+    "e"     'my/eval-normal-line
+    "E"     'eval-buffer)
 
   (general-def-goleader
     :states 'normal
@@ -58,10 +76,18 @@
     :states 'motion
     "rc"    (general-lambda ()
                             (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+    "j"           'vertigo-jump-down
+    "k"           'vertigo-jump-up
     "b"           'helm-mini
     "o"           'delete-other-windows
-    "TAB"         'next-buffer
-    "<backtab>"   'previous-buffer)
+    "h"           'next-buffer
+    "l"           'previous-buffer)
+
+
+  ;; visual keybinds
+  (general-def-leader
+    :states 'visual
+    "e"     'my/eval-visual-region)
 
 
   ;; insert keybinds

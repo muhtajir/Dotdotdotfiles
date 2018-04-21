@@ -92,6 +92,7 @@
 
 (use-package helm
   :init
+  ;; set fuzzy matching wherever it's supported
   (setq helm-mode-fuzzy-match t)
   (setq helm-completion-in-region-fuzzy-match t)
   (setq helm-recentf-fuzzy-match t)
@@ -106,6 +107,8 @@
   (setq helm-lisp-fuzzy-completion t)
   (setq helm-session-fuzzy-match t)
   (setq helm-etags-fuzzy-match t)
+  ;; don't make helm expand the current window
+  (setq helm-split-window-in-side-p t)
   :config
   (helm-autoresize-mode 1)
   (helm-mode 1))

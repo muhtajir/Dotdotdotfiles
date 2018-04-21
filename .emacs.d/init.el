@@ -65,22 +65,28 @@
                                     (plist-get base16-generic-colors :base03)))
   (setq hl-paren-delay 0))
 
-(add-hook 'prog-mode-hook 'electric-pair-local-mode)
-(add-hook 'prog-mode-hook 'highlight-parentheses-mode)
+(defun my/prog-mode-hooks ()
+  (electric-pair-local-mode 1)
+  (highlight-parentheses-mode 1)
+  (nlinum-relative-mode 1))
+(defun my/text-mode-hooks ()
+  (nlinum-relative-mode 1))
+(add-hook 'prog-mode-hook 'my/prog-mode-hooks)
+(add-hook 'text-mode-hook 'my/text-mode-hooks)
+
 
 
 ;; define a global mode for nlinum-relative because linenumbers are super
 ;; everywhere
-(define-globalized-minor-mode global-nlinum-relative-mode
-  nlinum-relative-mode
-  (lambda() (nlinum-relative-mode 1)))
+;; (define-globalized-minor-mode global-nlinum-relative-mode
+;;   nlinum-relative-mode
+;;   (lambda() (nlinum-relative-mode 1)))
 
 (use-package nlinum-relative
   :config
   (setq nlinum-format "%3d")
   (setq nlinum-relative-redisplay-delay 0)
-  (setq nlinum-relative-current-symbol "")
-  (global-nlinum-relative-mode 1))
+  (setq nlinum-relative-current-symbol ""))
 
 (use-package try)
 

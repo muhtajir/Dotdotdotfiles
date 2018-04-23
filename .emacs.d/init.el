@@ -8,7 +8,6 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
-
 ;; use-package setup with auto-package-update
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -28,7 +27,6 @@
   (setq auto-package-update-hide-results t)
   (auto-package-update-maybe))
 
-
 ;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
 (fringe-mode '(8 . 0))
@@ -44,51 +42,9 @@
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
 
-
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
-
-
-;; Parens matching
-(use-package highlight-parentheses
-  :init
-  (setq hl-paren-colors (list
-                         (plist-get base16-generic-colors :base01)
-                         (plist-get base16-generic-colors :base01)
-                         (plist-get base16-generic-colors :base00)
-                         (plist-get base16-generic-colors :base07)))
-  (setq hl-paren-background-colors (list
-                                    (plist-get base16-generic-colors :base0D)
-                                    (plist-get base16-generic-colors :base0B)
-                                    (plist-get base16-generic-colors :base08)
-                                    (plist-get base16-generic-colors :base03)))
-  (setq hl-paren-delay 0))
-
-(defun my/prog-mode-hooks ()
-  (electric-pair-local-mode 1)
-  (highlight-parentheses-mode 1)
-  (nlinum-relative-mode 1))
-(defun my/text-mode-hooks ()
-  (nlinum-relative-mode 1))
-(add-hook 'prog-mode-hook 'my/prog-mode-hooks)
-(add-hook 'text-mode-hook 'my/text-mode-hooks)
-
-
-
-;; define a global mode for nlinum-relative because linenumbers are super
-;; everywhere
-;; (define-globalized-minor-mode global-nlinum-relative-mode
-;;   nlinum-relative-mode
-;;   (lambda() (nlinum-relative-mode 1)))
-
-(use-package nlinum-relative
-  :config
-  (setq nlinum-format "%3d")
-  (setq nlinum-relative-redisplay-delay 0)
-  (setq nlinum-relative-current-symbol ""))
-
-(use-package try)
 
 (use-package helm
   :init
@@ -113,6 +69,39 @@
   (helm-autoresize-mode 1)
   (helm-mode 1))
 
+;; Parens matching
+(use-package highlight-parentheses
+  :init
+  (setq hl-paren-colors (list
+                         (plist-get base16-generic-colors :base0D)
+                         (plist-get base16-generic-colors :base0F)
+                         (plist-get base16-generic-colors :base0E)
+                         (plist-get base16-generic-colors :base0A)))
+  (setq hl-paren-delay 0))
+
+;; relative linenumbers
+(use-package nlinum-relative
+  :config
+  (setq nlinum-format "%3d")
+  (setq nlinum-relative-redisplay-delay 0)
+  (setq nlinum-relative-current-symbol ""))
+
+(use-package try)
+
 (require 'init-evil)
 
+(require 'init-company)
+
 (require 'init-keybinds)
+
+;; set mode-dependent hooks
+(defun my/prog-mode-hooks ()
+  (company-mode 1)
+  (electric-pair-local-mode 1)
+  (highlight-parentheses-mode 1)
+  (nlinum-relative-mode 1))
+(defun my/text-mode-hooks ()
+  (nlinum-relative-mode 1))
+
+(add-hook 'prog-mode-hook 'my/prog-mode-hooks)
+(add-hook 'text-mode-hook 'my/text-mode-hooks)

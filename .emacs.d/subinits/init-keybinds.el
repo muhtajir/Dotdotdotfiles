@@ -32,11 +32,11 @@
     (eval-region (mark) (point))
     (evil-normal-state))
 
-  (defun my/eval-normal-line
-      (interactive)
+  (defun my/eval-normal-line ()
+    (interactive)
     (let ((pos (evil-column)))
       (evil-end-of-line)
-      (eval-last-sexp)
+      (eval-last-sexp nil)
       (evil-move-to-column pos)))
 
   ;; normal state keybinds
@@ -103,7 +103,13 @@
     "C-u"       'helm-previous-page
     "C-d"       'helm-next-page
     "M-k"       'helm-previous-line
-    "M-j"       'helm-next-line))
+    "M-j"       'helm-next-line)
+
+  ;; company keybinds
+  (general-def
+    :keymaps 'company-active-map
+    "C-n"    'company-select-next
+    "C-p"    'company-select-previous))
 
 ;; end of keybinds
 

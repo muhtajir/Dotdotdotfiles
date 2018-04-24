@@ -9,6 +9,18 @@
                           :prefix "g")
 
   ;; helper functions to bind keys to
+
+  (defun my/describe-function-or-variable ()
+    (interactive)
+    (ignore-errors
+      (let ((func-or-var (intern (thing-at-point 'symbol t))))
+        (cond ((fboundp func-or-var)
+               (describe-function func-or-var))
+              ((boundp func-or-var)
+               (describe-variable func-or-var))
+              (t
+               (message "No known variable or function under cursor."))))))
+
   (defun my/evil-dry-open-below (line)
     (interactive "P")
     (let ((pos (evil-column)))
@@ -43,9 +55,7 @@
   (general-def
     :states 'normal
     "ö"         'my/evil-dry-open-below
-    "Ö"         'my/evil-dry-open-above
-    "M-y"       'helm-show-kill-ring
-    "C-t"       'helm-find-files)
+    "Ö"         'my/evil-dry-open-above)
 
   (general-def-leader
     :states 'normal
@@ -60,11 +70,13 @@
   ;; motion state keybinds
   (general-def
     :states 'motion
+    "C-h x"     'my/describe-function-or-variable
+    "C-p"       'counsel-git
+    "C-t"       'find-file-wildcards
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
     "M-k"       'evil-window-up
     "M-l"       'evil-window-right
-    "M-x"       'helm-M-x
     "M-c"       'delete-window
     "("         'evil-backward-paragraph
     ")"         'evil-forward-paragraph
@@ -78,7 +90,7 @@
                             (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
     "j"           'vertigo-jump-down
     "k"           'vertigo-jump-up
-    "b"           'helm-mini
+    "b"           'ivy-switch-buffer
     "o"           'delete-other-windows
     "h"           'next-buffer
     "l"           'previous-buffer)
@@ -93,17 +105,19 @@
   ;; insert keybinds
   (general-def
     :states 'insert
+    "C-n"        nil
+    "C-p"        nil
     "<backtab>"  'indent-relative)
 
 
-  ;; helm keybinds
+  ;; ivy keybinds
   (general-def
-    :keymaps 'helm-map
+    :keymaps 'ivy-minibuffer-map
     "<escape>"  'keyboard-escape-quit
-    "C-u"       'helm-previous-page
-    "C-d"       'helm-next-page
-    "M-k"       'helm-previous-line
-    "M-j"       'helm-next-line)
+    "C-u"       'ivy-scroll-down-command
+    "C-d"       'ivy-scroll-up-command
+    "M-k"       'ivy-previous-line
+    "M-j"       'ivy-next-line)
 
   ;; company keybinds
   (general-def
@@ -111,7 +125,7 @@
     "C-n"    'company-select-next
     "C-p"    'company-select-previous))
 
-;; end of keybinds
+  ;; end of keybinds
 
 
 (provide 'init-keybinds)

@@ -27,15 +27,6 @@
   :config
   (evil-commentary-mode 1))
 
-(use-package evil-goggles
-  :after evil
-  :init
-  (setq evil-goggles-duration 0.500)
-  (setq evil-goggles-enable-delete nil)
-  (setq evil-goggles-enable-undo nil)
-  :config
-  (evil-goggles-mode 1))
-
 (use-package evil-surround
   :after evil
   :config
@@ -44,6 +35,17 @@
 (use-package evil-replace-with-register
   :after evil)
 
-(nlinum-relative-setup-evil)
+(use-package evil-goggles
+  :after evil
+  :init
+  (setq evil-goggles-duration 0.500)
+  (setq evil-goggles-enable-shift nil)
+  (setq evil-goggles-enable-undo nil)
+  (setq evil-goggles-enable-paste nil)
+  (setq evil-goggles-enable-commentary nil)
+  (setq evil-goggles-enable-surround nil)
+  (setq evil-goggles-enable-delete nil)
+  :config
+  (add-hook 'after-init-hook 'evil-goggles-mode))
 
 (provide 'init-evil)

@@ -46,29 +46,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-(use-package helm
-  :init
-  ;; set fuzzy matching wherever it's supported
-  (setq helm-mode-fuzzy-match t)
-  (setq helm-completion-in-region-fuzzy-match t)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-locate-fuzzy-match t)
-  (setq helm-M-x-fuzzy-match t)
-  (setq helm-semantic-fuzzy-match t)
-  (setq helm-imenu-fuzzy-match t)
-  (setq helm-apropos-fuzzy-match t)
-  (setq helm-lisp-fuzzy-completion t)
-  (setq helm-session-fuzzy-match t)
-  (setq helm-etags-fuzzy-match t)
-  ;; don't make helm expand the current window
-  (setq helm-split-window-in-side-p t)
-  :config
-  (helm-autoresize-mode 1)
-  (helm-mode 1))
-
 ;; Parens matching
 (use-package highlight-parentheses
   :init
@@ -88,6 +65,8 @@
 
 (use-package try)
 
+(require 'init-ivy)
+
 (require 'init-evil)
 
 (require 'init-company)
@@ -97,6 +76,7 @@
 ;; set mode-dependent hooks
 (defun my/prog-mode-hooks ()
   (company-mode 1)
+  (company-quickhelp-mode 1)
   (electric-pair-local-mode 1)
   (highlight-parentheses-mode 1)
   (nlinum-relative-mode 1))

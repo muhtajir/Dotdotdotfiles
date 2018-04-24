@@ -32,7 +32,7 @@ function mergevars -S
     # do the actual replacing
     set -l file_string (cat $infile)
     for v in $vars
-        set file_string (string replace -r '{{{'$v'}}}' $$v $file_string)
+        set file_string (string replace '{{{'$v'}}}' $$v $file_string)
     end
 
     # print the result

@@ -46,22 +46,20 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; Parens matching
-(use-package highlight-parentheses
-  :init
-  (setq hl-paren-colors (list
-                         (plist-get base16-generic-colors :base0D)
-                         (plist-get base16-generic-colors :base0F)
-                         (plist-get base16-generic-colors :base0E)
-                         (plist-get base16-generic-colors :base0A)))
-  (setq hl-paren-delay 0))
+;; delimiter highlighting and matching
+(add-hook 'prog-mode-hook 'electric-pair-local-mode)
+(use-package rainbow-delimiters
+  :config
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; relative linenumbers
 (use-package nlinum-relative
   :config
   (setq nlinum-format "%3d")
   (setq nlinum-relative-redisplay-delay 0)
-  (setq nlinum-relative-current-symbol ""))
+  (setq nlinum-relative-current-symbol "")
+  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+  (add-hook 'text-mode-hook 'nlinum-relative-mode))
 
 (use-package try)
 
@@ -72,16 +70,3 @@
 (require 'init-company)
 
 (require 'init-keybinds)
-
-;; set mode-dependent hooks
-(defun my/prog-mode-hooks ()
-  (company-mode 1)
-  (company-quickhelp-mode 1)
-  (electric-pair-local-mode 1)
-  (highlight-parentheses-mode 1)
-  (nlinum-relative-mode 1))
-(defun my/text-mode-hooks ()
-  (nlinum-relative-mode 1))
-
-(add-hook 'prog-mode-hook 'my/prog-mode-hooks)
-(add-hook 'text-mode-hook 'my/text-mode-hooks)

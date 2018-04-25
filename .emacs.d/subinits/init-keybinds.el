@@ -3,13 +3,12 @@
   (general-auto-unbind-keys)
 
   (general-create-definer general-def-leader
-                          :prefix "SPC")
+                          :prefix "spc")
 
   (general-create-definer general-def-goleader
                           :prefix "g")
 
   ;; helper functions to bind keys to
-
   (defun my/describe-function-or-variable ()
     (interactive)
     (ignore-errors
@@ -22,7 +21,7 @@
                (message "No known variable or function under cursor."))))))
 
   (defun my/evil-dry-open-below (line)
-    (interactive "P")
+    (interactive "p")
     (let ((pos (evil-column)))
       (evil-open-below line)
       (evil-normal-state nil)
@@ -30,7 +29,7 @@
       (evil-move-to-column pos)))
 
   (defun my/evil-dry-open-above (line)
-    (interactive "P")
+    (interactive "p")
     (let ((pos (evil-column)))
       (evil-open-above line)
       (evil-normal-state nil)
@@ -51,11 +50,23 @@
       (eval-last-sexp nil)
       (evil-move-to-column pos)))
 
+  (defun my/company-select-next ()
+      "Navigate company-mode and also open the quickhelp popup."
+    (interactive)
+    (company-quickhelp-manual-begin)
+    (company-select-next))
+
+  (defun my/company-select-previous ()
+      "Navigate company-mode and also open the quickhelp popup."
+    (interactive)
+    (company-quickhelp-manual-begin)
+    (company-select-previous))
+
   ;; normal state keybinds
   (general-def
     :states 'normal
     "ö"         'my/evil-dry-open-below
-    "Ö"         'my/evil-dry-open-above)
+    "ö"         'my/evil-dry-open-above)
 
   (general-def-leader
     :states 'normal
@@ -73,6 +84,7 @@
     "C-h x"     'my/describe-function-or-variable
     "C-p"       'counsel-git
     "C-t"       'find-file-wildcards
+    "C-u"       'evil-scroll-up
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
     "M-k"       'evil-window-up
@@ -82,18 +94,21 @@
     ")"         'evil-forward-paragraph
     "{"         'evil-backward-sentence-begin
     "}"         'evil-forward-sentence-begin
-    "C-u"       'evil-scroll-up)
+    "-"         'goto-last-change
+    "+"         'goto-last-change-reverse)
 
   (general-def-leader
     :states 'motion
     "rc"    (general-lambda ()
-                            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+                            (find-file (substitute-in-file-name "$home/.emacs.d/init.el")))
     "j"           'vertigo-jump-down
     "k"           'vertigo-jump-up
     "b"           'ivy-switch-buffer
     "o"           'delete-other-windows
     "h"           'next-buffer
-    "l"           'previous-buffer)
+    "l"           'previous-buffer
+    "s"           'evil-window-split
+    "v"           'evil-window-vsplit)
 
 
   ;; visual keybinds
@@ -113,19 +128,19 @@
   ;; ivy keybinds
   (general-def
     :keymaps 'ivy-minibuffer-map
-    "<escape>"  'keyboard-escape-quit
-    "C-u"       'ivy-scroll-down-command
-    "C-d"       'ivy-scroll-up-command
-    "M-k"       'ivy-previous-line
-    "M-j"       'ivy-next-line)
+    "<S-return>"    'ivy-call
+    "<escape>"      'keyboard-escape-quit
+    "C-u"           'ivy-scroll-down-command
+    "C-d"           'ivy-scroll-up-command
+    "M-k"           'ivy-previous-line
+    "M-j"           'ivy-next-line)
 
   ;; company keybinds
   (general-def
     :keymaps 'company-active-map
-    "C-n"    'company-select-next
-    "C-p"    'company-select-previous))
+    "C-n"    'my/company-select-next
+    "C-p"    'my/company-select-previous))
 
   ;; end of keybinds
-
 
 (provide 'init-keybinds)

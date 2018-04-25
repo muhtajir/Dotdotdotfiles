@@ -8,10 +8,10 @@
 
 (use-package company-quickhelp
   :after company
-  :config
-  (company-quickhelp-mode 1)
-  (setq company-quickhelp-delay 1.5)
-  (add-hook 'prog-mode-hook 'company-quickhelp-mode))
-
+  :init
+  ;; set pos-tip theme
+  (setq pos-tip-foreground-color (plist-get base16-generic-colors :base00))
+  (setq pos-tip-background-color (plist-get base16-generic-colors :base04))
+  (setq company-quickhelp-delay 0))
 
 (provide 'init-company)

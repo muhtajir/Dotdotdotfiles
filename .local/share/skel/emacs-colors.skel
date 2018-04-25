@@ -688,6 +688,8 @@ settings and will be for very specific cases."
    (rainbow-delimiters-depth-7-face              :foreground base08)
    (rainbow-delimiters-depth-8-face              :foreground base03)
    (rainbow-delimiters-depth-9-face              :foreground base05)
+   (rainbow-delimiters-unmatched-face            :forgeround base00 :background base08)
+   (rainbow-delimiters-mismatched-face           :forgeround base00 :background base00)
 
 ;; regex-tool
    (regex-tool-matched-face                      :foreground nil :background nil :inherit match)

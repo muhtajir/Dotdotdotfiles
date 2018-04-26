@@ -4,36 +4,20 @@ call plug#begin()
     Plug 'chrisbra/SudoEdit.vim'
     Plug 'dag/vim-fish'
     Plug 'dietsche/vim-lastplace'
-    Plug 'donRaphaco/neotex', { 'for': 'tex' }
     Plug 'InspectorMustache/base16.nvim'
-    Plug 'jsfaint/gen_tags.vim'
-    Plug 'kassio/neoterm'
     Plug 'kana/vim-textobj-user'
-    Plug 'kshenoy/vim-signature'
-    Plug 'mtth/scratch.vim'
     Plug 'machakann/vim-highlightedyank'
-    Plug 'neomake/neomake'
     Plug 'prendradjaja/vim-vertigo'
     Plug 'raimondi/delimitmate'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'SirVer/ultisnips'
-    Plug 'thinca/vim-quickrun'
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     Plug 'vim-airline/vim-airline'
-    Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
     Plug 'vim-scripts/ReplaceWithRegister'
     Plug 'vim-scripts/vis'
-    " deoplete completions
-    Plug 'Shougo/neco-syntax'
-    Plug 'Shougo/deoplete-go', {'for': 'go'}
-    Plug 'zchee/deoplete-jedi', { 'for': 'python' }
     " custom text objects
     Plug 'Julian/vim-textobj-variable-segment'
     Plug 'kana/vim-textobj-indent'
-    Plug 'thinca/vim-textobj-between'
 call plug#end()
 
 " add plugins that come with locally installed packages
@@ -110,7 +94,7 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,r-cr:hor20-blinkon0,o:hor50-blinkon0
 
 " set what to ignore when using wildcards
-set wildignore+=*/__pycache__/*,*/.git/*
+set wildignore+=*/.git/*
 
 " make vim find hidden ctags files
 set tags+=./.tags;
@@ -119,17 +103,8 @@ set tags+=./.tags;
 let g:tex_flavor = 'latex'
 
 "" autocommands
-" source $MYVIMRC automatically after saving
-autocmd bufwritepost init.vim source $MYVIMRC
-" close preview window after leaving insert mode
-autocmd InsertLeave * silent! pclose!
 " retain clipboard content after closing vim
 autocmd VimLeave * call system(getreg('+'), " | xclip -se c -i <<<")
-
-
-"" aliases
-" change working directory to current file's parent folder
-cnoreabbrev <silent> here lcd %:p:h
 
 
 "" keybinds
@@ -151,8 +126,8 @@ nnoremap <silent> <leader>B :buffers<CR>
 nnoremap <leader>e :e 
 nnoremap <leader>rc :vsplit $MYVIMRC<CR>
 
-" split commands closer to i3
-nnoremap <silent> <leader>hs :vsplit<CR>
+" simpler split commands
+nnoremap <silent> <leader>s :vsplit<CR>
 nnoremap <silent> <leader>vs :split<CR>
 
 " auto-delete trailing whitespace
@@ -160,10 +135,7 @@ nnoremap <silent> <F3> :call <SID>FindTrailingWhitespaces()<CR>
 nnoremap <silent> <leader><F3> :call <SID>StripTrailingWhitespaces()<CR>
 
 " turn off search highlighting until next search
-nnoremap <silent> ´ :nohlsearch<CR>
-
-" run Neomake
-nnoremap <silent> <F5> :Neomake<CR>
+nnoremap <silent> <Esc> :nohlsearch<CR>
 
 " insert blank links without entering insert mode
 nnoremap <silent> ö :call append(line('.'),'')<CR>
@@ -257,9 +229,6 @@ nnoremap <silent> <C-T> :FZF<CR>
 " SudoEdit
 nnoremap <leader>sw :SudoWrite<CR>
 
-" Quickrun
-nnoremap <F12> :QuickRun<CR>
-
 " vertigo
 nnoremap <silent> <leader>j :<C-U>VertigoDown n<CR>
 nnoremap <silent> <leader>k :<C-U>VertigoUp n<CR>
@@ -268,62 +237,12 @@ vnoremap <silent> <leader>k :<C-U>VertigoUp v<CR>
 onoremap <silent> <leader>j :<C-U>VertigoDown o<CR>
 onoremap <silent> <leader>k :<C-U>VertigoUp o<CR>
 
-" shortcut for pytest
-nnoremap <F9> :terminal PYTHONPATH=$(pwd) pytest<CR>
-
 "" plugin configuration
 " delimitMate
 let g:delimitMate_expand_cr = 1
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#sources#go#gocode_binary = '/usr/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-call deoplete#custom#source('jedi', 'rank', 1000)
-
-" gen_tags
-let g:loaded_gentags#gtags = 1
-let g:gen_tags#gtags_auto_gen = 1
-
 " netrw
 let g:netrw_banner = 0
-
-" neomake
-let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_go_enabled_makers = ['go']
-call neomake#configure#automake({
-            \ 'InsertLeave': {},
-            \ 'TextChanged': {},
-            \ 'BufWritePost': {},
-            \ }, 0)
-
-" neoterm
-let g:neoterm_default_mod = ':vertical'
-let g:neoterm_keep_term_open = 0
-nnoremap <silent> <leader>tc :call neoterm#close()<CR>
-nnoremap <silent> <leader>tk :call neoterm#kill()<CR>
-nnoremap <silent> <leader>tl :call neoterm#clear()<CR>
-nnoremap <silent> <leader>ts :T %:p<CR>
-nnoremap <silent> <leader>tp :T python %:p<CR>
-
-" quickrun
-" subtler window size
-let g:quickrun_config = {'_': {'outputter/buffer/split': '%{winwidth(0) * 2 < winheight(0) * 5 ? "8" : "vertical 8"}'}}
-
-" scratch
-let g:scratch_insert_autohide = 0
-
-"" ultisnips
-" keybinds
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsSnippetsDir = '~/.config/nvim/snippets_custom'
-let g:UltiSnipsSnippetDirectories = ["UltiSnips", "snippets_custom"]
-" keybinds
-let g:UltiSnipsExpandTrigger = '<C-L>'
-let g:UltiSnipsBackwardTrigger = '<C-K>'
-let g:UltiSnipsForwardTrigger = '<C-J>'
-let g:UltiSnipsListSnippets = '<C-E>'
 
 "vertigo
 let g:Vertigo_homerow = 'asdfghjklö'

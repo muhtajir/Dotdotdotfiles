@@ -65,8 +65,6 @@
   ;; normal state keybinds
   (general-def
     :states 'normal
-    ;; remove bindings when motion state commands are preferred
-    "C-p"       nil
     "ö"         'my/evil-dry-open-below
     "Ö"         'my/evil-dry-open-above)
 
@@ -84,9 +82,8 @@
   (general-def
     :states 'motion
     "C-h x"     'my/describe-function-or-variable
-    "C-S-p"     'counsel-projectile-switch-project
-    "C-p"       'counsel-projectile-find-file
-    "C-t"       'find-file
+    "C-q"       'counsel-projectile-switch-project
+    "Q"         'counsel-projectile-find-file
     "C-u"       'evil-scroll-up
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
@@ -105,16 +102,17 @@
   (general-def-leader
     :states 'motion
     "rc"    (general-lambda ()
-                            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
-    "SPC"         'vertigo-set-digit-argument
-    "b"           'ivy-switch-buffer
-    "h"           'next-buffer
-    "I"           'ivy-resume
-    "l"           'previous-buffer
-    "o"           'delete-other-windows
-    "s"           'evil-window-split
-    "v"           'evil-window-vsplit
-    "<tab>"       'evil-switch-to-windows-last-buffer)
+                  (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+    "Q"     'find-file
+    "SPC"   'vertigo-set-digit-argument
+    "b"     'ivy-switch-buffer
+    "h"     'next-buffer
+    "I"     'ivy-resume
+    "l"     'previous-buffer
+    "o"     'delete-other-windows
+    "s"     'evil-window-split
+    "v"     'evil-window-vsplit
+    "<tab>" 'evil-switch-to-windows-last-buffer)
 
 
   ;; visual keybinds
@@ -125,10 +123,10 @@
 
   ;; insert keybinds
   (general-def
-    :states 'insert
-    "C-n"        nil
-    "C-p"        nil
-    "<backtab>"  'indent-relative)
+    :states         'insert
+    "C-n"           nil
+    "C-p"           nil
+    "<backtab>"     'indent-relative)
 
 
   ;; ivy keybinds

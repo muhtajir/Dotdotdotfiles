@@ -60,8 +60,6 @@
 !.config/nvim/init.vim
 !.config/nvim/autoload/
 !.config/nvim/autoload/*
-!.config/nvim/snippets_custom/
-!.config/nvim/snippets_custom/*
 
 !.config/pacman
 !.config/pacman/makepkg.conf

@@ -8,6 +8,15 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
+;; set up a separate location for backup and temp files
+(defconst emacs-tmp-dir (expand-file-name "auto-save" user-emacs-directory))
+(setq backup-directory-alist
+      `((".*" . ,emacs-tmp-dir)))
+(setq auto-save-file-name-transforms
+      `((".*" ,emacs-tmp-dir t)))
+(setq auto-save-list-file-prefix
+      emacs-tmp-dir)
+
 ;; use-package setup with auto-package-update
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))

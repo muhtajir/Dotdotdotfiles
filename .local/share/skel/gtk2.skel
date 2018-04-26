@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.gtkrc-2.0-%
+# %-LOCATION:$HOME/.gtkrc-2.0-% -*-conf-*-
 gtk-theme-name="Arc"
 gtk-icon-theme-name="Adwaita"
 gtk-font-name="{{{FONT_SANS}}} 10"

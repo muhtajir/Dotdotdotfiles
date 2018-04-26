@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/dunst/dunstrc-%
+# %-LOCATION:$HOME/.config/dunst/dunstrc-% -*-conf-*-
 [global]
     font = {{{FONT_MONO}}} 10
 
@@ -258,5 +258,3 @@
 #    appname = Pidgin
 #    summary = *twitter.com*
 #    urgency = normal
-#
-# vim: ft=cfg

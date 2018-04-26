@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/gtk-3.0/settings.ini-%
+# %-LOCATION:$HOME/.config/gtk-3.0/settings.ini-% -*-conf-*-
 [Settings]
 gtk-theme-name=Arc
 gtk-icon-theme-name=Adwaita

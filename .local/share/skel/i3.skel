@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-%
+# %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-% -*-conf-*-
 
 # Base16 color setup
 set $base00 {{{__BASE00_HASH}}}
@@ -307,5 +307,3 @@ exec --no-startup-id numlockx on
 exec --no-startup-id setxkbmap -layout de -variant nodeadkeys -option compose:menu -option caps:escape
 exec --no-startup-id nc_monitor $HOME/Nextcloud
 exec --no-startup-id xss-lock -- $i3scriptsdir/pm_lock
-
-# vim:ft=conf

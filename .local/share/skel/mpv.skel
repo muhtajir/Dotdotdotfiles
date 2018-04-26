@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/mpv/mpv.conf-%
+# %-LOCATION:$HOME/.config/mpv/mpv.conf-% -*-conf-*-
 ################
 # OSD settings #
 ################
@@ -13,5 +13,3 @@ sub-shadow-color = '{{{__BASE01_HASH}}}'
 osd-color = '{{{__BASE07_HASH}}}'
 osd-border-color = '{{{__BASE00_HASH}}}'
 osd-shadow-color = '{{{__BASE01_HASH}}}'
-
-# vim:ft=conf

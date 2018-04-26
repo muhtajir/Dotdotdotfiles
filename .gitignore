@@ -20,9 +20,6 @@
 !.config/firejail
 !.config/firejail/*
 
-!.config/fontconfig
-!.config/fontconfig/fonts.conf
-
 !.config/git
 !.config/git/config
 

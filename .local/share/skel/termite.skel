@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/termite/config-%
+# %-LOCATION:$HOME/.config/termite/config-% -*-conf-*-
 [options]
 allow_bold = true
 fullscreen = true
@@ -56,5 +56,3 @@ color18 = {{{__BASE01_HASH}}}
 color19 = {{{__BASE02_HASH}}}
 color20 = {{{__BASE04_HASH}}}
 color21 = {{{__BASE06_HASH}}}
-
-# vim: ft=cfg commentstring=#\ %s

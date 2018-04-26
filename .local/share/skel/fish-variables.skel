@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/fish/functions/__fish_set_universal_variables.fish-%
+# %-LOCATION:$HOME/.config/fish/functions/__fish_set_universal_variables.fish-% -*-fish-*-
 function __fish_set_universal_variables
     set -U fish_greeting
     set -U fish_default_variables_set
@@ -40,5 +40,3 @@ function __fish_set_universal_variables
         set -U {$var}_B (printf '%d' 0x(string sub -s 5 -l 2 $$var))
     end
 end
-
-# vim:ft=fish

@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/zathura/zathurarc-%
+# %-LOCATION:$HOME/.config/zathura/zathurarc-% -*-conf-*-
 # general settings
 set selection-clipboard clipboard
 

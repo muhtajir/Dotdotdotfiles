@@ -1,4 +1,4 @@
-// %-LOCATION:$HOME/.config/rofi/theme.rasi-%
+// %-LOCATION:$HOME/.config/rofi/theme.rasi-% -*-c++-*-
 /**
  * Author: Bla
  */
@@ -176,5 +176,3 @@
     background-color:   @lightfg;
     text-color:         @lightbg;
 }
-
-// vim:ft=cpp

@@ -1,4 +1,4 @@
-;; %-LOCATION:$HOME/.emacs.d/subinits/init-base16-generic-theme.el-%
+;; %-LOCATION:$HOME/.emacs.d/subinits/init-base16-generic-theme.el-% -*-emacs-lisp-*-
 ;; Generic base16 theme into which base16 environment vars have been inserted
 
 (defvar base16-generic-colors
@@ -841,5 +841,3 @@ settings and will be for very specific cases."
 (provide-theme 'base16-generic)
 
 (provide 'init-base16-generic-theme)
-
-;; vim: ft=lisp

@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/notmuch/notmuch-config-%
+# %-LOCATION:$HOME/.config/notmuch/notmuch-config-% -*-conf-*-
 # .notmuch-config - Configuration file for the notmuch mail system
 #
 # For more information about notmuch, see https://notmuchmail.org
@@ -98,5 +98,3 @@ synchronize_flags=true
 #
 [crypto]
 gpg_path=gpg
-
-# vim:ft=dosini

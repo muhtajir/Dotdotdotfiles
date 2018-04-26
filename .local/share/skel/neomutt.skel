@@ -1,4 +1,4 @@
-# %-LOCATION:$HOME/.config/neomutt/neomuttrc-%
+# %-LOCATION:$HOME/.config/neomutt/neomuttrc-% -*-conf-*-
 set realname='{{{REAL_NAME}}}'
 
 # sync mails upon startup
@@ -132,5 +132,3 @@ macro pager st "<save-message>=Transaktionen<enter><sync-mailbox>" "In die Trans
 
 # hiding or showing the sidebar
 macro index <Space> "<enter-command>toggle sidebar_visible<enter>"
-
-# vim:ft=neomuttrc

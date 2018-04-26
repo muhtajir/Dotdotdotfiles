@@ -55,6 +55,10 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
+;; various mode setting options
+(add-to-list 'auto-mode-alist '(".gitignore" . text-mode))
+(add-hook 'python-mode-hook 'jedi:setup)
+
 ;; delimiter highlighting and matching
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 (use-package rainbow-delimiters

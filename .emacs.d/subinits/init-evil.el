@@ -20,7 +20,7 @@
 
 (use-package vertigo
   :init
-  (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?k ?l ?ö)))
+  (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö)))
 
 (use-package evil-commentary
   :after evil

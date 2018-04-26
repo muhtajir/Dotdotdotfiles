@@ -139,13 +139,26 @@
     "M-k"           'ivy-previous-line
     "M-j"           'ivy-next-line)
 
+
   ;; company keybinds
   (general-def
     :keymaps    'company-active-map
     ;; don't use return for anything in company
     "<return>"  'newline
     "C-n"       'my/company-select-next
-    "C-p"       'my/company-select-previous))
+    "C-p"       'my/company-select-previous)
+
+  ;; jedi-keybinds
+  (general-def
+    :states  'normal
+    :keymaps 'jedi-mode-map
+    "C-h x"  'jedi:show-doc)
+  
+  (general-def-goleader
+    :states     'normal
+    :keymaps    'jedi-mode-map
+    "d"         'jedi:goto-definition
+    "D"         'jedi:goto-definition-pop-marker))
 
   ;; end of keybinds
 

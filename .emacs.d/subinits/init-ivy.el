@@ -10,4 +10,7 @@
   (ivy-mode 1)
   (counsel-mode 1))
 
+(use-package counsel-projectile
+  :after counsel)
+
 (provide 'init-ivy)

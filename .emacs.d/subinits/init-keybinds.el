@@ -3,7 +3,7 @@
   (general-auto-unbind-keys)
 
   (general-create-definer general-def-leader
-                          :prefix "spc")
+                          :prefix "SPC")
 
   (general-create-definer general-def-goleader
                           :prefix "g")
@@ -21,7 +21,7 @@
                (message "No known variable or function under cursor."))))))
 
   (defun my/evil-dry-open-below (line)
-    (interactive "p")
+    (interactive "P")
     (let ((pos (evil-column)))
       (evil-open-below line)
       (evil-normal-state nil)
@@ -29,7 +29,7 @@
       (evil-move-to-column pos)))
 
   (defun my/evil-dry-open-above (line)
-    (interactive "p")
+    (interactive "P")
     (let ((pos (evil-column)))
       (evil-open-above line)
       (evil-normal-state nil)
@@ -65,8 +65,10 @@
   ;; normal state keybinds
   (general-def
     :states 'normal
+    ;; remove bindings when motion state commands are preferred
+    "C-p"       nil
     "ö"         'my/evil-dry-open-below
-    "ö"         'my/evil-dry-open-above)
+    "Ö"         'my/evil-dry-open-above)
 
   (general-def-leader
     :states 'normal
@@ -82,14 +84,17 @@
   (general-def
     :states 'motion
     "C-h x"     'my/describe-function-or-variable
-    "C-p"       'counsel-git
-    "C-t"       'find-file-wildcards
+    "C-S-p"     'counsel-projectile-switch-project
+    "C-p"       'counsel-projectile-find-file
+    "C-t"       'find-file
     "C-u"       'evil-scroll-up
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
     "M-k"       'evil-window-up
     "M-l"       'evil-window-right
     "M-c"       'delete-window
+    "C-l"       'link-hint-open-link
+    "C-S-l"     'link-hint-copy-link
     "("         'evil-backward-paragraph
     ")"         'evil-forward-paragraph
     "{"         'evil-backward-sentence-begin
@@ -100,15 +105,16 @@
   (general-def-leader
     :states 'motion
     "rc"    (general-lambda ()
-                            (find-file (substitute-in-file-name "$home/.emacs.d/init.el")))
-    "j"           'vertigo-jump-down
-    "k"           'vertigo-jump-up
+                            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+    "SPC"         'vertigo-set-digit-argument
     "b"           'ivy-switch-buffer
-    "o"           'delete-other-windows
     "h"           'next-buffer
+    "I"           'ivy-resume
     "l"           'previous-buffer
+    "o"           'delete-other-windows
     "s"           'evil-window-split
-    "v"           'evil-window-vsplit)
+    "v"           'evil-window-vsplit
+    "<tab>"       'evil-switch-to-windows-last-buffer)
 
 
   ;; visual keybinds
@@ -137,9 +143,11 @@
 
   ;; company keybinds
   (general-def
-    :keymaps 'company-active-map
-    "C-n"    'my/company-select-next
-    "C-p"    'my/company-select-previous))
+    :keymaps    'company-active-map
+    ;; don't use return for anything in company
+    "<return>"  'newline
+    "C-n"       'my/company-select-next
+    "C-p"       'my/company-select-previous))
 
   ;; end of keybinds
 

@@ -52,6 +52,9 @@
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
+;; vimperator-style link-hints
+(use-package link-hint)
+
 ;; relative linenumbers
 (use-package nlinum-relative
   :config

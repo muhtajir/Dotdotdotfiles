@@ -65,6 +65,13 @@
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
+;; mark column 80 with line
+(use-package fill-column-indicator
+  :init
+  (setq fci-rule-color (plist-get base16-generic-colors :base01))
+  :config
+  (add-hook 'python-mode-hook 'fci-mode))
+
 ;; vimperator-style link-hints
 (use-package link-hint)
 

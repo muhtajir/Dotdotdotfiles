@@ -6,6 +6,11 @@
   (push 'company-tng-frontend company-frontends)
   (add-hook 'prog-mode-hook 'company-mode))
 
+(use-package company-flx
+  :after company
+  :config
+  (company-flx-mode 1))
+
 (use-package company-quickhelp
   :after company
   :init

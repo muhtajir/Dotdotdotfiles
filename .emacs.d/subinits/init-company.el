@@ -23,7 +23,10 @@
   :after company
   :config
   (defun my/python-company-mode ()
-    (add-to-list 'company-backends 'company-jedi))
+    (add-to-list 'company-backends 'company-jedi)
+    (jedi:setup))
   (add-hook 'python-mode-hook 'my/python-company-mode))
+
+(use-package company-auctex)
 
 (provide 'init-company)

@@ -112,6 +112,10 @@
     "o"     'delete-other-windows
     "s"     'evil-window-split
     "v"     'evil-window-vsplit
+    "S"     (general-lambda ()
+                            (evil-window-split) (evil-window-down 1))
+    "V"     (general-lambda ()
+                            (evil-window-vsplit) (evil-window-right 1))
     "<tab>" 'evil-switch-to-windows-last-buffer)
 
 

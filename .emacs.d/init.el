@@ -13,8 +13,8 @@
 (setq backup-directory-alist
       `((".*" . ,emacs-tmp-dir)))
 (setq auto-save-file-name-transforms
-      `((".*" ,emacs-tmp-dir t)))
-(setq auto-save-list-file-prefix
+      `((".*" ,(concat emacs-tmp-dir "/\\1") t)))
+    (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
 ;; use-package setup with auto-package-update
@@ -57,13 +57,27 @@
 
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . text-mode))
-(add-hook 'python-mode-hook 'jedi:setup)
 
 ;; delimiter highlighting and matching
 (add-hook 'prog-mode-hook 'electric-pair-local-mode)
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+;; additional language specific major modes
+(use-package fish-mode)
+(use-package tex
+  :ensure auctex
+  :defer t
+  :init
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)
+  :config
+  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  (add-hook 'LaTeX-mode-hook 'company-mode)
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init)
+  )
 
 ;; mark column 80 with line
 (use-package fill-column-indicator

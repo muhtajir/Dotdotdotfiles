@@ -8,18 +8,6 @@
   (general-create-definer general-def-goleader
                           :prefix "g")
 
-  ;; helper functions to bind keys to
-  (defun my/describe-function-or-variable ()
-    (interactive)
-    (ignore-errors
-      (let ((func-or-var (intern (thing-at-point 'symbol t))))
-        (cond ((fboundp func-or-var)
-               (describe-function func-or-var))
-              ((boundp func-or-var)
-               (describe-variable func-or-var))
-              (t
-               (message "No known variable or function under cursor."))))))
-
   (defun my/evil-dry-open-below (line)
     (interactive "P")
     (let ((pos (evil-column)))
@@ -81,7 +69,11 @@
   ;; motion state keybinds
   (general-def
     :states 'motion
-    "C-h x"     'my/describe-function-or-variable
+    "C-h x"     'helpful-at-point
+    "C-h f"     'helpful-callable
+    "C-h F"     'helpful-function
+    "C-h v"     'helpful-variable
+    "C-h k"     'helpful-key
     "C-q"       'counsel-projectile-switch-project
     "Q"         'counsel-projectile-find-file
     "C-u"       'evil-scroll-up

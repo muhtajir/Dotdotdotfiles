@@ -86,6 +86,9 @@
   :config
   (add-hook 'python-mode-hook 'fci-mode))
 
+;; sexier builtin help
+(use-package helpful)
+
 ;; vimperator-style link-hints
 (use-package link-hint)
 

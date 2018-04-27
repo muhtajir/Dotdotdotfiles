@@ -64,21 +64,6 @@
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
-;; additional language specific major modes
-(use-package fish-mode)
-(use-package tex
-  :ensure auctex
-  :defer t
-  :init
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq-default TeX-master nil)
-  :config
-  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-  (add-hook 'LaTeX-mode-hook 'company-mode)
-  (add-hook 'LaTeX-mode-hook 'company-auctex-init)
-  )
-
 ;; mark column 80 with line
 (use-package fill-column-indicator
   :init
@@ -107,6 +92,6 @@
 
 (require 'init-evil)
 
-(require 'init-company)
+(require 'init-language-specific)
 
 (require 'init-keybinds)

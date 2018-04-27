@@ -125,9 +125,15 @@
     "<backtab>"     'indent-relative)
 
 
+  ;; dired-keybinds
+  (general-def
+    :keymaps    'dired-mode-map
+    "SPC"       nil)
+
+
   ;; ivy keybinds
   (general-def
-    :keymaps 'ivy-minibuffer-map
+    :keymaps        'ivy-minibuffer-map
     "<S-return>"    'ivy-call
     "<escape>"      'keyboard-escape-quit
     "C-u"           'ivy-scroll-down-command
@@ -144,11 +150,24 @@
     "C-n"       'my/company-select-next
     "C-p"       'my/company-select-previous)
 
+
+  ;; go-mode-keybinds
+  (general-def
+    :states     'normal
+    :keymaps    'go-mode-map
+    "C-h x"     'godoc-at-point)
+
+  (general-def-goleader
+    :states     'normal
+    :keymaps    'go-mode-map
+    "d"         'godef-jump
+    "D"         'godef-jump-other-window)
+
   ;; jedi-keybinds
   (general-def
-    :states  'normal
-    :keymaps 'jedi-mode-map
-    "C-h x"  'jedi:show-doc)
+    :states     'normal
+    :keymaps    'jedi-mode-map
+    "C-h x"     'jedi:show-doc)
   
   (general-def-goleader
     :states     'normal

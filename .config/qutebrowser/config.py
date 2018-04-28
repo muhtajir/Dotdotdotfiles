@@ -289,7 +289,7 @@ c.url.searchengines = {
     'wd': 'https://de.wikipedia.org/w/index.php?search={}',
     'yt': 'https://www.youtube.com/results?search_query={}'}
 # Aliases
-c.aliases['ssh-tunnel'] = 'set content.proxy socks://localhost:4711 ;; message-info "Tunnel proxy set."'
+c.aliases['ssh-tunnel'] = 'config-cycle --temp content.proxy socks://localhost:4711 system'
 
 ## Miscellaneous settings
 # Start page

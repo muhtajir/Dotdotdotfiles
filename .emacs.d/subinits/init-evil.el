@@ -39,6 +39,7 @@
   :after evil
   :init
   (setq evil-goggles-duration 0.500)
+  (setq evil-goggles-blocking-duration 0.001)
   (setq evil-goggles-enable-shift nil)
   (setq evil-goggles-enable-undo nil)
   (setq evil-goggles-enable-paste nil)
@@ -47,5 +48,11 @@
   (setq evil-goggles-enable-delete nil)
   :config
   (add-hook 'after-init-hook 'evil-goggles-mode))
+
+(use-package evil-mc
+  :after evil
+  :config
+  (global-evil-mc-mode 1)
+  (setq evil-mc-key-map nil))
 
 (provide 'init-evil)

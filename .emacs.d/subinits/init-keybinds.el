@@ -68,12 +68,7 @@
 
   ;; motion state keybinds
   (general-def
-    :states 'motion
-    "C-h x"     'helpful-at-point
-    "C-h f"     'helpful-callable
-    "C-h F"     'helpful-function
-    "C-h v"     'helpful-variable
-    "C-h k"     'helpful-key
+    :states     'motion
     "C-q"       'counsel-projectile-switch-project
     "Q"         'counsel-projectile-find-file
     "C-u"       'evil-scroll-up
@@ -89,26 +84,36 @@
     "{"         'evil-backward-sentence-begin
     "}"         'evil-forward-sentence-begin
     "-"         'goto-last-change
-    "+"         'goto-last-change-reverse)
+    "+"         'goto-last-change-reverse
+    "ü"         'evil-mc-make-all-cursors
+    "Ü"         'evil-mc-undo-all-cursors
+    "ä"         'evil-mc-make-and-goto-next-match
+    "Ä"         'evil-mc-skip-and-goto-prev-match
+    "M-ä"       'evil-mc-skip-and-goto-next-match)
 
   (general-def-leader
     :states 'motion
     "rc"    (general-lambda ()
                   (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
-    "Q"     'find-file
-    "SPC"   'vertigo-set-digit-argument
-    "b"     'ivy-switch-buffer
-    "h"     'next-buffer
-    "I"     'ivy-resume
-    "l"     'previous-buffer
-    "o"     'delete-other-windows
-    "s"     'evil-window-split
-    "v"     'evil-window-vsplit
-    "S"     (general-lambda ()
-                            (evil-window-split) (evil-window-down 1))
-    "V"     (general-lambda ()
-                            (evil-window-vsplit) (evil-window-right 1))
-    "<tab>" 'evil-switch-to-windows-last-buffer)
+    "hx"     'helpful-at-point
+    "hf"     'helpful-callable
+    "hF"     'helpful-function
+    "hv"     'helpful-variable
+    "hk"     'helpful-key
+    "Q"      'find-file
+    "SPC"    'vertigo-set-digit-argument
+    "b"      'ivy-switch-buffer
+    "j"      'next-buffer
+    "k"      'previous-buffer
+    "I"      'ivy-resume
+    "o"      'delete-other-windows
+    "s"      'evil-window-split
+    "v"      'evil-window-vsplit
+    "S"      (general-lambda ()
+                             (evil-window-split) (evil-window-down 1))
+    "V"      (general-lambda ()
+                             (evil-window-vsplit) (evil-window-right 1))
+    "<tab>"                                  'evil-switch-to-windows-last-buffer)
 
 
   ;; visual keybinds
@@ -122,8 +127,13 @@
     :states         'insert
     "C-n"           nil
     "C-p"           nil
-    "<backtab>"     'indent-relative)
-
+    "<backtab>"     'indent-relative
+    "M-("           (kbd "[")
+    "M-)"           (kbd "]")
+    "C-M-("         "{"
+    "C-M-)"         "}"
+    )
+  
 
   ;; dired-keybinds
   (general-def
@@ -150,6 +160,13 @@
     "C-n"       'my/company-select-next
     "C-p"       'my/company-select-previous)
 
+
+  ;; simple escape for multiple modes (in the future)
+  (general-def
+    :states     'normal
+    :keymaps    'helpful-mode-map
+    "<escape>"  'quit-window
+    "q"         'quit-window)
 
   ;; go-mode-keybinds
   (general-def

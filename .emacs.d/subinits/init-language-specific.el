@@ -58,4 +58,17 @@
 (use-package company-auctex
   :after company)
 
+;; syntax checking
+(use-package flycheck
+  :init
+  (setq flycheck-display-errors-delay 0.1)
+  ;; show flycheck errors only in
+  (add-hook 'evil-normal-state-entry-hook (lambda ()
+                                            (setq flycheck-display-errors-function
+                                                  'flycheck-display-error-messages)))
+  (add-hook 'evil-normal-state-exit-hook (lambda ()
+                                           (setq flycheck-display-errors-function
+                                                 nil)))
+  )
+
 (provide 'init-language-specific)

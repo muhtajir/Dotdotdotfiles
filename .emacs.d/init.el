@@ -48,6 +48,7 @@
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
+(setq eldoc-idle-delay .2)
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
 

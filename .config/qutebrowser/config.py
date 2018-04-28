@@ -255,8 +255,8 @@ c.tabs.padding = {'top': 2, 'bottom': 2, 'left': 3, 'right': 3}
 
 ## Hint settings
 # Mode to use for hints.
-# very silly way to decide which mode i want to use
-c.hints.mode = 'number'
+c.hints.mode = 'letter'
+c.hints.chars = 'asdfghjklö'
 # A comma-separated list of regexes to use for 'next' links.
 c.hints.next_regexes = ['\\bnext\\b', '\\bmore\\b', '\\bnewer\\b',
                         '\\b[>→≫]\\b', '\\b(>>|»)\\b', '\\bcontinue\\b']

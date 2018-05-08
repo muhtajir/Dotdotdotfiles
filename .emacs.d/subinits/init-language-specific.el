@@ -58,17 +58,28 @@
 (use-package company-auctex
   :after company)
 
+(defun my/flycheck-upon-normal-entry ()
+  (when (bound-and-true-p flycheck-mode)
+    (flycheck-buffer)
+    (setq flycheck-check-syntax-automatically
+          (append flycheck-check-syntax-automatically '(idle-change)))))
+
+(defun my/flycheck-upon-normal-exit()
+  (when (bound-and-true-p flycheck-mode)
+  (setq flycheck-check-syntax-automatically
+          (delq 'idle-change flycheck-check-syntax-automatically))))
+
 ;; syntax checking
 (use-package flycheck
   :init
   (setq flycheck-display-errors-delay 0.1)
-  ;; show flycheck errors only in
-  (add-hook 'evil-normal-state-entry-hook (lambda ()
-                                            (setq flycheck-display-errors-function
-                                                  'flycheck-display-error-messages)))
-  (add-hook 'evil-normal-state-exit-hook (lambda ()
-                                           (setq flycheck-display-errors-function
-                                                 nil)))
-  )
+  (setq flycheck-check-syntax-automatically '(save idle-change))
+  (setq flycheck-idle-change-delay 0.1)
+  :config
+  (add-hook 'python-mode-hook 'flycheck-mode)
+  (add-hook 'go-mode-hook 'flycheck-mode)
+  (add-hook 'LaTeX-mode-hook 'flycheck-mode)
+  (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
+  (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit))
 
 (provide 'init-language-specific)

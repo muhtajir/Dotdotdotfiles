@@ -7,6 +7,12 @@ config = config  # type: ConfigAPI # noqa: F821 pylint: disable=E0602,C0103
 c = c  # type: ConfigContainer # noqa: F821 pylint: disable=E0602,C0103
 
 
+def get_rgba(hexcode, alpha):
+    hextuple = tuple(bytes.fromhex(hexcode[1:]))
+    rgba = "{0}, {1}, {2}, ".format(*hextuple) + alpha
+    return "rgba({})".format(rgba)
+
+
 def merge_bookmarks():
     """Merge bookmarks from the cloud with those kept by qutebrowser."""
     int_bookmarks = os.path.join(config.configdir, 'bookmarks', 'urls')
@@ -100,15 +106,13 @@ c.colors.downloads.system.bg = 'rgb'
 c.colors.downloads.system.fg = 'rgb'
 # Background color for hints. Note that you can use a `rgba(...)` value
 # for transparency.
-# for base16: rgba(light_orange), rgba(dark_orange)
-c.colors.hints.bg = 'rgba(255, 247, 133, 0.9)'
+c.colors.hints.bg = get_rgba(BASE07, '0.9')
 # Font color for hints.
 c.colors.hints.fg = BASE00
 # Font color for the matched part of hints.
 c.colors.hints.match.fg = BASE0B
 # Background color of the keyhint widget.
-# for base16: rgba(black0)
-c.colors.keyhint.bg = 'rgba(38, 38, 38, 0.9)'
+c.colors.keyhint.bg = get_rgba(BASE00, "0.9")
 # Text color for the keyhint widget.
 c.colors.keyhint.fg = BASE07
 # Highlight color for keys to complete the current keychain.
@@ -235,7 +239,7 @@ c.fonts.debug_console = '9pt {}'.format(FONT_MONO)
 # Font used for the downloadbar.
 c.fonts.downloads = '9pt {}'.format(FONT_SANS)
 # Font used for the hints.
-c.fonts.hints = 'bold 10pt {}'.format(FONT_SANS)
+c.fonts.hints = 'bold 10pt {}'.format(FONT_MONO)
 # Font used in the keyhint widget.
 c.fonts.keyhint = '9pt {}'.format(FONT_SANS)
 # Font used for error messages.
@@ -250,6 +254,10 @@ c.fonts.prompts = '9pt {}'.format(FONT_SANS)
 c.fonts.statusbar = '9pt {}'.format(FONT_MONO)
 # Font used in the tab bar.
 c.fonts.tabs = '10pt {}'.format(FONT_SANS)
+## Font family for sans-serif fonts.
+c.fonts.web.family.sans_serif = 'Liberation Sans'
+## Font family for serif fonts.
+c.fonts.web.family.serif = 'Liberation Serif'
 # Nice looking padding for tabs headers
 c.tabs.padding = {'top': 2, 'bottom': 2, 'left': 3, 'right': 3}
 

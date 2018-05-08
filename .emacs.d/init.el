@@ -100,3 +100,6 @@
 (require 'init-language-specific)
 
 (require 'init-keybinds)
+
+;; open todo.org on startup
+(find-file (expand-file-name "~/Nextcloud/Diverses/todo.org" (getenv "HOME")))

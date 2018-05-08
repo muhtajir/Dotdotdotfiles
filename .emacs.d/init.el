@@ -56,11 +56,15 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
+;; load-up org-mode
+(require 'org)
+(setq org-log-done 'time)
+
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . text-mode))
 
 ;; delimiter highlighting and matching
-(add-hook 'prog-mode-hook 'electric-pair-local-mode)
+(electric-pair-mode 1)
 (use-package rainbow-delimiters
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))

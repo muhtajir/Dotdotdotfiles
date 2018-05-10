@@ -100,15 +100,17 @@
     "hF"     'helpful-function
     "hv"     'helpful-variable
     "hk"     'helpful-key
-    "Q"      'find-file
     "SPC"    'vertigo-set-digit-argument
     "b"      'ivy-switch-buffer
     "j"      'next-buffer
     "k"      'previous-buffer
-    "I"      'ivy-resume
     "o"      'delete-other-windows
     "s"      'evil-window-split
     "v"      'evil-window-vsplit
+    "I"      'ivy-resume
+    "K"      (general-lambda ()
+                             (kill-buffer nil))
+    "Q"      'find-file
     "S"      (general-lambda ()
                              (evil-window-split) (evil-window-down 1))
     "V"      (general-lambda ()

@@ -55,4 +55,22 @@
   (global-evil-mc-mode 1)
   (setq evil-mc-key-map nil))
 
+;; evil commands and ex-commands
+(evil-define-command my/mv-buf-and-file (new-filename)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "<a>")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-filename)
+          (message "A buffer named '%s' already exists!" new-filename)
+        (progn
+          (rename-file filename new-filename 1)
+          (rename-buffer new-filename)
+          (set-visited-file-name new-filename)
+          (set-buffer-modified-p nil))))))
+
+(evil-ex-define-cmd "mv" 'my/mv-buf-and-file)
+
 (provide 'init-evil)

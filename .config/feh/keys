@@ -1,0 +1,10 @@
+next_img        j
+prev_img        k
+jump_fwd        C-d
+jump_back       C-u
+zoom_in         l
+zoom_out        h
+remove          x
+delete          X
+toggle_keep_vp  p
+

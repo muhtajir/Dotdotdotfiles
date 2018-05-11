@@ -1,4 +1,5 @@
 ;; %-LOCATION:$HOME/.emacs.d/subinits/init-base16-generic-theme.el-% -*-emacs-lisp-*-
+;; DO EDITS HERE: $HOME/.local/share/skel/emacs-colors.skel
 ;; Generic base16 theme into which base16 environment vars have been inserted
 
 (defvar base16-generic-colors

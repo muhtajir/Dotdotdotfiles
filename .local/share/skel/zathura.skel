@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/zathura/zathurarc-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/zathura.skel
 # general settings
 set selection-clipboard clipboard
 

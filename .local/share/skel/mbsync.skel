@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.mbsyncrc-%
+# DO EDITS HERE: $HOME/.local/share/skel/mbsync.skel
 IMAPAccount posteo
 Host posteo.de
 User {{{MAIL_ADDRESS}}}

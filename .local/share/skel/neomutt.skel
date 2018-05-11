@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/neomutt/neomuttrc-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/neomutt.skel
 set realname='{{{REAL_NAME}}}'
 
 # sync mails upon startup

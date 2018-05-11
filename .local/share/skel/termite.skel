@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/termite/config-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/termite.skel
 [options]
 allow_bold = true
 fullscreen = true

@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/i3.skel
 
 # Base16 color setup
 set $base00 {{{__BASE00_HASH}}}

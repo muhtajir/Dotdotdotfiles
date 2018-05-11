@@ -1,4 +1,5 @@
 <!-- %-LOCATION:$HOME/.config/fontconfig/fonts.conf-% -*-xml-*- -->
+<!-- DO EDITS HERE: $HOME/.local/share/skel/fontconfig.skel -->
 <?xml version='1.0'?>
 <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
 <fontconfig>

@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/fish/functions/__fish_set_universal_variables.fish-% -*-fish-*-
+# DO EDITS HERE: $HOME/.local/share/skel/fish-variables.skel
 function __fish_set_universal_variables
     set -U fish_greeting
     set -U fish_default_variables_set

@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/mpv/mpv.conf-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/mpv.skel
 ################
 # OSD settings #
 ################

@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.msmtprc-%
+# DO EDITS HERE: $HOME/.local/share/skel/msmtp.skel
 defaults
 auth            on
 tls             on

@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/dunst/dunstrc-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/dunst.skel
 [global]
     font = {{{FONT_MONO}}} 10
 

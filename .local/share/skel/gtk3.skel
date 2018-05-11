@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/gtk-3.0/settings.ini-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/gtk3.skel
 [Settings]
 gtk-theme-name=Arc
 gtk-icon-theme-name=Adwaita

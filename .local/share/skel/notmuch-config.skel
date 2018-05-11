@@ -1,4 +1,5 @@
 # %-LOCATION:$HOME/.config/notmuch/notmuch-config-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/notmuch-config.skel
 # .notmuch-config - Configuration file for the notmuch mail system
 #
 # For more information about notmuch, see https://notmuchmail.org

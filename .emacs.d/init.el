@@ -89,7 +89,8 @@
   (setq nlinum-relative-redisplay-delay 0)
   (setq nlinum-relative-current-symbol "")
   (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (add-hook 'text-mode-hook 'nlinum-relative-mode))
+  (add-hook 'text-mode-hook 'nlinum-relative-mode)
+  (add-hook 'conf-mode-hook 'nlinum-relative-mode))
 
 (use-package try)
 

@@ -74,7 +74,8 @@
   :init
   (setq fci-rule-color (plist-get base16-generic-colors :base01))
   :config
-  (add-hook 'python-mode-hook 'fci-mode))
+  (add-hook 'python-mode-hook 'fci-mode)
+  (add-hook 'go-mode-hook 'fci-mode))
 
 ;; sexier builtin help
 (use-package helpful

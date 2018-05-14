@@ -41,4 +41,5 @@ function __fish_set_user_abbreviations
     abbr --add v nvim
     abbr --add yt mpsyt /
     abbr --add z zathura
+    abbr --add auri auracle info
 end

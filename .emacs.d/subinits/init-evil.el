@@ -12,31 +12,28 @@
   :pin gnu)
 
 (use-package evil
-  :after (undo-tree nlinum-relative)
-  :init
-  (setq evil-want-Y-yank-to-eol t)
   :config
+  (setq evil-want-Y-yank-to-eol t)
   (evil-mode 1))
 
 (use-package vertigo
+  :commands vertigo-set-digit-argument
   :init
   (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö)))
 
 (use-package evil-commentary
-  :after evil
   :config
   (evil-commentary-mode 1))
 
 (use-package evil-surround
-  :after evil
   :config
   (global-evil-surround-mode 1))
 
 (use-package evil-replace-with-register
-  :after evil)
+  :commands evil-replace-with-register)
 
 (use-package evil-goggles
-  :after evil
+  :hook (after-init . evil-goggles-mode)
   :init
   (setq evil-goggles-duration 0.500)
   (setq evil-goggles-blocking-duration 0.001)
@@ -45,12 +42,9 @@
   (setq evil-goggles-enable-paste nil)
   (setq evil-goggles-enable-commentary nil)
   (setq evil-goggles-enable-surround nil)
-  (setq evil-goggles-enable-delete nil)
-  :config
-  (add-hook 'after-init-hook 'evil-goggles-mode))
+  (setq evil-goggles-enable-delete nil))
 
 (use-package evil-mc
-  :after evil
   :config
   (global-evil-mc-mode 1)
   (setq evil-mc-key-map nil))

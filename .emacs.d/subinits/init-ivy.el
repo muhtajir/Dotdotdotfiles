@@ -1,16 +1,15 @@
-(use-package flx)
-
 (use-package counsel
-  :after flx
-  :init
-  (setq ivy-use-virtual-buffers t)
   :config
+  (setq ivy-use-virtual-buffers t)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (ivy-mode 1)
   (counsel-mode 1))
 
-(use-package counsel-projectile
+(use-package flx
   :after counsel)
+
+(use-package counsel-projectile
+  :defer t)
 
 (provide 'init-ivy)

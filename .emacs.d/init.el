@@ -66,19 +66,17 @@
 ;; delimiter highlighting and matching
 (electric-pair-mode 1)
 (use-package rainbow-delimiters
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; mark column 80 with line
 (use-package fill-column-indicator
-  :init
-  (setq fci-rule-color (plist-get base16-generic-colors :base01))
+  :hook ((python-mode go-mode) . fci-mode)
   :config
-  (add-hook 'python-mode-hook 'fci-mode)
-  (add-hook 'go-mode-hook 'fci-mode))
+  (setq fci-rule-color (plist-get base16-generic-colors :base01)))
 
 ;; sexier builtin help
 (use-package helpful
+  :defer t
   :config
   (defun my/helpful-buffer-other-window (buf)
     "Custom function to open helpful buffers;
@@ -96,21 +94,22 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (setq helpful-max-buffers 2))
 
 ;; vimperator-style link-hints
-(use-package link-hint)
+(use-package link-hint
+  :commands link-hint-open-link)
 
 ;; relative linenumbers
 (use-package nlinum-relative
+  :hook ((prog-mode text-mode conf-mode) . nlinum-relative-mode)
   :config
   (setq nlinum-format "%3d")
   (setq nlinum-relative-redisplay-delay 0)
-  (setq nlinum-relative-current-symbol "")
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode)
-  (add-hook 'text-mode-hook 'nlinum-relative-mode)
-  (add-hook 'conf-mode-hook 'nlinum-relative-mode))
+  (setq nlinum-relative-current-symbol ""))
 
-(use-package try)
+(use-package try
+  :commands try)
 
-(use-package quickrun)
+(use-package quickrun
+  :commands quickrun)
 
 (require 'init-ivy)
 

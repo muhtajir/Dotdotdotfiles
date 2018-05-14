@@ -1,5 +1,6 @@
 ;; language specific major modes
-(use-package fish-mode)
+(use-package fish-mode
+  :defer t)
 
 (use-package tex
   :ensure auctex
@@ -17,69 +18,54 @@
 
 ;; autocompletion
 (use-package company
-  :init
+  :hook (prog-mode . company-mode)
+  :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
-  :config
-  (push 'company-tng-frontend company-frontends)
-  (add-hook 'prog-mode-hook 'company-mode))
+  (push 'company-tng-frontend company-frontends))
 
 (use-package company-flx
   :after company
-  :init
-  (setq company-flx-limit 250)
   :config
+  (setq company-flx-limit 250)
   (company-flx-mode 1))
 
 (use-package company-quickhelp
   :after company
-  :init
+  :config
   ;; set pos-tip theme
   (setq pos-tip-foreground-color (plist-get base16-generic-colors :base07))
   (setq pos-tip-background-color (plist-get base16-generic-colors :base02))
   (setq company-quickhelp-delay 0))
 
 (use-package company-jedi
-  :after company
-  :config
-  (defun my/python-company-mode ()
-    (add-to-list 'company-backends 'company-jedi)
-    (jedi:setup))
-  (add-hook 'python-mode-hook (lambda ()
-                                (add-to-list 'company-backends 'company-jedi)
-                                (jedi:setup))))
+  :hook (python-mode . (lambda ()
+                         (add-to-list 'company-backends 'company-jedi)
+                         (jedi:setup))))
 
 (use-package company-go
-  :after (company go-mode)
-  :config
-  (add-hook 'go-mode-hook (lambda ()
-                            (add-to-list 'company-backends 'company-go))))
+  :hook (go-mode . (lambda ()
+                     (add-to-list 'company-backends 'company-go))))
 
 (use-package company-auctex
-  :after company)
-
-(defun my/flycheck-upon-normal-entry ()
-  (when (bound-and-true-p flycheck-mode)
-    (flycheck-buffer)
-    (setq flycheck-check-syntax-automatically
-          (append flycheck-check-syntax-automatically '(idle-change)))))
-
-(defun my/flycheck-upon-normal-exit()
-  (when (bound-and-true-p flycheck-mode)
-  (setq flycheck-check-syntax-automatically
-          (delq 'idle-change flycheck-check-syntax-automatically))))
+  :after (company tex))
 
 ;; syntax checking
 (use-package flycheck
-  :init
+  :hook ((emacs-lisp-mode python-mode go-mode LaTeX-mode) . flycheck-mode)
+  :config
+  (defun my/flycheck-upon-normal-entry ()
+    (when (bound-and-true-p flycheck-mode)
+      (flycheck-buffer)
+      (setq flycheck-check-syntax-automatically
+            (append flycheck-check-syntax-automatically '(idle-change)))))
+  (defun my/flycheck-upon-normal-exit()
+    (when (bound-and-true-p flycheck-mode)
+      (setq flycheck-check-syntax-automatically
+            (delq 'idle-change flycheck-check-syntax-automatically))))
   (setq flycheck-display-errors-delay 0.1)
   (setq flycheck-check-syntax-automatically '(save idle-change))
   (setq flycheck-idle-change-delay 0.1)
-  :config
-  (add-hook 'emacs-lisp-mode 'flycheck-mode)
-  (add-hook 'python-mode-hook 'flycheck-mode)
-  (add-hook 'go-mode-hook 'flycheck-mode)
-  (add-hook 'LaTeX-mode-hook 'flycheck-mode)
   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
   (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit))
 

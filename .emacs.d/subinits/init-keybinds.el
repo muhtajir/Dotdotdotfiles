@@ -58,6 +58,7 @@
 
   (general-def-leader
     :states 'normal
+    "RET"   'quickrun
     "e"     'my/eval-normal-line
     "E"     'eval-buffer)
 

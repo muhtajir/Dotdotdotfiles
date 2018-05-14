@@ -76,6 +76,7 @@
   (setq flycheck-check-syntax-automatically '(save idle-change))
   (setq flycheck-idle-change-delay 0.1)
   :config
+  (add-hook 'emacs-lisp-mode 'flycheck-mode)
   (add-hook 'python-mode-hook 'flycheck-mode)
   (add-hook 'go-mode-hook 'flycheck-mode)
   (add-hook 'LaTeX-mode-hook 'flycheck-mode)

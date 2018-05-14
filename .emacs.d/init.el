@@ -110,6 +110,8 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 (use-package try)
 
+(use-package quickrun)
+
 (require 'init-ivy)
 
 (require 'init-evil)

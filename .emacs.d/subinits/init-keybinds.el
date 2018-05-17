@@ -52,19 +52,23 @@
 
   ;; normal state keybinds
   (general-def
-    :states 'normal
+    :states     'normal
     "ö"         'my/evil-dry-open-below
     "Ö"         'my/evil-dry-open-above)
 
   (general-def-leader
     :states 'normal
+    "c"     (general-lambda (when (bound-and-true-p flycheck-mode)
+                              (sleep-for .5)
+                              (flycheck-display-error-at-point)))
     "RET"   'quickrun
     "e"     'my/eval-normal-line
     "E"     'eval-buffer)
 
   (general-def-goleader
     :states 'normal
-    "r"         'evil-replace-with-register)
+    "r"     nil
+    "r"     'evil-replace-with-register)
 
 
   ;; motion state keybinds
@@ -86,11 +90,11 @@
     "}"         'evil-forward-sentence-begin
     "-"         'goto-last-change
     "+"         'goto-last-change-reverse
-    "ü"         'evil-mc-make-all-cursors
-    "Ü"         'evil-mc-undo-all-cursors
-    "ä"         'evil-mc-make-and-goto-next-match
-    "Ä"         'evil-mc-skip-and-goto-prev-match
-    "M-ä"       'evil-mc-skip-and-goto-next-match)
+    "ä"         'evil-mc-make-all-cursors
+    "Ä"         'evil-mc-undo-all-cursors
+    "C-n"       'evil-mc-make-and-goto-next-match
+    "C-p"       'evil-mc-skip-and-goto-prev-match
+    "C-S-n"     'evil-mc-skip-and-goto-next-match)
 
   (general-def-leader
     :states 'motion
@@ -164,12 +168,26 @@
     "C-p"       'my/company-select-previous)
 
 
-  ;; simple escape for multiple modes (in the future)
+  ;; simple escape for multiple modes
   (general-def
     :states     'normal
-    :keymaps    'helpful-mode-map
-    "<escape>"  'quit-window
+    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map)
     "q"         'quit-window)
+
+  ;; workaround for disabling evil-mc-key-map
+  (general-def
+    :states     '(normal motion)
+    :keymaps    'evil-mc-key-map
+    "gr"        nil)
+
+  ;; flycheck-list-mode-keybinds
+  (general-def
+    :states     'normal
+    :keymaps    'flycheck-error-list-mode-map
+    "j"         'flycheck-error-list-next-error
+    "k"         'flycheck-error-list-previous-error
+    "f"         'flycheck-error-list-set-filter
+    "F"         'flycheck-error-list-reset-filter)
 
   ;; go-mode-keybinds
   (general-def

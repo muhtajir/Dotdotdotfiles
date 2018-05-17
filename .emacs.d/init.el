@@ -48,7 +48,7 @@
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
-(setq eldoc-idle-delay .2)
+(setq eldoc-idle-delay .5)
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
 
@@ -120,4 +120,6 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 (require 'init-keybinds)
 
 ;; open todo.org on startup
-(find-file (expand-file-name "~/Nextcloud/Diverses/todo.org" (getenv "HOME")))
+(add-hook 'after-init-hook (lambda ()
+                             (find-file (expand-file-name "~/Nextcloud/Diverses/todo.org" (getenv "HOME")))
+                             (org-cycle)))

@@ -16,6 +16,14 @@
 
 (use-package go-mode)
 
+;; pos-tip setup for use by both company and flycheck
+(use-package pos-tip
+  :after (:any company flycheck)
+  :config
+  (setq x-gtk-use-system-tooltips nil)
+  (setq pos-tip-foreground-color (plist-get base16-generic-colors :base07))
+  (setq pos-tip-background-color (plist-get base16-generic-colors :base02)))
+
 ;; autocompletion
 (use-package company
   :hook (prog-mode . company-mode)
@@ -31,11 +39,8 @@
   (company-flx-mode 1))
 
 (use-package company-quickhelp
-  :after company
+  :after (company pos-tip)
   :config
-  ;; set pos-tip theme
-  (setq pos-tip-foreground-color (plist-get base16-generic-colors :base07))
-  (setq pos-tip-background-color (plist-get base16-generic-colors :base02))
   (setq company-quickhelp-delay 0))
 
 (use-package company-jedi
@@ -56,17 +61,31 @@
   :config
   (defun my/flycheck-upon-normal-entry ()
     (when (bound-and-true-p flycheck-mode)
+      (flycheck-pos-tip-mode 1)
       (flycheck-buffer)
       (setq flycheck-check-syntax-automatically
             (append flycheck-check-syntax-automatically '(idle-change)))))
   (defun my/flycheck-upon-normal-exit()
     (when (bound-and-true-p flycheck-mode)
+      (flycheck-pos-tip-mode 0)
       (setq flycheck-check-syntax-automatically
             (delq 'idle-change flycheck-check-syntax-automatically))))
-  (setq flycheck-display-errors-delay 0.1)
   (setq flycheck-check-syntax-automatically '(save idle-change))
   (setq flycheck-idle-change-delay 0.1)
   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
-  (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit))
+  (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
+  ;; hack for actions that aren't considered changes by flycheck
+  (defun my/flycheck-idleize (&rest args)
+    (flycheck--handle-idle-change-in-buffer (current-buffer)))
+  (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
+  (advice-add 'undo-tree-undo :after #'my/flycheck-idleize))
+
+(use-package flycheck-pos-tip
+  :after (flycheck pos-tip)
+  :config
+  (flycheck-pos-tip-mode))
+
+(use-package flycheck-gometalinter
+  :hook (go-mode . flycheck-gometalinter-setup))
 
 (provide 'init-language-specific)

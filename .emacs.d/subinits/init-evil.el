@@ -1,20 +1,20 @@
-;; cursor coloring to use with base16 package
-(defvar my/base16-colors base16-generic-colors)
-(setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
-      evil-insert-state-cursor  `(,(plist-get my/base16-colors :base05) bar)
-      evil-motion-state-cursor  `(,(plist-get my/base16-colors :base0E) box)
-      evil-normal-state-cursor  `(,(plist-get my/base16-colors :base05) box)
-      evil-replace-state-cursor `(,(plist-get my/base16-colors :base08) hollow)
-      evil-visual-state-cursor  `(,(plist-get my/base16-colors :base05) box))
-
 ;; undo-tree is a dependency but not available in melpa so get it from elpa
 (use-package undo-tree
   :pin gnu)
 
 (use-package evil
   :config
+  (evil-mode 1)
   (setq evil-want-Y-yank-to-eol t)
-  (evil-mode 1))
+  (setq evil-search-module 'evil-search)
+  ;; cursor coloring to use with base16 package
+  (defvar my/base16-colors base16-generic-colors)
+  (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
+        evil-insert-state-cursor  `(,(plist-get my/base16-colors :base05) bar)
+        evil-motion-state-cursor  `(,(plist-get my/base16-colors :base0E) box)
+        evil-normal-state-cursor  `(,(plist-get my/base16-colors :base05) box)
+        evil-replace-state-cursor `(,(plist-get my/base16-colors :base08) hollow)
+        evil-visual-state-cursor  `(,(plist-get my/base16-colors :base05) box)))
 
 (use-package vertigo
   :commands vertigo-set-digit-argument
@@ -46,8 +46,7 @@
 
 (use-package evil-mc
   :config
-  (global-evil-mc-mode 1)
-  (setq evil-mc-key-map nil))
+  (global-evil-mc-mode 1))
 
 ;; evil commands and ex-commands
 (evil-define-command my/mv-buf-and-file (new-filename)

@@ -14,7 +14,11 @@
   (add-hook 'LaTeX-mode-hook 'company-mode)
   (add-hook 'LaTeX-mode-hook 'company-auctex-init))
 
-(use-package go-mode)
+(use-package go-mode
+  :commands go-mode)
+
+(use-package go-eldoc
+  :hook (go-mode-hook . go-eldoc-setup))
 
 ;; pos-tip setup for use by both company and flycheck
 (use-package pos-tip
@@ -85,7 +89,7 @@
   :config
   (flycheck-pos-tip-mode))
 
-(use-package flycheck-gometalinter
-  :hook (go-mode . flycheck-gometalinter-setup))
+;; (use-package flycheck-gometalinter
+;;   :hook (go-mode . flycheck-gometalinter-setup))
 
 (provide 'init-language-specific)

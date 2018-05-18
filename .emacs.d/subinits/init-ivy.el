@@ -9,6 +9,9 @@
 (use-package flx
   :after counsel)
 
+(use-package projectile
+  :hook (prog-mode . projectile-mode))
+
 (use-package counsel-projectile
   :defer t)
 

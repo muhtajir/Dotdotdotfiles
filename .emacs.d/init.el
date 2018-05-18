@@ -109,7 +109,15 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   :commands try)
 
 (use-package quickrun
-  :commands quickrun)
+  :commands quickrun
+  :config
+  (setq quickrun-focus-p nil)
+  (quickrun-add-command "go/go"
+    '((:exec . ((lambda ()
+                 (if (string-match-p "_test\\.go\\'" (buffer-name))
+                     "%c test %o"
+                   "%c run %o %d/*.go %a")))))
+    :override t))
 
 (require 'init-ivy)
 

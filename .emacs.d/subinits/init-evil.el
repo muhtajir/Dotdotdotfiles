@@ -3,10 +3,11 @@
   :pin gnu)
 
 (use-package evil
+  :init
+  (setq evil-search-module 'evil-search)
   :config
   (evil-mode 1)
   (setq evil-want-Y-yank-to-eol t)
-  (setq evil-search-module 'evil-search)
   ;; cursor coloring to use with base16 package
   (defvar my/base16-colors base16-generic-colors)
   (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
@@ -47,6 +48,9 @@
 (use-package evil-mc
   :config
   (global-evil-mc-mode 1))
+
+(use-package evil-numbers
+  :commands (evil-numbers/inc-at-pt evil-numbers/dec-at-pt))
 
 ;; evil commands and ex-commands
 (evil-define-command my/mv-buf-and-file (new-filename)

@@ -53,6 +53,8 @@
   ;; normal state keybinds
   (general-def
     :states     'normal
+    "C-a"       'evil-numbers/inc-at-pt
+    "C-x"       'evil-numbers/dec-at-pt
     "ö"         'my/evil-dry-open-below
     "Ö"         'my/evil-dry-open-above)
 
@@ -137,9 +139,10 @@
     "<backtab>"     'indent-relative
     "M-("           (kbd "[")
     "M-)"           (kbd "]")
+    "C-("           (kbd "[")
+    "C-)"           (kbd "]")
     "C-M-("         "{"
-    "C-M-)"         "}"
-    )
+    "C-M-)"         "}")
   
 
   ;; dired-keybinds
@@ -159,6 +162,18 @@
     "M-j"           'ivy-next-line)
 
 
+  ;; simple escape for multiple modes
+  (general-def
+    :states     'normal
+    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map)
+    "q"         'quit-window)
+
+  ;; workaround for disabling evil-mc-key-map
+  (general-def
+    :states     '(normal motion)
+    :keymaps    'evil-mc-key-map
+    "gr"        nil)
+
   ;; company keybinds
   (general-def
     :keymaps    'company-active-map
@@ -167,18 +182,6 @@
     "C-n"       'my/company-select-next
     "C-p"       'my/company-select-previous)
 
-
-  ;; simple escape for multiple modes
-  (general-def
-    :states     'normal
-    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map)
-    "q"         'quit-window)
-
-  ;; workaround for disabling evil-mc-key-map
-  (general-def
-    :states     '(normal motion)
-    :keymaps    'evil-mc-key-map
-    "gr"        nil)
 
   ;; flycheck-list-mode-keybinds
   (general-def
@@ -189,11 +192,17 @@
     "f"         'flycheck-error-list-set-filter
     "F"         'flycheck-error-list-reset-filter)
 
-  ;; go-mode-keybinds
+  ;; ivy keybindings
   (general-def
+    :keymaps    'ivy-switch-buffer-map
+    "C-k"       'ivy-switch-buffer-kill)
+
+  ;; go-mode-keybinds
+  (general-def-leader
     :states     'normal
     :keymaps    'go-mode-map
-    "C-h x"     'godoc-at-point)
+    "hx"        'godoc-at-point
+    "hf"        'godoc)
 
   (general-def-goleader
     :states     'normal
@@ -202,10 +211,11 @@
     "D"         'godef-jump-other-window)
 
   ;; jedi-keybinds
-  (general-def
+  (general-def-leader
     :states     'normal
     :keymaps    'jedi-mode-map
-    "C-h x"     'jedi:show-doc)
+    "hf"        'jedi:doc-mode
+    "hx"        'jedi:show-doc)
   
   (general-def-goleader
     :states     'normal

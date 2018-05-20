@@ -95,6 +95,10 @@ macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht
 bind index / vfolder-from-query
 bind index \\ search
 
+# make send button something less likely to be hit accidentally
+bind compose y noop
+bind compose \CQ send-message
+
 ## mailbox switching and moving
 # first switching
 bind index,pager C change-folder

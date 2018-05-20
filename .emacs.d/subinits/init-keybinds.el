@@ -76,27 +76,28 @@
   ;; motion state keybinds
   (general-def
     :states     'motion
+    "("         'evil-backward-paragraph
+    ")"         'evil-forward-paragraph
+    "+"         'goto-last-change-reverse
+    "-"         'goto-last-change
+    "C-S-l"     'link-hint-copy-link
+    "C-S-n"     'evil-mc-skip-and-goto-next-match
+    "C-l"       'link-hint-open-link
+    "C-n"       'evil-mc-make-and-goto-next-match
+    "C-p"       'evil-mc-skip-and-goto-prev-match
     "C-q"       'counsel-projectile-switch-project
-    "Q"         'counsel-projectile-find-file
     "C-u"       'evil-scroll-up
+    "C-´"       'evil-ex-nohighlight
+    "M-c"       'delete-window
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
     "M-k"       'evil-window-up
     "M-l"       'evil-window-right
-    "M-c"       'delete-window
-    "C-l"       'link-hint-open-link
-    "C-S-l"     'link-hint-copy-link
-    "("         'evil-backward-paragraph
-    ")"         'evil-forward-paragraph
+    "Q"         'counsel-projectile-find-file
     "{"         'evil-backward-sentence-begin
     "}"         'evil-forward-sentence-begin
-    "-"         'goto-last-change
-    "+"         'goto-last-change-reverse
-    "ä"         'evil-mc-make-all-cursors
     "Ä"         'evil-mc-undo-all-cursors
-    "C-n"       'evil-mc-make-and-goto-next-match
-    "C-p"       'evil-mc-skip-and-goto-prev-match
-    "C-S-n"     'evil-mc-skip-and-goto-next-match)
+    "ä"         'evil-mc-make-all-cursors)
 
   (general-def-leader
     :states 'motion

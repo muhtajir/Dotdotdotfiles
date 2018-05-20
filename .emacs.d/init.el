@@ -57,8 +57,13 @@
 (setq-default tab-width 4)
 
 ;; load-up org-mode
-(require 'org)
-(setq org-log-done 'time)
+(use-package org
+  :ensure nil
+  :commands org-mode
+  :config
+  (setq org-log-done 'time)
+  (add-hook 'org-mode-hook (lambda ()
+                             (setq evil-auto-indent nil))))
 
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . text-mode))

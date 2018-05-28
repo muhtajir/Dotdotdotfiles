@@ -53,6 +53,8 @@
   ;; normal state keybinds
   (general-def
     :states     'normal
+    "M-p"       'evil-paste-pop
+    "M-S-p"     'evil-paste-pop-next
     "C-a"       'evil-numbers/inc-at-pt
     "C-x"       'evil-numbers/dec-at-pt
     "ö"         'my/evil-dry-open-below
@@ -146,7 +148,17 @@
     "C-M-)"         "}")
   
 
-  ;; dired-keybinds
+  ;; operator keybinds
+  (general-def
+    :states         'operator
+    "M-("           (kbd "[")
+    "M-)"           (kbd "]")
+    "C-("           (kbd "[")
+    "C-)"           (kbd "]")
+    "C-M-("         "{"
+    "C-M-)"         "}")
+
+  ;; dired keybinds
   (general-def
     :keymaps    'dired-mode-map
     "SPC"       nil)
@@ -175,16 +187,32 @@
     :keymaps    'evil-mc-key-map
     "gr"        nil)
 
+  ;; keymap/mode-specific keybinds:
+  ;;
   ;; company keybinds
   (general-def
     :keymaps    'company-active-map
-    ;; don't use return for anything in company
-    "<return>"  'newline
+    ;; insert newline with return even with open completions
+    "<return>"  (general-lambda ()
+                                (company-complete)
+                                (newline 1 t))
     "C-n"       'my/company-select-next
     "C-p"       'my/company-select-previous)
 
 
-  ;; flycheck-list-mode-keybinds
+  ;; flycheck-mode keybinds
+  (general-def
+    :states     'normal
+    :keymaps    'flycheck-mode-map
+    "C-j"       'flycheck-next-error
+    "C-k"       'flycheck-previous-error)
+
+  (general-def-goleader
+    :states     'normal
+    :keymaps    'flycheck-mode-map
+    "!"         'flycheck-list-errors)
+
+  ;; flycheck-list-mode keybinds
   (general-def
     :states     'normal
     :keymaps    'flycheck-error-list-mode-map
@@ -193,12 +221,7 @@
     "f"         'flycheck-error-list-set-filter
     "F"         'flycheck-error-list-reset-filter)
 
-  ;; ivy keybindings
-  (general-def
-    :keymaps    'ivy-switch-buffer-map
-    "C-k"       'ivy-switch-buffer-kill)
-
-  ;; go-mode-keybinds
+  ;; go-mode keybinds
   (general-def-leader
     :states     'normal
     :keymaps    'go-mode-map
@@ -211,7 +234,12 @@
     "d"         'godef-jump
     "D"         'godef-jump-other-window)
 
-  ;; jedi-keybinds
+  ;; ivy keybindings
+  (general-def
+    :keymaps    'ivy-switch-buffer-map
+    "C-k"       'ivy-switch-buffer-kill)
+
+  ;; jedi keybinds
   (general-def-leader
     :states     'normal
     :keymaps    'jedi-mode-map
@@ -223,7 +251,5 @@
     :keymaps    'jedi-mode-map
     "d"         'jedi:goto-definition
     "D"         'jedi:goto-definition-pop-marker))
-
-  ;; end of keybinds
 
 (provide 'init-keybinds)

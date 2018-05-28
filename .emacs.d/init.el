@@ -1,4 +1,3 @@
-;; -*- no-byte-compile: t; -*-
 ;; enable sourcing from init scripts in emacs.d/subinits
 (add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
@@ -42,13 +41,14 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(setq show-paren-delay 0)
 (show-paren-mode 1)
+(setq show-paren-delay 0)
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
 (setq eldoc-idle-delay .5)
+(setq-default fill-column 80)
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
 

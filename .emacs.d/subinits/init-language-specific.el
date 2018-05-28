@@ -18,7 +18,7 @@
   :commands go-mode)
 
 (use-package go-eldoc
-  :hook (go-mode-hook . go-eldoc-setup))
+  :hook (go-mode . go-eldoc-setup))
 
 ;; pos-tip setup for use by both company and flycheck
 (use-package pos-tip
@@ -63,6 +63,7 @@
 (use-package flycheck
   :hook ((emacs-lisp-mode python-mode go-mode LaTeX-mode) . flycheck-mode)
   :config
+  ;; flycheck buffer when entering normal state
   (defun my/flycheck-upon-normal-entry ()
     (when (bound-and-true-p flycheck-mode)
       (flycheck-pos-tip-mode 1)
@@ -72,12 +73,14 @@
   (defun my/flycheck-upon-normal-exit()
     (when (bound-and-true-p flycheck-mode)
       (flycheck-pos-tip-mode 0)
+      (flycheck-clear)
       (setq flycheck-check-syntax-automatically
             (delq 'idle-change flycheck-check-syntax-automatically))))
   (setq flycheck-check-syntax-automatically '(save idle-change))
   (setq flycheck-idle-change-delay 0.1)
   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
   (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
+
   ;; hack for actions that aren't considered changes by flycheck
   (defun my/flycheck-idleize (&rest args)
     (flycheck--handle-idle-change-in-buffer (current-buffer)))
@@ -89,7 +92,9 @@
   :config
   (flycheck-pos-tip-mode))
 
-;; (use-package flycheck-gometalinter
-;;   :hook (go-mode . flycheck-gometalinter-setup))
+(use-package flycheck-gometalinter
+  :hook (go-mode . flycheck-gometalinter-setup)
+  :config
+  (setq flycheck-gometalinter-fast t))
 
 (provide 'init-language-specific)

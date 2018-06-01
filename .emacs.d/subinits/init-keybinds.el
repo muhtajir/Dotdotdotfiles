@@ -50,6 +50,29 @@
     (company-quickhelp-manual-begin)
     (company-select-previous))
 
+  (defun my/search-visual-selection (direction count)
+    "Search for visually selected text in buffer."
+    (when (> (mark) (point))
+      (exchange-point-and-mark))
+    (when (eq direction 'backward)
+      (setq count (+ (or count 1) 1)))
+    (let ((regex (format "\\<%s\\>" (regexp-quote (buffer-substring (mark) (point))))))
+      (setq evil-ex-search-count count
+            evil-ex-search-direction direction
+            evil-ex-search-pattern
+            (evil-ex-make-search-pattern regex)
+            evil-ex-search-offset nil
+            evil-ex-last-was-search t)
+      ;; update search history unless this pattern equals the
+      ;; previous pattern
+      (unless (equal (car-safe evil-ex-search-history) regex)
+        (push regex evil-ex-search-history))
+      (evil-push-search-history regex (eq direction 'forward))
+      (evil-ex-delete-hl 'evil-ex-search)
+      (evil-exit-visual-state)
+      (when (fboundp 'evil-ex-search-next)
+        (evil-ex-search-next count))))
+
   ;; normal state keybinds
   (general-def
     :states     'normal
@@ -86,7 +109,10 @@
     "C-S-n"     'evil-mc-skip-and-goto-next-match
     "C-l"       'link-hint-open-link
     "C-n"       'evil-mc-make-and-goto-next-match
-    "C-p"       'evil-mc-skip-and-goto-prev-match
+    "C-S-p"     (general-lambda ()
+                                (evil-mc-undo-cursor-at-pos (point))
+                                (evil-mc-skip-and-goto-prev-cursor))
+    "C-p"       'evil-mc-skip-and-goto-prev-cursor
     "C-q"       'counsel-projectile-switch-project
     "C-u"       'evil-scroll-up
     "C-´"       'evil-ex-nohighlight
@@ -115,8 +141,8 @@
     "j"      'next-buffer
     "k"      'previous-buffer
     "o"      'delete-other-windows
-    "s"      'evil-window-split
-    "v"      'evil-window-vsplit
+    "v"      'evil-window-split
+    "s"      'evil-window-vsplit
     "I"      'ivy-resume
     "K"      (general-lambda ()
                              (kill-buffer nil))
@@ -129,6 +155,15 @@
 
 
   ;; visual keybinds
+  (general-def
+    :states 'visual
+    "*"     (lambda (count)
+              (interactive "P")
+              (my/search-visual-selection 'forward count))
+    "#"     (lambda (count)
+              (interactive "P")
+              (my/search-visual-selection 'backward count)))
+
   (general-def-leader
     :states 'visual
     "e"     'my/eval-visual-region)
@@ -139,24 +174,8 @@
     :states         'insert
     "C-n"           nil
     "C-p"           nil
-    "<backtab>"     'indent-relative
-    "M-("           (kbd "[")
-    "M-)"           (kbd "]")
-    "C-("           (kbd "[")
-    "C-)"           (kbd "]")
-    "C-M-("         "{"
-    "C-M-)"         "}")
+    "<backtab>"     'indent-relative)
   
-
-  ;; operator keybinds
-  (general-def
-    :states         'operator
-    "M-("           (kbd "[")
-    "M-)"           (kbd "]")
-    "C-("           (kbd "[")
-    "C-)"           (kbd "]")
-    "C-M-("         "{"
-    "C-M-)"         "}")
 
   ;; dired keybinds
   (general-def

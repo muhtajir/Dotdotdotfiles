@@ -14,6 +14,9 @@
   (add-hook 'LaTeX-mode-hook 'company-mode)
   (add-hook 'LaTeX-mode-hook 'company-auctex-init))
 
+(use-package pkgbuild-mode
+  :commands pkgbuild-mode)
+
 (use-package go-mode
   :commands go-mode)
 
@@ -92,9 +95,9 @@
   :config
   (flycheck-pos-tip-mode))
 
-(use-package flycheck-gometalinter
-  :hook (go-mode . flycheck-gometalinter-setup)
-  :config
-  (setq flycheck-gometalinter-fast t))
+;; (use-package flycheck-gometalinter
+;;   :hook (go-mode . flycheck-gometalinter-setup)
+;;   :config
+;;   (setq flycheck-gometalinter-fast t))
 
 (provide 'init-language-specific)

@@ -106,7 +106,7 @@ c.colors.downloads.system.bg = 'rgb'
 c.colors.downloads.system.fg = 'rgb'
 # Background color for hints. Note that you can use a `rgba(...)` value
 # for transparency.
-c.colors.hints.bg = get_rgba(BASE07, '0.9')
+c.colors.hints.bg = get_rgba(BASE07, '0.8')
 # Font color for hints.
 c.colors.hints.fg = BASE00
 # Font color for the matched part of hints.

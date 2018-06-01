@@ -7,6 +7,7 @@ function aurmake
     set -l pos (pwd)
     cd ~/Downloads/AUR/
     auracle download $argv | string match -r '[^/]+$' | read -l pkg_folder
+        or return
     cd $pkg_folder
     makepkg -sri
     cd $pos

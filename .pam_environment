@@ -1,49 +1,44 @@
 # define PATHs
-PATH                        DEFAULT=${PATH}:@{HOME}/.local/bin
-GOPATH                      DEFAULT=@{HOME}/.local/share/go
+PATH                          DEFAULT=${PATH}:@{HOME}/.local/bin
+GOPATH                        DEFAULT=@{HOME}/.local/share/go
 
 # define default applications with some common variables
-EDITOR                      DEFAULT=nvim
-TERMINAL                    DEFAULT=termite
+EDITOR                        DEFAULT=nvim
+TERMINAL                      DEFAULT=termite
 
 # define style for QT applications
-QT_STYLE_OVERRIDE           DEFAULT=adwaita
+QT_STYLE_OVERRIDE             DEFAULT=adwaita
 
 # setup fcitx as default input method for all applications
-GTK_IM_MODULE               DEFAULT=fcitx
-XMODIFIERS                  DEFAULT=@im=fcitx
-QT_IM_MODULE                DEFAULT=fcitx
-
-# define XKB options
-XKB_DEFAULT_LAYOUT          DEFAULT=de
-XKB_DEFAULT_VARIANT         DEFAULT=nodeadkeys
-XKB_DEFAULT_OPTIONS         DEFAULT=compose:menu,caps:escape
+GTK_IM_MODULE                 DEFAULT=fcitx
+XMODIFIERS                    DEFAULT=@im=fcitx
+QT_IM_MODULE                  DEFAULT=fcitx
 
 # define config locations by environment variable
-GNUPGHOME                   DEFAULT=@{HOME}/.config/gnupg
-HISTFILE                    DEFAULT=@{HOME}/.local/share/.bash_history
-LESSHISTFILE                DEFAULT=@{HOME}/.local/share/.lesshst
-NOTMUCH_CONFIG              DEFAULT=@{HOME}/.config/notmuch/notmuch-config
+GNUPGHOME                     DEFAULT=@{HOME}/.config/gnupg
+HISTFILE                      DEFAULT=@{HOME}/.local/share/.bash_history
+LESSHISTFILE                  DEFAULT=@{HOME}/.local/share/.lesshst
+NOTMUCH_CONFIG                DEFAULT=@{HOME}/.config/notmuch/notmuch-config
 
 # setup base16 colors as environment variables
-__BASE00                    DEFAULT=262626
-__BASE01                    DEFAULT=3a3a3a
-__BASE02                    DEFAULT=4e4e4e
-__BASE03                    DEFAULT=8a8a8a
-__BASE04                    DEFAULT=949494
-__BASE05                    DEFAULT=dab997
-__BASE06                    DEFAULT=d5c4a1
-__BASE07                    DEFAULT=ebdbb2
-__BASE08                    DEFAULT=d75f5f
-__BASE09                    DEFAULT=ff8700
-__BASE0A                    DEFAULT=ffaf00
-__BASE0B                    DEFAULT=afaf00
-__BASE0C                    DEFAULT=85ad85
-__BASE0D                    DEFAULT=83adad
-__BASE0E                    DEFAULT=d485ad
-__BASE0F                    DEFAULT=d65d0e
+__BASE00                      DEFAULT=262626
+__BASE01                      DEFAULT=3a3a3a
+__BASE02                      DEFAULT=4e4e4e
+__BASE03                      DEFAULT=8a8a8a
+__BASE04                      DEFAULT=949494
+__BASE05                      DEFAULT=dab997
+__BASE06                      DEFAULT=d5c4a1
+__BASE07                      DEFAULT=ebdbb2
+__BASE08                      DEFAULT=d75f5f
+__BASE09                      DEFAULT=ff8700
+__BASE0A                      DEFAULT=ffaf00
+__BASE0B                      DEFAULT=afaf00
+__BASE0C                      DEFAULT=85ad85
+__BASE0D                      DEFAULT=83adad
+__BASE0E                      DEFAULT=d485ad
+__BASE0F                      DEFAULT=d65d0e
 
 # setup font settings for accessing them from the shell
-FONT_SANS                   DEFAULT="Quicksand Medium"
-FONT_SERIF                  DEFAULT=Merriweather
-FONT_MONO                   DEFAULT="Source Code Pro"
+FONT_SANS                     DEFAULT="Quicksand Medium"
+FONT_SERIF                    DEFAULT=Merriweather
+FONT_MONO                     DEFAULT="Source Code Pro"

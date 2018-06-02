@@ -144,8 +144,7 @@
     "v"      'evil-window-split
     "s"      'evil-window-vsplit
     "I"      'ivy-resume
-    "K"      (general-lambda ()
-                             (kill-buffer nil))
+    "K"      'kill-this-buffer
     "Q"      'find-file
     "S"      (general-lambda ()
                              (evil-window-split) (evil-window-down 1))

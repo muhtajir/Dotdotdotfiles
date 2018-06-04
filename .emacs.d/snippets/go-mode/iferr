@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: error conditional
+# key: iferr
+# condition: (string-match-p "^[[:space:]]*iferr" (thing-at-point 'line t))
+# --
+if err != nil {
+   $0
+}

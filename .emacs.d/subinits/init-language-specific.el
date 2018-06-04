@@ -101,6 +101,11 @@
 ;;   (setq flycheck-gometalinter-fast t))
 
 (use-package yasnippet
-  :hook ((text-mode prog-mode) . yas-minor-mode))
-
+  :hook ((text-mode prog-mode) . yas-minor-mode)
+  :config
+  (general-def
+    :states  'insert
+    :keymaps 'yas-minor-mode-map
+    "SPC"    yas-maybe-expand))
+    
 (provide 'init-language-specific)

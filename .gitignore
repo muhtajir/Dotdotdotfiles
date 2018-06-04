@@ -82,10 +82,10 @@
 
 !.emacs.d/
 !.emacs.d/init.el
+!.emacs.d/snippets
+!.emacs.d/snippets/**
 !.emacs.d/subinits
 !.emacs.d/subinits/*
-!.emacs.d/snippets/
-!.emacs.d/snippets/*
 .emacs.d/subinits/init-base16-generic-theme.el
 .emacs.d/subinits/#*
 .emacs.d/subinits/*~

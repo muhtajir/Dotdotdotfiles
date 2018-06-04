@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: func
+# key: func
+# condition: (string-match-p "^[[:space:]]*func" (thing-at-point 'line t))
+# --
+func ${1:myFunc}($2) ${3:interface{}} {
+     ${0:return}
+}

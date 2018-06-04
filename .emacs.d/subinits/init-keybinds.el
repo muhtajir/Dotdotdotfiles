@@ -77,7 +77,7 @@
   (general-def
     :states     'normal
     "M-p"       'evil-paste-pop
-    "M-S-p"     'evil-paste-pop-next
+    "M-P"     'evil-paste-pop-next
     "C-a"       'evil-numbers/inc-at-pt
     "C-x"       'evil-numbers/dec-at-pt
     "ö"         'my/evil-dry-open-below
@@ -183,15 +183,12 @@
 
 
   ;; yasnippet keybinds
+  ;; yas-maybe-expand must be bound after the package is loaded because it's a var
   (general-def
     :keymaps        'yas-minor-mode-map
     :states         'insert
-    "SPC"           yas-maybe-expand
     "S-SPC"         (general-lambda ()
                                     (insert " ")))
-   
-          
-      
 
   ;; ivy keybinds
   (general-def
@@ -213,7 +210,9 @@
   (general-def
     :states     '(normal motion)
     :keymaps    'evil-mc-key-map
-    "gr"        nil)
+    "gr"        nil
+    "M-P"       nil
+    "M-p"       nil)
 
   ;; keymap/mode-specific keybinds:
   ;;
@@ -221,11 +220,13 @@
   (general-def
     :keymaps    'company-active-map
     ;; insert newline with return even with open completions
-    "<return>"  (general-lambda ()
-                                (company-abort)
-                                (newline 1 t))
-    "C-n"       'my/company-select-next
-    "C-p"       'my/company-select-previous)
+    "<tab>"           nil
+    "<return>"        'company-complete-common
+    "S-<return>"      (general-lambda ()
+                                      (company-abort)
+                                      (newline 1 t))
+    "C-n"             'my/company-select-next
+    "C-p"             'my/company-select-previous)
 
 
   ;; flycheck-mode keybinds

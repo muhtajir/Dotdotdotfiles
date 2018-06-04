@@ -182,6 +182,17 @@
     "SPC"       nil)
 
 
+  ;; yasnippet keybinds
+  (general-def
+    :keymaps        'yas-minor-mode-map
+    :states         'insert
+    "SPC"           yas-maybe-expand
+    "S-SPC"         (general-lambda ()
+                                    (insert " ")))
+   
+          
+      
+
   ;; ivy keybinds
   (general-def
     :keymaps        'ivy-minibuffer-map
@@ -191,7 +202,6 @@
     "C-d"           'ivy-scroll-up-command
     "M-k"           'ivy-previous-line
     "M-j"           'ivy-next-line)
-
 
   ;; simple escape for multiple modes
   (general-def
@@ -212,7 +222,7 @@
     :keymaps    'company-active-map
     ;; insert newline with return even with open completions
     "<return>"  (general-lambda ()
-                                (company-complete)
+                                (company-abort)
                                 (newline 1 t))
     "C-n"       'my/company-select-next
     "C-p"       'my/company-select-previous)

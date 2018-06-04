@@ -1,4 +1,4 @@
-fcitx
+fcitx -r
 xset -b &
 numlockx on &
-xkbcomp ~/.config/xkb/custom.xkb "$DISPLAY"
+(sleep 2 && xkbcomp ~/.config/xkb/custom.xkb "$DISPLAY") &

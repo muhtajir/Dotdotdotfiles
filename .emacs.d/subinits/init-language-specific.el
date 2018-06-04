@@ -100,4 +100,7 @@
 ;;   :config
 ;;   (setq flycheck-gometalinter-fast t))
 
+(use-package yasnippet
+  :hook ((text-mode prog-mode) . yas-minor-mode))
+
 (provide 'init-language-specific)

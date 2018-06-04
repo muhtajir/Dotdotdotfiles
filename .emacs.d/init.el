@@ -66,7 +66,7 @@
                              (setq evil-auto-indent nil))))
 
 ;; various mode setting options
-(add-to-list 'auto-mode-alist '(".gitignore" . text-mode))
+(add-to-list 'auto-mode-alist '(".gitignore" . prog-mode))
 
 ;; delimiter highlighting and matching
 (electric-pair-mode 1)

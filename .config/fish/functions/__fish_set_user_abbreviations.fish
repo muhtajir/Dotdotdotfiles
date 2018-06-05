@@ -42,4 +42,6 @@ function __fish_set_user_abbreviations
     abbr --add yt mpsyt /
     abbr --add z zathura
     abbr --add auri auracle info
+    abbr --add sctlpo systemctl poweroff
+    abbr --add sctlrb systemctl reboot
 end

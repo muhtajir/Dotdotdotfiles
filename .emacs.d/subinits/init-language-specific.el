@@ -103,6 +103,7 @@
 (use-package yasnippet
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
+  (yas-reload-all)
   (general-def
     :states  'insert
     :keymaps 'yas-minor-mode-map

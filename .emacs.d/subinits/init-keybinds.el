@@ -173,7 +173,9 @@
     :states         'insert
     "C-n"           nil
     "C-p"           nil
-    "<backtab>"     'indent-relative)
+    "<backtab>"     'indent-relative
+    "<return>"      'indent-new-comment-line
+    "S-<return>"    'newline)
   
 
   ;; dired keybinds
@@ -188,7 +190,8 @@
     :keymaps        'yas-minor-mode-map
     :states         'insert
     "S-SPC"         (general-lambda ()
-                                    (insert " ")))
+                                    (insert " "))
+    "C-<tab>"       'yas-skip-and-clear-field)
 
   ;; ivy keybinds
   (general-def

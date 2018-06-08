@@ -37,6 +37,7 @@
   :config
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
   (push 'company-tng-frontend company-frontends))
 
 (use-package company-flx
@@ -94,11 +95,6 @@
   :after (flycheck pos-tip)
   :config
   (flycheck-pos-tip-mode))
-
-;; (use-package flycheck-gometalinter
-;;   :hook (go-mode . flycheck-gometalinter-setup)
-;;   :config
-;;   (setq flycheck-gometalinter-fast t))
 
 (use-package yasnippet
   :hook ((text-mode prog-mode) . yas-minor-mode)

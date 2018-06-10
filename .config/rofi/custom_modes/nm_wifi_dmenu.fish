@@ -37,7 +37,9 @@ else
 
     # first try to activate the connection profile in case a connection has been previously established
     nmcli connection up id "$ssid"
-    success_feedback $status
+    if [ $status -eq 0 ]
+        success_feedback 0
+    end
 
     if string match -qr '(WPA|WEP)' $sec
         set -l pass (

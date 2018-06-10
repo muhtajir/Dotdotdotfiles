@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $BLOCK_BUTTON = 1 ]]; then
-    $HOME/.config/rofi/custom_modes/nm_wifi_dmenu.fish
+    $HOME/.config/i3/scripts/nm_menu
 fi
 
 WIRED_INSTANCE=${BLOCK_INSTANCE/;*/}

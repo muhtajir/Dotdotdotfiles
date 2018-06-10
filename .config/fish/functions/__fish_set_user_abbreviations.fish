@@ -44,5 +44,5 @@ function __fish_set_user_abbreviations
     abbr --add auri auracle info
     abbr --add sctlpo systemctl poweroff
     abbr --add sctlrb systemctl reboot
-    abbr --add mc merge-configs; and fish_update_user_settings
+    abbr --add mc 'merge-configs; and fish_update_user_settings'
 end

@@ -357,3 +357,8 @@ config.unbind('<Ctrl-v>', mode='passthrough')
 config.bind('<Ctrl-\>', 'enter-mode passthrough')
 config.bind('<Ctrl-\>', 'leave-mode', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
+
+## Per-domain settings
+# SSH tunneling
+# not supported as of now
+# config.set('content.proxy', 'socks://localhost:4711', '*.www.cc.com/*')

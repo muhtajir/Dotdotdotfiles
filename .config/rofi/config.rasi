@@ -9,8 +9,8 @@ configuration {
 	kb-row-right: "Control+Page_Down,Alt+l";
 	kb-row-up: "Up,Control+p,Alt+k";
 	kb-row-down: "Down,Control+n,Alt+j";
-	kb-row-first: "Home,KP_Home,Alt+K";
-	kb-row-last: "End,KP_End,Alt+J";
+	kb-row-first: "Home,KP_Home,Alt+K,Control+P";
+	kb-row-last: "End,KP_End,Alt+J,Control+N";
 	kb-remove-to-sol: "";
 	kb-page-prev: "Page_Up,Control+u";
 	kb-remove-char-forward: "Delete";

@@ -16,16 +16,20 @@ function fish_user_key_bindings
     bind -M visual -m default \e end-selection force-repaint
     bind -M replace-one -m default \e cancel force-repaint
 
+    # iso friendly Emacs keys
+    bind -M insert \cf forward-word
+    bind -M insert \cb backward-word
+
     # prepend commands by keypress
     bind -M insert \ep __fish_plz_bind
     bind -M insert \ea __fish_away_bind
 
     # better line editing
-    bind -M insert \cE edit_command_buffer
-    bind \cE edit_command_buffer
+    bind -M insert \cV edit_command_buffer
+    bind \cV edit_command_buffer
 
     # file selection with vifm
-    bind -M insert \cF __fish_vifm_bind
+    bind -M insert \c_ __fish_vifm_bind
 
     # update history but keep commandline
     bind -M insert \cH 'history merge'

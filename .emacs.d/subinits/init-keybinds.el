@@ -173,6 +173,10 @@
     :states         'insert
     "C-n"           nil
     "C-p"           nil
+    "C-f"           'forward-word
+    "C-b"           'backward-word
+    "M-f"           'forward-char
+    "M-b"           'backward-char
     "<backtab>"     'indent-relative
     "<return>"      'indent-new-comment-line
     "S-<return>"    'newline)
@@ -198,10 +202,14 @@
     :keymaps        'ivy-minibuffer-map
     "<S-return>"    'ivy-call
     "<escape>"      'keyboard-escape-quit
+    "C-S-p"         'ivy-beginning-of-buffer
+    "C-S-n"         'ivy-end-of-buffer
     "C-u"           'ivy-scroll-down-command
     "C-d"           'ivy-scroll-up-command
     "M-k"           'ivy-previous-line
-    "M-j"           'ivy-next-line)
+    "M-j"           'ivy-next-line
+    "M-K"           'ivy-beginning-of-buffer
+    "M-J"           'ivy-end-of-buffer)
 
   ;; simple escape for multiple modes
   (general-def

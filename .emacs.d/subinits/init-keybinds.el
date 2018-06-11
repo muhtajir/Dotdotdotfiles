@@ -8,6 +8,9 @@
   (general-create-definer general-def-goleader
                           :prefix "g")
 
+  (general-create-definer general-def-local
+                          :prefix "C-c")
+
   (defun my/evil-dry-open-below (line)
     (interactive "P")
     (let ((pos (evil-column)))
@@ -214,7 +217,7 @@
   ;; simple escape for multiple modes
   (general-def
     :states     'normal
-    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map)
+    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map quickrun--mode-map)
     "q"         'quit-window)
 
   ;; workaround for disabling evil-mc-key-map
@@ -273,6 +276,11 @@
     :keymaps    'go-mode-map
     "d"         'godef-jump
     "D"         'godef-jump-other-window)
+
+  (general-def-local
+   :states      'normal
+   :keymaps     'go-mode-map
+   "i"          'go-import-add)
 
   ;; ivy keybindings
   (general-def

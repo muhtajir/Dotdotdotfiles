@@ -1,4 +1,5 @@
 function away -d 'Run a command and immediately disown it'
-    fish -c "$argv" >/dev/null 2>&1 &
+    set -l cmd (string escape $argv)
+    fish -c "$cmd" >/dev/null 2>&1 &
     disown
 end

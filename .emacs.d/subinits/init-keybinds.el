@@ -11,6 +11,17 @@
   (general-create-definer general-def-local
                           :prefix "C-c")
 
+  (defun my/eshell ()
+    "Open or bring eshell to front if it isn't already. Otherwise kill the
+eshell buffer and window."
+    (interactive)
+    (if (get-buffer-window "*eshell*")
+        (progn (let ((sw (selected-window)))
+                 (select-window (get-buffer-window "*eshell*"))
+                 (kill-buffer-and-window)
+                 (ignore-errors (select-window sw))))
+      (eshell)))
+
   (defun my/evil-dry-open-below (line)
     (interactive "P")
     (let ((pos (evil-column)))
@@ -133,21 +144,23 @@
   (general-def-leader
     :states 'motion
     "rc"    (general-lambda ()
-                  (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+                            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
     "hx"     'helpful-at-point
     "hf"     'helpful-callable
     "hF"     'helpful-function
     "hv"     'helpful-variable
     "hk"     'helpful-key
+    "hm"     'helpful-mode
+    "hX"     'helpful-kill-buffers
     "SPC"    'vertigo-set-digit-argument
+    "$"      'my/eshell
     "b"      'ivy-switch-buffer
-    "j"      'next-buffer
-    "k"      'previous-buffer
+    "k"      'kill-this-buffer
     "o"      'delete-other-windows
     "v"      'evil-window-split
     "s"      'evil-window-vsplit
+    "X"      'evil-window-delete
     "I"      'ivy-resume
-    "K"      'kill-this-buffer
     "Q"      'find-file
     "S"      (general-lambda ()
                              (evil-window-split) (evil-window-down 1))
@@ -185,6 +198,12 @@
     "S-<return>"    'newline)
   
 
+  ;;  read-expression keybinds (below the statusline)
+  (general-def
+    :keymaps        'read-expression-map
+    "M-k"           'previous-line-or-history-element
+    "M-j"           'ivy-next-line-or-history)
+
   ;; dired keybinds
   (general-def
     :keymaps    'dired-mode-map
@@ -209,15 +228,14 @@
     "C-S-n"         'ivy-end-of-buffer
     "C-u"           'ivy-scroll-down-command
     "C-d"           'ivy-scroll-up-command
-    "M-k"           'ivy-previous-line
-    "M-j"           'ivy-next-line
-    "M-K"           'ivy-beginning-of-buffer
-    "M-J"           'ivy-end-of-buffer)
+    "M-k"           'ivy-previous-history-element
+    "M-j"           'ivy-next-history-element)
 
   ;; simple escape for multiple modes
   (general-def
     :states     'normal
-    :keymaps    '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map quickrun--mode-map)
+    :keymaps '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map
+                                quickrun--mode-map)
     "q"         'quit-window)
 
   ;; workaround for disabling evil-mc-key-map
@@ -235,13 +253,27 @@
     :keymaps    'company-active-map
     ;; insert newline with return even with open completions
     "<tab>"           nil
-    "<return>"        'company-complete-common
+    "<return>"        (general-lambda ()
+                                      (company-complete)
+                                      (company-pseudo-tooltip-hide)
+                                      (newline 1 t))
     "S-<return>"      (general-lambda ()
                                       (company-abort)
                                       (newline 1 t))
     "C-n"             'my/company-select-next
     "C-p"             'my/company-select-previous)
 
+
+  ;; eshell keybinds (eshell-mode-keymap is buffer-local and only gets
+  ;; initialized after eshell is started - why?)
+  (defun my/eshell-set-keys ()
+    (general-def
+      :states     'insert
+      :keymaps    'eshell-mode-map
+      "<return>"  'eshell-send-input
+      "M-k"       'eshell-previous-matching-input-from-input
+      "M-j"       'eshell-next-matching-input-from-input))
+  (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
 
   ;; flycheck-mode keybinds
   (general-def

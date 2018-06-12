@@ -47,7 +47,7 @@
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
-(setq eldoc-idle-delay .5)
+(setq eldoc-idle-delay .03)
 (setq-default fill-column 80)
 (require 'init-mode-line)
 (require 'init-base16-generic-theme)
@@ -67,6 +67,14 @@
 
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . prog-mode))
+
+;; eshell settings
+(setq eshell-banner-message "")
+(add-hook 'eshell-exit-hook (lambda ()
+                              (when
+                                  (string= (buffer-name (window-buffer (selected-window)))
+                                           "*eshell*")
+                                (delete-window))))
 
 ;; delimiter highlighting and matching
 (electric-pair-mode 1)
@@ -110,9 +118,6 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (setq nlinum-relative-redisplay-delay 0)
   (setq nlinum-relative-current-symbol ""))
 
-(use-package try
-  :commands try)
-
 (use-package quickrun
   :commands quickrun
   :config
@@ -123,6 +128,15 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
                      "%c test %o"
                    "%c run %o %d/*.go %a")))))
     :override t))
+
+(use-package shackle
+  :config
+  (shackle-mode 1)
+  (setq shackle-rules '(("\\*eshell\\*"
+                         :regexp t :select t :popup t :align 'below :size 0.2))))
+
+(use-package try
+  :commands try)
 
 (require 'init-ivy)
 

@@ -48,9 +48,19 @@ function loop_candidates -S -a prop
     # loop through candidates and find one that matches $prop
     for password in $passes
         set -l barepass (command basename $password)
-        string match -qi "*$barepass*" $prop
-        if test $status -eq 0
+        if string match -qi "*$barepass*" $prop
             set candidates $candidates $password
+            continue
+        end
+
+        set -l subs (string split "$PASS_SUBNAME_SPLIT_CHAR" "$barepass")
+        if [ ! "$subs" = "$barepass" ]
+            for sub in $subs[2..-1]
+                if string match -qi "*$sub*" $prop
+                    set candidates $candidates $password
+                    continue
+                end
+            end
         end
     end
 end
@@ -65,21 +75,6 @@ loop_candidates $name
 if test -z "$candidates"
     loop_candidates $class
 end
-
-# if there are no matches try secondary names
-if test -z "$candidates"
-    for password in $passes
-        set -l barepass (command basename $password)
-        set -l subs (string split "$PASS_SUBNAME_SPLIT_CHAR" "$barepass")
-        test $status -eq 0; and for sub in $subs
-            string match -qi "*$sub*" $name
-            if test $status -eq 0
-                set candidates $password
-            end
-        end
-    end
-end
-
 
 # send candidate to pass; use dmenu to select one if there are too many
 set -l cand_num (count $candidates)

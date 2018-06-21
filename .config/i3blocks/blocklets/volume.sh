@@ -14,7 +14,7 @@ volume=$(amixer -c ${BLOCK_INSTANCE} -M -D pulse get Master | grep -Eo '[[:digit
 
 # first check for mute state
 if [[ $(amixer -c ${BLOCK_INSTANCE} -M -D pulse get Master | grep -E '^\s*Front.+\[off\]') ]]; then
-    echo "<span size='x-small'>⛔</span>"
+    echo "<span size='x-small'></span>"
     exit
 fi
 

@@ -36,6 +36,9 @@ set sort_alias = alias
 set reverse_alias = yes
 source $alias_file
 
+# i don't know... more compatible line breaks?
+set text_flowed = yes
+
 # source the colors file
 source ~/.config/neomutt/colors
 

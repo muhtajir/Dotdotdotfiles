@@ -46,4 +46,5 @@ function __fish_set_user_abbreviations
     abbr --add sctlrb systemctl reboot
     abbr --add mc 'merge-configs; and fish_update_user_settings'
     abbr --add uctl udisksctl
+    abbr --add lo libreoffice
 end

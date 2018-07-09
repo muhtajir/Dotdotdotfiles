@@ -224,6 +224,11 @@ filetype *.sha512
        \ {Check SHA512 hash sum}
        \ sha512sum -c %f %S,
 
+" PDF
+filetype *.pdf
+       \ {Open with zathura}
+       \ zathura %f %i &,
+
 " GPG signature
 filetype *.asc
        \ {Check signature}

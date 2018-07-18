@@ -106,7 +106,7 @@ let g:tex_flavor = 'latex'
 " retain clipboard content after closing vim
 autocmd VimLeave * call system(getreg('+'), " | xclip -se c -i <<<")
 " adapt linebreak settings for mail
-autocmd FileType mail setl formatoptions+=aw
+autocmd FileType mail setl formatoptions+=aw spell spelllang=de
 
 
 "" keybinds

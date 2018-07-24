@@ -357,6 +357,11 @@ config.unbind('<Ctrl-v>', mode='passthrough')
 config.bind('<Ctrl-\>', 'enter-mode passthrough')
 config.bind('<Ctrl-\>', 'leave-mode', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
+# emacsy input keybindings
+config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')
+config.bind('<Ctrl-e>', 'rl-end-of-line', mode='command')
+config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='prompt')
+config.bind('<Ctrl-e>', 'rl-end-of-line', mode='prompt')
 
 ## Per-domain settings
 # SSH tunneling

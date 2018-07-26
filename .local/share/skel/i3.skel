@@ -41,10 +41,14 @@ set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 {{{custom}}}
 # end of custom settings
 
+## focus settings
 # never let windows take focus
 focus_on_window_activation urgent
 # don't move focus with mouse
 focus_follows_mouse no
+# application specific focus settings
+no_focus [class="mpv"]
+
 ## configure window decorations
 # first the border
 hide_edge_borders smart
@@ -57,21 +61,9 @@ font pango:$font 8
 for_window [class=".*"] title_format "     %title"
 
 # Gaps
-# gaps edge_gaps on
 gaps inner 15
 gaps outer -6
 smart_gaps on
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -87,7 +79,7 @@ bindsym $mod+q kill
 # kill window by middle-clicking its title bar
 bindsym --release button2 kill
 
-# start customized i3lock
+# Power management
 bindsym $mod+Pause exec $i3scriptsdir/screen_off
 bindsym $mod+Shift+Pause exec systemctl suspend
 

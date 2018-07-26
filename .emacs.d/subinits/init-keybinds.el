@@ -130,6 +130,8 @@ eshell buffer and window."
     "C-q"       'counsel-projectile-switch-project
     "C-u"       'evil-scroll-up
     "C-´"       'evil-ex-nohighlight
+    "C-/"       'vr/isearch-forward
+    "C-?"       'vr/isearch-backward
     "M-c"       'delete-window
     "M-h"       'evil-window-left
     "M-j"       'evil-window-down
@@ -166,7 +168,9 @@ eshell buffer and window."
                              (evil-window-split) (evil-window-down 1))
     "V"      (general-lambda ()
                              (evil-window-vsplit) (evil-window-right 1))
-    "<tab>"                                  'evil-switch-to-windows-last-buffer)
+    "<tab>"  'evil-switch-to-windows-last-buffer
+    "/"      'vr/replace
+    "C-/"    'vr/query-replace)
 
 
   ;; visual keybinds
@@ -330,6 +334,11 @@ eshell buffer and window."
     :states     'normal
     :keymaps    'jedi-mode-map
     "d"         'jedi:goto-definition
-    "D"         'jedi:goto-definition-pop-marker))
+    "D"         'jedi:goto-definition-pop-marker)
+
+  ;; visual regexp keybinds
+  (general-def
+    :keymaps    'vr/minibuffer-keymap
+    "<escape>"  'minibuffer-keyboard-quit))
 
 (provide 'init-keybinds)

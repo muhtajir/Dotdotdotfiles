@@ -118,6 +118,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (setq nlinum-relative-redisplay-delay 0)
   (setq nlinum-relative-current-symbol ""))
 
+(use-package pcre2el
+  :defer t)
+
 (use-package quickrun
   :commands quickrun
   :config
@@ -137,6 +140,12 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 (use-package try
   :commands try)
+
+(use-package visual-regexp-steroids
+  :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)
+  :after pcre2el
+  :config
+  (setq vr/engine 'pcre2el))
 
 (require 'init-ivy)
 

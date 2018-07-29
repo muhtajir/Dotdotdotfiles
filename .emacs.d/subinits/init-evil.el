@@ -22,8 +22,9 @@
 
 (use-package vertigo
   :commands vertigo-set-digit-argument
-  :init
-  (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö)))
+  :config
+  (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
+  (setq vertigo-cut-off 9))
 
 (use-package evil-commentary
   :config

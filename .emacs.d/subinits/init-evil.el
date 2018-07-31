@@ -24,7 +24,8 @@
   :commands vertigo-set-digit-argument
   :config
   (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
-  (setq vertigo-cut-off 9))
+  (setq vertigo-cut-off 9)
+  (evil-declare-motion 'vertigo-set-digit-argument))
 
 (use-package evil-commentary
   :config

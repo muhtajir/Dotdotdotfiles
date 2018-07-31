@@ -10,17 +10,8 @@ function __fish_set_universal_variables
     set -Ux MEDIA "/run/media/{{{USER}}}/"
 
     # environment variables used by other programs
-    # FZF
-    set -Ux FZF_DEFAULT_OPTS "
-      --height 60% --border
-      --color=bg+:'{{{__BASE01_HASH}}}',bg:'{{{__BASE00_HASH}}}',spinner:'{{{__BASE0C_HASH}}}',hl:'{{{__BASE0D_HASH}}}'
-      --color=fg:'{{{__BASE04_HASH}}}',header:'{{{__BASE0D_HASH}}}',info:'{{{__BASE0A_HASH}}}',pointer:'{{{__BASE0C_HASH}}}'
-      --color=marker:'{{{__BASE0C_HASH}}}',fg+:'{{{__BASE06_HASH}}}',prompt:'{{{__BASE0A_HASH}}}',hl+:'{{{__BASE0D_HASH}}}'
-      --bind=alt-j:down,alt-k:up --reverse
-    "
-    set -Ux FZF_DEFAULT_COMMAND "command find -P \$dir -mindepth 1 \( -wholename '*.config/*' -or -wholename '*.emacs.d/*' -or \( -wholename '*.local/share/*' -and -not -wholename '*.local/share/Steam/*' \) \) -or -not -path '*/\.*' 2> /dev/null"
-    set -U FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
-    set -U FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+    # fzf
+    __fish_config_fzf
     # pass
     set -Ux PASSWORD_STORE_DIR $HOME/.local/share/.password-store
 

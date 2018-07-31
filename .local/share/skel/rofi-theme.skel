@@ -51,7 +51,7 @@
 
 #window {
     width:          100%;
-    font:           "{{{FONT_MONO}}} 13";
+    font:           "{{{FONT_MONO}}} 11";
     location:       south;
     anchor:         south;
 }

@@ -7,6 +7,10 @@
   (write-region "" "" custom-file))
 (load custom-file)
 
+;; set up default browser
+(setq browse-url-generic-program "qutebrowser")
+(setq browse-url-browser-function 'browse-url-generic)
+
 ;; set up a separate location for backup and temp files
 (defconst emacs-tmp-dir (expand-file-name "auto-save" user-emacs-directory))
 (setq backup-directory-alist

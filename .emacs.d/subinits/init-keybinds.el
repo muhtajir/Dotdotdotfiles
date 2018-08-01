@@ -87,6 +87,14 @@ eshell buffer and window."
       (when (fboundp 'evil-ex-search-next)
         (evil-ex-search-next count))))
 
+  ;; running tests via quickrun
+  (defun my/python-test ()
+    (interactive)
+    (let* ((old-py-path (getenv "PYTHONPATH"))
+           (new-py-path (projectile-project-root)))
+      (quickrun :source `((:default-directory . ,new-py-path)
+                         (:exec . ("pytest"))))))
+
   ;; normal state keybinds
   (general-def
     :states     'normal
@@ -195,6 +203,8 @@ eshell buffer and window."
     "C-p"           nil
     "C-f"           'forward-word
     "C-b"           'backward-word
+    "C-a"           'move-beginning-of-line
+    "C-e"           'move-end-of-line
     "M-f"           'forward-char
     "M-b"           'backward-char
     "<backtab>"     'indent-relative

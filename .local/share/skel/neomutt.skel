@@ -18,6 +18,8 @@ set sleep_time = 0
 # create replies quicker
 set fast_reply = yes
 set include = yes
+# no "press key to continue" message
+unset wait_key
 
 # menu navigation
 set menu_scroll
@@ -134,6 +136,9 @@ macro pager si "<save-message>=Inbox<enter>" "In die Inbox Mailbox speichern"
 macro pager sp "<save-message>=Privat<enter>" "In die Privat Mailbox speichern"
 macro pager ss "<save-message>=Sent<enter>" "In die Sent Mailbox speichern"
 macro pager st "<save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
+
+# rerun mbsync
+macro index ^ "<shell-escape>mbsync -a<enter><sync-mailbox>"
 
 # hiding or showing the sidebar
 macro index <Space> "<enter-command>toggle sidebar_visible<enter>"

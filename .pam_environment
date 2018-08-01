@@ -5,6 +5,8 @@ GOPATH                        DEFAULT=@{HOME}/.local/share/go
 # define default applications with some common variables
 EDITOR                        DEFAULT=nvim
 TERMINAL                      DEFAULT=termite
+BROWSER                       DEFAULT=qutebrowser
+
 
 # define style for QT applications
 QT_STYLE_OVERRIDE             DEFAULT=adwaita

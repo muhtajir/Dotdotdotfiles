@@ -152,7 +152,7 @@ eshell buffer and window."
     "hF"     'helpful-function
     "hv"     'helpful-variable
     "hk"     'helpful-key
-    "hm"     'helpful-mode
+    "hm"     'describe-mode
     "hX"     'helpful-kill-buffers
     "SPC"    'vertigo-set-digit-argument
     "$"      'my/eshell

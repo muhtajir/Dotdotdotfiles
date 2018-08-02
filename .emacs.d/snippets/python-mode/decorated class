@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: decorated class
+# key: class
+# condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
+# --
+`(my/yas-get-python-filler)`@${1:decorator}
+class ${2:MyClass}($3):
+      """${4:TODO: Docstring for $2}"""
+
+      def __init__(self${5:$(when (/= (length yas-text) 0) ", ")}$5):
+          ${5:$(unless (= (length yas-text) 0)
+                 (string-join
+                   (mapcar (lambda (s) (concat "self." s " = ")) (split-string yas-text ", "))
+                     "\n"))}

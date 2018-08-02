@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: function
+# key: def
+# condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
+# --
+`(my/yas-get-python-filler)`def ${1:my_func}($2):
+    """${3:TODO: Docstring for $1}"""
+    $0

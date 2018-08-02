@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: decorated function
+# key: ddef
+# condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
+# --
+`(my/yas-get-python-filler)`@${1:decorator}
+def ${2:my_func}($3):
+    """${4:TODO: Docstring for $2}"""
+    $0

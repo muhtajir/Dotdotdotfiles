@@ -92,8 +92,11 @@ eshell buffer and window."
     (interactive)
     (let* ((old-py-path (getenv "PYTHONPATH"))
            (new-py-path (projectile-project-root)))
-      (quickrun :source `((:default-directory . ,new-py-path)
-                         (:exec . ("pytest"))))))
+      (setenv "PYTHONPATH" new-py-path)
+      (quickrun :source `((:command . "pytest")
+                          (:default-directory . ,new-py-path)
+                          (:exec . ("pytest"))))
+      (setenv "PYTHONPATH" old-py-path)))
 
   ;; normal state keybinds
   (general-def
@@ -335,10 +338,11 @@ eshell buffer and window."
 
   ;; jedi keybinds
   (general-def-leader
-    :states     'normal
-    :keymaps    'jedi-mode-map
-    "hf"        'jedi:doc-mode
-    "hx"        'jedi:show-doc)
+    :states         'normal
+    :keymaps        'jedi-mode-map
+    "hf"            'jedi:doc-mode
+    "hx"            'jedi:show-doc
+    "S-<return>"    'my/python-test)
   
   (general-def-goleader
     :states     'normal

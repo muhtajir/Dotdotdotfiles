@@ -94,9 +94,23 @@
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
+
+  (defun my/yas-get-python-filler ()
+    (let ((counter 2)
+          (non-break t)
+          (fillstr ""))
+      (save-excursion
+        (while (and (> counter 0) non-break)
+          (forward-line -1)
+          (if (string= "" (buffer-substring-no-properties
+                           (line-beginning-position) (line-end-position)))
+              (setq counter (1- counter))
+            (setq non-break nil)))
+        (make-string counter ?\n))))
+
   (general-def
     :states  'insert
     :keymaps 'yas-minor-mode-map
     "SPC"    yas-maybe-expand))
-    
+
 (provide 'init-language-specific)

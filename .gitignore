@@ -88,7 +88,6 @@
 !.emacs.d/snippets/**
 !.emacs.d/subinits
 !.emacs.d/subinits/*
-.emacs.d/subinits/init-base16-generic-theme.el
 .emacs.d/subinits/#*
 .emacs.d/subinits/*~
 

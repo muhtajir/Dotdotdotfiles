@@ -1,11 +1,7 @@
-;; enable sourcing from init scripts in emacs.d/subinits
-(add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
-
 ;; get rid of the custom blabla by using custom-file
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)
   (write-region "" "" custom-file))
-(load custom-file)
 
 ;; set up default browser
 (setq browse-url-generic-program "qutebrowser")
@@ -20,54 +16,39 @@
     (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
-;; use-package setup with auto-package-update
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
+;; setup package management with straight.el and use-package
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; why isn't everyone setting this one?
-(setq use-package-always-ensure t)
-(setq use-package-always-pin "melpa")
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
-(require 'use-package)
+;; enable sourcing from init scripts in emacs.d/subinits
+(add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
-(use-package auto-package-update
-  :config
-  (setq auto-package-update-hide-results t)
-  (auto-package-update-maybe))
+(require 'init-my-functions)
 
-;; GUI and Highlighting settings
-(setq inhibit-startup-message t)
-(fringe-mode '(8 . 0))
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(show-paren-mode 1)
-(setq show-paren-delay 0)
-(global-hl-line-mode 1)
-(blink-cursor-mode 0)
-(setq-default cursor-in-non-selected-windows nil)
-(setq echo-keystrokes .01)
-(setq eldoc-idle-delay .03)
-(setq-default fill-column 80)
-(require 'init-mode-line)
-(require 'init-base16-generic-theme)
+(require 'init-gui-setup)
 
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; load-up org-mode
-(use-package org
-  :ensure nil
-  :commands org-mode
-  :config
-  (setq org-log-done 'time)
-  (add-hook 'org-mode-hook (lambda ()
-                             (setq evil-auto-indent nil))))
+;; load up org-mode with workarounds
+(require 'init-org-mode)
+
+;; tramp settings (so far not many)
+(setq tramp-default-method "ssh")
 
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . prog-mode))
@@ -114,14 +95,6 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 (use-package link-hint
   :commands link-hint-open-link)
 
-;; relative linenumbers
-(use-package nlinum-relative
-  :hook ((prog-mode text-mode conf-mode) . nlinum-relative-mode)
-  :config
-  (setq nlinum-format "%3d")
-  (setq nlinum-relative-redisplay-delay 0)
-  (setq nlinum-relative-current-symbol ""))
-
 (use-package pcre2el
   :defer t)
 
@@ -142,9 +115,7 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (setq shackle-rules '(("\\*eshell\\*"
                          :regexp t :select t :popup t :align 'below :size 0.2))))
 
-(use-package try
-  :commands try)
-
+()
 (use-package visual-regexp-steroids
   :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)
   :after pcre2el

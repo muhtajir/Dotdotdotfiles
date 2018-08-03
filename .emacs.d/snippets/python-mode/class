@@ -3,11 +3,11 @@
 # key: class
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
-`(my/yas-get-python-filler)`class ${1:MyClass}($2):
+`(my/yas-func-padding)`class ${1:MyClass}($2):
       """${3:TODO: Docstring for $1}"""
 
       def __init__(self${4:$(when (/= (length yas-text) 0) ", ")}$4):
           ${4:$(unless (= (length yas-text) 0)
                  (string-join
                    (mapcar (lambda (s) (concat "self." s " = ")) (split-string yas-text ", "))
-                     "\n"))}
+                     "\n"))}`(my/yas-func-padding t)`

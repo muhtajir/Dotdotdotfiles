@@ -3,7 +3,7 @@
   :defer t)
 
 (use-package tex
-  :ensure auctex
+  :straight auctex
   :defer t
   :init
   (setq TeX-auto-save t)
@@ -88,22 +88,24 @@
   (defun my/flycheck-idleize (&rest args)
     (flycheck--handle-idle-change-in-buffer (current-buffer)))
   (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
-  (advice-add 'undo-tree-undo :after #'my/flycheck-idleize))
+  (advice-add 'undo-tree-undo :after #'my/flycheck-idleize)
+
+  (mapc 'evil-declare-motion (list 'flycheck-next-error 'flycheck-previous-error)))
 
 (use-package yasnippet
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
 
-  (defun my/yas-get-python-filler ()
+  (defun my/yas-func-padding (&optional down)
     (let ((counter 2)
           (non-break t)
-          (fillstr ""))
+          (fillstr "")
+          (direction (if down 1 -1)))
       (save-excursion
         (while (and (> counter 0) non-break)
-          (forward-line -1)
-          (if (string= "" (buffer-substring-no-properties
-                           (line-beginning-position) (line-end-position)))
+          (forward-line direction)
+          (if (string= "" (my/get-line))
               (setq counter (1- counter))
             (setq non-break nil)))
         (make-string counter ?\n))))

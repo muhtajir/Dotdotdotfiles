@@ -1,8 +1,9 @@
 ;; undo-tree is a dependency but not available in melpa so get it from elpa
 (use-package undo-tree
-  :pin gnu)
+  :defer t)
 
 (use-package evil
+  :after undo-tree
   :init
   (setq evil-search-module 'evil-search)
   :config

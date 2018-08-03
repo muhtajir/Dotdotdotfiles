@@ -11,102 +11,18 @@
   (general-create-definer general-def-local
                           :prefix "C-c")
 
-  (defun my/eshell ()
-    "Open or bring eshell to front if it isn't already. Otherwise kill the
-eshell buffer and window."
-    (interactive)
-    (if (get-buffer-window "*eshell*")
-        (progn (let ((sw (selected-window)))
-                 (select-window (get-buffer-window "*eshell*"))
-                 (kill-buffer-and-window)
-                 (ignore-errors (select-window sw))))
-      (eshell)))
-
-  (defun my/evil-dry-open-below (line)
-    (interactive "P")
-    (let ((pos (evil-column)))
-      (evil-open-below line)
-      (evil-normal-state nil)
-      (evil-previous-line line)
-      (evil-move-to-column pos)))
-
-  (defun my/evil-dry-open-above (line)
-    (interactive "P")
-    (let ((pos (evil-column)))
-      (evil-open-above line)
-      (evil-normal-state nil)
-      (evil-next-line)
-      (evil-move-to-column pos)))
-
-  (defun my/eval-visual-region ()
-    (interactive)
-    (when (> (mark) (point))
-      (exchange-point-and-mark))
-    (eval-region (mark) (point))
-    (evil-normal-state))
-
-  (defun my/eval-normal-line ()
-    (interactive)
-    (let ((pos (evil-column)))
-      (evil-end-of-line)
-      (eval-last-sexp nil)
-      (evil-move-to-column pos)))
-
-  (defun my/company-select-next ()
-      "Navigate company-mode and also open the quickhelp popup."
-    (interactive)
-    (company-quickhelp-manual-begin)
-    (company-select-next))
-
-  (defun my/company-select-previous ()
-      "Navigate company-mode and also open the quickhelp popup."
-    (interactive)
-    (company-quickhelp-manual-begin)
-    (company-select-previous))
-
-  (defun my/search-visual-selection (direction count)
-    "Search for visually selected text in buffer."
-    (when (> (mark) (point))
-      (exchange-point-and-mark))
-    (when (eq direction 'backward)
-      (setq count (+ (or count 1) 1)))
-    (let ((regex (format "\\<%s\\>" (regexp-quote (buffer-substring (mark) (point))))))
-      (setq evil-ex-search-count count
-            evil-ex-search-direction direction
-            evil-ex-search-pattern
-            (evil-ex-make-search-pattern regex)
-            evil-ex-search-offset nil
-            evil-ex-last-was-search t)
-      ;; update search history unless this pattern equals the
-      ;; previous pattern
-      (unless (equal (car-safe evil-ex-search-history) regex)
-        (push regex evil-ex-search-history))
-      (evil-push-search-history regex (eq direction 'forward))
-      (evil-ex-delete-hl 'evil-ex-search)
-      (evil-exit-visual-state)
-      (when (fboundp 'evil-ex-search-next)
-        (evil-ex-search-next count))))
-
-  ;; running tests via quickrun
-  (defun my/python-test ()
-    (interactive)
-    (let* ((old-py-path (getenv "PYTHONPATH"))
-           (new-py-path (projectile-project-root)))
-      (setenv "PYTHONPATH" new-py-path)
-      (quickrun :source `((:command . "pytest")
-                          (:default-directory . ,new-py-path)
-                          (:exec . ("pytest"))))
-      (setenv "PYTHONPATH" old-py-path)))
 
   ;; normal state keybinds
   (general-def
     :states     'normal
     "M-p"       'evil-paste-pop
-    "M-P"     'evil-paste-pop-next
+    "M-P"       'evil-paste-pop-next
     "C-a"       'evil-numbers/inc-at-pt
     "C-x"       'evil-numbers/dec-at-pt
     "ö"         'my/evil-dry-open-below
-    "Ö"         'my/evil-dry-open-above)
+    "Ö"         'my/evil-dry-open-above
+    "-"         'goto-last-change
+    "_"         'goto-last-change-reverse)
 
   (general-def-leader
     :states 'normal
@@ -160,7 +76,7 @@ eshell buffer and window."
                             (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
     "hx"     'helpful-at-point
     "hf"     'helpful-callable
-    "hF"     'helpful-function
+    "hF"     'helpful-command
     "hv"     'helpful-variable
     "hk"     'helpful-key
     "hm"     'describe-mode
@@ -174,7 +90,8 @@ eshell buffer and window."
     "s"      'evil-window-vsplit
     "X"      'evil-window-delete
     "I"      'ivy-resume
-    "Q"      'find-file
+    "q"      'find-file
+    "Q"      'my/sudo-find-file
     "S"      (general-lambda ()
                              (evil-window-split) (evil-window-down 1))
     "V"      (general-lambda ()
@@ -219,7 +136,13 @@ eshell buffer and window."
   (general-def
     :keymaps        'read-expression-map
     "M-k"           'previous-line-or-history-element
-    "M-j"           'ivy-next-line-or-history)
+    "M-j"           'next-line-or-history-element)
+
+  ;; minibuffer keybinds
+  (general-def
+    :keymaps        'minibuffer-local-map
+    "C-v"           'yank
+    "C-M-v"           'yank-pop)
 
   ;; dired keybinds
   (general-def
@@ -296,8 +219,8 @@ eshell buffer and window."
   (general-def
     :states     'normal
     :keymaps    'flycheck-mode-map
-    "C-j"       'flycheck-next-error
-    "C-k"       'flycheck-previous-error)
+    "M-_"       'flycheck-next-error
+    "M--"       'flycheck-previous-error)
 
   (general-def-goleader
     :states     'normal

@@ -279,6 +279,7 @@ c.hints.auto_follow_timeout = 300
 
 ## Address bar shortcut settings
 # Definitions of search engines which can be used via the address bar.
+c.url.open_base_url = True
 c.url.searchengines = {
     'DEFAULT': 'https://duckduckgo.com/?q={}',
     'aw': 'https://wiki.archlinux.org/index.php?search={}',
@@ -296,6 +297,7 @@ c.url.searchengines = {
     'w': 'https://en.wikipedia.org/w/index.php?search={}',
     'wd': 'https://de.wikipedia.org/w/index.php?search={}',
     'yt': 'https://www.youtube.com/results?search_query={}'}
+
 # Aliases
 c.aliases['ssh-tunnel'] = 'config-cycle --temp content.proxy socks://localhost:4711 system'
 

@@ -9,8 +9,8 @@
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
-(setq echo-keystrokes .01)
-(setq eldoc-idle-delay .03)
+(setq echo-keystrokes .03)
+(setq eldoc-idle-delay .01)
 (setq-default fill-column 80)
 
 (use-package telephone-line

@@ -57,16 +57,6 @@ eshell buffer and window."
     (eval-last-sexp nil)
     (evil-move-to-column pos)))
 
-(defun my/ivy-switch-buffer ()
-  (interactive)
-  (let ((ivy-use-virtual-buffers nil))
-    (ivy-switch-buffer)))
-
-(defun my/ivy-switch-buffer-extended ()
-  (interactive)
-  (let ((ivy-use-virtual-buffers t))
-    (ivy-switch-buffer)))
-
 (defun my/company-select-next ()
   "Navigate company-mode and also open the quickhelp popup."
   (interactive)

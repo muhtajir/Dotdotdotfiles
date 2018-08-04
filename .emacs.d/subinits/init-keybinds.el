@@ -83,8 +83,12 @@
     "hX"     'helpful-kill-buffers
     "SPC"    'vertigo-set-digit-argument
     "$"      'my/eshell
-    "b"      'my/ivy-switch-buffer
-    "B"      'my/ivy-switch-buffer-extended
+    "b"      (general-lambda ()
+                             (let ((ivy-use-virtual-buffers nil))
+                               (ivy-switch-buffer)))
+    "B"      (general-lambda ()
+                             (let ((ivy-use-virtual-buffers t))
+                               (ivy-switch-buffer)))
     "k"      'kill-this-buffer
     "o"      'delete-other-windows
     "v"      'evil-window-split

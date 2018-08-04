@@ -1,6 +1,6 @@
 ;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
-(fringe-mode '(8 . 0))
+(fringe-mode '(0 . 0))
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -9,8 +9,8 @@
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
-(setq echo-keystrokes .03)
-(setq eldoc-idle-delay .01)
+(setq echo-keystrokes .05)
+(setq eldoc-idle-delay .03)
 (setq-default fill-column 80)
 
 (use-package telephone-line

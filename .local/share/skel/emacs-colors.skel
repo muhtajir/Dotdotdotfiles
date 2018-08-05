@@ -224,7 +224,7 @@ settings and will be for very specific cases."
 
 ;; line-numbers
    (line-number                                  :foreground base03 :background fringe-bg)
-   (line-number-current-line                     :inverse-video t)
+   (line-number-current-line                     :foreground base0A :background fringe-bg)
 
 ;; mode-line
    (mode-line                                    :foreground base07 :background base01 :box nil)

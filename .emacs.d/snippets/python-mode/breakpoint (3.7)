@@ -1,0 +1,5 @@
+# key: bp
+# name: breakpoint (3.7)
+# condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
+# --
+breakpoint()

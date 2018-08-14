@@ -1,4 +1,4 @@
-# pylint: disable=C0111
+# pylint: disable=C0111,E266,E501
 import os
 import tempfile
 from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
@@ -341,8 +341,9 @@ config.bind('<Alt-j>', 'command-history-next', mode='command')
 config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
 config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
 # Additional hinting
-config.bind(',f', 'hint all hover')
-config.bind(',O', 'set-cmd-text --space :open -b')
+config.bind(';o', 'set-cmd-text --space :open -b')
+config.bind(';O', 'set-cmd-text --space :open -p')
+config.bind(';p', 'hint images yank')
 config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
 config.bind(';a', 'hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}')
 config.bind(';x', 'hint links userscript xdg-open')

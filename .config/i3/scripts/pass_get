@@ -55,7 +55,7 @@ function loop_candidates -S -a prop
 
         set -l subs (string split "$PASS_SUBNAME_SPLIT_CHAR" "$barepass")
         if [ ! "$subs" = "$barepass" ]
-            for sub in $subs[2..-1]
+            for sub in $subs
                 if string match -qi "*$sub*" $prop
                     set candidates $candidates $password
                     continue

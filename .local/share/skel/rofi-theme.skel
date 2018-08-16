@@ -50,10 +50,12 @@
 }
 
 #window {
-    width:          100%;
+    width:          90%;
     font:           "{{{FONT_SANS}}} 11";
     location:       south;
     anchor:         south;
+    border:         2px 2px 0px 2px;
+    border-color:   {{{__BASE03_HASH}}};
 }
 
 #mainbox {

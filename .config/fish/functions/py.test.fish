@@ -1,14 +1,22 @@
 function py.test
     set -l curdir (pwd)
 
-    if test -d tests
-        true
-    else if test -d ../tests
-        cd ..
-    else
-        echo 'Directory "tests" not found.'
+    for t_folder in test tests
+        if test -d $t_folder
+            break
+        else if test -d ../$t_folder
+            cd ..
+            break
+        else
+            false
+        end
+    end
+    or begin
+        echo "No testing folder found."
         return
     end
+
+    
 
     set -lx PYTHONPATH (pwd)
     pytest $argv

@@ -1,12 +1,12 @@
 function frename
-    argparse 'n/dry-run' 'I/non-interactive' -- $argv
+    argparse 'n/dry-run' 'r/regex' 'i/ignore-case' 'I/non-interactive' -- $argv
 
     set mv_options "-i"
     [ -n "$_flag_I" ]; and set mv_options ""
 
     # validate input
     if [ ! (count $argv) -ge 3 ]
-        echo "Required format: (-n) PATTERN REPLACEMENT FILE(S)"
+        echo "Required format: [OPTIONS] PATTERN REPLACEMENT FILE(S)"
         return 2
     end
 
@@ -23,7 +23,7 @@ function frename
 
     # do the renaming
     for file in $file_list
-        set -l new_name (string replace -r $argv[1] $argv[2] "$file")
+        set -l new_name (string replace $_flag_i $_flag_r $argv[1] $argv[2] "$file")
         if set -ql _flag_n
             echo "$file --> $new_name"
         else

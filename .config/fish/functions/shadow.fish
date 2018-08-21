@@ -8,6 +8,7 @@ function shadow -d "Stop logging command line entries to the history file"
             return
         else if test "$link_target" = '/dev/null'
             rm $shadow_file
+            return
         else
             echo 'There is a foreign history file with the name "shadow". Delete before proceeding.'
             return 1

@@ -220,6 +220,12 @@
       "M-j"       'eshell-next-matching-input-from-input))
   (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
 
+  ;; fish-mode keybinds
+  (general-def-leader
+    :states     'normal
+    :keymaps    'fish-mode-map
+    "hx"        'man-follow)
+
   ;; flycheck-mode keybinds
   (general-def
     :states     'normal

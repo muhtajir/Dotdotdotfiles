@@ -15,8 +15,7 @@
     (command-execute 'find-file)))
 
 (defun my/eshell ()
-  "Open or bring eshell to front if it isn't already. Otherwise kill the
-eshell buffer and window."
+  "Open or bring eshell to front if it isn't already.  Otherwise kill the eshell buffer and window."
   (interactive)
   (if (get-buffer-window "*eshell*")
       (progn (let ((sw (selected-window)))
@@ -24,24 +23,6 @@ eshell buffer and window."
                (kill-buffer-and-window)
                (ignore-errors (select-window sw))))
     (eshell)))
-
-(defun my/evil-dry-open-below (line)
-  "Open LINE below but stay in current line."
-  (interactive "P")
-  (let ((pos (evil-column)))
-    (evil-open-below line)
-    (evil-normal-state nil)
-    (evil-previous-line line)
-    (evil-move-to-column pos)))
-
-(defun my/evil-dry-open-above (line)
-  "Open LINE above but stay in current line."
-  (interactive "P")
-  (let ((pos (evil-column)))
-    (evil-open-above line)
-    (evil-normal-state nil)
-    (evil-next-line)
-    (evil-move-to-column pos)))
 
 (defun my/eval-visual-region ()
   (interactive)
@@ -52,10 +33,10 @@ eshell buffer and window."
 
 (defun my/eval-normal-line ()
   (interactive)
-  (let ((pos (evil-column)))
-    (evil-end-of-line)
+  (let ((pos (current-column)))
+    (end-of-line)
     (eval-last-sexp nil)
-    (evil-move-to-column pos)))
+    (move-to-column pos)))
 
 (defun my/company-select-next ()
   "Navigate company-mode and also open the quickhelp popup."
@@ -69,8 +50,60 @@ eshell buffer and window."
   (company-quickhelp-manual-begin)
   (company-select-previous))
 
-(defun my/search-visual-selection (direction count)
-  "Search for visually selected text in buffer."
+(defun my/open-line-above (line)
+  "Really open LINE lines above instead of just prepending them to the beginning of the line or something."
+  (interactive "p")
+  (forward-line -1)
+  (end-of-line)
+  (open-line line)
+  (forward-line line))
+
+;; running tests via quickrun
+(defun my/python-test ()
+  (interactive)
+  (let* ((old-py-path (getenv "PYTHONPATH"))
+         (new-py-path (projectile-project-root)))
+    (setenv "PYTHONPATH" new-py-path)
+    (quickrun :source `((:command . "pytest")
+                        (:default-directory . ,new-py-path)
+                        (:exec . ("pytest"))))
+    (setenv "PYTHONPATH" old-py-path)))
+
+
+;; evil-related-functions
+(defun my/evil-dry-open-below (&optional line)
+  "Open LINE number of lines below but stay in current line."
+  (interactive "p")
+  (save-excursion
+    (end-of-line)
+    (open-line line)))
+
+(defun my/evil-dry-open-above (line)
+  "Open LINE number of lines above but stay in current line."
+  (interactive "p")
+  (save-excursion
+    (my/open-line-above line)))
+
+(defun my/evil-paste-with-newline-above (count)
+  "Paste COUNT times into a newly opened line above."
+  (interactive "p")
+  (evil-with-single-undo
+    (my/open-line-above 1)
+    (evil-paste-after count)
+    (indent-according-to-mode)))
+
+(defun my/evil-paste-with-newline-below (count)
+  "Paste COUNT times into a newly opened line above."
+  (interactive "p")
+  (evil-with-single-undo
+    (evil-open-below 1)
+    (evil-normal-state nil)
+    (evil-paste-after count)
+    (indent-according-to-mode)))
+
+(defun my/evil-search-visual-selection (direction count)
+  "Search for visually selected text in buffer.
+DIRECTION can be forward or backward.  Don't know what COUNT does."
   (when (> (mark) (point))
     (exchange-point-and-mark))
   (when (eq direction 'backward)
@@ -91,16 +124,5 @@ eshell buffer and window."
     (evil-exit-visual-state)
     (when (fboundp 'evil-ex-search-next)
       (evil-ex-search-next count))))
-
-;; running tests via quickrun
-(defun my/python-test ()
-  (interactive)
-  (let* ((old-py-path (getenv "PYTHONPATH"))
-         (new-py-path (projectile-project-root)))
-    (setenv "PYTHONPATH" new-py-path)
-    (quickrun :source `((:command . "pytest")
-                        (:default-directory . ,new-py-path)
-                        (:exec . ("pytest"))))
-    (setenv "PYTHONPATH" old-py-path)))
 
 (provide 'init-my-functions)

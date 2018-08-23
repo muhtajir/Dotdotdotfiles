@@ -21,8 +21,8 @@
     "C-x"       'evil-numbers/dec-at-pt
     "ö"         'my/evil-dry-open-below
     "Ö"         'my/evil-dry-open-above
-    "-"         'goto-last-change
-    "_"         'goto-last-change-reverse)
+    "_"         'goto-last-change
+    "-"         'goto-last-change-reverse)
 
   (general-def-leader
     :states 'normal
@@ -31,7 +31,9 @@
                               (flycheck-display-error-at-point)))
     "RET"   'quickrun
     "e"     'my/eval-normal-line
-    "E"     'eval-buffer)
+    "E"     'eval-buffer
+    "P"     'my/evil-paste-with-newline-above
+    "p"     'my/evil-paste-with-newline-below)
 
   (general-def-goleader
     :states 'normal
@@ -111,10 +113,10 @@
     :states 'visual
     "*"     (lambda (count)
               (interactive "P")
-              (my/search-visual-selection 'forward count))
+              (my/evil-search-visual-selection 'forward count))
     "#"     (lambda (count)
               (interactive "P")
-              (my/search-visual-selection 'backward count)))
+              (my/evil-search-visual-selection 'backward count)))
 
   (general-def-leader
     :states 'visual
@@ -230,8 +232,8 @@
   (general-def
     :states     'normal
     :keymaps    'flycheck-mode-map
-    "M-_"       'flycheck-next-error
-    "M--"       'flycheck-previous-error)
+    "M--"       'flycheck-next-error
+    "M-_"       'flycheck-previous-error)
 
   (general-def-goleader
     :states     'normal

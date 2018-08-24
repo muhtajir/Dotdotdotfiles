@@ -3,13 +3,13 @@
   (general-auto-unbind-keys)
 
   (general-create-definer general-def-leader
-                          :prefix "SPC")
+    :prefix "SPC")
 
   (general-create-definer general-def-goleader
-                          :prefix "g")
+    :prefix "g")
 
   (general-create-definer general-def-local
-                          :prefix "C-c")
+    :prefix "C-c")
 
 
   ;; normal state keybinds
@@ -52,9 +52,9 @@
     "C-S-n"     'evil-mc-skip-and-goto-next-match
     "C-l"       'link-hint-open-link
     "C-n"       'evil-mc-make-and-goto-next-match
-    "C-S-p"     (general-lambda ()
-                                (evil-mc-undo-cursor-at-pos (point))
-                                (evil-mc-skip-and-goto-prev-cursor))
+    "C-S-p"     (general-lambda
+                 (evil-mc-undo-cursor-at-pos (point))
+                 (evil-mc-skip-and-goto-prev-cursor))
     "C-p"       'evil-mc-skip-and-goto-prev-cursor
     "C-q"       'counsel-projectile-switch-project
     "C-u"       'evil-scroll-up
@@ -74,8 +74,8 @@
 
   (general-def-leader
     :states 'motion
-    "rc"    (general-lambda ()
-                            (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+    "rc"    (general-lambda
+             (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
     "hx"     'helpful-at-point
     "hf"     'helpful-callable
     "hF"     'helpful-command
@@ -85,12 +85,12 @@
     "hX"     'helpful-kill-buffers
     "SPC"    'vertigo-set-digit-argument
     "$"      'my/eshell
-    "b"      (general-lambda ()
-                             (let ((ivy-use-virtual-buffers nil))
-                               (ivy-switch-buffer)))
-    "B"      (general-lambda ()
-                             (let ((ivy-use-virtual-buffers t))
-                               (ivy-switch-buffer)))
+    "b"      (general-lambda
+              (let ((ivy-use-virtual-buffers nil))
+                (ivy-switch-buffer)))
+    "B"      (general-lambda
+              (let ((ivy-use-virtual-buffers t))
+                (ivy-switch-buffer)))
     "k"      'kill-this-buffer
     "o"      'delete-other-windows
     "v"      'evil-window-split
@@ -99,10 +99,10 @@
     "I"      'ivy-resume
     "q"      'find-file
     "Q"      'my/sudo-find-file
-    "S"      (general-lambda ()
-                             (evil-window-split) (evil-window-down 1))
-    "V"      (general-lambda ()
-                             (evil-window-vsplit) (evil-window-right 1))
+    "S"      (general-lambda
+              (evil-window-split) (evil-window-down 1))
+    "V"      (general-lambda
+              (evil-window-vsplit) (evil-window-right 1))
     "<tab>"  'evil-switch-to-windows-last-buffer
     "/"      'vr/replace
     "C-/"    'vr/query-replace)
@@ -135,8 +135,8 @@
     "M-f"           'forward-char
     "M-b"           'backward-char
     "<backtab>"     'indent-relative
-    "<return>"      'indent-new-comment-line
-    "S-<return>"    'newline)
+    "<return>"      'newline
+    "C-j"           'newline)
   
 
   ;;  read-expression keybinds (below the statusline)
@@ -162,8 +162,8 @@
   (general-def
     :keymaps        'yas-minor-mode-map
     :states         'insert
-    "S-SPC"         (general-lambda ()
-                                    (insert " "))
+    "S-SPC"         (general-lambda
+                     (insert " "))
     "C-<tab>"       'yas-skip-and-clear-field)
 
   ;; ivy keybinds
@@ -200,13 +200,13 @@
     :keymaps    'company-active-map
     ;; insert newline with return even with open completions
     "<tab>"           nil
-    "<return>"        (general-lambda ()
-                                      (company-complete)
-                                      (company-pseudo-tooltip-hide)
-                                      (newline 1 t))
-    "S-<return>"      (general-lambda ()
-                                      (company-abort)
-                                      (newline 1 t))
+    "<return>"        (general-lambda
+                       (company-complete)
+                       (company-pseudo-tooltip-hide)
+                       (newline 1 t))
+    "S-<return>"      (general-lambda
+                       (company-abort)
+                       (newline 1 t))
     "C-n"             'my/company-select-next
     "C-p"             'my/company-select-previous)
 
@@ -263,9 +263,9 @@
     "D"         'godef-jump-other-window)
 
   (general-def-local
-   :states      'normal
-   :keymaps     'go-mode-map
-   "i"          'go-import-add)
+    :states      'normal
+    :keymaps     'go-mode-map
+    "i"          'go-import-add)
 
   ;; ivy keybindings
   (general-def

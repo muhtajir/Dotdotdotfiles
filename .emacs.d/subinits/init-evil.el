@@ -10,8 +10,6 @@
   (evil-mode 1)
   ;; sensible Y behavior
   (customize-set-variable 'evil-want-Y-yank-to-eol t)
-  ;; use vim word definition by default
-  (modify-syntax-entry ?_ "w")
   ;; cursor coloring to use with base16 package
   (defvar my/base16-colors base16-generic-colors)
   (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)

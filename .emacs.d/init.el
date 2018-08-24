@@ -16,6 +16,12 @@
     (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
+;; enable sourcing from init scripts in emacs.d/subinits
+(add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
+
+;; source custom functions early
+(require 'init-my-functions)
+
 ;; setup package management with straight.el and use-package
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -32,11 +38,6 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
-
-;; enable sourcing from init scripts in emacs.d/subinits
-(add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
-
-(require 'init-my-functions)
 
 (require 'init-gui-setup)
 
@@ -62,7 +63,8 @@
                                 (delete-window))))
 
 ;; delimiter highlighting and matching
-(electric-pair-mode 1)
+(setq electric-pair-open-newline-between-pairs t)
+(my/add-hooks 'electric-pair-mode '(prog-mode-hook text-mode-hook))
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
@@ -101,13 +103,7 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 (use-package quickrun
   :commands quickrun
   :config
-  (setq quickrun-focus-p nil)
-  (quickrun-add-command "go/go"
-    '((:exec . ((lambda ()
-                 (if (string-match-p "_test\\.go\\'" (buffer-name))
-                     "%c test %o"
-                   "%c run %o %d/*.go %a")))))
-    :override t))
+  (setq quickrun-focus-p nil))
 
 (use-package shackle
   :config
@@ -115,7 +111,6 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (setq shackle-rules '(("\\*eshell\\*"
                          :regexp t :select t :popup t :align 'below :size 0.2))))
 
-()
 (use-package visual-regexp-steroids
   :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)
   :after pcre2el

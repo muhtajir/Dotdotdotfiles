@@ -1,28 +1,3 @@
-;; language specific major modes
-(use-package fish-mode
-  :defer t)
-
-(use-package tex
-  :straight auctex
-  :defer t
-  :init
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq-default TeX-master nil)
-  :config
-  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-  (add-hook 'LaTeX-mode-hook 'company-mode)
-  (add-hook 'LaTeX-mode-hook 'company-auctex-init))
-
-(use-package pkgbuild-mode
-  :commands pkgbuild-mode)
-
-(use-package go-mode
-  :commands go-mode)
-
-(use-package go-eldoc
-  :hook (go-mode . go-eldoc-setup))
-
 ;; pos-tip setup for use by both company and flycheck
 (use-package pos-tip
   :after company
@@ -35,6 +10,14 @@
 (use-package company
   :hook (prog-mode . company-mode)
   :config
+  ;; workaround for compatibility with fill-column-indicator
+  (defun on-off-fci-before-company(command)
+    (when (string= "show" command)
+      (turn-off-fci-mode))
+    (when (string= "hide" command)
+      (turn-on-fci-mode)))
+  (advice-add 'company-call-frontends :before #'on-off-fci-before-company)
+
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)
@@ -139,5 +122,31 @@
     :states  'insert
     :keymaps 'yas-minor-mode-map
     "SPC"    yas-maybe-expand))
+
+
+;; language specific major modes
+(use-package fish-mode
+  :defer t)
+
+(use-package tex
+  :straight auctex
+  :defer t
+  :init
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq-default TeX-master nil)
+  :config
+  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+  (add-hook 'LaTeX-mode-hook 'company-mode)
+  (add-hook 'LaTeX-mode-hook 'company-auctex-init))
+
+(use-package pkgbuild-mode
+  :commands pkgbuild-mode)
+
+(use-package go-mode
+  :commands go-mode)
+
+(use-package go-eldoc
+  :hook (go-mode . go-eldoc-setup))
 
 (provide 'init-language-specific)

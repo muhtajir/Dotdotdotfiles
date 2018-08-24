@@ -1,4 +1,4 @@
-function fish_vi_cursor --on-variable fish_bind_mode
+function fish_vi_cursor --on-variable fish_bind_mode --on-event fish_prompt
     # only xterm or this is just gonna cause countless headaches
     if not string match -q 'xterm-*' $TERM
         return

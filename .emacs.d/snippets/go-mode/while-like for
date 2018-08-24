@@ -1,8 +1,8 @@
 # -*- mode: snippet -*-
-# name: infinite for
+# name: while-like for
 # key: for
 # condition: (string-match-p "^[[:space:]]*for" (thing-at-point 'line t))
 # --
-for {
+for $1 {
     $0
 }

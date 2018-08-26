@@ -126,7 +126,9 @@
 
 ;; language specific major modes
 (use-package fish-mode
-  :defer t)
+  :defer t
+  :config
+  (setq fish-enable-auto-indent t))
 
 (use-package tex
   :straight auctex

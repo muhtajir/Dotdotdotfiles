@@ -96,6 +96,8 @@ bind attach,index,browser gg first-entry
 bind attach,index,browser G last-entry
 bind index - limit
 macro index _ "<limit>all<enter>"
+bind index z untag-pattern
+macro index Z "<untag-pattern>all<enter>"
 macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
 
 # make it less likely for the send key to be hit accidentally

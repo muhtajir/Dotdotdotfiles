@@ -1,6 +1,6 @@
 function __fish_create_first_prompt_seg
-    # catch the exit status before anything else or it will be lost
-    set -l return_code $status
+    # get the exit code passed from fish_prompt
+    set -l return_code $argv
 
     # now choose content for the first prompt segment
     # highest ranking output is bind mode

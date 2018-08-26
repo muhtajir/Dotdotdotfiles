@@ -357,8 +357,8 @@ config.bind('<Ctrl-R>', 'config-source')
 # Passthrough settings
 config.unbind('<Ctrl-v>', mode='normal')
 config.unbind('<Ctrl-v>', mode='passthrough')
-config.bind('<Ctrl-\>', 'enter-mode passthrough')
-config.bind('<Ctrl-\>', 'leave-mode', mode='passthrough')
+config.bind('<Ctrl-z>', 'enter-mode passthrough')
+config.bind('<Ctrl-z>', 'leave-mode', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
 # emacsy input keybindings
 config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')

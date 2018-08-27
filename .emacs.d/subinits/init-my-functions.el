@@ -15,13 +15,13 @@
     (command-execute 'find-file)))
 
 (defun my/eshell ()
-  "Open or bring eshell to front if it isn't already.  Otherwise kill the eshell buffer and window."
+  "Open or bring eshell to front if it isn't already.
+Otherwise kill the eshell buffer and window."
   (interactive)
   (if (get-buffer-window "*eshell*")
-      (progn (let ((sw (selected-window)))
-               (select-window (get-buffer-window "*eshell*"))
-               (kill-buffer-and-window)
-               (ignore-errors (select-window sw))))
+      (progn
+        (select-window (get-buffer-window "*eshell*"))
+        (kill-buffer))
     (eshell)))
 
 (defun my/eval-visual-region ()

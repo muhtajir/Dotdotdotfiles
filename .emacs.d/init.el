@@ -108,8 +108,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 (use-package shackle
   :config
   (shackle-mode 1)
-  (setq shackle-rules '(("\\*eshell\\*"
-                         :regexp t :select t :popup t :align 'below :size 0.2))))
+  (setq shackle-rules
+        '(("*eshell*"
+           :regexp t :select t :popup t :align below :size 0.2))))
 
 (use-package visual-regexp-steroids
   :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)

@@ -22,7 +22,7 @@ function fish_user_key_bindings
 
     # prepend commands by keypress
     bind -M insert \ep __fish_plz_bind
-    bind -M insert \cA __fish_away_bind
+    bind -M insert \ea __fish_away_bind
 
     # better line editing
     bind -M insert \cV edit_command_buffer

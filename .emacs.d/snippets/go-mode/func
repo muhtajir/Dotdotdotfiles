@@ -3,7 +3,7 @@
 # key: func
 # condition: (string-match-p "^[[:space:]]*func" (thing-at-point 'line t))
 # --
-// ${1:$(replace-regexp-in-string "^([^)]*)[[:space:]]*" "" yas-text)} $4
-func ${1:myFunc}($2) ${3:interface{}} {
+`(my/yas-func-padding 1)`// ${1:$(replace-regexp-in-string "^([^)]*)[[:space:]]*" "" yas-text)} $4
+func ${1:myFunc}($2) $3${3:$(when (> (length yas-text) 0) " ")}{
      ${0:return}
-}
+} `(my/yas-func-padding 1 t)`

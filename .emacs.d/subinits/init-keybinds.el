@@ -26,9 +26,6 @@
 
   (general-def-leader
     :states 'normal
-    "c"     (general-lambda (when (bound-and-true-p flycheck-mode)
-                              (sleep-for .5)
-                              (flycheck-display-error-at-point)))
     "RET"   'quickrun
     "e"     'my/eval-normal-line
     "E"     'eval-buffer
@@ -104,8 +101,8 @@
     "V"      (general-lambda
               (evil-window-vsplit) (evil-window-right 1))
     "<tab>"  'evil-switch-to-windows-last-buffer
-    "/"      'vr/replace
-    "C-/"    'vr/query-replace)
+    "Yn"     'yas-new-snippet
+    "Ye"     'yas-visit-snippet-file)
 
 
   ;; visual keybinds
@@ -238,7 +235,9 @@
   (general-def-goleader
     :states     'normal
     :keymaps    'flycheck-mode-map
-    "!"         'flycheck-list-errors)
+    "!"         'flycheck-list-errors
+    "/"         'vr/replace
+    "C-/"       'vr/query-replace)
 
   ;; flycheck-list-mode keybinds
   (general-def
@@ -289,6 +288,13 @@
   ;; visual regexp keybinds
   (general-def
     :keymaps    'vr/minibuffer-keymap
-    "<escape>"  'minibuffer-keyboard-quit))
+    "<escape>"  'minibuffer-keyboard-quit)
+
+  ;; ya-snippet keybinds
+  (general-def-leader
+    :keymaps    'snippet-mode-map
+    :states     'normal
+    "YY"        'yas-load-snippet-buffer-and-close
+    "Yy"        'yas-load-snippet-buffer))
 
 (provide 'init-keybinds)

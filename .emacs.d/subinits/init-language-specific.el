@@ -105,19 +105,7 @@
   :config
   (yas-reload-all)
 
-  (defun my/yas-func-padding (&optional down)
-    (let ((counter 2)
-          (non-break t)
-          (fillstr "")
-          (direction (if down 1 -1)))
-      (save-excursion
-        (while (and (> counter 0) non-break)
-          (forward-line direction)
-          (if (string= "" (my/get-line))
-              (setq counter (1- counter))
-            (setq non-break nil)))
-        (make-string counter ?\n))))
-
+  ;; bind this here because yas-maybe-expanded needs to be loaded first
   (general-def
     :states  'insert
     :keymaps 'yas-minor-mode-map

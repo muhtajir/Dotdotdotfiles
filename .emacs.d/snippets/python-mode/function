@@ -3,6 +3,6 @@
 # key: def
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
-`(my/yas-func-padding)`def ${1:my_func}($2):
+`(my/yas-func-padding 2)`def ${1:my_func}($2):
     """${3:TODO: Docstring for $1}"""
-    $0`(my/yas-func-padding t)`
+    $0`(my/yas-func-padding 2 t)`

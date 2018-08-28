@@ -69,6 +69,18 @@ Otherwise kill the eshell buffer and window."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
+(defun my/yas-func-padding (count &optional down)
+  (let ((counter count)
+        (non-break t)
+        (fillstr "")
+        (direction (if down 1 -1)))
+    (save-excursion
+      (while (and (> counter 0) non-break)
+        (forward-line direction)
+        (if (string= "" (my/get-line))
+            (setq counter (1- counter))
+          (setq non-break nil)))
+      (make-string counter ?\n))))
 
 ;; evil-related-functions
 (defun my/evil-dry-open-below (&optional line)

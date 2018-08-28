@@ -3,12 +3,12 @@
 # key: dclass
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
-`(my/yas-func-padding)`@${1:decorator}
+`(my/yas-func-padding 2)`@${1:decorator}
 class ${2:MyClass}($3):
       """${4:TODO: Docstring for $2}"""
 
-      def __init__(self${5:$(when (/= (length yas-text) 0) ", ")}$5):
-          ${5:$(unless (= (length yas-text) 0)
-                 (string-join
-                   (mapcar (lambda (s) (concat "self." s " = ")) (split-string yas-text ", "))
-                     "\n"))}`(my/yas-func-padding t)`
+      def __init__(self${5:$(when (/= (length yas-text) 0) ", ")}$5):${5:$(unless
+               (= (length yas-text) 0)
+                 (string-join (cons ""
+                   (mapcar (lambda (s) (concat "self." s " = ")) (split-string yas-text ", ")))
+                     "\n"))}`(my/yas-func-padding 2 t)`

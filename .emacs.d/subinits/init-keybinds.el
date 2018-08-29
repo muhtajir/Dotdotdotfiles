@@ -153,16 +153,6 @@
     :keymaps    'dired-mode-map
     "SPC"       nil)
 
-
-  ;; yasnippet keybinds
-  ;; yas-maybe-expand must be bound after the package is loaded because it's a var
-  (general-def
-    :keymaps        'yas-minor-mode-map
-    :states         'insert
-    "S-SPC"         (general-lambda
-                     (insert " "))
-    "C-<tab>"       'yas-skip-and-clear-field)
-
   ;; ivy keybinds
   (general-def
     :keymaps        'ivy-minibuffer-map
@@ -290,7 +280,15 @@
     :keymaps    'vr/minibuffer-keymap
     "<escape>"  'minibuffer-keyboard-quit)
 
-  ;; ya-snippet keybinds
+  ;; yasnippet keybinds
+  ;; yas-maybe-expand must be bound after the package is loaded because it's a var
+  (general-def
+    :keymaps        'yas-keymap
+    :states         'insert
+    "S-SPC"         (general-lambda
+                     (insert " "))
+    "C-<tab>"       'yas-skip-and-clear-field)
+
   (general-def-leader
     :keymaps    'snippet-mode-map
     :states     'normal

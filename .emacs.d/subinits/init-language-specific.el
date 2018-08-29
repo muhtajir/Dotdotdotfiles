@@ -109,7 +109,13 @@
   (general-def
     :states  'insert
     :keymaps 'yas-minor-mode-map
-    "SPC"    yas-maybe-expand))
+    "SPC"    yas-maybe-expand)
+
+  ;; expansion for some python snippets
+  (general-def
+    :keymaps    'python-mode-map
+    :states     'insert
+    ":"         yas-maybe-expand))
 
 
 ;; language specific major modes

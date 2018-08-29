@@ -1,0 +1,7 @@
+# key: try
+# name: try-except
+# --
+try:
+    ${2:pass}
+except ${1:$(when (string-match-p "," yas-text) "(")}${1:Exception}${1:$(when (string-match-p "," yas-text) ")")}:
+    $0`(my/yas-func-padding 1 t)`

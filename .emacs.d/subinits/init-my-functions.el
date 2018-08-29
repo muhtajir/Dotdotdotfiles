@@ -1,3 +1,5 @@
+(require 'cl)
+
 (defun my/add-hooks (func hooks)
   "Add FUNC to multiple HOOKS at once."
   (mapc (lambda (hook)
@@ -69,11 +71,20 @@ Otherwise kill the eshell buffer and window."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
-(defun my/yas-func-padding (count &optional down)
+(defun* my/yas-func-padding (count &optional down)
+  "Add COUNT empty lines above current position.
+
+If DOWN is non-nil, then add lines below instead."
   (let ((counter count)
         (non-break t)
         (fillstr "")
-        (direction (if down 1 -1)))
+        (direction (if down 1 -1))
+        (current-line (line-number-at-pos)))
+    ;; do nothing if we're already at the end or beginning of the file
+    (when (or
+           (= current-line 1)
+           (>= current-line (- (line-number-at-pos (max-char)) 1)))
+      (return-from my/yas-func-padding))
     (save-excursion
       (while (and (> counter 0) non-break)
         (forward-line direction)

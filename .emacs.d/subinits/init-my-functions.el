@@ -71,6 +71,10 @@ Otherwise kill the eshell buffer and window."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
+(defun my/yas-indented-p (line)
+  "Return t if LINE is indented, else return nil."
+  (if (string-match "^\s" line) t nil))
+
 (defun* my/yas-func-padding (count &optional down)
   "Add COUNT empty lines above current position.
 
@@ -92,6 +96,17 @@ If DOWN is non-nil, then add lines below instead."
             (setq counter (1- counter))
           (setq non-break nil)))
       (make-string counter ?\n))))
+
+(defun my/yas-python-func-padding (pos &optional down)
+  "Determine based on the indentation of line at POS how much padding we need.
+DOWN is used as in `yas-func-padding`."
+  (let ((line)
+        (pad))
+    (save-excursion
+      (goto-char pos)
+      (setq line (my/get-line))
+    (setq pad (if (my/yas-indented-p line) 1 2)))
+    (my/yas-func-padding pad down)))
 
 ;; evil-related-functions
 (defun my/evil-dry-open-below (&optional line)

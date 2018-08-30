@@ -1,8 +1,9 @@
 # -*- mode: snippet -*-
 # name: function
 # key: def
+# expand-env: ((snippet-pos (point)))
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
-`(my/yas-func-padding 2)`def ${1:my_func}($2):
+`(my/yas-python-func-padding snippet-pos)`def ${1:my_func}($2):
     """${3:TODO: Docstring for $1}"""
-    $0`(my/yas-func-padding 2 t)`
+    $0`(my/yas-python-func-padding snippet-pos t)`

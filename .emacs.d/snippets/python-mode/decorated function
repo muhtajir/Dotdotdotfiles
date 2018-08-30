@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: decorated function
-# key: ddef
-# condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
-# --
-`(my/yas-func-padding 2)`@${1:decorator}
-def ${2:my_func}($3):
-    """${4:TODO: Docstring for $2}"""
-    $0 `(my/yas-func-padding 2 t)`

@@ -1,13 +1,18 @@
 # -*- mode: snippet -*-
 # name: class
 # key: class
+# expand-env: ((snippet-pos (point)))
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
-`(my/yas-func-padding 2)`class ${1:MyClass}($2):
-      """${3:TODO: Docstring for $1}"""
+`(my/yas-python-func-padding snippet-pos)`class ${1:MyClass}($2):
+    """${3:TODO: Docstring for $1}"""
 
-      def __init__(self${4:$(when (/= (length yas-text) 0) ", ")}$4):${4:$(unless
+    def __init__(self${4:$(when (/= (length yas-text) 0) ", ")}$4):${4:$(unless
                (= (length yas-text) 0)
-                 (string-join (cons ""
-                   (mapcar (lambda (s) (concat "self." s " = ")) (split-string yas-text ", ")))
-                     "\n"))}`(my/yas-func-padding 2 t)`
+                 (string-join
+                   (cons ""
+                     (mapcar
+                       (lambda (s) (concat "        self." s " = "))
+                       (split-string yas-text ", ")))
+                         "\n"))}
+        $0`(my/yas-python-func-padding snippet-pos t)`

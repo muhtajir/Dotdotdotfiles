@@ -10,14 +10,6 @@
 (use-package company
   :hook (prog-mode . company-mode)
   :config
-  ;; workaround for compatibility with fill-column-indicator
-  (defun on-off-fci-before-company(command)
-    (when (string= "show" command)
-      (turn-off-fci-mode))
-    (when (string= "hide" command)
-      (turn-on-fci-mode)))
-  (advice-add 'company-call-frontends :before #'on-off-fci-before-company)
-
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)

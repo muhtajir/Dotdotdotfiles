@@ -35,9 +35,12 @@
   (setq company-quickhelp-delay 0))
 
 (use-package company-jedi
+  ;; other python-mode setup here as well why not
   :hook (python-mode . (lambda ()
                          (add-to-list 'company-backends 'company-jedi)
-                         (jedi:setup))))
+                         (jedi:setup)
+                         (setq fill-column 79)
+                         (setq column-enforce-column 79))))
 
 (use-package company-go
   :hook (go-mode . (lambda ()
@@ -104,6 +107,8 @@
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
+  (add-hook 'python-mode-hook (lambda ()
+                                (setq yas-indent-line 'fixed)))
 
   ;; bind this here because yas-maybe-expanded needs to be loaded first
   (general-def

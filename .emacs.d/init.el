@@ -68,11 +68,12 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; mark column 80 with line
-(use-package fill-column-indicator
-  :hook ((python-mode go-mode) . fci-mode)
-  :config
-  (setq fci-rule-color (plist-get base16-generic-colors :base01)))
+;; ;; mark text after column 80 in prog-modes (but not elisp because headaches)
+(use-package column-enforce-mode
+  :hook ((python-mode go-mode) . column-enforce-mode))
+
+;; auto-fill for comments when coding
+(add-hook 'prog-mode-hook 'auto-fill-mode)
 
 ;; sexier builtin help
 (use-package helpful

@@ -51,7 +51,9 @@
 
 (use-package evil-mc
   :config
-  (global-evil-mc-mode 1))
+  (global-evil-mc-mode 1)
+  (setq evil-mc-custom-known-commands
+        '((indent-relative ((:default . evil-mc-execute-default-call))))))
 
 (use-package evil-numbers
   :commands (evil-numbers/inc-at-pt evil-numbers/dec-at-pt))

@@ -5,5 +5,7 @@
 # condition: (string-match-p "^[[:space:]]*" (thing-at-point 'line t))
 # --
 `(my/yas-python-func-padding snippet-pos)`def ${1:my_func}($2):
-    """${3:TODO: Docstring for $1}"""
+    """
+    ${3:TODO: Docstring for $1}
+    """
     $0`(my/yas-python-func-padding snippet-pos t)`

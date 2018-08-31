@@ -263,7 +263,17 @@
     :keymaps        'ivy-switch-buffer-map
     "C-k"           'ivy-switch-buffer-kill)
 
-  ;; jedi keybinds
+  ;; python and jedi keybinds
+  (general-def-leader
+    :states         'normal
+    :keymaps        'python-mode-map
+    "$"             'run-python)
+
+  (general-def
+    :states         'insert
+    :keymaps         'inferior-python-mode-map
+    "<return>"      'comint-send-input)
+
   (general-def-leader
     :states         'normal
     :keymaps        'jedi-mode-map

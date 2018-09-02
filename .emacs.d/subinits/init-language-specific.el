@@ -99,8 +99,6 @@
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
-  (add-hook 'python-mode-hook (lambda ()
-                                (setq yas-indent-line 'fixed)))
 
   ;; bind this here because yas-maybe-expanded needs to be loaded first
   (general-def

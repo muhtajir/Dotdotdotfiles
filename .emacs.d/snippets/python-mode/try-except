@@ -1,5 +1,6 @@
 # key: try
 # name: try-except
+# condition: (string-match-p "^[[:space:]]*try$" (my/get-line))
 # --
 try:
     ${2:pass}

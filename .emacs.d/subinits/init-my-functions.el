@@ -71,6 +71,13 @@ Otherwise kill the eshell buffer and window."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
+(defun my/yas-snippet-key ()
+  "Retrieve the key of the snippet that's currently being edited."
+  (save-excursion
+    (goto-char 0)
+    (search-forward-regexp "# key:[[:space:]]*")
+    (thing-at-point 'symbol t)))
+
 (defun my/yas-indented-p (line)
   "Return t if LINE is indented, else return nil."
   (if (string-match "^\s" line) t nil))
@@ -97,16 +104,29 @@ If DOWN is non-nil, then add lines below instead."
           (setq non-break nil)))
       (make-string counter ?\n))))
 
-(defun my/yas-python-func-padding (pos &optional down)
-  "Determine based on the indentation of line at POS how much padding we need.
-DOWN is used as in `yas-func-padding`."
-  (let ((line)
-        (pad))
-    (save-excursion
-      (goto-char pos)
-      (setq line (my/get-line))
-    (setq pad (if (my/yas-indented-p line) 1 2)))
-    (my/yas-func-padding pad down)))
+(defun my/yas-python-func-padding (indent &optional down)
+  "Use Python INDENT to determine necessary padding for class or function declaration.
+If decorator syntax is found a line above the current, don't do any padding."
+  (let ((decorated nil))
+    (unless down
+      (save-excursion
+        (forward-line -1)
+        (setq decorated (string-match-p "^[ \t]*@" (my/get-line)))))
+    ;; exit without any padding here if this is a decorated function
+    (if decorated
+        ""
+      (my/yas-func-padding (if (> indent 0) 1 2) down))))
+
+(defun my/yas-python-class-field-splitter (arg-string)
+  "Return ARG-STRING as a conventional Python class field assignment block."
+  (if (= (length arg-string) 0)
+      ""
+    (let ((clean-string)
+          (field-list))
+          (setq clean-string
+                (string-trim-left (replace-regexp-in-string " ?[:=][^,]+" "" arg-string) ", "))
+          (setq field-list (split-string clean-string ", +"))
+          (string-join (mapcar (lambda (s) (concat "self." s " = " s "\n")) field-list)))))
 
 ;; evil-related-functions
 (defun my/evil-dry-open-below (&optional line)

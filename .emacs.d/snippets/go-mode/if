@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: if
 # key: if
-# condition: (string-match-p "^[[:space:]]*if" (thing-at-point 'line t))
+# condition: (string-match-p "^[[:space:]]*if" (my/get-line))
 # --
 if ${1:true} {
    $0

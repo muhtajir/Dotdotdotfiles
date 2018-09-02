@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: func
 # key: func
-# condition: (string-match-p "^[[:space:]]*func" (thing-at-point 'line t))
+# condition: (string-match-p "^[[:space:]]*func" (my/get-line))
 # --
 `(my/yas-func-padding 1)`// ${1:$(replace-regexp-in-string "^([^)]*)[[:space:]]*" "" yas-text)} $4
 func ${1:myFunc}($2) $3${3:$(when (> (length yas-text) 0) " ")}{

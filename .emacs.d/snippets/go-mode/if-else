@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: if-else
 # key: ifel
-# condition: (string-match-p "^[[:space:]]*ifel" (thing-at-point 'line t))
+# condition: (string-match-p "^[[:space:]]*ifel" (my/get-line))
 # --
 if ${1:true} {
    $2

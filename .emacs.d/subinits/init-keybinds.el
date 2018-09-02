@@ -137,15 +137,11 @@
     "C-j"           'newline)
   
 
-  ;;  evil-ex keybinds
+  ;;  evil-ex and minibuffer keybinds
   (general-def
-    :keymaps        '(evil-ex-completion-map evil-ex-search-keymap)
+    :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map)
     "M-k"           'previous-line-or-history-element
-    "M-j"           'next-line-or-history-element)
-
-  ;; minibuffer keybinds
-  (general-def
-    :keymaps        'minibuffer-local-map
+    "M-j"           'next-line-or-history-element
     "C-v"           'yank
     "C-M-v"         'yank-pop
     "<escape>"      'minibuffer-keyboard-quit)

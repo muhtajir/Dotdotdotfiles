@@ -72,8 +72,8 @@
 (use-package column-enforce-mode
   :hook ((python-mode go-mode) . column-enforce-mode))
 
-;; auto-fill for comments when coding
-(add-hook 'prog-mode-hook 'auto-fill-mode)
+;; auto-fill in python
+(add-hook 'python-mode-hook 'auto-fill-mode)
 
 ;; sexier builtin help
 (use-package helpful

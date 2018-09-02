@@ -59,6 +59,7 @@
     "C-´"           'evil-ex-nohighlight
     "C-/"           'vr/isearch-forward
     "C-?"           'vr/isearch-backward
+    "M-o"           'delete-other-windows
     "M-c"           'delete-window
     "M-h"           'evil-window-left
     "M-j"           'evil-window-down
@@ -90,7 +91,6 @@
                      (let ((ivy-use-virtual-buffers t))
                        (ivy-switch-buffer)))
     "k"             'kill-this-buffer
-    "o"             'delete-other-windows
     "v"             'evil-window-split
     "s"             'evil-window-vsplit
     "X"             'evil-window-delete
@@ -140,6 +140,10 @@
   ;;  evil-ex and minibuffer keybinds
   (general-def
     :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map)
+    "M-h"           'left-char
+    "M-l"           'right-char
+    "C-h"           'left-word
+    "C-l"           'right-word
     "M-k"           'previous-line-or-history-element
     "M-j"           'next-line-or-history-element
     "C-v"           'yank
@@ -149,7 +153,9 @@
   ;; dired keybinds
   (general-def
     :keymaps        'dired-mode-map
-    "SPC"           nil)
+    "SPC"           nil
+    "t"             'my/dired-mark-toggle
+    "T"             'dired-toggle-marks)
 
   ;; ivy keybinds
   (general-def
@@ -206,6 +212,12 @@
       "M-k"           'eshell-previous-matching-input-from-input
       "M-j"           'eshell-next-matching-input-from-input))
   (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
+
+  ;; term keybinds
+  (general-def
+    :states         'insert
+    :keymaps        'term-raw-map
+    "<return>"      'term-send-input)
 
   ;; fish-mode keybinds
   (general-def-leader

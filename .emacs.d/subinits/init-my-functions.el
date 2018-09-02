@@ -16,6 +16,19 @@
   (let ((default-directory "/sudo::/"))
     (command-execute 'find-file)))
 
+(defun my/dired-mark-toggle ()
+  "Toggle mark for currently selected file."
+  (interactive)
+  (let ((inhibit-read-only t))
+    (when (not (dired-between-files))
+      (save-excursion
+        (beginning-of-line)
+        (apply 'subst-char-in-region
+               (point) (1+ (point))
+               (if (eq (following-char) ?\040)
+                   (list ?\040 dired-marker-char)
+                 (list dired-marker-char ?\040)))))))
+
 (defun my/eshell ()
   "Open or bring eshell to front if it isn't already.
 Otherwise kill the eshell buffer and window."
@@ -23,7 +36,7 @@ Otherwise kill the eshell buffer and window."
   (if (get-buffer-window "*eshell*")
       (progn
         (select-window (get-buffer-window "*eshell*"))
-        (kill-buffer))
+        (delete-window))
     (eshell)))
 
 (defun my/eval-visual-region ()

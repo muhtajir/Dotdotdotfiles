@@ -1,3 +1,3 @@
-if [[ $- == *i* ]]; then
+if [[ $TERM == xterm-* ]]; then
     exec fish
 fi

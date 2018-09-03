@@ -79,18 +79,6 @@
 (use-package helpful
   :defer t
   :config
-  (defun my/helpful-buffer-other-window (buf)
-    "Custom function to open helpful buffers;
-Replace buffer/window if in helpful-mode, lazy-open otherwise."
-    (let (sw)
-      (if (eq major-mode 'helpful-mode)
-          (progn
-            (quit-window)
-            (pop-to-buffer buf))
-        (progn (setq sw (selected-window))
-               (switch-to-buffer-other-window buf)))
-      (helpful-update)
-      (when sw (select-window sw))))
   (setq helpful-switch-buffer-function 'my/helpful-buffer-other-window)
   (setq helpful-max-buffers 2))
 
@@ -104,7 +92,8 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 (use-package quickrun
   :commands quickrun
   :config
-  (setq quickrun-focus-p nil))
+  (setq quickrun-focus-p nil)
+  ())
 
 (use-package shackle
   :config

@@ -287,7 +287,10 @@
     :keymaps        'jedi-mode-map
     "hf"            'jedi:doc-mode
     "hx"            'jedi:show-doc
-    "S-<return>"    'my/python-test)
+    "S-<return>"    (general-lambda
+                     (if (string-match-p "^test_" (buffer-file-name))
+                         'my/python-test
+                       'quickrun)))
   
   (general-def-goleader
     :states         'normal

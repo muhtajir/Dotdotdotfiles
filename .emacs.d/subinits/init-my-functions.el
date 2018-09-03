@@ -43,7 +43,7 @@ Otherwise kill the eshell buffer and window."
   (interactive)
   (when (> (mark) (point))
     (exchange-point-and-mark))
-  (eval-region (mark) (point))
+  (eval-region (mark) (point) t)
   (evil-normal-state))
 
 (defun my/eval-normal-line ()
@@ -65,6 +65,19 @@ Otherwise kill the eshell buffer and window."
   (company-quickhelp-manual-begin)
   (company-select-previous))
 
+(defun my/helpful-buffer-other-window (buf)
+    "Custom function to open helpful buffers;
+Replace buffer/window if in helpful-mode, lazy-open otherwise."
+    (let (sw)
+      (if (eq major-mode 'helpful-mode)
+          (progn
+            (quit-window)
+            (pop-to-buffer buf))
+        (progn (setq sw (selected-window))
+               (switch-to-buffer-other-window buf)))
+      (helpful-update)
+      (when sw (select-window sw))))
+
 (defun my/open-line-above (line)
   "Really open LINE lines above instead of just prepending them to the beginning of the line or something."
   (interactive "p")
@@ -76,24 +89,13 @@ Otherwise kill the eshell buffer and window."
 ;; running tests via quickrun
 (defun my/python-test ()
   (interactive)
-  (let* ((old-py-path (getenv "PYTHONPATH"))
-         (new-py-path (projectile-project-root)))
+  (let ((old-py-path (getenv "PYTHONPATH"))
+        (new-py-path (projectile-project-root)))
     (setenv "PYTHONPATH" new-py-path)
     (quickrun :source `((:command . "pytest")
                         (:default-directory . ,new-py-path)
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
-
-(defun my/yas-snippet-key ()
-  "Retrieve the key of the snippet that's currently being edited."
-  (save-excursion
-    (goto-char 0)
-    (search-forward-regexp "# key:[[:space:]]*")
-    (thing-at-point 'symbol t)))
-
-(defun my/yas-indented-p (line)
-  "Return t if LINE is indented, else return nil."
-  (if (string-match "^\s" line) t nil))
 
 (defun* my/yas-func-padding (count &optional down)
   "Add COUNT empty lines above current position.
@@ -117,6 +119,40 @@ If DOWN is non-nil, then add lines below instead."
           (setq non-break nil)))
       (make-string counter ?\n))))
 
+(defun my/yas-indented-p (line)
+  "Return t if LINE is indented, else return nil."
+  (if (string-match-p "^\s" line) t nil))
+
+(defun my/yas-snippet-key ()
+  "Retrieve the key of the snippet that's currently being edited."
+  (save-excursion
+    (goto-char 0)
+    (search-forward-regexp "# key:[[:space:]]*")
+    (thing-at-point 'symbol t)))
+
+(defun my/yas-python-class-field-splitter (arg-string)
+  "Return ARG-STRING as a conventional Python class field assignment block."
+  (if (= (length arg-string) 0)
+      ""
+    (let ((clean-string)
+          (field-list))
+          (setq clean-string
+                (string-trim-left (replace-regexp-in-string " ?[:=][^,]+" "" arg-string) ", "))
+          (setq field-list (split-string clean-string ", +"))
+          (string-join (mapcar (lambda (s) (concat "self." s " = " s "\n")) field-list)))))
+
+(defun my/yas-python-doc-wrapper (docstring side)
+  "Wrap DOCSTRING in quotes on either left or right SIDE."
+  (let* ((line-length (+ (python-indent-calculate-indentation) 6 (length docstring)))
+         (nl ""))
+    (when (> (+ (python-indent-calculate-indentation) 6 (length docstring)) fill-column)
+      (setq nl "\n"))
+    (apply 'concat
+           (cond ((eq side 'left)
+                  `("\"\"\"" ,nl))
+                 ((eq side 'right)
+                  `(,nl "\"\"\""))))))
+
 (defun my/yas-python-func-padding (indent &optional down)
   "Use Python INDENT to determine necessary padding for class or function declaration.
 If decorator syntax is found a line above the current, don't do any padding."
@@ -129,17 +165,6 @@ If decorator syntax is found a line above the current, don't do any padding."
     (if decorated
         ""
       (my/yas-func-padding (if (> indent 0) 1 2) down))))
-
-(defun my/yas-python-class-field-splitter (arg-string)
-  "Return ARG-STRING as a conventional Python class field assignment block."
-  (if (= (length arg-string) 0)
-      ""
-    (let ((clean-string)
-          (field-list))
-          (setq clean-string
-                (string-trim-left (replace-regexp-in-string " ?[:=][^,]+" "" arg-string) ", "))
-          (setq field-list (split-string clean-string ", +"))
-          (string-join (mapcar (lambda (s) (concat "self." s " = " s "\n")) field-list)))))
 
 ;; evil-related-functions
 (defun my/evil-dry-open-below (&optional line)

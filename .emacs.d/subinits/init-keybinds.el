@@ -15,6 +15,9 @@
   ;; normal state keybinds
   (general-def
     :states         'normal
+    "<escape>"      (general-lambda
+                     (evil-ex-nohighlight)
+                     (evil-force-normal-state))
     "M-p"           'evil-paste-pop
     "M-P"           'evil-paste-pop-next
     "C-a"           'evil-numbers/inc-at-pt
@@ -56,7 +59,9 @@
     "C-p"           'evil-mc-skip-and-goto-prev-cursor
     "C-q"           'counsel-projectile-switch-project
     "C-u"           'evil-scroll-up
-    "C-´"           'evil-ex-nohighlight
+    "<escape>"      (general-lambda
+                     (evil-ex-nohighlight)
+                     (evil-force-normal-state))
     "C-/"           'vr/isearch-forward
     "C-?"           'vr/isearch-backward
     "M-o"           'delete-other-windows

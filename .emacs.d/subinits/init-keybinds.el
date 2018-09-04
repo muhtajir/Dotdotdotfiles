@@ -144,7 +144,8 @@
 
   ;;  evil-ex and minibuffer keybinds
   (general-def
-    :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map)
+    :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map
+                                             minibuffer-local-map)
     "M-h"           'left-char
     "M-l"           'right-char
     "C-h"           'left-word
@@ -280,7 +281,8 @@
   (general-def-leader
     :states         'normal
     :keymaps        'python-mode-map
-    "$"             'run-python)
+    "$"             'run-python
+    "cB"            'my/python-remove-breakpoints)
 
   (general-def
     :states         'insert

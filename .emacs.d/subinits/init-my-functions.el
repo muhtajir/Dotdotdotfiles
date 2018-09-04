@@ -86,7 +86,17 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   (open-line line)
   (forward-line line))
 
-;; running tests via quickrun
+(defun my/python-remove-breakpoints ()
+  "Remove all breakpoint declarations in buffer."
+  (interactive)
+  (let ((counter 0))
+    (save-excursion
+      (goto-char 0)
+      (while (re-search-forward "^[[:space:]]*breakpoint()[[:space:]]*\n" nil t)
+        (replace-match "")
+        (setq counter (1+ counter))))
+    (message "%s breakpoint%s removed." counter (if (= counter 1) "" "s"))))
+
 (defun my/python-test ()
   (interactive)
   (let ((old-py-path (getenv "PYTHONPATH"))

@@ -1,5 +1,5 @@
 function frename
-    argparse 'n/dry-run' 'r/regex' 'i/ignore-case' 'I/non-interactive' -- $argv
+    argparse --name='frename' 'n/dry-run' 'r/regex' 'i/ignore-case' 'I/non-interactive' -- $argv
 
     set mv_options "-i"
     [ -n "$_flag_I" ]; and set mv_options ""

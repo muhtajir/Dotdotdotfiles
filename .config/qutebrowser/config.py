@@ -365,6 +365,10 @@ config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')
 config.bind('<Ctrl-e>', 'rl-end-of-line', mode='command')
 config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='prompt')
 config.bind('<Ctrl-e>', 'rl-end-of-line', mode='prompt')
+# one day these might be supported in insert mode as well... until then at
+# least unbind them
+config.unbind('<Ctrl-e>', mode='insert')
+config.bind('<Ctrl-v>', 'open-editor', mode='insert')
 
 ## Per-domain settings
 # SSH tunneling

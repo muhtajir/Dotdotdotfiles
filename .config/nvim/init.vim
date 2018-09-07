@@ -7,7 +7,6 @@ call plug#begin()
     Plug 'InspectorMustache/base16.nvim'
     Plug 'kana/vim-textobj-user'
     Plug 'machakann/vim-highlightedyank'
-    Plug 'prendradjaja/vim-vertigo'
     Plug 'raimondi/delimitmate'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
@@ -93,12 +92,6 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,n-v-c:block-blinkon0,i-ci-ve:ver20-blinkon0
             \,r-cr:hor20-blinkon0,o:hor50-blinkon0
 
-" set what to ignore when using wildcards
-set wildignore+=*/.git/*
-
-" make vim find hidden ctags files
-set tags+=./.tags;
-
 " set tex flavor to latex
 let g:tex_flavor = 'latex'
 
@@ -177,18 +170,7 @@ nnoremap <A-l> <C-w>l
 nnoremap <silent> <A-c> :clo<CR>
 nnoremap <silent> <S-A-c> :bp<bar>sp<bar>bn<bar>bd<bar>clo<CR>
 
-" also in terminal mode
-tnoremap <A-h> <C-\><C-n><C-w>h
-tnoremap <A-j> <C-\><C-n><C-w>j
-tnoremap <A-k> <C-\><C-n><C-w>k
-tnoremap <A-l> <C-\><C-n><C-w>l
-tnoremap <silent> <A-c> <C-\><C-n>:clo<CR>
-tnoremap <silent> <S-A-c> :bp<bar>sp<bar>bn<bar>bd<bar>clo<CR>
-
-" jump to end of line in insert mode
-inoremap æ <Esc>A
-
-" use up-down bindings from my shell configuration
+" use up-down bindings like in my shell configuration
 cnoremap <A-k> <Up>
 cnoremap <A-j> <Down>
 
@@ -210,9 +192,6 @@ onoremap } )
 vnoremap { (
 vnoremap } )
 
-" file navigation
-nnoremap <silent> <A-o> :Explore<CR>
-
 " search for visually selected text in file
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -225,29 +204,9 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-" fzf
-nnoremap <silent> <C-T> :FZF<CR>
-
-" SudoEdit
-nnoremap <leader>sw :SudoWrite<CR>
-
-" vertigo
-nnoremap <silent> <leader>j :<C-U>VertigoDown n<CR>
-nnoremap <silent> <leader>k :<C-U>VertigoUp n<CR>
-vnoremap <silent> <leader>j :<C-U>VertigoDown v<CR>
-vnoremap <silent> <leader>k :<C-U>VertigoUp v<CR>
-onoremap <silent> <leader>j :<C-U>VertigoDown o<CR>
-onoremap <silent> <leader>k :<C-U>VertigoUp o<CR>
-
 "" plugin configuration
 " delimitMate
 let g:delimitMate_expand_cr = 1
-
-" netrw
-let g:netrw_banner = 0
-
-"vertigo
-let g:Vertigo_homerow = 'asdfghjklö'
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -266,3 +225,6 @@ colorscheme base16-gruvbox-dark-pale
 Base16Highlight Pmenu bg=dark1
 Base16Highlight PmenuSel bg=dark3
 Base16Highlight NeomakeWarningSign fg=yellow
+
+" settings for using nvim as a manpager
+autocmd FileType man doautocmd user AirlineToggledOff | set laststatus=0

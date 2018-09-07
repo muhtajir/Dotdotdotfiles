@@ -24,6 +24,9 @@ function __fish_set_universal_variables
     set -Ux LESS_TERMCAP_ue (printf "\e[0m")
     set -Ux LESS_TERMCAP_us (printf "\e[01;35m")
 
+    # use nvim as a pager for man pages
+    set -Ux MANPAGER "nvim -c 'set ft=man' -"
+
     # set base16 derived color variables
     for var in __BASE00 __BASE01 __BASE02 __BASE03 __BASE04 __BASE05 __BASE06 \
                __BASE07 __BASE08 __BASE09 __BASE0A __BASE0B __BASE0C __BASE0D \

@@ -9,8 +9,8 @@
 (global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
-(setq echo-keystrokes .05)
-(setq eldoc-idle-delay .03)
+(setq echo-keystrokes .01)
+(setq eldoc-idle-delay .8)
 (setq-default fill-column 80)
 
 (use-package telephone-line
@@ -39,5 +39,29 @@
                       display-line-numbers-widen t
                       display-line-numbers-current-absolute t))
               '(prog-mode-hook text-mode-hook conf-mode-hook))
+
+(use-package sublimity
+  :commands sublimity-mode
+  :init
+  (my/add-hooks (lambda ()
+                  (when (> (count-lines 1 (point-max)) 120)
+                    (sublimity-mode 1)))
+                '(prog-mode-hook text-mode-hook))
+  :config
+  (require 'sublimity-scroll)
+  (setq sublimity-scroll-weight 5)
+  (setq sublimity-scroll-drift-length 0)
+  (require 'sublimity-map)
+  (cancel-timer sublimity-map--timer)
+  (mapc
+   (lambda (x)
+     (advice-add x :around (lambda (orig-func &rest args)
+                             (let ((return-value (apply orig-func args)))
+                               (sublimity-map-show)
+                               return-value))))
+   '(evil-scroll-down
+     evil-scroll-up
+     evil-scroll-page-down
+     evil-scroll-page-up)))
 
 (provide 'init-gui-setup)

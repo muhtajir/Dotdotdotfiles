@@ -27,12 +27,9 @@
   (setq company-quickhelp-delay 0))
 
 (use-package company-jedi
-  ;; other python-mode setup here as well why not
   :hook (python-mode . (lambda ()
                          (add-to-list 'company-backends 'company-jedi)
-                         (jedi:setup)
-                         (setq fill-column 79)
-                         (setq column-enforce-column 79))))
+                         (jedi:setup))))
 
 (use-package company-go
   :hook (go-mode . (lambda ()
@@ -58,7 +55,7 @@
             (delq 'idle-change flycheck-check-syntax-automatically))))
   (setq flycheck-check-syntax-automatically '(save idle-change))
   (setq flycheck-idle-change-delay 0.1)
-  (setq flycheck-display-errors-delay 0.07)
+  (setq flycheck-display-errors-delay 1)
   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
   (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
 
@@ -112,8 +109,12 @@
     :states     'insert
     ":"         yas-maybe-expand))
 
+;; ;; mark text after column 80 in prog-modes (but not elisp because headaches)
+(use-package column-enforce-mode
+  :hook ((python-mode go-mode) . column-enforce-mode))
 
-;; language specific major modes
+
+;; language specific major modes and their settings
 (use-package fish-mode
   :defer t
   :config
@@ -133,6 +134,18 @@
 
 (use-package pkgbuild-mode
   :commands pkgbuild-mode)
+
+;; python settings
+(add-hook
+ 'python-mode-hook
+ (lambda ()
+   ;; auto-fill
+   (auto-fill-mode)
+   (setq-local comment-auto-fill-only-comments t)
+   ;; width settings
+   (setq-local fill-column 79)
+   (setq-local column-enforce-column 79)
+   (setq-local electric-pair-open-newline-between-pairs nil)))
 
 (use-package go-mode
   :commands go-mode)

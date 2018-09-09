@@ -368,7 +368,7 @@ config.bind('<Ctrl-e>', 'rl-end-of-line', mode='prompt')
 # one day these might be supported in insert mode as well... until then at
 # least unbind them
 config.unbind('<Ctrl-e>', mode='insert')
-config.bind('<Ctrl-v>', 'open-editor', mode='insert')
+config.bind('<Ctrl-q>', 'open-editor', mode='insert')
 
 ## Per-domain settings
 # SSH tunneling

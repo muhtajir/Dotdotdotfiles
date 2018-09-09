@@ -49,8 +49,8 @@
                 '(prog-mode-hook text-mode-hook))
   :config
   (require 'sublimity-scroll)
-  (setq sublimity-scroll-weight 5)
-  (setq sublimity-scroll-drift-length 0)
+  (setq sublimity-scroll-weight 8)
+  (setq sublimity-scroll-drift-length 2)
   (require 'sublimity-map)
   (cancel-timer sublimity-map--timer)
   (mapc

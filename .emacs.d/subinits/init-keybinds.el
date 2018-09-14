@@ -38,6 +38,8 @@
   (general-def-goleader
     :states         'normal
     "\""            'counsel-evil-registers
+    "C-s"           'vr/replace
+    "C-S-s"         'vr/query-replace
     "r"             nil
     "r"             'evil-replace-with-register)
 
@@ -62,8 +64,8 @@
     "<escape>"      (general-lambda
                      (evil-ex-nohighlight)
                      (evil-force-normal-state))
-    "C-/"           'vr/isearch-forward
-    "C-?"           'vr/isearch-backward
+    "C-s"           'vr/isearch-forward
+    "C-S-s"         'vr/isearch-backward
     "M-o"           'delete-other-windows
     "M-c"           'delete-window
     "M-h"           'evil-window-left
@@ -142,6 +144,11 @@
     "C-j"           'newline)
   
 
+  ;; isearch keybinds
+  (general-def
+    :keymaps        'isearch-mode-map
+    "C-S-s"         'isearch-repeat-backward)
+
   ;;  evil-ex and minibuffer keybinds
   (general-def
     :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map
@@ -182,6 +189,15 @@
                                        quickrun--mode-map)
     "q"             'quit-window)
 
+  (general-def
+    :states         'normal
+    :keymaps        'view-mode-map
+    "q"             'View-quit)
+  ;; i don't know why this is necessary...?
+  (add-hook 'view-mode-hook (lambda ()
+                              (use-local-map view-mode-map)))
+  
+
   ;; workaround for disabling evil-mc-key-map
   (general-def
     :states         '(normal motion)
@@ -195,7 +211,6 @@
   ;; company keybinds
   (general-def
     :keymaps       'company-active-map
-    ;; insert newline with return even with open completions
     "<tab>"        nil
     "<return>"     (general-lambda
                     (company-complete)
@@ -241,9 +256,7 @@
   (general-def-goleader
     :states         'normal
     :keymaps        'flycheck-mode-map
-    "!"             'flycheck-list-errors
-    "/"             'vr/replace
-    "C-/"           'vr/query-replace)
+    "!"             'flycheck-list-errors)
 
   ;; flycheck-list-mode keybinds
   (general-def
@@ -313,11 +326,13 @@
   ;; yasnippet keybinds
   ;; yas-maybe-expand must be bound after the package is loaded because it's a var
   (general-def
-    :keymaps        'yas-keymap
-    :states         'insert
-    "S-SPC"         (general-lambda
-                     (insert " "))
-    "C-<tab>"       'yas-skip-and-clear-field)
+    :keymaps        '(yas-keymap yas/keymap)
+    "<tab>"         nil
+    "TAB"           nil
+    "<backtab>"     nil
+    "M-j"           'yas-next-field-or-maybe-expand
+    "M-k"           'yas-prev-field
+    "M-S-j"         'yas-skip-and-clear-field)
 
   (general-def-leader
     :keymaps        'snippet-mode-map

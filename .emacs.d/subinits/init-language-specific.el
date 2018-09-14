@@ -96,7 +96,6 @@
   :hook ((text-mode prog-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
-
   ;; bind this here because yas-maybe-expanded needs to be loaded first
   (general-def
     :states  'insert

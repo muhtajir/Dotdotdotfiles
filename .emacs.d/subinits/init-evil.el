@@ -8,6 +8,10 @@
   (setq evil-search-module 'evil-search)
   :config
   (setq-default evil-symbol-word-search t)
+  ;; workaround for view-mode keybinding behavior
+  (add-hook 'view-mode-hook (lambda ()
+                              (general-def :states 'normal :keymaps 'local
+                                "q" nil)))
   (evil-mode 1)
   ;; sensible Y behavior
   (customize-set-variable 'evil-want-Y-yank-to-eol t)

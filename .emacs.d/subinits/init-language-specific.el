@@ -142,6 +142,7 @@
    ;; auto-fill
    (auto-fill-mode)
    (setq-local comment-auto-fill-only-comments t)
+   (setq python-fill-docstring-style 'symmetric)
    ;; width settings
    (setq-local fill-column 79)
    (setq-local column-enforce-column 79)

@@ -104,6 +104,9 @@ macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht
 bind compose y noop
 bind compose \CQ send-message
 
+# url extraction with urlscan
+macro pager \CX "<pipe-message>urlview<enter>" "URLs mit urlview extrahieren"
+
 ## mailbox switching and moving
 # first switching
 bind index,pager C change-folder
@@ -144,5 +147,3 @@ macro index ^ "<shell-escape>mbsync -a<enter><sync-mailbox>"
 
 # hiding or showing the sidebar
 macro index <Space> "<enter-command>toggle sidebar_visible<enter>"
-
-# vim:ft=neomuttrc

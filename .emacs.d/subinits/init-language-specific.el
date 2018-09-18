@@ -28,8 +28,9 @@
 
 (use-package company-jedi
   :hook (python-mode . (lambda ()
-                         (add-to-list 'company-backends 'company-jedi)
-                         (jedi:setup))))
+                         (add-to-list 'company-backends #'company-jedi)
+                         (jedi:setup)
+                         (evil-add-command-properties #'jedi:goto-definition))))
 
 (use-package company-go
   :hook (go-mode . (lambda ()

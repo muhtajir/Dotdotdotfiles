@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: class
 # key: class
-# expand-env: ((snippet-indent (python-indent-calculate-indentation)))
+# expand-env: ((snippet-indent (current-indentation)))
 # condition: (string-match-p "^[[:space:]]*class" (my/get-line))
 # --
 `(my/yas-python-func-padding snippet-indent)`class ${1:MyClass}($2):

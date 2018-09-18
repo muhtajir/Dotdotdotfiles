@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: function
 # key: def
-# expand-env: ((snippet-indent (python-indent-calculate-indentation)))
+# expand-env: ((snippet-indent (current-indentation)))
 # condition: (string-match-p "^[[:space:]]*def$" (my/get-line))
 # --
 `(my/yas-python-func-padding snippet-indent)`def ${1:my_func}($2):

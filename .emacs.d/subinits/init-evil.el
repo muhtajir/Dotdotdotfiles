@@ -29,7 +29,8 @@
   :config
   (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
   (setq vertigo-cut-off 9)
-  (evil-declare-motion 'vertigo-set-digit-argument))
+  (evil-declare-motion #'vertigo-set-digit-argument)
+  (evil-add-command-properties #'vertigo-set-digit-argument :jump t))
 
 (use-package evil-commentary
   :config

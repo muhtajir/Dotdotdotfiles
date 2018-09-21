@@ -174,6 +174,7 @@
   (general-def
     :keymaps        'ivy-minibuffer-map
     "<S-return>"    'ivy-call
+    "<C-return>"    'ivy-immediate-done
     "<escape>"      'keyboard-escape-quit
     "C-S-p"         'ivy-beginning-of-buffer
     "C-S-n"         'ivy-end-of-buffer

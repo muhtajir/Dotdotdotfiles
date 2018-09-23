@@ -57,7 +57,7 @@ set record = +Sent
 set trash = +Trash
 set postponed = +Drafts
 set header_cache = ~/.cache/neomutt
-mailboxes = +Inbox +Sent +Drafts +-------------------------------- +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
+mailboxes = +Inbox +Sent +Drafts +Trash +-------------------------------- +Archiv +Following +Privat +Transaktionen +Arbeit+Bildung
 
 # sidebar settings
 set mail_check_stats
@@ -115,12 +115,13 @@ bind index \CP sidebar-prev
 bind index \CO sidebar-open
 macro index,pager ca "<change-folder>=Archiv<enter>" "Zur Archiv Mailbox wechseln"
 macro index,pager cb "<change-folder>=Arbeit+Bildung<enter>" "Zur Arbeit+Bildung mailbox wechseln"
-macro index,pager cd "<change-folder>=Drafts<enter>" "Zur Drafts Mailbox wechseln"
+macro index,pager cd "<change-folder>=Drafts<enter>" "Zu Entwürfen wechseln"
 macro index,pager cf "<change-folder>=Following<enter>" "Zur Following Mailbox wechseln"
-macro index,pager ci "<change-folder>=Inbox<enter>" "Zur Inbox Mailbox wechseln"
+macro index,pager ci "<change-folder>=Inbox<enter>" "Zum Posteingang wechseln"
 macro index,pager cp "<change-folder>=Privat<enter>" "Zur Privat Mailbox wechseln"
-macro index,pager cs "<change-folder>=Sent<enter>" "Zur Sent Mailbox wechseln"
+macro index,pager cs "<change-folder>=Sent<enter>" "Zu gesendeten Nachrichten wechseln"
 macro index,pager ct "<change-folder>=Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
+macro index,pager cx "<change-folder>=Trash<enter>" "Zum Papierkorb wechseln"
 # then moving
 bind index,pager S save-message
 # moving from the index (supporting prefix)

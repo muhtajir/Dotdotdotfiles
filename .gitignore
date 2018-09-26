@@ -104,8 +104,9 @@
 
 !.audiotools.cfg
 !.bashrc
-!.profile
 !.ctags
 !.gitignore
 !.pam_environment
+!.profile
+!.urlview
 !.XCompose

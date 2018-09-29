@@ -1,35 +1,31 @@
 function glob
-    set -l first_param_char (string sub -s 1 -l 1 -- $argv[1])
-    set -l mode
-    if test "$first_param_char" = '-'
-        set mode (string sub -s 2 -- $argv[1])
-    else
-        return
+    argparse -n 'glob' -x 'd,f' 'h/hidden' 'x/except=+' 'd/directory' 'f/file' -- $argv
+        or return 1
+
+    # build list of files
+    set -l all_files *
+    if [ "$_flag_h" ]
+        set all_files $all_files .*
     end
 
-    # include a check for a hidden switch at some point
-    set -l hidden -not -name '.*'
-    # save non-option arguments in $args
-    set -l args
-    if test (count $argv) -ge 2
-        set args $argv[2..(count $argv)]
+    set -l out_files
+    # loop through all_files and only put those we need into out_files
+    for f in $all_files
+        # skip for any exception defined on the command line
+        set -l except ""
+        for x in $_flag_except
+            string match -q "$x" "$f"; and set except "$f"; and break
+        end
+        test "$except"; and continue
+
+        if [ -n "$_flag_directory" -a ! -d "$f" ]
+            continue
+        else if [ -n "$_flag_file" -a ! -f "$f" ]
+            continue
+        else
+            set out_files $out_files "$f"
+        end
     end
 
-    switch $mode
-        case 'x'
-            # match all except args
-            set -l params
-            for arg in $args
-                set params $params -not -name {$arg}
-            end
-            find . -maxdepth 1 $params $hidden
-        case 'd'
-            # only match directories
-            find . -maxdepth 1 -type d $hidden
-        case 'f'
-            # only match files
-            find . -maxdepth 1 -type f $hidden
-        case '*'
-            return
-    end
+    printf '%s\n' $out_files
 end

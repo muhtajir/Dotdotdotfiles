@@ -79,6 +79,11 @@
 (use-package link-hint
   :commands link-hint-open-link)
 
+(use-package magit
+  :commands magit-status
+  :config
+  (add-hook 'with-editor-mode-hook 'evil-insert-state))
+
 (use-package pcre2el
   :defer t)
 

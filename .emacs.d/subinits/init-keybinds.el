@@ -41,7 +41,8 @@
     "C-s"           'vr/replace
     "C-S-s"         'vr/query-replace
     "r"             nil
-    "r"             'evil-replace-with-register)
+    "r"             'evil-replace-with-register
+    "G"             'magit-status)
 
 
   ;; motion state keybinds
@@ -228,11 +229,19 @@
   ;; initialized after eshell is started - why?)
   (defun my/eshell-set-keys ()
     (general-def
-      :states         'insert
-      :keymaps        'eshell-mode-map
-      "<return>"      'eshell-send-input
-      "M-k"           'eshell-previous-matching-input-from-input
-      "M-j"           'eshell-next-matching-input-from-input))
+      :states           'insert
+      :keymaps          'eshell-mode-map
+      "<return>"        'eshell-send-input
+      "M-k"             'eshell-previous-matching-input-from-input
+      "M-j"             'eshell-next-matching-input-from-input)
+
+    (general-def
+      :states           'normal
+      "^"               'eshell-bol
+      "S"               (general-lambda
+                         (eshell-bol)
+                         (kill-line)
+                         (evil-insert-state))))
   (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
 
   ;; term keybinds
@@ -285,6 +294,15 @@
     :states          'normal
     :keymaps         'go-mode-map
     "i"              'go-import-add)
+
+  ;; magit keybindings
+  (general-def
+    :states         'emacs
+    :keymaps        'magit-mode-map
+    "M-h"           'evil-window-left
+    "M-j"           'evil-window-down
+    "M-k"           'evil-window-up
+    "M-l"           'evil-window-right)
 
   ;; ivy keybindings
   (general-def

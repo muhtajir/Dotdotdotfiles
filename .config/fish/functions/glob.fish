@@ -3,7 +3,13 @@ function glob
         or return 1
 
     # build list of files
-    set -l all_files *
+    set -l all_files
+    if [ -z "$argv" ]
+        set all_files *
+    else
+        set all_files $argv
+    end
+
     if [ "$_flag_h" ]
         set all_files $all_files .*
     end

@@ -62,6 +62,14 @@
                                            "*eshell*")
                                 (delete-window))))
 
+;; spellchecking settings
+(setq ispell-program-name "hunspell")
+(setq ispell-local-dictionary "de_DE")
+(setq ispell-local-dictionary-alist
+      '(("German (Germany)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "de_DE"))
+        ("English (US)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+        ("English (Australia)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_AU") nil utf-8)))
+
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)
 (my/add-hooks 'electric-pair-mode '(prog-mode-hook text-mode-hook))

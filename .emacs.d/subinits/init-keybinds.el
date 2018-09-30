@@ -302,7 +302,19 @@
     "M-h"           'evil-window-left
     "M-j"           'evil-window-down
     "M-k"           'evil-window-up
-    "M-l"           'evil-window-right)
+    "M-l"           'evil-window-right
+    "j"             'magit-section-forward
+    "k"             'magit-section-backward
+    "C-j"           'next-line
+    "C-k"           'previous-line
+    "p"             'magit-push-popup
+    "d"             'magit-delete-thing
+    "D"             'magit-diff-popup
+    "Ju"            'magit-jump-to-unstaged
+    "Js"            'magit-jump-to-staged
+    "Jn"            'magit-jump-to-untracked
+    "Jz"            'magit-jump-to-stashes
+    "Jt"            'magit-jump-to-tracked)
 
   ;; ivy keybindings
   (general-def

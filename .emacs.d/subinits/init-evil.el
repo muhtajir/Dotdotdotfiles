@@ -1,6 +1,8 @@
 ;; undo-tree is a dependency but not available in melpa so get it from elpa
 (use-package undo-tree
-  :defer t)
+  :defer t
+  :config
+  (setq undo-tree-enable-undo-in-region nil))
 
 (use-package evil
   :after undo-tree

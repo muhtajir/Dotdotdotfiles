@@ -13,7 +13,22 @@
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)
-  (push 'company-tng-frontend company-frontends))
+  (push 'company-tng-frontend company-frontends)
+
+  (defun my/company-select-next ()
+    "Navigate company-mode and also open the quickhelp popup."
+    (interactive)
+    (company-quickhelp-manual-begin)
+    (company-select-next))
+
+  (defun my/company-select-previous ()
+    "Navigate company-mode and also open the quickhelp popup."
+    (interactive)
+    (company-quickhelp-manual-begin)
+    (company-select-previous))
+  (evil-declare-not-repeat #'my/company-select-next)
+  (evil-declare-not-repeat #'my/company-select-previous))
+
 
 (use-package company-flx
   :after company

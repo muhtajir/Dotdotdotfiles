@@ -53,18 +53,6 @@ Otherwise kill the eshell buffer and window."
     (eval-last-sexp nil)
     (move-to-column pos)))
 
-(defun my/company-select-next ()
-  "Navigate company-mode and also open the quickhelp popup."
-  (interactive)
-  (company-quickhelp-manual-begin)
-  (company-select-next))
-
-(defun my/company-select-previous ()
-  "Navigate company-mode and also open the quickhelp popup."
-  (interactive)
-  (company-quickhelp-manual-begin)
-  (company-select-previous))
-
 (defun my/helpful-buffer-other-window (buf)
     "Custom function to open helpful buffers;
 Replace buffer/window if in helpful-mode, lazy-open otherwise."

@@ -33,25 +33,25 @@ def merge_bookmarks():
         f.writelines(sorted(set(ext_urls + int_urls)))
 
 
-BASE00 = '#{}'.format(os.getenv('__BASE00'))  # black0
-BASE01 = '#{}'.format(os.getenv('__BASE01'))  # black1
-BASE02 = '#{}'.format(os.getenv('__BASE02'))  # black2
-BASE03 = '#{}'.format(os.getenv('__BASE03'))  # black3
-BASE04 = '#{}'.format(os.getenv('__BASE04'))  # black4
-BASE05 = '#{}'.format(os.getenv('__BASE05'))  # white0
-BASE06 = '#{}'.format(os.getenv('__BASE06'))  # white1
-BASE07 = '#{}'.format(os.getenv('__BASE07'))  # white2
-BASE08 = '#{}'.format(os.getenv('__BASE08'))  # red
-BASE09 = '#{}'.format(os.getenv('__BASE09'))  # light_orange
-BASE0A = '#{}'.format(os.getenv('__BASE0A'))  # yellow
-BASE0B = '#{}'.format(os.getenv('__BASE0B'))  # green
-BASE0C = '#{}'.format(os.getenv('__BASE0C'))  # cyan
-BASE0D = '#{}'.format(os.getenv('__BASE0D'))  # blue
-BASE0E = '#{}'.format(os.getenv('__BASE0E'))  # magenta
-BASE0F = '#{}'.format(os.getenv('__BASE0F'))  # dark_orange
+BASE00 = '#{}'.format(os.getenv('__BASE00'), default='262626')  # black0
+BASE01 = '#{}'.format(os.getenv('__BASE01'), default='3a3a3a')  # black1
+BASE02 = '#{}'.format(os.getenv('__BASE02'), default='4e4e4e')  # black2
+BASE03 = '#{}'.format(os.getenv('__BASE03'), default='8a8a8a')  # black3
+BASE04 = '#{}'.format(os.getenv('__BASE04'), default='949494')  # black4
+BASE05 = '#{}'.format(os.getenv('__BASE05'), default='dab997')  # white0
+BASE06 = '#{}'.format(os.getenv('__BASE06'), default='d5c4a1')  # white1
+BASE07 = '#{}'.format(os.getenv('__BASE07'), default='ebdbb2')  # white2
+BASE08 = '#{}'.format(os.getenv('__BASE08'), default='d75f5f')  # red
+BASE09 = '#{}'.format(os.getenv('__BASE09'), default='ff8700')  # light_orange
+BASE0A = '#{}'.format(os.getenv('__BASE0A'), default='ffaf00')  # yellow
+BASE0B = '#{}'.format(os.getenv('__BASE0B'), default='afaf00')  # green
+BASE0C = '#{}'.format(os.getenv('__BASE0C'), default='85ad85')  # cyan
+BASE0D = '#{}'.format(os.getenv('__BASE0D'), default='83adad')  # blue
+BASE0E = '#{}'.format(os.getenv('__BASE0E'), default='d485ad')  # magenta
+BASE0F = '#{}'.format(os.getenv('__BASE0F'), default='d65d0e')  # dark_orange
 
-FONT_SANS = os.getenv('FONT_SANS')
-FONT_MONO = os.getenv('FONT_MONO')
+FONT_SANS = os.getenv('FONT_SANS', default='Quicksand Medium')
+FONT_MONO = os.getenv('FONT_MONO', default='Source Code Pro')
 
 merge_bookmarks()
 

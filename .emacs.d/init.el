@@ -53,6 +53,10 @@
 
 ;; tramp settings (so far not many)
 (setq tramp-default-method "ssh")
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (file-remote-p default-directory)
+              (my/source-ssh-env))))
 
 ;; various mode setting options
 (add-to-list 'auto-mode-alist '(".gitignore" . prog-mode))
@@ -107,8 +111,8 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 (use-package magit
   :commands magit-status
-  :config
-  (add-hook 'with-editor-mode-hook 'evil-insert-state))
+  :hook ((magit-mode . my/source-ssh-env)
+         (with-editor-mode . evil-insert-state)))
 
 (use-package pcre2el
   :defer t)

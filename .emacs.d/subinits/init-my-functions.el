@@ -86,5 +86,21 @@ Otherwise kill the eshell buffer and window."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
+(defun my/source-ssh-env ()
+  "Read environment variables for the ssh environment from '~/.ssh/environment'."
+  (let (pos1 pos2 (var-strs '("SSH_AUTH_SOCK" "SSH_AGENT_PID")))
+    (unless (some 'getenv var-strs)
+      (with-temp-buffer
+        (ignore-errors
+          (insert-file-contents "~/.ssh/environment")
+          (mapc
+           (lambda (var-str)
+             (goto-char 0)
+             (search-forward var-str)
+             (setq pos1 (+ (point) 1))
+             (search-forward ";")
+             (setq pos2 (- (point) 1))
+             (setenv var-str (buffer-substring-no-properties pos1 pos2)))
+           var-strs))))))
 
 (provide 'init-my-functions)

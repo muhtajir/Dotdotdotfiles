@@ -23,7 +23,6 @@
 !.config/fish/functions
 !.config/fish/functions/*
 .config/fish/functions/__fish_set_universal_variables.fish
-.config/fish/functions/__fish_config_fzf.fish
 !.config/fish/completions
 !.config/fish/completions/*
 

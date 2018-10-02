@@ -1,3 +1,5 @@
+(require 'init-base16-generic-theme)
+
 ;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
 (fringe-mode '(0 . 0))
@@ -31,8 +33,6 @@
   (defvar telephone-line-secondary-right-separator  'telephone-line-cubed-hollow-right)
   :config
   (telephone-line-mode t))
-
-(require 'init-base16-generic-theme)
 
 (my/add-hooks (lambda ()
                 (setq display-line-numbers 'relative

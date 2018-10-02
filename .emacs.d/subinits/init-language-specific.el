@@ -122,7 +122,78 @@
   (general-def
     :keymaps    'python-mode-map
     :states     'insert
-    ":"         yas-maybe-expand))
+    ":"         yas-maybe-expand)
+
+
+  ;; yas related functions
+  (defun* my/yas-func-padding (count &optional down)
+    "Add COUNT empty lines above current position.
+
+If DOWN is non-nil, then add lines below instead."
+    (let ((counter count)
+          (non-break t)
+          (fillstr "")
+          (direction (if down 1 -1))
+          (current-line (line-number-at-pos)))
+      ;; do nothing if we're already at the end or beginning of the file
+      (when (or
+             (= current-line 1)
+             (>= current-line (- (line-number-at-pos (max-char)) 1)))
+        (return-from my/yas-func-padding))
+      (save-excursion
+        (while (and (> counter 0) non-break)
+          (forward-line direction)
+          (if (string= "" (my/get-line))
+              (setq counter (1- counter))
+            (setq non-break nil)))
+        (make-string counter ?\n))))
+
+  (defun my/yas-indented-p (line)
+    "Return t if LINE is indented, else return nil."
+    (if (string-match-p "^\s" line) t nil))
+
+  (defun my/yas-snippet-key ()
+    "Retrieve the key of the snippet that's currently being edited."
+    (save-excursion
+      (goto-char 0)
+      (search-forward-regexp "# key:[[:space:]]*")
+      (thing-at-point 'symbol t)))
+
+  (defun my/yas-python-class-field-splitter (arg-string)
+    "Return ARG-STRING as a conventional Python class field assignment block."
+    (if (= (length arg-string) 0)
+        ""
+      (let ((clean-string)
+            (field-list))
+        (setq clean-string
+              (string-trim-left (replace-regexp-in-string " ?[:=][^,]+" "" arg-string) ", "))
+        (setq field-list (split-string clean-string ", +"))
+        (string-join (mapcar (lambda (s) (concat "self." s " = " s "\n")) field-list)))))
+
+  (defun my/yas-python-doc-wrapper (docstring side)
+    "Wrap DOCSTRING in quotes on either left or right SIDE."
+    (let* ((line-length (+ (python-indent-calculate-indentation) 6 (length docstring)))
+           (nl ""))
+      (when (> (+ (python-indent-calculate-indentation) 6 (length docstring)) fill-column)
+        (setq nl "\n"))
+      (apply 'concat
+             (cond ((eq side 'left)
+                    `("\"\"\"" ,nl))
+                   ((eq side 'right)
+                    `(,nl "\"\"\""))))))
+
+  (defun my/yas-python-func-padding (indent &optional down)
+    "Use Python INDENT to determine necessary padding for class or function declaration.
+If decorator syntax is found a line above the current, don't do any padding."
+    (let ((decorated nil))
+      (unless down
+        (save-excursion
+          (forward-line -1)
+          (setq decorated (string-match-p "^[ \t]*@" (my/get-line)))))
+      ;; exit without any padding here if this is a decorated function
+      (if decorated
+          ""
+        (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
 ;; ;; mark text after column 80 in prog-modes (but not elisp because headaches)
 (use-package column-enforce-mode

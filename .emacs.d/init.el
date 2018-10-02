@@ -84,7 +84,22 @@
   :defer t
   :config
   (setq helpful-switch-buffer-function 'my/helpful-buffer-other-window)
-  (setq helpful-max-buffers 2))
+  (setq helpful-max-buffers 2)
+
+
+  ;; helpful related functions
+  (defun my/helpful-buffer-other-window (buf)
+    "Display helpful buffer BUF the way I want it, ie:
+Replace buffer/window if in helpful-mode, lazy-open otherwise."
+    (let (sw)
+      (if (eq major-mode 'helpful-mode)
+          (progn
+            (quit-window)
+            (pop-to-buffer buf))
+        (progn (setq sw (selected-window))
+               (switch-to-buffer-other-window buf)))
+      (helpful-update)
+      (when sw (select-window sw)))))
 
 ;; vimperator-style link-hints
 (use-package link-hint

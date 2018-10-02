@@ -1,29 +1,24 @@
-;; %-LOCATION:$HOME/.emacs.d/subinits/init-base16-generic-theme.el-% -*-emacs-lisp-*-
-;; DO EDITS HERE: $HOME/.local/share/skel/emacs-colors.skel
-;; Generic base16 theme into which base16 environment vars have been inserted
-
 (defvar base16-generic-colors
-  '(:base00     "#{{{__BASE00}}}"
-    :base01     "#{{{__BASE01}}}"
-    :base02     "#{{{__BASE02}}}"
-    :base03     "#{{{__BASE03}}}"
-    :base04     "#{{{__BASE04}}}"
-    :base05     "#{{{__BASE05}}}"
-    :base06     "#{{{__BASE06}}}"
-    :base07     "#{{{__BASE07}}}"
-    :base08     "#{{{__BASE08}}}"
-    :base09     "#{{{__BASE09}}}"
-    :base0A     "#{{{__BASE0A}}}"
-    :base0B     "#{{{__BASE0B}}}"
-    :base0C     "#{{{__BASE0C}}}"
-    :base0D     "#{{{__BASE0D}}}"
-    :base0E     "#{{{__BASE0E}}}"
-    :base0F     "#{{{__BASE0F}}}"
-    ; :font-mono  "{{{FONT_MONO}}}"
+  `(:base00     ,(concat "#" (getenv "__BASE00"))
+    :base01     ,(concat "#" (getenv "__BASE01"))
+    :base02     ,(concat "#" (getenv "__BASE02"))
+    :base03     ,(concat "#" (getenv "__BASE03"))
+    :base04     ,(concat "#" (getenv "__BASE04"))
+    :base05     ,(concat "#" (getenv "__BASE05"))
+    :base06     ,(concat "#" (getenv "__BASE06"))
+    :base07     ,(concat "#" (getenv "__BASE07"))
+    :base08     ,(concat "#" (getenv "__BASE08"))
+    :base09     ,(concat "#" (getenv "__BASE09"))
+    :base0A     ,(concat "#" (getenv "__BASE0A"))
+    :base0B     ,(concat "#" (getenv "__BASE0B"))
+    :base0C     ,(concat "#" (getenv "__BASE0C"))
+    :base0D     ,(concat "#" (getenv "__BASE0D"))
+    :base0E     ,(concat "#" (getenv "__BASE0E"))
+    :base0F     ,(concat "#" (getenv "__BASE0F"))
+    ; :font-mono  "Source Code Pro"
     :font-mono  "mononoki"
-    :font-sans  "{{{FONT_SANS}}}"
-    :font-serif "{{{FONT_SERIF}}}"
-    ))
+    :font-sans  ,(getenv "FONT_SANS")
+    :font-serif ,(getenv "FONT_SERIF")))
 
 (deftheme base16-generic)
 

@@ -8,6 +8,9 @@
 !.config/
 .config/*
 
+!.config/bpython
+!.config/bpython/config
+
 !.config/cower
 !.config/cower/config
 

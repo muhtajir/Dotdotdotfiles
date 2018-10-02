@@ -7,6 +7,9 @@
 (setq browse-url-generic-program "qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 
+;; use more conservative sentence definition
+(setq sentence-end-double-space nil)
+
 ;; set up a separate location for backup and temp files
 (defconst emacs-tmp-dir (expand-file-name "auto-save" user-emacs-directory))
 (setq backup-directory-alist

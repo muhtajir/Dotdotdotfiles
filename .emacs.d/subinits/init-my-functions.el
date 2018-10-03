@@ -105,7 +105,7 @@ Start eshell if it isn't running already."
 
 (defun my/term ()
   "Hide or show term window.
-Start eshell if it isn't running already."
+Start terminal if it isn't running already."
   (interactive)
   (let* ((term-buf "*ansi-term*")
          (term-win (get-buffer-window term-buf)))
@@ -117,6 +117,7 @@ Start eshell if it isn't running already."
         (let ((cur-buf (buffer-name)))
           (ansi-term "/bin/bash")
           (switch-to-buffer cur-buf)))
-      (pop-to-buffer term-buf))))
+      (pop-to-buffer term-buf)
+      (evil-insert-state))))
 
 (provide 'init-my-functions)

@@ -30,8 +30,8 @@
                  (list dired-marker-char ?\040)))))))
 
 (defun my/eshell ()
-  "Open or bring eshell to front if it isn't already.
-Otherwise kill the eshell buffer and window."
+  "Hide or show eshell window.
+Start eshell if it isn't running already."
   (interactive)
   (if (get-buffer-window "*eshell*")
       (progn
@@ -102,5 +102,21 @@ Otherwise kill the eshell buffer and window."
              (setq pos2 (- (point) 1))
              (setenv var-str (buffer-substring-no-properties pos1 pos2)))
            var-strs))))))
+
+(defun my/term ()
+  "Hide or show term window.
+Start eshell if it isn't running already."
+  (interactive)
+  (let* ((term-buf "*ansi-term*")
+         (term-win (get-buffer-window term-buf)))
+    (if term-win
+        (progn
+          (select-window term-win)
+          (delete-window))
+      (unless (get-buffer term-buf)
+        (let ((cur-buf (buffer-name)))
+          (ansi-term "/bin/bash")
+          (switch-to-buffer cur-buf)))
+      (pop-to-buffer term-buf))))
 
 (provide 'init-my-functions)

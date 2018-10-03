@@ -91,7 +91,8 @@
     "hm"            'describe-mode
     "hX"            'helpful-kill-buffers
     "SPC"           'vertigo-set-digit-argument
-    "$"             'my/eshell
+    "$"             'my/term
+    "C-$"           'my/eshell
     "b"             (general-lambda
                      (let ((ivy-use-virtual-buffers nil))
                        (ivy-switch-buffer)))

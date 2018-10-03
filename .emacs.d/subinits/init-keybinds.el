@@ -73,6 +73,7 @@
     "M-j"           'evil-window-down
     "M-k"           'evil-window-up
     "M-l"           'evil-window-right
+    "M-H"           'helpful-kill-buffers
     "Q"             'counsel-projectile-find-file
     "{"             'evil-backward-sentence-begin
     "}"             'evil-forward-sentence-begin
@@ -83,16 +84,19 @@
     :states         'motion
     "rc"            (general-lambda
                      (find-file (substitute-in-file-name "$HOME/.emacs.d/init.el")))
+    "rf"            'counsel-recentf
     "hx"            'helpful-at-point
     "hf"            'helpful-callable
     "hF"            'helpful-command
     "hv"            'helpful-variable
     "hk"            'helpful-key
     "hm"            'describe-mode
-    "hX"            'helpful-kill-buffers
     "SPC"           'vertigo-set-digit-argument
     "$"             'my/term
     "C-$"           'my/eshell
+    "%"             (general-lambda
+                     (counsel-ag nil (projectile-project-root)))
+    "C-%"           'my/counsel-ag-prompt-path
     "b"             (general-lambda
                      (let ((ivy-use-virtual-buffers nil))
                        (ivy-switch-buffer)))

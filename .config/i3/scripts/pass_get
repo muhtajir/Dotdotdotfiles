@@ -15,34 +15,44 @@ set name (string replace -a ' ' '_' "$name")
 set class (string replace -a ' ' '_' "$class")
 
 
-function get_login -a pass copy
-    # get the string after "login:" in the file
-    pass show $pass | string replace -rf '^login:\s?(.+)$' '$1' | read -l login
-    if test -n "$login"
+function get_value -a pass key copy
+    # get the value for $key in the pass file
+    pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value
+    if test -n "$value"
         if eval $copy
-            echo $login | xclip -selection clipboard -i
+            echo $value | xclip -selection clipboard -i
+            true
         else
-            echo $login
+            echo $value
+            true
         end
     else
-        notify-send 'Unable to retrieve login info'
         false
     end
 end
 
 
+function complain_not_found -a key
+    notify-send "Unable to retrieve $key"
+end
+
+
 function xdo_pass_entry -a pass
-    set -l login (get_login $pass false); or return
+    set -l login (get_value $pass "login" false)
+        or complain_not_found "login"
     set -l pass_string (pass show $pass | head -n 1); or return
+    set -l field_div (get_value $pass "xdoDiv" false)
+    [ -z "$field_div" ]; and set field_div "Tab"
     xdotool keyup Super
     xdotool type --clearmodifiers $login
     xdotool keyup Super
-    xdotool key --clearmodifiers Tab
+    xdotool key --clearmodifiers (string split " " $field_div)
     xdotool keyup Super
     xdotool type --clearmodifiers $pass_string
     xdotool keyup Super
     xdotool key --clearmodifiers Return
 end
+
 
 function loop_candidates -S -a prop
     # loop through candidates and find one that matches $prop
@@ -64,6 +74,7 @@ function loop_candidates -S -a prop
         end
     end
 end
+
 
 # get list of all pass files
 set -l passes (string replace -r '^.+?\.password-store/(.+?)\.gpg$' '$1' $PASSWORD_STORE_DIR/**/*)
@@ -102,7 +113,7 @@ if test -n "$final_candidate"
     # handle different command flags
     switch $argv
         case "-l"
-            get_login $final_candidate true
+            get_value $final_candidate "login" true
         case "-x"
             xdo_pass_entry $final_candidate
         case "*"

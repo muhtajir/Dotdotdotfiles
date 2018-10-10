@@ -21,10 +21,10 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
 
         case "off"
             if string match -rq '\bdns=' "$nm_config"
-                string replace -r '\b(dns=)' '$default' < "$nm_config" > "$tmpf"
+                string replace -r '\b(dns=)' '$1default' < "$nm_config" > "$tmpf"
                 sudo mv "$tmpf" "$nm_config"
             else
-                echo "dns=default" > "$tmpf"
+                echo "[main]"\n"dns=default" > "$tmpf"
                 sudo mv "$tmpf" "$nm_config"
             end
 

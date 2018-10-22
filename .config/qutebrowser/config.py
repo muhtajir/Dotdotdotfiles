@@ -355,8 +355,6 @@ config.bind('b', 'set-cmd-text --space :buffer')
 # Source config
 config.bind('<Ctrl-R>', 'config-source')
 # Passthrough settings
-config.unbind('<Ctrl-v>', mode='normal')
-config.unbind('<Ctrl-v>', mode='passthrough')
 config.bind('<Ctrl-z>', 'enter-mode passthrough')
 config.bind('<Ctrl-z>', 'leave-mode', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')

@@ -4,8 +4,8 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
     set -l tmpf (mktemp)
     switch "$argv"
         case "on"
-            echo "127.0.0.1" > "$tmpf"
-            sudo mv "$tmpf" "$nm_config"
+            echo "nameserver 127.0.0.1" > "$tmpf"
+            sudo mv "$tmpf" "$resolv"
 
             if string match -rq '\bdns=' "$nm_config"
                 string replace -r '\b(dns=)' '$1none' < "$nm_config" > "$tmpf"
@@ -16,7 +16,7 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
             end
 
             if not systemctl is-active dnscrypt-proxy > /dev/null
-                sudo systemctl start dnscrypt-proxy
+                sudo systemctl start dnscrypt-proxy.socket
             end
 
         case "off"
@@ -29,7 +29,8 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
             end
 
             if systemctl is-active dnscrypt-proxy > /dev/null
-                sudo systemctl stop dnscrypt-proxy
+                sudo systemctl stop dnscrypt-proxy.service
+                sudo systemctl stop dnscrypt-proxy.socket
             end
 
             sudo systemctl restart NetworkManager

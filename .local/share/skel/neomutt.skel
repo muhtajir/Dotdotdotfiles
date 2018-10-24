@@ -94,22 +94,30 @@ bind pager G bottom
 bind pager gg top
 bind attach,index,browser gg first-entry
 bind attach,index,browser G last-entry
+
+# search/filter/limit bindings
 bind index - limit
 bind index z untag-pattern
 bind index,pager,browser N search-opposite
 macro index _ "<limit>all<enter>"
 macro index Z "<untag-pattern>all<enter>"
-macro index d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
 
-# make it less likely for the send key to be hit accidentally
+# send bindings
+## reply to all
+bind index,pager A group-reply
+## make it less likely for the send key to be hit accidentally
 bind compose y noop
 bind compose \CQ send-message
 
 # url extraction with urlscan
-macro pager \CX "<pipe-message>urlview<enter>" "URLs mit urlview extrahieren"
+macro pager \CX "<enter-command>set my_tmp=$pipe_decode<enter>\
+                 <enter-command>set pipe_decode=yes<enter>\
+                 <pipe-message>urlview<enter>\
+                 <enter-command>set pipe_decode=$my_tmp<enter>" \
+                 "URLs mit urlview extrahieren"
 
-## mailbox switching and moving
-# first switching
+# mailbox switching and moving
+## first switching
 bind index,pager C change-folder
 bind index \CN sidebar-next
 bind index \CP sidebar-prev
@@ -123,9 +131,12 @@ macro index,pager cp "<change-folder>=Privat<enter>" "Zur Privat Mailbox wechsel
 macro index,pager cs "<change-folder>=Sent<enter>" "Zu gesendeten Nachrichten wechseln"
 macro index,pager ct "<change-folder>=Transaktionen<enter>" "Zur Transaktionen Mailbox wechseln"
 macro index,pager cx "<change-folder>=Trash<enter>" "Zum Papierkorb wechseln"
-# then moving
+
+## then moving
+### unmark messages before deleting
+macro index,pager d "<tag-prefix><clear-flag>N<tag-prefix><delete-message>" "Nachricht löschen"
 bind index,pager S save-message
-# moving from the index (supporting prefix)
+## moving from the index (supporting prefix)
 macro index sa "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Archiv<enter>" "In die Archiv Mailbox speichern"
 macro index sb "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
 macro index sd "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"
@@ -134,7 +145,7 @@ macro index si "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Inbox<enter>
 macro index sp "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Privat<enter>" "In die Privat Mailbox speichern"
 macro index ss "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Sent<enter>" "In die Sent Mailbox speichern"
 macro index st "<tag-prefix><clear-flag>N<tag-prefix><save-message>=Transaktionen<enter>" "In die Transaktionen Mailbox speichern"
-# moving from the pager
+## moving from the pager
 macro pager sa "<change-folder>=Archiv<enter>" "In die Archiv Mailbox wechseln"
 macro pager sb "<save-message>=Arbeit+Bildung<enter>" "In die Arbeit+Bildung Mailbox speichern"
 macro pager sd "<save-message>=Drafts<enter>" "In die Drafts Mailbox speichern"

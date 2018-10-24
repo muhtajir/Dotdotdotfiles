@@ -359,13 +359,16 @@ xkb_keymap {
       level_name[Level3]= "Level3";
     };
     type "FOUR_LEVEL_FLEX" {
-      modifiers= Shift+Mod1+Control+Mod5;
+      modifiers= Shift+Mod1+Control+Mod5+Mod4;
       map[Shift]= Level2;
       map[Mod5]= Level3;
       map[Shift+Mod5]= Level4;
       map[Shift+Control]= Level5;
       map[Shift+Mod1]= Level6;
       map[Shift+Mod1+Control]= Level7;
+      map[Mod4+Shift+Control]= Level8;
+      map[Mod4+Shift+Mod1]= 9;
+      map[Mod4+Shift+Mod1+Control]= 10;
       level_name[Level1]= "Base";
       level_name[Level2]= "Shift";
       level_name[Level3]= "Level3";
@@ -373,6 +376,9 @@ xkb_keymap {
       level_name[Level5]= "Shift Control";
       level_name[Level6]= "Shift Mod1";
       level_name[Level7]= "Shift Mod1 Ctrl";
+      level_name[Level8]= "Mod4 Shift Control";
+      level_name[9]= "Mod4 Shift Mod1";
+      level_name[10]= "Mod4 Shift Mod1 Ctrl";
     };
     type "FOUR_LEVEL" {
       modifiers= Shift+Mod5;
@@ -909,12 +915,12 @@ xkb_keymap {
         };
     key <AE08> {
         type= "FOUR_LEVEL_FLEX",
-        symbols[Group1]= [               8,       parenleft,     bracketleft,       trademark,       NoSymbol,       NoSymbol,       NoSymbol ],
+        symbols[Group1]= [               8,       parenleft,     bracketleft,       trademark,       NoSymbol,       NoSymbol,       NoSymbol,       8,       8,       8 ],
         actions[Group1]= [               NoAction(),       NoAction(),     NoAction(),       NoAction(),       RedirectKey(key=<AE08>,clearmods=Shift+Control,modifiers=Mod5),       RedirectKey(key=<AE07>,clearmods=Shift+Mod1,modifiers=Mod5),       RedirectKey(key=<AE07>,clearmods=Shift+Mod1+Control,modifiers=Mod5) ]
     };
     key <AE09> {
         type= "FOUR_LEVEL_FLEX",
-        symbols[Group1]= [               9,      parenright,    bracketright,       plusminus,       NoSymbol,       NoSymbol,       NoSymbol ],
+        symbols[Group1]= [               9,      parenright,    bracketright,       plusminus,       NoSymbol,       NoSymbol,       NoSymbol,       9,       9,       9 ],
         actions[Group1]= [               NoAction(),       NoAction(),     NoAction(),       NoAction(),       RedirectKey(key=<AE09>,clearmods=Shift+Control,modifiers=Mod5),       RedirectKey(key=<AE10>,clearmods=Shift+Mod1,modifiers=Mod5),       RedirectKey(key=<AE10>,clearmods=Shift+Mod1+Control,modifiers=Mod5) ]
     };
     // key <AE08> {

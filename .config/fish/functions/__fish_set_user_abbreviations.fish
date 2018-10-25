@@ -28,6 +28,7 @@ function __fish_set_user_abbreviations
     abbr --add nd nextd
     abbr --add o open
     abbr --add pd prevd
+    abbr --add p pass
     abbr --add pg pass git
     abbr --add pgd pass git diff
     abbr --add pgf pass git fetch
@@ -37,6 +38,7 @@ function __fish_set_user_abbreviations
     abbr --add pgst pass git status
     abbr --add pm pacman
     abbr --add psa ps -A
+    abbr --add psag 'ps -A | grep -i'
     abbr --add py python
     abbr --add py2 python2
     abbr --add q exit

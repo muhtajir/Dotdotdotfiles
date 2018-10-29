@@ -58,6 +58,7 @@
 .config/neomutt/*
 !.config/neomutt/mailcap
 !.config/neomutt/colors
+!.config/neomutt/openattach.sh
 
 !.config/nvim
 !.config/nvim/init.vim

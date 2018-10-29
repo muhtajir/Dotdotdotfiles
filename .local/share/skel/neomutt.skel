@@ -80,6 +80,9 @@ bind attach,index,pager g noop
 bind index,pager s noop
 bind index,pager c noop
 
+# emacs-like help binding
+bind attach,index,pager,browser,compose \CH help
+
 # Moving around
 bind pager j next-line
 bind pager k previous-line
@@ -96,6 +99,7 @@ bind attach,index,browser gg first-entry
 bind attach,index,browser G last-entry
 
 # search/filter/limit bindings
+bind index,pager,browser ? search-reverse
 bind index - limit
 bind index z untag-pattern
 bind index,pager,browser N search-opposite

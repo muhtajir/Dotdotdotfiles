@@ -258,7 +258,10 @@
   (general-def
     :states         'insert
     :keymaps        'term-raw-map
-    "<return>"      'term-send-input)
+    "<return>"      'term-send-input
+    "C-h-k"         'helpful-key
+    "M-j"           'term-send-down
+    "M-k"           'term-send-up)
 
   ;; fish-mode keybinds
   (general-def-leader
@@ -292,7 +295,7 @@
     :states         'normal
     :keymaps        'go-mode-map
     "hx"            'godoc-at-point
-    "hf"            'godoc)
+    "hF"            'godoc)
 
   (general-def-goleader
     :states         'normal
@@ -335,18 +338,18 @@
   (general-def-leader
     :states         'normal
     :keymaps        'python-mode-map
-    "$"             'run-python
+    "C-$"           'run-python
     "cB"            'my/python-remove-breakpoints)
 
   (general-def
     :states         'insert
-    :keymaps         'inferior-python-mode-map
+    :keymaps        'inferior-python-mode-map
     "<return>"      'comint-send-input)
 
   (general-def-leader
     :states         'normal
     :keymaps        'jedi-mode-map
-    "hf"            'jedi:doc-mode
+    "hF"            'jedi:doc-mode
     "hx"            'jedi:show-doc
     "S-<return>"    (general-lambda
                      (if (string-match-p "^test_" (buffer-file-name))

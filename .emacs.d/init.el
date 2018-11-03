@@ -129,7 +129,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
         '(("*eshell*"
            :regexp t :select t :popup t :align below :size 0.2)
           ("^\\*ansi-term.*"
-           :regexp t :select t :popup t :align below :size 0.2))))
+           :regexp t :select t :popup t :align below :size 0.2)
+          ('inferior-python-mode
+           :select t :popup t :align below :size 0.2))))
 
 (use-package visual-regexp-steroids
   :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)

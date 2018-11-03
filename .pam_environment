@@ -1,12 +1,13 @@
 # define PATHs
 PATH                          DEFAULT=${PATH}:@{HOME}/.local/bin
 GOPATH                        DEFAULT=@{HOME}/.local/share/go
+WINEPREFIX                    DEFAULT=@{HOME}/.local/share/wine
+WINEARCH                      DEFAULT=win32
 
 # define default applications with some common variables
 EDITOR                        DEFAULT=nvim
 TERMINAL                      DEFAULT=termite
 BROWSER                       DEFAULT=qutebrowser
-
 
 # define style for QT applications
 QT_STYLE_OVERRIDE             DEFAULT=adwaita

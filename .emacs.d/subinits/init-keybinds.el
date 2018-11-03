@@ -259,7 +259,7 @@
     :states         'insert
     :keymaps        'term-raw-map
     "<return>"      'term-send-input
-    "C-h-k"         'helpful-key
+    "C-h k"         'helpful-key
     "M-j"           'term-send-down
     "M-k"           'term-send-up)
 

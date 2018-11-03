@@ -197,6 +197,11 @@
     "q"             'quit-window)
 
   (general-def
+    :states         'emacs
+    :keymaps        '(magit-mode-map magit-popup-mode-map)
+    "<escape>"      'quit-window)
+
+  (general-def
     :states         'normal
     :keymaps        'view-mode-map
     "q"             'View-quit)

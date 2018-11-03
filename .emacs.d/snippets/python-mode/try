@@ -1,0 +1,8 @@
+# key: try
+# name: try
+# condition: (string-match-p "^[[:space:]]*try$" (my/get-line))
+# --
+try:
+    ${1:pass}
+except:
+    pass

@@ -1,5 +1,5 @@
 # define PATHs
-PATH                          DEFAULT=${PATH}:@{HOME}/.local/bin
+PATH                          DEFAULT=/usr/local/bin:${PATH}:@{HOME}/.local/bin
 GOPATH                        DEFAULT=@{HOME}/.local/share/go
 WINEPREFIX                    DEFAULT=@{HOME}/.local/share/wine
 WINEARCH                      DEFAULT=win32

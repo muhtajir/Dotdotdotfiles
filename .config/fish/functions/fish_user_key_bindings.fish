@@ -5,6 +5,9 @@ function fish_user_key_bindings
 
     fish_default_key_bindings -M insert
     fzf_key_bindings
+    # additional bindings that base fzf search in $MEDIA
+    bind -M insert \eC 'commandline $MEDIA; and fzf-cd-widget'
+    bind -M insert \et 'commandline -a $MEDIA; and fzf-file-widget'
 
     bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search

@@ -97,6 +97,10 @@
 !.local/bin
 !.local/bin/*
 
+!.local/share/applications/
+.local/share/applications/*
+!.local/share/applications/emacs.desktop
+
 !.local/share/qutebrowser
 !.local/share/qutebrowser/userscripts
 !.local/share/qutebrowser/userscripts/*

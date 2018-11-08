@@ -77,6 +77,10 @@
         ("English (US)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
         ("English (Australia)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_AU") nil utf-8)))
 
+;; fcitx integration for better Chinese input
+(use-package fcitx
+  :commands my/fcitx-init)
+
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)
 (my/add-hooks 'electric-pair-mode '(prog-mode-hook text-mode-hook))

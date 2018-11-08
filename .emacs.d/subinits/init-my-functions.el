@@ -103,6 +103,13 @@ Start eshell if it isn't running already."
              (setenv var-str (buffer-substring-no-properties pos1 pos2)))
            var-strs))))))
 
+(defun my/fcitx-init ()
+  "Enable fcitx input support."
+  (interactive)
+    (fcitx-default-setup)
+    (when (eq system-type 'gnu/linux)
+      (setq fcitx-use-dbus t)))
+
 (defun my/term ()
   "Hide or show term window.
 Start terminal if it isn't running already."

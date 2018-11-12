@@ -7,7 +7,7 @@ function mymail
 
     mbsync -a
     neomutt
-    and mbsync -a
+    and mbsync -a >/dev/null &; disown
 
     cd $current_dir
 end

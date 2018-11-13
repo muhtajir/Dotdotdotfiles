@@ -56,6 +56,13 @@ Start eshell if it isn't running already."
     (eval-last-sexp nil)
     (move-to-column pos)))
 
+(defun my/fcitx-init ()
+  "Enable fcitx input support."
+  (interactive)
+    (fcitx-default-setup)
+    (when (eq system-type 'gnu/linux)
+      (setq fcitx-use-dbus t)))
+
 (defun my/open-line-above (line)
   "Really open LINE lines above instead of just prepending them to the beginning of the line or something."
   (interactive "p")
@@ -103,12 +110,11 @@ Start eshell if it isn't running already."
              (setenv var-str (buffer-substring-no-properties pos1 pos2)))
            var-strs))))))
 
-(defun my/fcitx-init ()
-  "Enable fcitx input support."
+(defun my/straight-update ()
+  "Fetch, merge and rebuild all straight packages."
   (interactive)
-    (fcitx-default-setup)
-    (when (eq system-type 'gnu/linux)
-      (setq fcitx-use-dbus t)))
+  (straight-pull-all)
+  (straight-rebuild-all))
 
 (defun my/term ()
   "Hide or show term window.

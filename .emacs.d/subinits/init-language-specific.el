@@ -106,7 +106,10 @@
     :severity 0
     :overlay-category 'flycheck-info-overlay
     :fringe-bitmap 'left-triangle
-    :fringe-face 'flycheck-fringe-info))
+    :fringe-face 'flycheck-fringe-info)
+
+  ;; checker specific settings
+  (setq flycheck-flake8-maximum-line-length 200))
 
 (use-package yasnippet
   :hook ((text-mode prog-mode) . yas-minor-mode)

@@ -341,6 +341,7 @@ config.bind('<Alt-j>', 'command-history-next', mode='command')
 config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
 config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
 # Additional hinting
+config.bind('e', 'hint all hover', mode='normal')
 config.bind(';o', 'set-cmd-text --space :open -b')
 config.bind(';O', 'set-cmd-text --space :open -p')
 config.bind(';p', 'hint images yank')
@@ -355,14 +356,24 @@ config.bind('b', 'set-cmd-text --space :buffer')
 # Source config
 config.bind('<Ctrl-R>', 'config-source')
 # Passthrough settings
+config.unbind('<Ctrl-v>')
 config.bind('<Ctrl-z>', 'enter-mode passthrough')
 config.bind('<Ctrl-z>', 'leave-mode', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
-# emacsy input keybindings
+# emacsy input keybindings in command mode
 config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')
 config.bind('<Ctrl-e>', 'rl-end-of-line', mode='command')
+config.bind('<Alt-h>', 'rl-backward-char', mode='command')
+config.bind('<Alt-l>', 'rl-forward-char', mode='command')
+config.bind('<Ctrl-h>', 'rl-backward-word', mode='command')
+config.bind('<Ctrl-l>', 'rl-forward-word', mode='command')
+# emacsy input keybindings in prompt mode
 config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='prompt')
 config.bind('<Ctrl-e>', 'rl-end-of-line', mode='prompt')
+config.bind('<Alt-h>', 'rl-backward-char', mode='prompt')
+config.bind('<Alt-l>', 'rl-forward-char', mode='prompt')
+config.bind('<Ctrl-h>', 'rl-backward-word', mode='prompt')
+config.bind('<Ctrl-l>', 'rl-forward-word', mode='prompt')
 # one day these might be supported in insert mode as well... until then at
 # least unbind them
 config.unbind('<Ctrl-e>', mode='insert')

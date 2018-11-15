@@ -51,20 +51,6 @@
   (add-to-list 'sublimity-disabled-major-modes 'term-mode)
   (require 'sublimity-scroll)
   (setq sublimity-scroll-weight 8)
-  (setq sublimity-scroll-drift-length 2)
-  (require 'sublimity-map)
-  (cancel-timer sublimity-map--timer)
-
-  ;; advice evil scroll functions to run sublimity-map-show
-  (mapc
-   (lambda (x)
-     (advice-add x :around (lambda (orig-func &rest args)
-                             (let ((return-value (apply orig-func args)))
-                               (sublimity-map-show)
-                               return-value))))
-   '(evil-scroll-down
-     evil-scroll-up
-     evil-scroll-page-down
-     evil-scroll-page-up)))
+  (setq sublimity-scroll-drift-length 2))
 
 (provide 'init-gui-setup)

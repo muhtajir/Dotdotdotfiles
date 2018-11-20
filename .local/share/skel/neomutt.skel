@@ -115,10 +115,10 @@ bind compose \CQ send-message
 
 # url extraction with urlscan
 macro pager \CX "<enter-command>set my_tmp=$pipe_decode<enter>\
-                 <enter-command>set pipe_decode=yes<enter>\
-                 <pipe-message>urlview<enter>\
-                 <enter-command>set pipe_decode=$my_tmp<enter>" \
-                 "URLs mit urlview extrahieren"
+<enter-command>set pipe_decode=yes<enter>\
+<pipe-message>urlview<enter>\
+<enter-command>set pipe_decode=$my_tmp<enter>" \
+"URLs mit urlview extrahieren"
 
 # mailbox switching and moving
 ## first switching

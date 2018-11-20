@@ -14,7 +14,7 @@ QT_STYLE_OVERRIDE             DEFAULT=adwaita
 
 # setup fcitx as default input method for all applications
 GTK_IM_MODULE                 DEFAULT=fcitx
-XMODIFIERS                    DEFAULT=@im=fcitx
+XMODIFIERS                    DEFAULT=\@im=fcitx
 QT_IM_MODULE                  DEFAULT=fcitx
 
 # define config locations by environment variable

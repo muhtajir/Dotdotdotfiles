@@ -11,7 +11,7 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
                 string replace -r '\b(dns=)' '$1none' < "$nm_config" > "$tmpf"
                 sudo mv "$tmpf" "$nm_config"
             else
-                echo "[main]\ndns=none" > "$tmpf"
+                echo -e "[main]\ndns=none" > "$tmpf"
                 sudo mv "$tmpf" "$nm_config"
             end
 

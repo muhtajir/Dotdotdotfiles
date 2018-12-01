@@ -50,8 +50,8 @@ BASE0D = '#{}'.format(os.getenv('__BASE0D'), default='83adad')  # blue
 BASE0E = '#{}'.format(os.getenv('__BASE0E'), default='d485ad')  # magenta
 BASE0F = '#{}'.format(os.getenv('__BASE0F'), default='d65d0e')  # dark_orange
 
-FONT_SANS = os.getenv('FONT_SANS', default='Quicksand Medium')
-FONT_MONO = os.getenv('FONT_MONO', default='Source Code Pro')
+FONT_SANS = os.getenv('FONT_SANS', default='Liberation Sans')
+FONT_MONO = 'Source Code Pro'
 
 merge_bookmarks()
 

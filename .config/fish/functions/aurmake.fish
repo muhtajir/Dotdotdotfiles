@@ -28,10 +28,12 @@ function aurmake -w cower -d 'Build specified AUR package'
     end
 
     set_color -o
-    echo "Removing dependencies installed from AUR..."
     set -l del_deps
     for dep in (pacman -Qdtq)
          contains $dep $all_deps; and set del_deps $del_deps $dep
     end
-    sudo pacman -Rsc $del_deps
+    if [ -n "$del_deps" ]
+        echo "Removing dependencies installed from AUR..."
+        sudo pacman -Rsc $del_deps
+    end
 end

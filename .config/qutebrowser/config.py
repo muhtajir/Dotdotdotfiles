@@ -106,11 +106,11 @@ c.colors.downloads.system.bg = 'rgb'
 c.colors.downloads.system.fg = 'rgb'
 # Background color for hints. Note that you can use a `rgba(...)` value
 # for transparency.
-c.colors.hints.bg = get_rgba(BASE07, '0.8')
+c.colors.hints.bg = get_rgba(BASE02, '0.85')
 # Font color for hints.
-c.colors.hints.fg = BASE00
+c.colors.hints.fg = BASE07
 # Font color for the matched part of hints.
-c.colors.hints.match.fg = BASE0B
+c.colors.hints.match.fg = BASE03
 # Background color of the keyhint widget.
 c.colors.keyhint.bg = get_rgba(BASE00, "0.9")
 # Text color for the keyhint widget.
@@ -138,7 +138,7 @@ c.colors.messages.warning.fg = BASE07
 # Background color for prompts.
 c.colors.prompts.bg = BASE02
 # Border used around UI elements in prompts.
-c.colors.prompts.border = '1px {}'.format(BASE07)
+c.colors.prompts.border = '1px solid {}'.format(BASE07)
 # Foreground color for prompts.
 c.colors.prompts.fg = BASE07
 # Background color for the selected item in filename prompts.
@@ -239,7 +239,7 @@ c.fonts.debug_console = '9pt {}'.format(FONT_MONO)
 # Font used for the downloadbar.
 c.fonts.downloads = '9pt {}'.format(FONT_SANS)
 # Font used for the hints.
-c.fonts.hints = 'bold 10pt {}'.format(FONT_MONO)
+c.fonts.hints = '9pt {}'.format(FONT_MONO)
 # Font used in the keyhint widget.
 c.fonts.keyhint = '9pt {}'.format(FONT_SANS)
 # Font used for error messages.
@@ -276,6 +276,8 @@ c.keyhint.delay = 200
 # A timeout (in milliseconds) to ignore normal-mode key bindings after a
 # successful auto-follow.
 c.hints.auto_follow_timeout = 300
+# setup hints border
+c.hints.border = '1px solid {}'.format(BASE04)
 
 ## Address bar shortcut settings
 # Definitions of search engines which can be used via the address bar.

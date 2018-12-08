@@ -337,6 +337,8 @@ config.bind('<Ctrl-´>', 'search')
 # necessary)
 config.bind('eq', 'set-cmd-text --space :quickmark-load')
 config.bind('eb', 'set-cmd-text --space :bookmark-load')
+# bind mute command
+config.bind('M', 'tab-mute')
 # Completion navigation command mode
 config.bind('<Alt-k>', 'command-history-prev', mode='command')
 config.bind('<Alt-j>', 'command-history-next', mode='command')

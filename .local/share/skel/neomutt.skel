@@ -119,6 +119,12 @@ macro pager \CX "<enter-command>set my_tmp=$pipe_decode<enter>\
 <pipe-message>urlview<enter>\
 <enter-command>set pipe_decode=$my_tmp<enter>" \
 "URLs mit urlview extrahieren"
+# edit mail content
+macro pager E "<enter-command>set my_tmp=$pipe_decode<enter>\
+<enter-command>set pipe_decode=yes<enter>\
+<pipe-message>nvim<enter>\
+<enter-command>set pipe_decode=$my_tmp<enter>" \
+"Text bearbeiten"
 
 # mailbox switching and moving
 ## first switching

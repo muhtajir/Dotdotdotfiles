@@ -96,12 +96,21 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+# move in relation to parent
+bindsym $mod+Ctrl+h focus parent; focus left; focus child
+bindsym $mod+Ctrl+j focus parent; focus down; focus child
+bindsym $mod+Ctrl+k focus parent; focus up; focus child
+bindsym $mod+Ctrl+l focus parent; focus right; focus child
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+bindsym $mod+Ctrl+Left focus parent; focus left; focus child
+bindsym $mod+Ctrl+Down focus parent; focus down; focus child
+bindsym $mod+Ctrl+Up focus parent; focus up; focus child
+bindsym $mod+Ctrl+Right focus parent; focus right; focus child
 
 # move focused window
 bindsym $mod+Shift+h move left

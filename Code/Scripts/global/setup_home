@@ -8,7 +8,7 @@ cd $tmp_dir
 
 function install_from_aur
     if not pacman -Q $argv > /dev/null 2>/dev/null
-        cowmake $argv
+        aurmake $argv
     end
 end
 
@@ -17,17 +17,17 @@ function print_bold
     echo -e "\033[1m"$argv"\033[0m"
 end
 
-function install_cower
-    print_bold "Building cower…"
+function install_auracle
+    print_bold "Building auracle…"
     cd (mktemp -d -p $tmp_dir)
-    git clone 'https://aur.archlinux.org/cower.git'
-    cd cower
+    git clone 'https://aur.archlinux.org/auracle-git.git'
+    cd auracle-git
     makepkg -sri
 end
 
 function install_font_awesome
     print_bold "Building FontAwesome 4…"
-    cower -d ttf-font-awesome-4
+    auracle download ttf-font-awesome-4
     cd $HOME/Downloads/AUR/ttf-font-awesome-4
     makepkg -ri
     sudo pacman -U otf-*
@@ -70,11 +70,11 @@ update_mirrorlist
 
 # some AUR stuff, if it's not installed already
 print_bold "Building specific AUR packages…"
-which cower > /dev/null 2>/dev/null; or install_cower
+which auracle > /dev/null 2>/dev/null; or install_auracle
 install_from_aur i3lock-color
 install_from_aur unclutter-xfixes-git
 install_from_aur nextcloud-client
-fc-list : family | string match -qe mononoki; or cowmake ttf-mononoki
+fc-list : family | string match -qe mononoki; or aurmake ttf-mononoki
 fc-list : family | string match -qe FontAwesome; or install_font_awesome
 
 # powerlinesymbols

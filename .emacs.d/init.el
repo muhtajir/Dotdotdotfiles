@@ -153,5 +153,5 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 ;; open todo.org on startup
 (add-hook 'after-init-hook (lambda ()
-                             (find-file (expand-file-name "~/Nextcloud/Diverses/todo.org" (getenv "HOME")))
+                             (find-file (expand-file-name "~/Sync/Diverses/todo.org" (getenv "HOME")))
                              (org-cycle)))

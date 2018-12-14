@@ -1,8 +1,0 @@
-#!/usr/bin/env fish
-
-if test (count $argv) -lt 1
-    exit
-end
-
-command inotifywait -r -e attrib -e modify -e move -e create -e delete $argv 1>/dev/null 2>/dev/null
-and nextcloud

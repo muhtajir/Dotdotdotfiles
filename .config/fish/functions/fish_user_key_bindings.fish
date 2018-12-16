@@ -23,9 +23,10 @@ function fish_user_key_bindings
     bind -M insert \cf forward-word
     bind -M insert \cb backward-word
 
-    # prepend commands by keypress
+    # prepend/append commands by keypress
     bind -M insert \ep __fish_plz_bind
     bind -M insert \ea __fish_away_bind
+    bind -M insert \cG __fish_lass_bind
 
     # better line editing
     bind -M insert \cV edit_command_buffer

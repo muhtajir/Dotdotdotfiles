@@ -73,7 +73,6 @@ print_bold "Building specific AUR packages…"
 which auracle > /dev/null 2>/dev/null; or install_auracle
 install_from_aur i3lock-color
 install_from_aur unclutter-xfixes-git
-install_from_aur nextcloud-client
 fc-list : family | string match -qe mononoki; or aurmake ttf-mononoki
 fc-list : family | string match -qe FontAwesome; or install_font_awesome
 
@@ -112,7 +111,8 @@ sudo pacman -S --needed \
     fcitx-sunpinyin \
     xss-lock \
     rofi \
-    w3m
+    w3m \
+    syncthing
 
 # setup firejail
 print_bold "Creating firejail config…"
@@ -136,4 +136,4 @@ print_bold "\nLeft to do:"
 print_bold "\tSet-up password store"
 print_bold "\tSet-up GPG"
 print_bold "\tSet-up SSH"
-print_bold "\tSet-up Nextcloud"
+print_bold "\tSet-up Syncthing"

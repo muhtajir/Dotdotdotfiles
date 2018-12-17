@@ -16,7 +16,7 @@ def get_rgba(hexcode, alpha):
 def merge_bookmarks():
     """Merge bookmarks from the cloud with those kept by qutebrowser."""
     int_bookmarks = os.path.join(config.configdir, 'bookmarks', 'urls')
-    ext_bookmarks = os.path.join(os.getenv('HOME'), 'Nextcloud', 'Diverses',
+    ext_bookmarks = os.path.join(os.getenv('HOME'), 'Sync', 'Diverses',
                                  'Bookmarks', 'qute_urls')
 
     try:

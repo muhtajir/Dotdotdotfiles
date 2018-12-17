@@ -33,7 +33,7 @@ auto_view text/html
 alternative_order text/plain text/enriched text/html
 
 # define alias file settings
-set alias_file = ~/Nextcloud/Diverses/Bookmarks/neomutt_aliases
+set alias_file = ~/Sync/Diverses/Bookmarks/neomutt_aliases
 set sort_alias = alias
 set reverse_alias = yes
 source $alias_file

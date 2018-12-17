@@ -1,4 +1,4 @@
-whitelist ${HOME}/Nextcloud/Diverses/Bookmarks
+whitelist ${HOME}/Sync/Diverses/Bookmarks
 noblacklist ${HOME}/.config/mpv
 whitelist ${HOME}/.config/mpv
 noblacklist ${HOME}/.config/nvim

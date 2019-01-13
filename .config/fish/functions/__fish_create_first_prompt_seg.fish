@@ -13,8 +13,8 @@ function __fish_create_first_prompt_seg
     else if jobs > /dev/null 2> /dev/null
         set -l fish_last_job (jobs -lc | tail -n 1)
         __fish_draw_first_prompt_seg $__BASE0C " $fish_last_job "
-    # fourth is shadow mode
-    else if test "$__fish_shadow_mode" = "1"
+    # fourth is private mode
+    else if set -q fish_private_mode
         __fish_draw_first_prompt_seg $__BASE02 ' %% '
     # and after that it's just a percent sign
     else

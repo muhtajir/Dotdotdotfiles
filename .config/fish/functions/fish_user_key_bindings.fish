@@ -1,10 +1,7 @@
 function fish_user_key_bindings
-    if [ $fish_key_bindings != 'fish_vi_key_bindings' ]
-        fish_vi_key_bindings
-    end
-
-    fish_default_key_bindings -M insert
+    fish_hybrid_key_bindings
     fzf_key_bindings
+    
     # additional bindings that base fzf search in $MEDIA
     bind -M insert \eC 'commandline $MEDIA; and fzf-cd-widget'
     bind -M insert \et 'commandline -a $MEDIA; and fzf-file-widget'
@@ -12,12 +9,6 @@ function fish_user_key_bindings
     bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
     bind -M insert \el accept-autosuggestion
-
-    # use escape to get to normal mode
-    bind -M insert \e 'if commandline -P; commandline -f cancel; else; set fish_bind_mode default; commandline -f backward-char force-repaint; end'
-    bind \e cancel
-    bind -M visual -m default \e end-selection force-repaint
-    bind -M replace-one -m default \e cancel force-repaint
 
     # iso friendly Emacs keys
     bind -M insert \cf forward-word
@@ -39,5 +30,5 @@ function fish_user_key_bindings
     bind -M insert \cH 'history merge'
 
     # toggle shadow mode
-    bind -M insert \cs 'shadow; commandline -f force-repaint force-repaint'
+    bind -M insert \cs 'if set -q fish_private_mode; exec fish; else; exec fish --private; end'
 end

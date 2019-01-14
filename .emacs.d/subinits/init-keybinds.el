@@ -139,12 +139,10 @@
     :states         'insert
     "C-n"           nil
     "C-p"           nil
-    "C-f"           'forward-word
-    "C-b"           'backward-word
     "C-a"           'move-beginning-of-line
     "C-e"           'move-end-of-line
-    "M-f"           'forward-char
-    "M-b"           'backward-char
+    "C-S-f"         'forward-word
+    "C-S-b"         'backward-word
     "<backtab>"     'indent-relative
     "<return>"      'newline
     "C-j"           'newline)
@@ -159,10 +157,15 @@
   (general-def
     :keymaps        '(evil-ex-completion-map evil-ex-search-keymap read-expression-map
                                              minibuffer-local-map)
-    "M-h"           'left-char
-    "M-l"           'right-char
-    "C-h"           'left-word
-    "C-l"           'right-word
+    "C-h k"         'helpful-key
+    "C-a"           'move-beginning-of-line
+    "C-e"           'move-end-of-line
+    "C-f"           'forward-char
+    "C-b"           'backward-char
+    "C-S-f"         'forward-word
+    "C-S-b"         'backward-word
+    "C-d"           'delete-char
+    "C-S-d"         'kill-word
     "M-k"           'previous-line-or-history-element
     "M-j"           'next-line-or-history-element
     "C-v"           'yank

@@ -44,6 +44,9 @@ set text_flowed = yes
 # source the colors file
 source ~/.config/neomutt/colors
 
+# customize browser columns
+set folder_format = "%2C %t %6s %f"
+
 # customize shown header contents
 ignore *
 unignore from date subject to cc bcc
@@ -105,6 +108,10 @@ bind index z untag-pattern
 bind index,pager,browser N search-opposite
 macro index _ "<limit>all<enter>"
 macro index Z "<untag-pattern>all<enter>"
+
+# commandline navigation
+bind editor \ej history-down
+bind editor \ek history-up
 
 # send bindings
 ## reply to all

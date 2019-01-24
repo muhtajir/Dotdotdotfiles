@@ -6,6 +6,7 @@ function fish_user_key_bindings
     bind -M insert \eC 'commandline $MEDIA; and fzf-cd-widget'
     bind -M insert \et 'commandline -a $MEDIA; and fzf-file-widget'
 
+    # history and completion bindings
     bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
     bind -M insert \el accept-autosuggestion
@@ -24,10 +25,19 @@ function fish_user_key_bindings
     bind \cV edit_command_buffer
 
     # file selection with vifm
-    bind -M insert \cf __fish_vifm_bind
+    bind -M insert \e\u00b4 __fish_vifm_bind
+
+    # keybindings for path navigation
+    bind -M insert \eH 'prevd; commandline -f repaint'
+    bind -M insert \eL 'nextd; commandline -f repaint'
+    bind -M insert \eK '__fish_cd_navigation up; commandline -f repaint'
+    bind -M insert \eJ '__fish_cd_navigation down; commandline -f repaint'
 
     # update history but keep commandline
-    bind -M insert \cH 'history merge'
+    bind -M insert \e\cH 'history merge'
+
+    # clear terminal screen
+    bind -M insert \e\cL 'cls; commandline -f repaint'
 
     # toggle shadow mode
     bind -M insert \cs 'if set -q fish_private_mode; exec fish; else; exec fish --private; end'

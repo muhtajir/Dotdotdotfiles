@@ -1,0 +1,19 @@
+#!/usr/bin/env fish
+
+set base_folder "$HOME/Musik/Zwischenspeicher"
+set record_folder $base_folder/Alben
+
+for flac_folder in $record_folder/flac/*
+    if [ -d "$flac_folder" -a (count "$flac_folder/"*.flac) -gt 0 ]
+        set_color -o; echo "Preparing "(basename "$flac_folder")"..."; set_color normal
+        replaygain $flac_folder/*
+        cd "$flac_folder"
+
+        oggenc -q 6 *.flac
+        set ogg_folder "$record_folder/ogg/"(basename "$flac_folder")
+        mkdir "$ogg_folder"
+        mv *.ogg "$ogg_folder"/
+        
+        set_color -o; echo "Finished processing "(basename "$flac_folder")"."; set_color normal
+    end
+end

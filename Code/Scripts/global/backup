@@ -10,13 +10,4 @@ function ext_backup
     rsync -rltvxP --delay-updates "$MEDIA/Erde/Bilder/Ich war wo/" "$ext_drive/Backup/Bilder/"
 end
 
-
-function adbfs_backup
-    echo "Backing up to Android device..."
-    rsync -rltvxP --delay-updates --delete-delay --size-only $HOME/Musik/Singles/ "$adbfsmnt/storage/3138-3430/Music/Singles/"
-    rsync -rltvxP --delay-updates --delete-delay --size-only $HOME/Musik/Alben/ "$adbfsmnt/storage/3138-3430/Music/Alben/"
-end
-
-
 [ -d $ext_drive ]; and ext_backup
-[ -d $adbfsmnt ]; and adbfs_backup

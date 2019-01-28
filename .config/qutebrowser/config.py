@@ -361,8 +361,9 @@ config.bind('b', 'set-cmd-text --space :buffer')
 config.bind('<Ctrl-R>', 'config-source')
 # Passthrough settings
 config.unbind('<Ctrl-v>')
-config.bind('<Ctrl-z>', 'enter-mode passthrough')
-config.bind('<Ctrl-z>', 'leave-mode', mode='passthrough')
+config.bind('I', 'enter-mode passthrough')
+config.bind('<Escape>', 'leave-mode', mode='passthrough')
+config.bind('<Shift-Escape>', 'fake-key <Escape>', mode='passthrough')
 config.bind('<Shift-Escape>', 'fake-key <Escape>')
 # emacsy input keybindings in command mode
 config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')

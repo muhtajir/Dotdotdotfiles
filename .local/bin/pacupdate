@@ -1,131 +1,554 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-
-import re
-import subprocess
-import webbrowser
-import textwrap
-from urllib import urlopen
-from contextlib import closing
-from time import strptime, sleep
-from os import getenv, path, mkdir
-from calendar import timegm
-
-arch_home = "https://www.archlinux.org/"
-arch_feed = "https://www.archlinux.org/feeds/news/"
-
-home_dir = getenv("HOME")
-downloads_dir = home_dir + "/Downloads"
-aur_dir = downloads_dir + "/AUR"
-vcs_dir = aur_dir + "/VCS"
-
-supported_vcs = ["git"]
-
-def print_bold(text, optional_text=""):
-    print "\033[1m" + text + "\033[0m" + optional_text
-
-def get_feed_time():
-    search_needle = re.compile(r"<lastBuildDate>")
-    replace_needle = re.compile(r"^.+?<lastBuildDate>(.+?) \+.+",
-                                flags=re.DOTALL)
-    strptime_pattern = "%a, %d %b %Y %X"
-    
-    with closing(urlopen(arch_feed)) as rss_source:
-        for rss_source_line in rss_source:
-            if re.search(search_needle, rss_source_line):
-                curr_feed = re.sub(replace_needle, "\g<1>", rss_source_line)
-                curr_feed_t = strptime(curr_feed, strptime_pattern)
-                return timegm(curr_feed_t)
-                
-def aur_install(candidate, directory):
-    subprocess.call(["cower", "-df", candidate, "-t", directory])
-    package_dir = directory + "/" + candidate
-    subprocess.call(["makepkg", "-sri"], cwd=package_dir)
+#!/bin/fish
 
 
-#create missing folders
-for directory in [downloads_dir, aur_dir, vcs_dir]:
-    if not path.exists(directory):
-        mkdir(directory)
+set parent_tmp_dir (command mktemp --suffix='-pacupdate' -d)
+set cache_file $HOME/.cache/pacupdate
+set repo_updates
+set repo_updates_count
+set aur_updates
+set aur_updates_count
+set git_updates
+set git_updates_count
+set exit_status 0
 
-#open config file and store content in $config
-config_file_name =  home_dir + "/.config/pacupdate.conf"
+# create a cache file if there isn't already one
+if [ ! -e $cache_file ]
+    mkdir -p (dirname $cache_file)
+    touch $cache_file
+end
 
-if not path.isfile(config_file_name):
-    webbrowser.open_new_tab(arch_home)        
-    with open(config_file_name, "w") as config_file:
-        config_file.write(str(get_feed_time()))
-        output = """\
-        This is the first time pacupdate is run, so there is no way to know
-        whether or not there are any updates in the ArchLinux feed. A config
-        file has been created that will serve this purpose in the future. The
-        browser has been opened and pointed to the Arch news page so you can
-        check if you"re good to go."""
-        print textwrap.fill(textwrap.dedent(output), 80)
-        quit()
-
-else:
-    with open(config_file_name, "r") as config_file:
-        config = config_file.read().splitlines()
+# setup fallbacks for envar settings
+function set_or_fallback -S -a var fallback
+    if not set -gq $var
+        set -g $var $fallback
+    end
+end
 
 
-print "Neues im Arch-Newsfeed?"
-last_feed_t = config[0]
-curr_feed_t = str(get_feed_time())
-
-if last_feed_t == curr_feed_t:
-    print_bold("\tNein.")
-else:
-    print_bold("\tJa.")
-    sleep(1)
-    webbrowser.open_new_tab(arch_home)
-    config[0] = curr_feed_t + "\n"
-    with open(config_file_name, "w") as config_file:
-        config_file.writelines(config)
-    quit()
-    
-
-print "Neues in den Repositorien?"
-subprocess.call(["sudo", "pacman", "-Sy"], stdout=subprocess.PIPE)
-repo_checkupdates = subprocess.Popen(["sudo", "pacman", "-Qu"], stdout=subprocess.PIPE)
-repo_update_list = repo_checkupdates.communicate()[0].splitlines()
-repo_updates = len(repo_update_list)
-if repo_updates > 0:
-    print_bold("\tJa, ", str(repo_updates) + " neue Updates.")
-    repo_update_switch = True
-else:
-    print_bold("\tNein.")
+set_or_fallback PACUPDATE_MIRRORLIST_STRING "?country=all&protocol=http&protocol=https&ip_version=4"
+set_or_fallback PACUPDATE_CURL_TIMEOUT 20
+set_or_fallback PACUPDATE_MIRRORLIST_INTERVAL 14
+set_or_fallback PACUPDATE_GIT_INTERVAL 14
 
 
-print "Neues im AUR?"
-aur_checkupdates = subprocess.Popen(["cower", "-uq", "--timeout", "0"], 
-stdout=subprocess.PIPE)
-aur_update_list = aur_checkupdates.communicate()[0].splitlines()
-aur_updates = len(aur_update_list)
-if aur_updates > 0:
-    print_bold("\tJa, ", str(aur_updates) + " neue Updates.")
-    aur_update_switch = True
-else:
-    print_bold("\tNein.")
-    
-all_updates = repo_updates + aur_updates
+function decho
+    # easily locatable debug statements that don't change current error code
+    set -l outer_status $status
+    echo $argv >&2
+    return $status
+end
 
-if all_updates > 0:
-    response = raw_input("\033[1mMit allen %s Updates fortfahren? [J/n] \033[0m" 
-                         % all_updates)
-else:
-    print_bold("Keine Updates verfügbar.")
-    quit()
 
-if (response.lower() == "j") or (response == ""):
-    if repo_updates > 0:
-        subprocess.call(["sudo", "pacman", "-Syu"])
-        
-    if aur_updates > 0:
-        trail_needle = re.compile(r"^.+?-([^-]+)$")
-        for candidate in aur_update_list:
-            trail = re.sub(trail_needle, r"\1", candidate)
-            if trail in supported_vcs:
-                aur_install(candidate, vcs_dir)
-            else:
-                aur_install(candidate, aur_dir)
+function test_sudo
+    if not command -sq sudo
+        echo "Sudo not found on system. Aborting..." >&2
+        return 1
+    end
+end
+
+
+function test_installed -a cmd
+    if not command -sq $cmd
+        echo_important "$cmd not installed. Skipping..."
+        return 1
+    end
+end
+
+
+function mktemp
+    # override mktemp to use $parent_tmp_dir as a sort of sandbox
+    command mktemp -p "$parent_tmp_dir" $argv
+end
+
+
+function ring_bell
+    # ring the terminal bell, call this before any interactive command
+    printf "\a" >&2
+end
+
+
+function s
+    # shorthand for sudo that also rings the terminal bell when credentials aren't cached
+    if not sudo -n true 2>/dev/null
+        ring_bell
+    end
+    sudo $argv
+end
+
+
+function formatted_echo -a color prefix msg
+    set_color -o $color
+    echo -n "$prefix "
+    set_color normal
+    set_color -o
+    echo $msg
+    set_color normal
+end
+
+
+function echo_head
+    argparse 'n-nolb' 'c=' -- $argv
+    [ -z "$_flag_c" ]
+        and set _flag_c green
+
+    # skip linebreak on nolb flag
+    [ ! $_flag_nolb ]
+        and echo ""
+
+    formatted_echo $_flag_c "==>" "$argv"
+end
+
+
+function echo_important -a msg
+    formatted_echo blue "  ->" $msg
+end
+
+
+function confirm -a msg
+    # show a confirm prompt that doesn't print user input
+    ring_bell
+    set_color -i
+    echo -n $msg
+    set_color normal
+    # stty -echo
+    head -n 1 - | read -l _ #throwaway var
+    # stty echo
+    # echo
+end
+
+
+function yn_prompt -a msg
+    ring_bell
+    set -l answer
+    while true
+        read -n 1 --prompt="set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
+        set answer (string lower $answer)
+        if [ $answer = 'y' -o $answer = 'n' ]
+            break
+        end
+    end
+
+    if [ "$answer" = 'y' -o -z "$answer" ]
+        return 0
+    else
+        return 1
+    end
+end
+
+
+function set_cache_var -a key value
+    if string match -qr "^$key\s*=" < $cache_file
+        string replace -r '^('$key'\s*=\s*).+$' '${1}'$value < $cache_file > $cache_file
+    else
+        echo "$key = $value" >> $cache_file
+    end
+end
+
+
+function get_cache_var -a key
+    string replace -rf '^'$key'\s*=\s*(.+)$' '$1' < $cache_file
+end
+
+
+function print_msg -a msg_id msg_file
+    set -l record_mode 0
+    set -l msg_chunk
+    while read -l line
+        switch $record_mode
+            case 0
+                string match -qi 'Message-Id: <'$msg_id'>' -- $line
+                    and set record_mode 1
+            case 1
+                string match -q 'X-List-Received-Date: *' -- $line
+                    and set record_mode 2
+            case 2
+                if string match -qr 'From (arch-)?announce@archlinux.org' -- $line
+                    break
+                else
+                    set msg_chunk $msg_chunk $line
+                end
+        end
+    end < $msg_file
+
+    # leave leading and trailing empty lines for now
+    string join \n $msg_chunk
+
+end
+
+
+function simple_diff_print -a file1 file2
+    # show all lines that are present in file2 but not in file1
+    set -l lines1 (cat $file1)
+    set -l lines2 (cat $file2)
+    set -l diff_lines
+
+    for line in $lines2
+        if not contains $line $lines1
+            set diff_lines $diff_lines $line
+        end
+    end
+    string join \n $diff_lines
+end
+
+
+function update_pacman_mirrorlist
+    echo_head --nolb "Pacman mirrorlist outdated?"
+    set -l last_update_mirrorlist (get_cache_var last_update_mirrorlist)
+    # convert PACUPDATE_MIRRORLIST_INTERVAL to seconds
+    set -l update_interval (math $PACUPDATE_MIRRORLIST_INTERVAL \* 86400)
+
+    if [ -z $last_update_mirrorlist ]
+        set_cache_var last_update_mirrorlist (date +%s)
+        echo "There are no previous update checks for the mirrorlist."
+    else if [ (math (date +%s) - $last_update_mirrorlist) -ge $update_interval ]
+        set_cache_var last_update_mirrorlist (date +%s)
+        echo_important "Yes."
+    else
+        echo "No."
+        return 0
+    end
+
+    echo "Retrieving current copy..."
+    set -l mirrorlist_temp (mktemp --suffix="-mirrorlist")
+    curl -m "$PACUPDATE_CURL_TIMEOUT" -s "https://www.archlinux.org/mirrorlist/$PACUPDATE_MIRRORLIST_STRING" > $mirrorlist_temp 2>/dev/null
+        or begin
+            echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set?' >&2
+            return 1
+        end
+
+    # cleaning up mirrorlist
+    string replace -r '^#Server' 'Server' < $mirrorlist_temp > $mirrorlist_temp
+
+    # backing up the old mirrorlist and setting the new one in place
+    s cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+        or return 1
+    s mv $mirrorlist_temp /etc/pacman.d/mirrorlist
+        or return 1
+    echo_important "Mirrorlist updated."
+end
+
+
+function check_mailing_list
+    echo_head "News in the Arch Mailing List?"
+    set -l last_update_msg_id (get_cache_var last_update_msg_id)
+    set -l mail_list_file (mktemp --suffix="-maillist")
+    echo "Retrieving current copy..."
+    curl -m "$PACUPDATE_CURL_TIMEOUT" -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
+
+    # get most recent message id from arch mailing list
+    set -l msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
+
+    if [ -z $last_update_msg_id ]
+        set_cache_var last_update_msg_id $msg_id_list[-1]
+        echo "There are no previously recorded visits to the Arch Mailing List."
+        yn_prompt "Continue anyway?"
+            and return 0
+            or return 1
+    else if [ $last_update_msg_id = $msg_id_list[-1] ]
+        echo_important "No news."
+        return
+    else
+        set -l last_update_msg_id_pos (contains -i $last_update_msg_id $msg_id_list)
+        echo_important 'Yes, '(count $msg_id_list[$last_update_msg_id_pos..-1])' unread news items.'
+
+        # collect all msg_ids for messages between now and $last_update_msg_id
+        for msg_id in $msg_id_list[$last_update_msg_id_pos..-1]
+            print_msg $msg_id $mail_list_file
+            confirm 'Press Enter to continue.'
+        end
+        set_cache_var last_update_msg_id $msg_id_list[-1]
+        yn_prompt "Continue with the updating process?"
+            and return 0
+            or return 1
+    end
+end
+
+
+function get_package_buildtime -a pkg
+    set -l orig_lang $LANG
+    set -lx LANG en_US.UTF-8
+
+    pacman -Qi $pkg | \
+    string replace -rf 'Build Date\s+:\s+(.+)$' '$1' | \
+    read -l builddate_time
+        or return 1
+    set -lx LANG $orig_lang
+    date -d $builddate_time +%s
+end
+
+
+function check_git_package_schedule -a pkg
+    # check if a git package is scheduled for an update check
+    set -l last_check (get_cache_var "$pkg-checkdate"; or echo 0)
+    set -l last_update (get_package_buildtime $pkg)
+    set -l check_interval (math $PACUPDATE_GIT_INTERVAL \* 86400) # convert to seconds
+
+    # if the package has been updated since the last check, use the update time instead
+    if [ $last_update -gt $last_check ]
+        set last_check $last_update
+    end
+
+    if [ (math (date +%s) - $last_check) -ge $check_interval ]
+        return 0
+    else
+        return 1
+    end
+end
+
+
+function get_git_url -a pkg
+    # get the git_url for pkg
+    set -l git_dir (mktemp -d --suffix="-$pkg")
+    git clone "https://aur.archlinux.org/$pkg.git" "$git_dir" >/dev/null 2>&1
+        or begin
+            echo "Error retrieving package $pkg from AUR." >&2
+            return 1
+        end
+    set git_urls (bash --norc -c "source $git_dir/PKGBUILD && echo \$source")
+
+    string replace -r '^([^:]+::)?(git\+)?' '' $git_urls[1]
+end
+
+
+function retrieve_git_fragment -a vcs_url frag fallback
+    # extract fragment from vcs_url or fall back to $fallback
+    string replace -rf '^[^#]+#.*'$frag'=(.+?)(#|$)' '$1' $vcs_url
+        or echo $fallback
+end
+
+
+function get_last_git_commit -a git_url
+    set -l git_dir (mktemp -d)
+
+    # retrieve fragments from the url
+    set -l git_commit (retrieve_git_fragment "$git_url" commit HEAD)
+    # if there's a specific commit specified we can skip the check because
+    # unless the PKGBUILD gets updated, we will always retrieve that specific
+    # commit
+    [ "$git_commit" != "HEAD" ]
+        and return 2
+    set -l git_branch (retrieve_git_fragment "$git_url" branch master)
+    set -l git_tag (retrieve_git_fragment "$git_url" tag "")
+
+    # clean up $git_url
+    set git_url (string replace -r '#.+$' '' "$git_url")
+
+    # prefer tag reference over branch when cloning
+    set -l git_branch_arg
+    if [ -n "$git_tag" ]
+        set git_branch_arg $git_tag
+    else
+        set git_branch_arg $git_branch
+    end
+
+    git clone "$git_url" "$git_dir" -b "$git_branch_arg" --depth=1 >/dev/null 2>&1
+        or begin
+            echo "Error cloning from $git_url." >&2
+            return 1
+        end
+
+    # this is the return value
+    git -C "$git_dir" log -1 --format=format:%at
+        or return 1
+end
+
+
+function check_git_package -a pkg
+    # check a single git package for updates and return without status if there are any
+
+    # skip immediately if it's not time for a check yet
+    check_git_package_schedule $pkg
+        or return 1
+
+    set -l git_url (get_git_url $pkg)
+    set -l last_git_commit_date (get_last_git_commit "$git_url")
+    # if the url is commit specific (see get_last_git_commit function) we can
+    # abort here
+    if [ $status != 0 ]
+        return 1
+    end
+
+    set_cache_var "$pkg-checkdate" (date +%s)
+
+    if [ $last_git_commit_date -gt (get_package_buildtime $pkg) ]
+        return 0
+    else
+        return 1
+    end
+
+end
+
+
+function check_repo_updates
+    echo_head "Updates in Pacman's repos?"
+    s pacman -Sy > /dev/null
+        or return 1
+    set repo_updates (pacman -Quq)
+    set repo_updates_count (count $repo_updates)
+
+    if [ $repo_updates_count -gt 0 ]
+        echo_important "Yes, $repo_updates_count new updates."
+    else
+        echo_important "None."
+    end
+end
+
+
+function check_aur_updates
+    echo_head "Updates in the AUR?"
+
+    # skip if auracle's not installed
+    test_installed auracle
+        or return 0
+
+    for pkg in (auracle sync -q)
+        # this is for packages that get moved from the aur to the official repos
+        not contains $pkg $repo_updates; and set aur_updates $aur_updates $pkg
+    end
+    set aur_updates_count (count $aur_updates)
+
+    if [ $aur_updates_count -gt 0 ]
+        echo_important "Yes, $aur_updates_count new updates."
+    else
+        echo_important "None."
+    end
+end
+
+
+function check_git_updates
+    echo_head "Outdated git-packages?"
+
+    # skip if git's not installed
+    test_installed git
+        or return 0
+
+    # TODO: integrate a check that only looks up git updates in certain intervals
+
+    set git_pkgs (pacman -Qq | string match -er -- '-git$')
+    for pkg in $git_pkgs
+        if not contains $pkg $aur_updates
+            echo "Checking updates for $pkg..."
+            check_git_package $pkg; or continue
+
+            set git_updates $git_updates $pkg
+        end
+    end
+
+    set git_updates_count (count $git_updates)
+
+    if [ $git_updates_count -gt 0 ]
+        echo_important 'Yes, '$git_updates_count' new updates.'
+    else
+        echo_important "None."
+    end
+end
+
+
+function install_repo_updates
+    # skip if there are no updates
+    [ $repo_updates_count -gt 0 ]
+        or return 0
+
+    set -l pacman_log (string replace -rf '^LogFile\s+=\s+(\S+)' '$1' < /etc/pacman.conf
+        or echo "/var/log/pacman.log")
+    set -l pacman_old_log (mktemp --suffix=".log.old")
+    set -l pacman_new_log (mktemp --suffix=".log.new")
+    cp $pacman_log $pacman_old_log
+        or return 1
+
+    echo_head "Installing updates from Pacman's repos..."
+    s pacman -Su
+        or return 1
+
+    simple_diff_print $pacman_old_log $pacman_log > $pacman_new_log
+    # TODO: process new log entries
+end
+
+
+function build_aur_pkg
+    argparse 'p/pkg=' 'd/dep' -- $argv
+    set -l makepkg_args ""
+    [ $_flag_dep ]; and set makepkg_args "--asdeps"
+    echo_important "Building and installing $_flag_pkg..."
+    cd (mktemp -d --suffix="-$_flag_pkg")
+    git clone "https://aur.archlinux.org/$_flag_pkg.git" . >/dev/null 2>&1
+        or begin
+            echo "Error retrieving package $_flag_pkg from AUR." >&2
+            return 1
+        end
+    makepkg -sri $makepkg_args
+        or return 1
+end
+
+
+function install_aur_updates
+    # skip if there are no aur_updates
+    [ $aur_updates_count -gt 0 ]
+        or return 0
+
+    echo_head "Installing updates from the AUR..."
+
+    # skip if git's not installed
+    test_installed git
+        or return 0
+
+    for aur_pkg in $aur_updates
+        aurmake $aur_pkg
+            or yn_prompt "Error installing $aur_pkg. Continue anyway? "
+                or return 1
+    end
+end
+
+
+function install_git_updates
+    [ $git_updates_count -gt 0 ]
+        or return 0
+
+    echo_head "Installing Git updates..."
+
+    for pkg in $git_updates
+        aurmake $pkg
+            or yn_prompt "Error installing $aur_pkg. Continue anyway? "
+                or return 1
+    end
+end
+
+
+function install_updates
+    # skip if there are no updates
+    set -l total_updates_count (math $repo_updates_count + $aur_updates_count + $git_updates_count)
+    if not [ $total_updates_count -gt 0 ]
+        return 0
+    end
+
+    yn_prompt "Install total of $total_updates_count updates?"
+        or return 1
+    install_repo_updates
+        or return 1
+    install_aur_updates
+        or return 1
+    install_git_updates
+        or return 1
+end
+
+
+function main
+    test_sudo
+    and update_pacman_mirrorlist
+    and check_mailing_list
+    and check_repo_updates
+    and check_aur_updates
+    and check_git_updates
+    and install_updates
+    or begin
+        echo_head -c red "Update aborted."
+        and set exit_status 1
+    end
+
+    # rm -rf $parent_tmp_dir
+    exit $exit_status
+end
+
+if not status is-interactive
+    main
+end

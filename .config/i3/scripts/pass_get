@@ -1,7 +1,8 @@
 #!/usr/bin/env fish
 
-test -z $PASS_SUBNAME_SPLIT_CHAR; and set -l PASS_SUBNAME_SPLIT_CHAR '%'
-test -z $PASSWORD_STORE_DIR; and set -l PASSWORD_STORE_DIR $HOME/.password-store
+test -z $PASS_SUBNAME_SPLIT_CHAR; and set PASS_SUBNAME_SPLIT_CHAR '%'
+test -z $PASSWORD_STORE_DIR; and set PASSWORD_STORE_DIR $HOME/.password-store
+test -z $PASS_FALLBACK_LOGIN; and set PASS_FALLBACK_LOGIN "InspectorMustache"
 
 # get name of currently active window
 test -z "$argv"; and set -l argv ""
@@ -15,9 +16,10 @@ set name (string replace -a ' ' '_' "$name")
 set class (string replace -a ' ' '_' "$class")
 
 
-function get_value -a pass key copy
+function get_value -a pass key copy fallback
     # get the value for $key in the pass file
     pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value
+    test -z $value; and set value "$fallback"
     if test -n "$value"
         if eval $copy
             echo $value | xclip -selection clipboard -i
@@ -38,11 +40,10 @@ end
 
 
 function xdo_pass_entry -a pass
-    set -l login (get_value $pass "login" false)
-        or complain_not_found "login"
+    set -l login (get_value $pass "login" false "$PASS_FALLBACK_LOGIN")
     set -l pass_string (pass show $pass | head -n 1); or return
     set -l field_div (get_value $pass "xdoDiv" false)
-    [ -z "$field_div" ]; and set field_div "Tab"
+    test -z "$field_div"; and set field_div "Tab"
     xdotool keyup Super
     xdotool type --clearmodifiers $login
     xdotool keyup Super
@@ -113,7 +114,7 @@ if test -n "$final_candidate"
     # handle different command flags
     switch $argv
         case "-l"
-            get_value $final_candidate "login" true
+            get_value $final_candidate "login" true "$PASS_FALLBACK_LOGIN"
         case "-x"
             xdo_pass_entry $final_candidate
         case "*"

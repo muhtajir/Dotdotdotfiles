@@ -1,6 +1,5 @@
 # pylint: disable=C0111,E266,E501
 import os
-import tempfile
 from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
 from qutebrowser.config.config import ConfigContainer  # noqa: F401
 config = config  # type: ConfigAPI # noqa: F821 pylint: disable=E0602,C0103
@@ -308,8 +307,6 @@ c.aliases['ssh-tunnel'] = 'config-cycle --temp content.proxy socks://localhost:4
 c.url.start_pages = 'https://www.punknews.org/'
 # Where to show the downloaded files.
 c.downloads.position = 'bottom'
-# Default download location
-c.downloads.location.directory = tempfile.gettempdir()
 # Open new tabs in background
 c.tabs.background = True
 # Don't store cookies because I don't like them

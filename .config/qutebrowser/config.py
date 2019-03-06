@@ -331,6 +331,9 @@ config.bind('dH', 'tab-only --next')
 config.bind('dL', 'tab-only --prev')
 config.bind('dq', 'set-cmd-text --space :quickmark-del')
 config.bind('db', 'set-cmd-text --space :bookmark-del')
+# Tab moving
+config.bind('<Alt-Shift-J>', 'tab-move +')
+config.bind('<Alt-Shift-K>', 'tab-move -')
 # Clear search highlightingg
 config.bind('<Ctrl-´>', 'search')
 # Quickmark/Bookmark opening (mostly redundant, replace e bindings if

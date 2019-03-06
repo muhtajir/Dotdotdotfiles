@@ -33,6 +33,9 @@ function fish_user_key_bindings
     bind -M insert \eK '__fish_cd_navigation up; commandline -f repaint'
     bind -M insert \eJ '__fish_cd_navigation down; commandline -f repaint'
 
+    # create a directory from the current token
+    bind -M insert \em 'mkdir -p (commandline -t)'
+
     # update history but keep commandline
     bind -M insert \e\cH 'history merge'
 

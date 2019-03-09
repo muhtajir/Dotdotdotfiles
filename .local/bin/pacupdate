@@ -31,19 +31,26 @@ set_or_fallback PACUPDATE_MIRRORLIST_INTERVAL 14
 set_or_fallback PACUPDATE_GIT_INTERVAL 14
 
 
-function decho
-    # easily locatable debug statements that don't change current error code
-    set -l outer_status $status
-    echo $argv >&2
-    return $status
-end
-
-
 function test_sudo
     if not command -sq sudo
         echo "Sudo not found on system. Aborting..." >&2
         return 1
     end
+end
+
+
+function formatted_echo -a color prefix msg
+    set_color -o $color
+    echo -n "$prefix "
+    set_color normal
+    set_color -o
+    echo $msg
+    set_color normal
+end
+
+
+function echo_important -a msg
+    formatted_echo blue "  ->" $msg
 end
 
 
@@ -76,16 +83,6 @@ function s
 end
 
 
-function formatted_echo -a color prefix msg
-    set_color -o $color
-    echo -n "$prefix "
-    set_color normal
-    set_color -o
-    echo $msg
-    set_color normal
-end
-
-
 function echo_head
     argparse 'n-nolb' 'c=' -- $argv
     [ -z "$_flag_c" ]
@@ -99,21 +96,13 @@ function echo_head
 end
 
 
-function echo_important -a msg
-    formatted_echo blue "  ->" $msg
-end
-
-
 function confirm -a msg
     # show a confirm prompt that doesn't print user input
     ring_bell
     set_color -i
     echo -n $msg
     set_color normal
-    # stty -echo
     head -n 1 - | read -l _ #throwaway var
-    # stty echo
-    # echo
 end
 
 
@@ -176,18 +165,11 @@ function print_msg -a msg_id msg_file
 end
 
 
-function simple_diff_print -a file1 file2
-    # show all lines that are present in file2 but not in file1
-    set -l lines1 (cat $file1)
-    set -l lines2 (cat $file2)
-    set -l diff_lines
-
-    for line in $lines2
-        if not contains $line $lines1
-            set diff_lines $diff_lines $line
-        end
-    end
-    string join \n $diff_lines
+function get_added_lines -a file1 file2
+    # show all lines that have been added to file1 in file2
+    set linecount (count (string split \n < "$file1"))
+    set linecount (math $linecount + 1)
+    tail -n +$linecount $file2
 end
 
 
@@ -422,8 +404,6 @@ function check_git_updates
     test_installed git
         or return 0
 
-    # TODO: integrate a check that only looks up git updates in certain intervals
-
     set git_pkgs (pacman -Qq | string match -er -- '-git$')
     for pkg in $git_pkgs
         if not contains $pkg $aur_updates
@@ -444,6 +424,18 @@ function check_git_updates
 end
 
 
+function get_warnings_from_log -a old_log new_log
+    set new_lines (get_added_lines "$old_log" "$new_log")
+    set warnings (string match -re '^\[[^\]]+\] \[ALPM\] warning:\s+' '' -- $new_lines)
+
+    if any $warnings
+        echo_important "Pacman issued these warnings:"
+        printf -- '- %s\n' $warnings
+        confirm 'Press Enter to continue.'
+    end
+end
+
+
 function install_repo_updates
     # skip if there are no updates
     [ $repo_updates_count -gt 0 ]
@@ -460,7 +452,7 @@ function install_repo_updates
     s pacman -Su
         or return 1
 
-    simple_diff_print $pacman_old_log $pacman_log > $pacman_new_log
+    get_added_lines $pacman_old_log $pacman_log > $pacman_new_log
     # TODO: process new log entries
 end
 

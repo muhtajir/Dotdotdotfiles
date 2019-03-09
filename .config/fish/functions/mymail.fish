@@ -3,9 +3,9 @@ function mymail
     set -l mutt_dir "$HOME/Downloads/Mutt"
 
     mkdir -p $mutt_dir
-    cd $mutt_dir
 
     mbsync -a
+    cd $mutt_dir
     neomutt
     and mbsync -a >/dev/null &; disown
 

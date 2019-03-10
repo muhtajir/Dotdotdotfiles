@@ -15,6 +15,12 @@
 (setq eldoc-idle-delay .8)
 (setq-default fill-column 80)
 
+(use-package nswbuff
+  :commands nswbuff-switch-to-next-buffer
+  :config
+  (setq nswbuff-delay-switch t)
+  (add-to-list 'nswbuff-exclude-buffer-regexps "^\\*.*\\*$"))
+
 (use-package telephone-line
   :init
   (defvar telephone-line-lhs

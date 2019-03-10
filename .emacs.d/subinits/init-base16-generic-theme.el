@@ -616,6 +616,12 @@ settings and will be for very specific cases."
    (mmm-comment-submode-face                     :inherit font-lock-comment-face)
    (mmm-output-submode-face                      :background base03)
 
+;; nswbuff
+   (nswbuff-current-buffer-face                  :foreground base0B :underline base07)
+   (nswbuff-default-face                         :foreground base05)
+   (nswbuff-separator-face                       :foreground base04)
+   (nswbuff-special-buffers-face                 :foreground base08)
+
 ;; nxml-mode
    (nxml-name-face                               :foreground unspecified :inherit font-lock-constant-face)
    (nxml-attribute-local-name-face               :foreground unspecified :inherit font-lock-variable-name-face)

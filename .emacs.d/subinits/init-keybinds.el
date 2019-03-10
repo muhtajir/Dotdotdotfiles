@@ -97,9 +97,7 @@
     "%"             (general-lambda
                      (counsel-ag nil (projectile-project-root)))
     "C-%"           'my/counsel-ag-prompt-path
-    "b"             (general-lambda
-                     (let ((ivy-use-virtual-buffers nil))
-                       (ivy-switch-buffer)))
+    "b"             'nswbuff-switch-to-next-buffer
     "B"             (general-lambda
                      (let ((ivy-use-virtual-buffers t))
                        (ivy-switch-buffer)))
@@ -172,26 +170,6 @@
     "C-M-v"         'yank-pop
     "<escape>"      'minibuffer-keyboard-quit)
 
-  ;; dired keybinds
-  (general-def
-    :keymaps        'dired-mode-map
-    "SPC"           nil
-    "t"             'my/dired-mark-toggle
-    "T"             'dired-toggle-marks)
-
-  ;; ivy keybinds
-  (general-def
-    :keymaps        'ivy-minibuffer-map
-    "<S-return>"    'ivy-call
-    "<C-return>"    'ivy-immediate-done
-    "<escape>"      'keyboard-escape-quit
-    "C-S-p"         'ivy-beginning-of-buffer
-    "C-S-n"         'ivy-end-of-buffer
-    "C-u"           'ivy-scroll-down-command
-    "C-d"           'ivy-scroll-up-command
-    "M-k"           'ivy-previous-history-element
-    "M-j"           'ivy-next-history-element)
-
   ;; simple escape for multiple modes
   (general-def
     :states         'normal
@@ -237,6 +215,12 @@
     "C-n"          'my/company-select-next
     "C-p"          'my/company-select-previous)
 
+  ;; dired keybinds
+  (general-def
+    :keymaps        'dired-mode-map
+    "SPC"           nil
+    "t"             'my/dired-mark-toggle
+    "T"             'dired-toggle-marks)
 
   ;; eshell keybinds (eshell-mode-keymap is buffer-local and only gets
   ;; initialized after eshell is started - why?)
@@ -256,6 +240,24 @@
                          (kill-line)
                          (evil-insert-state))))
   (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
+
+  ;; ivy keybinds
+  (general-def
+    :keymaps        'ivy-minibuffer-map
+    "<S-return>"    'ivy-call
+    "<C-return>"    'ivy-immediate-done
+    "<escape>"      'keyboard-escape-quit
+    "C-S-p"         'ivy-beginning-of-buffer
+    "C-S-n"         'ivy-end-of-buffer
+    "C-u"           'ivy-scroll-down-command
+    "C-d"           'ivy-scroll-up-command
+    "M-k"           'ivy-previous-history-element
+    "M-j"           'ivy-next-history-element)
+
+  (general-def
+    :keymaps        'ivy-switch-buffer-map
+    "C-k"           'ivy-switch-buffer-kill)
+
 
   ;; term keybinds
   (general-def
@@ -332,10 +334,13 @@
     "Jz"            'magit-jump-to-stashes
     "Jt"            'magit-jump-to-tracked)
 
-  ;; ivy keybindings
+  ;; nswbuff keybindings
   (general-def
-    :keymaps        'ivy-switch-buffer-map
-    "C-k"           'ivy-switch-buffer-kill)
+    :keymaps        'nswbuff-override-map
+    "j"             'nswbuff-switch-to-previous-buffer
+    "k"             'nswbuff-switch-to-next-buffer
+    "h"             'nswbuff-switch-to-previous-buffer
+    "l"             'nswbuff-switch-to-next-buffer)
 
   ;; python and jedi keybinds
   (general-def-leader

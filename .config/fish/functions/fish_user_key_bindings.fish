@@ -21,8 +21,8 @@ function fish_user_key_bindings
     bind -M insert \cG __fish_lass_bind
 
     # better line editing
-    bind -M insert \cV edit_command_buffer
-    bind \cV edit_command_buffer
+    bind -M insert \cQ edit_command_buffer
+    bind \cQ edit_command_buffer
 
     # file selection with vifm
     bind -M insert \e\u00b4 __fish_vifm_bind
@@ -34,7 +34,7 @@ function fish_user_key_bindings
     bind -M insert \eJ '__fish_cd_navigation down; commandline -f repaint'
 
     # create a directory from the current token
-    bind -M insert \em 'mkdir -p (commandline -t)'
+    bind -M insert \eo 'mkdir -p (commandline -t)'
 
     # update history but keep commandline
     bind -M insert \e\cH 'history merge'

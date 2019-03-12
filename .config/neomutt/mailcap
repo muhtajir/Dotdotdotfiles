@@ -1,3 +1,4 @@
 text/html; qutebrowser %s; nametemplate=%s.html; test=test -n "$DISPLAY";
 text/html; w3m -I %{charset} -T text/html; copiousoutput
+image/*; feh -. '%s'; test=test -n "$DISPLAY";
 application/*; $HOME/.config/neomutt/openattach.sh '%s';

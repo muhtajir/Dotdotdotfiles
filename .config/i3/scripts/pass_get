@@ -59,7 +59,7 @@ function loop_candidates -S -a prop
     # loop through candidates and find one that matches $prop
     for password in $passes
         set -l barepass (command basename $password)
-        if string match -qi "*$barepass*" $prop
+        if string match -qie "$barepass" $prop
             set candidates $candidates $password
             continue
         end
@@ -67,7 +67,8 @@ function loop_candidates -S -a prop
         set -l subs (string split "$PASS_SUBNAME_SPLIT_CHAR" "$barepass")
         if [ ! "$subs" = "$barepass" ]
             for sub in $subs
-                if string match -qi "*$sub*" $prop
+                if not contains $password $candidates;
+                   and string match -qie "$sub" $prop
                     set candidates $candidates $password
                     continue
                 end

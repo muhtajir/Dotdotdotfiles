@@ -12,10 +12,10 @@ BROWSER                       DEFAULT=qutebrowser
 # define style for QT applications
 QT_STYLE_OVERRIDE             DEFAULT=adwaita
 
-# setup fcitx as default input method for all applications
-GTK_IM_MODULE                 DEFAULT=fcitx
-XMODIFIERS                    DEFAULT=\@im=fcitx
-QT_IM_MODULE                  DEFAULT=fcitx
+# setup ibus as default input method for all applications
+GTK_IM_MODULE                 DEFAULT=ibus
+XMODIFIERS                    DEFAULT=\@im=ibus
+QT_IM_MODULE                  DEFAULT=ibus
 
 # define config locations by environment variable
 GNUPGHOME                     DEFAULT=@{HOME}/.config/gnupg

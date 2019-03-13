@@ -107,8 +107,7 @@ sudo pacman -S --needed \
     ttf-freefont \
     adobe-source-code-pro-fonts \
     arc-gtk-theme \
-    fcitx-im \
-    fcitx-sunpinyin \
+    ibus \
     xss-lock \
     rofi \
     w3m \

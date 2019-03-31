@@ -1,5 +1,5 @@
-# %-LOCATION:$HOME/.config/i3/config-% %-CUSTOM:$HOME/.config/i3/custom-% -*-conf-*-
-# DO EDITS HERE: $HOME/.local/share/skel/i3.skel
+# %-LOCATION:$HOME/.config/sway/config-% %-CUSTOM:$HOME/.config/sway/custom-% -*-conf-*-
+# DO EDITS HERE: $HOME/.local/share/skel/sway.skel
 
 # Base16 color setup
 set $base00 {{{__BASE00_HASH}}}
@@ -18,6 +18,11 @@ set $base0C {{{__BASE0C_HASH}}}
 set $base0D {{{__BASE0D_HASH}}}
 set $base0E {{{__BASE0E_HASH}}}
 set $base0F {{{__BASE0F_HASH}}}
+
+# input setup
+input * xkb_layout de
+input * xkb_variant nodeadkeys
+input * xkb_options caps:escape
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
@@ -68,10 +73,13 @@ smart_gaps on
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# set cursor hiding timeout
+seat seat0 hide_cursor 10000
+
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec termite
 # start a terminal on workspace 1
-bindsym $mod+Shift+Return workspace $ws1; exec i3-sensible-terminal
+bindsym $mod+Shift+Return workspace $ws1; exec termite
 
 # kill focused window
 bindsym $mod+q kill
@@ -303,7 +311,5 @@ bar {
         }
 }
 
-exec --no-startup-id compton -f
-exec --no-startup-id unclutter
-exec --no-startup-id feh --bg-fill $HOME/Bilder/wallpaper.jpg
-exec --no-startup-id xss-lock -- $i3scriptsdir/pm_lock
+# set background
+output * bg $HOME/Bilder/wallpaper.jpg fill

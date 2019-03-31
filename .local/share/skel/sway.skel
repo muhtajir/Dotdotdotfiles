@@ -34,7 +34,6 @@ client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 
 set $font {{{FONT_SANS}}}
-set $i3confdir $HOME/.config/i3
 set $i3scriptsdir $HOME/.config/i3/scripts
 set $i3b_up $HOME/.config/i3/scripts/i3b_up
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
@@ -291,7 +290,7 @@ bindsym $mod+plus mode $mode_resize
 bindsym $mod+m mode $mode_music
 bindsym $mod+b mode $mode_blocks
 
-# Start i3bar to display a workspace bar
+# Start swaybar to display a workspace bar
 bar {
         status_command i3blocks
         position top
@@ -313,3 +312,6 @@ bar {
 
 # set background
 output * bg $HOME/Bilder/wallpaper.jpg fill
+
+# startup programs
+exec mako

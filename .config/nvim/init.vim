@@ -95,6 +95,9 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
 " set tex flavor to latex
 let g:tex_flavor = 'latex'
 
+" always use system clipboard (you know, like emacs)
+set clipboard+=unnamedplus
+
 "" autocommands
 " retain clipboard content after closing vim
 autocmd VimLeave * call system(getreg('+'), " | xclip -se c -i <<<")
@@ -137,30 +140,6 @@ nnoremap <silent> ö :call append(line('.'),'')<CR>
 nnoremap <silent> Ö :call append(line('.')-1,'')<CR>
 nnoremap <leader>ö o<ESC>
 nnoremap <leader>Ö O<ESC>
-
-" system clipboard accessible by prepending leader key
-nnoremap <leader>y "+y
-nnoremap <leader>p "+p
-nnoremap <leader>Y "+y$
-nnoremap <leader>P "+P
-nnoremap <leader>d "+d
-nnoremap <leader>D "+D
-onoremap <leader>y "+y
-onoremap <leader>p "+p
-onoremap <leader>Y "+y$
-onoremap <leader>P "+P
-onoremap <leader>d "+d
-onoremap <leader>D "+D
-vnoremap <leader>y "+y
-vnoremap <leader>p "+p
-vnoremap <leader>Y "+y$
-vnoremap <leader>P "+P
-nmap <leader>gr "+gr
-nmap <leader>gR "+gR
-vmap <leader>gr "+gr
-vmap <leader>gR "+gR
-omap <leader>gr "+gr
-omap <leader>gR "+gR
 
 " window navigation with alt key
 nnoremap <A-h> <C-w>h

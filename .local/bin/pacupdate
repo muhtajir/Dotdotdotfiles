@@ -49,8 +49,21 @@ function formatted_echo -a color prefix msg
 end
 
 
+function echo_head
+    argparse 'n-nolb' 'c=' -- $argv
+    [ -z "$_flag_c" ]
+        and set _flag_c green
+
+    # skip linebreak on nolb flag
+    [ ! $_flag_nolb ]
+        and echo ""
+
+    formatted_echo $_flag_c "==>" "$argv"
+end
+
+
 function echo_important -a msg
-    formatted_echo blue "  ->" $msg
+    formatted_echo blue "::" $msg
 end
 
 
@@ -83,19 +96,6 @@ function s
 end
 
 
-function echo_head
-    argparse 'n-nolb' 'c=' -- $argv
-    [ -z "$_flag_c" ]
-        and set _flag_c green
-
-    # skip linebreak on nolb flag
-    [ ! $_flag_nolb ]
-        and echo ""
-
-    formatted_echo $_flag_c "==>" "$argv"
-end
-
-
 function confirm -a msg
     # show a confirm prompt that doesn't print user input
     ring_bell
@@ -110,8 +110,12 @@ function yn_prompt -a msg
     ring_bell
     set -l answer
     while true
-        read -n 1 --prompt="set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
+        read --prompt="set_color -o; echo -n "(string escape $msg)" [Y/n]\ ; set_color normal" answer
         set answer (string lower $answer)
+
+        # no answer results in falling back to default 'y'
+        test -z "$answer"; and set answer y
+
         if [ $answer = 'y' -o $answer = 'n' ]
             break
         end
@@ -186,7 +190,7 @@ function update_pacman_mirrorlist
         set_cache_var last_update_mirrorlist (date +%s)
         echo_important "Yes."
     else
-        echo "No."
+        echo_important "No."
         return 0
     end
 
@@ -342,6 +346,7 @@ function check_git_package -a pkg
     check_git_package_schedule $pkg
         or return 1
 
+    echo "Checking updates for $pkg..."
     set -l git_url (get_git_url $pkg)
     set -l last_git_commit_date (get_last_git_commit "$git_url")
     # if the url is commit specific (see get_last_git_commit function) we can
@@ -407,7 +412,6 @@ function check_git_updates
     set git_pkgs (pacman -Qq | string match -er -- '-git$')
     for pkg in $git_pkgs
         if not contains $pkg $aur_updates
-            echo "Checking updates for $pkg..."
             check_git_package $pkg; or continue
 
             set git_updates $git_updates $pkg

@@ -15,8 +15,7 @@
 !.config/cower/config
 
 !.config/feh
-.config/feh/*
-!.config/feh/keys
+!.config/feh/*
 
 !.config/fish
 !.config/fish/config.fish

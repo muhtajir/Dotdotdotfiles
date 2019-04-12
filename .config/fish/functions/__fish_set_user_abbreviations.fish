@@ -5,7 +5,6 @@ function __fish_set_user_abbreviations
     abbr --add aurs auracle search
     abbr --add bgd 'bg; and disown'
     abbr --add bpy bpython
-    abbr --add feh feh -.
     abbr --add g git
     abbr --add ga git add
     abbr --add ga. git add .

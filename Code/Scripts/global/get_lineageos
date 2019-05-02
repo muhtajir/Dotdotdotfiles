@@ -1,0 +1,22 @@
+#!/usr/bin/env fish
+
+set tmp_dir (mktemp -d)
+set base_dir (pwd)
+set base_url "https://download.lineage.microg.org/"$argv"/" 
+
+curl "$base_url" | string match -ra 'lineage[0-9.\-]+microG-'$argv'.zip' | tail -n 1 | read file_name
+cd $tmp_dir
+
+while true
+    curl -O "$base_url/$file_name"
+    curl -O "$base_url/$file_name".sha256sum
+    if sha256sum -c "$file_name".sha256sum
+        break
+    end
+end
+
+mv "$file_name" /tmp/
+cd "$base_dir"
+rm -r "$tmp_dir"
+
+echo "$file_name downloaded to /tmp/"

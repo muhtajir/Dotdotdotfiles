@@ -9,7 +9,8 @@ function fish_user_key_bindings
     # history and completion bindings
     bind -M insert \ek up-or-search
     bind -M insert \ej down-or-search
-    bind -M insert \el accept-autosuggestion
+    bind -M insert \e\l "commandline -f forward-word"
+    bind -M insert \e\x20 accept-autosuggestion
 
     # iso friendly Emacs keys
     bind -M insert \cf forward-word

@@ -50,4 +50,6 @@ function __fish_set_user_abbreviations
     abbr --add yt mpsyt /
     abbr --add z zathura
     abbr --add gri grep -i
+    abbr --add str string replace
+    abbr --add stm string match
 end

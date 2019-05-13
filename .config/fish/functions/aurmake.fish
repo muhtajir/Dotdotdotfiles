@@ -1,6 +1,6 @@
 function aurmake -w cower -d 'Build specified AUR package'
     set -l pkgs (string match -r '(?<!\x2d)\b\S+' -- $argv)
-    set -l args (string match -r '(?<!\S)\x2d\x2d\S+' -- $argv)
+    set -l args (string match -r '(?<!\S)\x2d(\x2d)?\S+' -- $argv)
     set -l all_deps
 
     true

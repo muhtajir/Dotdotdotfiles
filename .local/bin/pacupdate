@@ -503,7 +503,7 @@ function install_git_updates
     echo_head "Installing Git updates..."
 
     for pkg in $git_updates
-        aurmake $pkg
+        aurmake -f $pkg
             or yn_prompt "Error installing $aur_pkg. Continue anyway? "
                 or return 1
     end

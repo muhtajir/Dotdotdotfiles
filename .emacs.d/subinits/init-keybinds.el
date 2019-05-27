@@ -323,8 +323,6 @@
     "M-l"           'evil-window-right
     "j"             'magit-section-forward
     "k"             'magit-section-backward
-    "C-j"           'next-line
-    "C-k"           'previous-line
     "p"             'magit-push-popup
     "d"             'magit-delete-thing
     "D"             'magit-diff-popup

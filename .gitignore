@@ -54,10 +54,8 @@
 !.config/ncmpcpp/bindings
 
 !.config/neomutt
-.config/neomutt/*
-!.config/neomutt/mailcap
-!.config/neomutt/colors
-!.config/neomutt/openattach.sh
+!.config/neomutt/*
+.config/neomutt/neomuttrc
 
 !.config/nvim
 !.config/nvim/init.vim

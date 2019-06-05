@@ -221,6 +221,13 @@ If decorator syntax is found a line above the current, don't do any padding."
   (add-hook 'LaTeX-mode-hook 'company-mode)
   (add-hook 'LaTeX-mode-hook 'company-auctex-init))
 
+(use-package markdown-mode
+  :defer t)
+(use-package flymd
+  :after markdown-mode
+  :config
+  (setq flymd-output-directory temporary-file-directory))
+
 (use-package pkgbuild-mode
   :commands pkgbuild-mode)
 

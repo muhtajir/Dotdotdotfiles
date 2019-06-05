@@ -313,6 +313,11 @@
     :keymaps         'go-mode-map
     "i"              'go-import-add)
 
+  ;; markdown-mode keybinds
+  (general-def-leader
+    :states          'normal
+    "RET"            'flymd-flyit)
+
   ;; magit keybindings
   (general-def
     :states         'emacs

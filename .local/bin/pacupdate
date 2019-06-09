@@ -19,7 +19,7 @@ end
 
 # setup fallbacks for envar settings
 function set_or_fallback -S -a var fallback
-    if not set -gq $var
+    if not set -q $var
         set -g $var $fallback
     end
 end

@@ -4,6 +4,7 @@ configuration {
 	fixed-num-lines: false;
 	scroll-method: 1;
 	lines: 18;
+    show-icons: true;
     /* [keybinds] */
 	kb-row-left: "Control+Page_Up,Alt+h";
 	kb-row-right: "Control+Page_Down,Alt+l";

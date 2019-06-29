@@ -60,7 +60,7 @@
 
 #mainbox {
     orientation:    vertical;
-    children:       [upperbox, inputbar, sidebar];
+    children:       [upperbox, inputbar, mode-switcher];
 }
 
 #upperbox {
@@ -68,7 +68,7 @@
     children:       [listview, message];
 }
 
-#sidebar {
+#mode-switcher {
     spacing:            2px;
     background-color:   @alternate-normal-background;
 }

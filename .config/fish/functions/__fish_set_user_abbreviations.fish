@@ -52,4 +52,5 @@ function __fish_set_user_abbreviations
     abbr --add gri grep -i
     abbr --add str string replace
     abbr --add stm string match
+    abbr --add ytd youtube-dl
 end

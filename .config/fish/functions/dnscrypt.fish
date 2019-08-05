@@ -5,14 +5,19 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
     switch "$argv"
         case "on"
             echo "nameserver 127.0.0.1" > "$tmpf"
-            sudo mv "$tmpf" "$resolv"
+            sudo mv "$tmpf" $resolv
 
-            if string match -rq '\bdns=' "$nm_config"
-                string replace -r '\b(dns=)' '$1none' < "$nm_config" > "$tmpf"
-                sudo mv "$tmpf" "$nm_config"
+            if string match -rq '\bdns=' $nm_config
+                string replace -r '\b(dns=)' '$1none' < $nm_config > "$tmpf"
+                sudo mv "$tmpf" $nm_config
             else
                 echo -e "[main]\ndns=none" > "$tmpf"
-                sudo mv "$tmpf" "$nm_config"
+                sudo mv "$tmpf" $nm_config
+            end
+
+            for f in $resolv $nm_config
+                sudo chown root:root $i
+                sudo chmod 644 $i
             end
 
             if not systemctl is-active dnscrypt-proxy > /dev/null
@@ -20,17 +25,20 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
             end
 
         case "off"
-            if string match -rq '\bdns=' "$nm_config"
-                string replace -r '\b(dns=)' '$1default' < "$nm_config" > "$tmpf"
-                sudo mv "$tmpf" "$nm_config"
+            if string match -rq '\bdns=' $nm_config
+                string replace -r '\b(dns=)' '$1default' < $nm_config > "$tmpf"
+                sudo mv "$tmpf" $nm_config
             else
                 echo "[main]"\n"dns=default" > "$tmpf"
-                sudo mv "$tmpf" "$nm_config"
+                sudo mv "$tmpf" $nm_config
             end
 
+            sudo chown root:root $nm_config
+            sudo chmod 644 $nm_config
+
             if systemctl is-active dnscrypt-proxy > /dev/null
-                sudo systemctl stop dnscrypt-proxy.service
                 sudo systemctl stop dnscrypt-proxy.socket
+                sudo systemctl stop dnscrypt-proxy.service
             end
 
             sudo systemctl restart NetworkManager

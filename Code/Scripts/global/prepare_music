@@ -11,7 +11,7 @@ for flac_folder in $record_folder/flac/*
 
         oggenc -q 6 *.flac
         set ogg_folder "$record_folder/ogg/"(basename "$flac_folder")
-        mkdir "$ogg_folder"
+        mkdir -p "$ogg_folder"
         mv *.ogg "$ogg_folder"/
         
         set_color -o; echo "Finished processing "(basename "$flac_folder")"."; set_color normal

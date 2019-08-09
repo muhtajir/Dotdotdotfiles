@@ -7,6 +7,7 @@ function __fish_set_user_abbreviations
     abbr --add aurs auracle search
     abbr --add bgd 'bg; and disown'
     abbr --add bpy bpython
+    abbr --add f function
     abbr --add ga git add
     abbr --add ga. git add .
     abbr --add gca git commit -a
@@ -54,6 +55,5 @@ function __fish_set_user_abbreviations
     abbr --add uctl udisksctl
     abbr --add v nvim
     abbr --add ytd youtube-dl
-    abbr --add yt mpsyt /
     abbr --add z zathura
 end

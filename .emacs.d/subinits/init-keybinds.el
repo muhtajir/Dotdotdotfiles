@@ -174,13 +174,8 @@
   (general-def
     :states         'normal
     :keymaps        '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map
-                                       quickrun--mode-map)
+                                       quickrun--mode-map magit-mode-map)
     "q"             'quit-window)
-
-  (general-def
-    :states         'emacs
-    :keymaps        '(magit-mode-map magit-popup-mode-map)
-    "<escape>"      'quit-window)
 
   (general-def
     :states         'normal
@@ -328,9 +323,9 @@
     "M-l"           'evil-window-right
     "j"             'magit-section-forward
     "k"             'magit-section-backward
-    "p"             'magit-push-popup
+    "p"             'magit-push
     "d"             'magit-delete-thing
-    "D"             'magit-diff-popup
+    "D"             'magit-diff
     "Ju"            'magit-jump-to-unstaged
     "Js"            'magit-jump-to-staged
     "Jn"            'magit-jump-to-untracked

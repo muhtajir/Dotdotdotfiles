@@ -334,7 +334,18 @@ config.bind('db', 'set-cmd-text --space :bookmark-del')
 # Tab moving
 config.bind('<Alt-Shift-J>', 'tab-move +')
 config.bind('<Alt-Shift-K>', 'tab-move -')
-# Clear search highlightingg
+# direct tab selection
+config.bind('g1', 'tab-focus 1')
+config.bind('g2', 'tab-focus 2')
+config.bind('g3', 'tab-focus 3')
+config.bind('g4', 'tab-focus 4')
+config.bind('g5', 'tab-focus 5')
+config.bind('g6', 'tab-focus 6')
+config.bind('g7', 'tab-focus 7')
+config.bind('g8', 'tab-focus 8')
+config.bind('g9', 'tab-focus 9')
+config.bind('g0', 'tab-focus 10')
+# Clear search highlighting
 config.bind('<Ctrl-´>', 'search')
 # Quickmark/Bookmark opening (mostly redundant, replace e bindings if
 # necessary)

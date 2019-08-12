@@ -1,3 +1,5 @@
+(require 'cl)
+
 ;; pos-tip setup for use by both company and flycheck
 (use-package pos-tip
   :after company
@@ -77,7 +79,7 @@
 
   ;; hack for actions that aren't considered changes by flycheck
   (defun my/flycheck-idleize (&rest args)
-    (flycheck--handle-idle-change-in-buffer (current-buffer)))
+    (cl-pushnew 'idle-change flycheck--idle-trigger-conditions))
   (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
   (advice-add 'undo-tree-undo :after #'my/flycheck-idleize)
 

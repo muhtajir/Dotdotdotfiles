@@ -11,7 +11,8 @@ function __aurmake_single
     end
 
     set pos (pwd)
-    cd ~/Downloads/AUR/
+    mkdir -p "$AURMAKE_FOLDER"
+    cd "$AURMAKE_FOLDER"
     auracle download $pkg | string match -r '[^/]+$' | read -l pkg_folder
         or return 1
 

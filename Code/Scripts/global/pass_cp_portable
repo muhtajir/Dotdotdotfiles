@@ -14,7 +14,7 @@ function cp_to_cell -a file -S
     rm -rf "$tmp_file"
 end
 
-# prepar marked random passes
+# prepare marked random passes
 set -l portable_files
 for line in (pass grep "portable: true")
     set line (string replace -ra '\e\[(K|[\d;]+m)' '' $line)
@@ -28,7 +28,7 @@ for file in $portable_files
     cp_to_cell $file
 end
 
-# prepar non-random passes
+# prepare non-random passes
 for file in $PASSWORD_STORE_DIR/non-random/*.gpg
     cp_to_cell (string replace "$PASSWORD_STORE_DIR/" "" $file)
 end

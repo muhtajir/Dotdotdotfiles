@@ -150,9 +150,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 (require 'init-evil)
 
-(require 'init-language-specific)
-
 (require 'init-keybinds)
+
+(require 'init-language-specific)
 
 ;; open todo.org on startup
 (add-hook 'after-init-hook (lambda ()

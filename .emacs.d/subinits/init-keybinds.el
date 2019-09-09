@@ -311,6 +311,7 @@
   ;; markdown-mode keybinds
   (general-def-leader
     :states          'normal
+    :keymaps         'flymd-map
     "RET"            'flymd-flyit)
 
   ;; magit keybindings

@@ -6,12 +6,12 @@ separator_block_width=15
 markup=none
 
 [clipboard]
-label=
+label= 
 interval=5
 markup=pango
 
 [mpd]
-label=
+label= 
 interval=8
 signal=10
 markup=pango
@@ -23,7 +23,7 @@ instance=localhost; 6600
 # end of custom settings
 
 [time]
-label=
+label= 
 interval=30
 markup=pango
 

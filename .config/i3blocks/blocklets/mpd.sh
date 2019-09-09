@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if systemctl --user is-active mpd.service > /dev/null; then
-    if [ $BLOCK_BUTTON = 1 ]; then
+    if [ "$BLOCK_BUTTON" = 1 ]; then
         mpc toggle >&2
     fi
 

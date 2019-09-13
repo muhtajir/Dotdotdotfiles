@@ -47,38 +47,39 @@
 
   ;; motion state keybinds
   (general-def
-    :states         'motion
-    "("             'evil-backward-paragraph
-    ")"             'evil-forward-paragraph
-    "+"             'goto-last-change-reverse
-    "-"             'goto-last-change
-    "C-S-l"         'link-hint-copy-link
-    "C-S-n"         'evil-mc-skip-and-goto-next-match
-    "C-l"           'link-hint-open-link
-    "C-n"           'evil-mc-make-and-goto-next-match
-    "C-S-p"         (general-lambda
-                     (evil-mc-undo-cursor-at-pos (point))
-                     (evil-mc-skip-and-goto-prev-cursor))
-    "C-p"           'evil-mc-skip-and-goto-prev-cursor
-    "C-q"           'counsel-projectile-switch-project
-    "C-u"           'evil-scroll-up
-    "<escape>"      (general-lambda
-                     (evil-ex-nohighlight)
-                     (evil-force-normal-state))
-    "C-s"           'vr/isearch-forward
-    "C-S-s"         'vr/isearch-backward
-    "M-o"           'delete-other-windows
-    "M-c"           'delete-window
-    "M-h"           'evil-window-left
-    "M-j"           'evil-window-down
-    "M-k"           'evil-window-up
-    "M-l"           'evil-window-right
-    "M-H"           'helpful-kill-buffers
-    "Q"             'counsel-projectile-find-file
-    "{"             'evil-backward-sentence-begin
-    "}"             'evil-forward-sentence-begin
-    "Ä"             'evil-mc-undo-all-cursors
-    "ä"             'evil-mc-make-all-cursors)
+    :states             'motion
+    "("                 'evil-backward-paragraph
+    ")"                 'evil-forward-paragraph
+    "+"                 'goto-last-change-reverse
+    "-"                 'goto-last-change
+    "C-S-l"             'link-hint-copy-link
+    "C-S-n"             'evil-mc-skip-and-goto-next-match
+    "C-l"               'link-hint-open-link
+    "C-n"               'evil-mc-make-and-goto-next-match
+    "C-S-p"             (general-lambda
+                         (evil-mc-undo-cursor-at-pos (point))
+                          (evil-mc-skip-and-goto-prev-cursor))
+    "C-p"               'evil-mc-skip-and-goto-prev-cursor
+    "C-q"               'counsel-projectile-switch-project
+    "C-u"               'evil-scroll-up
+    "<escape>"          (general-lambda
+                         (evil-ex-nohighlight)
+                         (evil-force-normal-state))
+    "C-s"               'vr/isearch-forward
+    "C-S-s"             'vr/isearch-backward
+    "M-o"               'delete-other-windows
+    "M-c"               'delete-window
+    "M-h"               'evil-window-left
+    "M-j"               'evil-window-down
+    "M-k"               'evil-window-up
+    "M-l"               'evil-window-right
+    "M-H"               'helpful-kill-buffers
+    "Q"                 'counsel-projectile-find-file
+    "{"                 'evil-backward-sentence-begin
+    "}"                 'evil-forward-sentence-begin
+    "Ä"                 'evil-mc-undo-all-cursors
+    "ä"                 'evil-mc-make-all-cursors
+    "<S-SPC><S-SPC>"    'my/vertigo-reuse-last-arg)
 
   (general-def-leader
     :states         'motion

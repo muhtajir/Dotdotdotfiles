@@ -88,7 +88,16 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
   (setq vertigo-home-row '(?a ?s ?d ?f ?g ?h ?j ?k ?l ?ö))
   (setq vertigo-cut-off 9)
   (evil-declare-motion #'vertigo-set-digit-argument)
-  (evil-add-command-properties #'vertigo-set-digit-argument :jump t))
+  (evil-add-command-properties #'vertigo-set-digit-argument :jump t)
+  (defun my/vertigo--remember-arg (func num)
+    (setq-local my/vertigo--last-arg num)
+    (funcall func num))
+  (advice-add #'vertigo--set-digit-argument :around #'my/vertigo--remember-arg)
+  (defun my/vertigo-reuse-last-arg ()
+    (interactive)
+    (if (boundp 'my/vertigo--last-arg)
+        (vertigo--set-digit-argument my/vertigo--last-arg)
+      (message "No previously used vertigo."))))
 
 (use-package evil-commentary
   :config

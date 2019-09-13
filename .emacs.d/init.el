@@ -22,9 +22,6 @@
 ;; enable sourcing from init scripts in emacs.d/subinits
 (add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
-;; source custom functions early
-(require 'init-my-functions)
-
 ;; setup package management with straight.el and use-package
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -41,6 +38,24 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+
+;; autoload custom functions early
+(mapc (lambda (func)
+        (autoload func "init-my-functions.el"))
+      '(my/add-hooks
+        my/get-line
+        my/sudo-find-file
+        my/dired-mark-toggle
+        my/eshell
+        my/eval-visual-region
+        my/eval-normal-line
+        my/fcitx-init
+        my/open-line-above
+        my/python-remove-breakpoints
+        my/python-test
+        my/source-ssh-env
+        my/straight-update
+        my/term))
 
 (require 'init-gui-setup)
 

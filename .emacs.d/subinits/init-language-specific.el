@@ -48,7 +48,8 @@
   :hook (python-mode . (lambda ()
                          (add-to-list 'company-backends #'company-jedi)
                          (jedi:setup)
-                         (evil-add-command-properties #'jedi:goto-definition :jump t))))
+                         (evil-add-command-properties #'jedi:goto-definition :jump t)
+                         (setq jedi:tooltip-method nil))))
 
 (use-package company-go
   :hook (go-mode . (lambda ()

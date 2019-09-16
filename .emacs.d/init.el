@@ -1,3 +1,4 @@
+(require 'cl)
 ;; get rid of the custom blabla by using custom-file
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)
@@ -153,6 +154,8 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
           ("^\\*ansi-term.*"
            :regexp t :select t :popup t :align below :size 0.2)
           ('inferior-python-mode
+           :select t :popup t :align below :size 0.2)
+          ('vterm-mode
            :select t :popup t :align below :size 0.2))))
 
 (use-package visual-regexp-steroids
@@ -160,6 +163,31 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   :after pcre2el
   :config
   (setq vr/engine 'pcre2el))
+
+;; use locally installed package (from AUR) of emacs-vterm
+(use-package vterm
+  :straight nil
+  :commands my/vterm
+  :config
+  (defun my/vterm ()
+    "Hide or show vterm window.
+Start terminal if it isn't running already."
+    (interactive)
+    (let* ((vterm-buf "vterm")
+           (vterm-win (get-buffer-window vterm-buf)))
+      (if vterm-win
+          (progn
+            (select-window vterm-win)
+            (ignore-errors
+                (delete-process vterm--process))
+            (while (process-live-p vterm--process)
+              (ignore))
+            (kill-this-buffer)
+            (delete-window))
+        (if (get-buffer vterm-buf)
+            (pop-to-buffer vterm-buf)
+          (vterm-other-window))
+        (evil-insert-state)))))
 
 (require 'init-ivy)
 

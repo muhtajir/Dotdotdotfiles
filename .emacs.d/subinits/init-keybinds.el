@@ -99,10 +99,9 @@
     "hk"            'helpful-key
     "hm"            'describe-mode
     "SPC"           'vertigo-set-digit-argument
-    "$"             'my/term
+    "$"             'my/vterm
     "C-$"           'my/eshell
-    "%"             (general-lambda
-                     (counsel-ag nil (projectile-project-root)))
+    "%"             'my/counsel-ag-projectile
     "C-%"           'my/counsel-ag-prompt-path
     "b"             'nswbuff-switch-to-next-buffer
     "B"             (general-lambda
@@ -264,11 +263,9 @@
   ;; term keybinds
   (general-def
     :states         'insert
-    :keymaps        'term-raw-map
-    "<return>"      'term-send-input
-    "C-h k"         'helpful-key
-    "M-j"           'term-send-down
-    "M-k"           'term-send-up)
+    :keymaps        'vterm-mode-map
+    "<return>"      'vterm--self-insert
+    "C-h k"         'helpful-key)
 
   ;; fish-mode keybinds
   (general-def-leader

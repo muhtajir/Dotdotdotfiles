@@ -116,21 +116,4 @@ Start eshell if it isn't running already."
   (straight-pull-all)
   (straight-rebuild-all))
 
-(defun my/term ()
-  "Hide or show term window.
-Start terminal if it isn't running already."
-  (interactive)
-  (let* ((term-buf "*ansi-term*")
-         (term-win (get-buffer-window term-buf)))
-    (if term-win
-        (progn
-          (select-window term-win)
-          (delete-window))
-      (unless (get-buffer term-buf)
-        (let ((cur-buf (buffer-name)))
-          (ansi-term "/bin/bash")
-          (switch-to-buffer cur-buf)))
-      (pop-to-buffer term-buf)
-      (evil-insert-state))))
-
 (provide 'init-my-functions)

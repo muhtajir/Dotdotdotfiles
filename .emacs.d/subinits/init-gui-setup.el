@@ -8,12 +8,12 @@
 (menu-bar-mode -1)
 (show-paren-mode 1)
 (setq show-paren-delay 0)
-(global-hl-line-mode 1)
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
 (setq eldoc-idle-delay .8)
 (setq-default fill-column 80)
+(my/add-hooks 'hl-line-mode '(prog-mode-hook text-mode-hook))
 
 (use-package nswbuff
   :commands nswbuff-switch-to-next-buffer

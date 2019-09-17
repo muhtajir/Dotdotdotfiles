@@ -25,7 +25,9 @@ instance=localhost; 6600
 [time]
 label= 
 interval=30
+format=json
 markup=pango
+_BLOCK_STATE=time
 
 [shutdown]
 interval=once

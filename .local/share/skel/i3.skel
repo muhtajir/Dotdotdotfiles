@@ -30,10 +30,19 @@ client.background       $base07
 
 set $font {{{FONT_SANS}}}
 set $i3scriptsdir $HOME/.config/i3/scripts
-set $i3b_up $HOME/.config/i3/scripts/i3b_up
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
 set $rofimodedir $HOME/.config/rofi/custom_modes
 set $mod Mod4
+set $i3b_up10 "pkill -RTMIN+10 i3blocks"
+set $i3b_up9 "pkill -RTMIN+9 i3blocks"
+set $i3b_up8 "pkill -RTMIN+8 i3blocks"
+set $i3b_up7 "pkill -RTMIN+7 i3blocks"
+set $i3b_up6 "pkill -RTMIN+6 i3blocks"
+set $i3b_up5 "pkill -RTMIN+5 i3blocks"
+set $i3b_up4 "pkill -RTMIN+4 i3blocks"
+set $i3b_up3 "pkill -RTMIN+3 i3blocks"
+set $i3b_up2 "pkill -RTMIN+2 i3blocks"
+set $i3b_up1 "pkill -RTMIN+1 i3blocks"
 
 # custom settings
 {{{custom}}}
@@ -252,9 +261,9 @@ mode $mode_resize {
 # control mpd
 mode $mode_music {
         bindsym space exec mpc toggle
-        bindsym l exec mpc next; exec $i3b_up 10 0
-        bindsym h exec mpc prev; exec $i3b_up 10 0
-        bindsym r exec mpc random; exec $i3b_up 10 0
+        bindsym l exec mpc next; exec $i3b_up10
+        bindsym h exec mpc prev; exec $i3b_up10
+        bindsym r exec mpc random; exec $i3b_up10
         bindsym Tab exec $i3scriptsdir/mpd_toggle
         # sexy rofi modes
         bindsym p exec "rofi -modi \\"queue:$rofimodedir/mpc_qu.fish,playlists:$rofimodedir/mpc_pl.fish\\" -show playlists -sidebar-mode"; mode "default"

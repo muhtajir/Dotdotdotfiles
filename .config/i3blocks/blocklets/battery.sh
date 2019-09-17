@@ -4,6 +4,11 @@ battery=/sys/class/power_supply/${BLOCK_INSTANCE}
 charge=$(grep '^POWER_SUPPLY_CAPACITY=' ${battery}/uevent | sed -r 's/^.+=//')
 status=$(grep '^POWER_SUPPLY_STATUS=' ${battery}/uevent | sed -r 's/^.+=//')
 
+# send notification on click
+if [[ -n ${BLOCK_BUTTON} ]]; then
+    notify-send -u normal 'Battery' "$charge percent remaining."
+fi
+
 status=$(cat ${battery}/status)
 if [[ $status = 'Full' ]]; then
     echo ''
@@ -41,9 +46,4 @@ if [[ $status != 'Charging' ]]; then
     elif [[ $charge -le 5 && ! -e /tmp/batwarning_critical.i3blocks ]]; then
         notify-send -u critical 'Battery' "Only $charge percent remaining!"
     fi
-fi
-
-# also send notification on click
-if [[ -n "$BLOCK_BUTTON" ]]; then
-    notify-send -u normal 'Batterie' "$charge percent remaining."
 fi

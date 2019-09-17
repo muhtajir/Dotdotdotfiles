@@ -29,13 +29,11 @@ client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 
 set $font {{{FONT_SANS}}}
-set $i3confdir $HOME/.config/i3
 set $i3scriptsdir $HOME/.config/i3/scripts
 set $i3b_up $HOME/.config/i3/scripts/i3b_up
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
 set $rofimodedir $HOME/.config/rofi/custom_modes
 set $mod Mod4
-set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 
 # custom settings
 {{{custom}}}

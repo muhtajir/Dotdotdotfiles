@@ -1,5 +1,8 @@
 (require 'cl)
 
+;; make shell scripts executable after save if they include a shebang
+(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
+
 ;; pos-tip setup for use by both company and flycheck
 (use-package pos-tip
   :after company
@@ -7,7 +10,7 @@
   (setq x-gtk-use-system-tooltips nil)
   (setq pos-tip-foreground-color (plist-get base16-generic-colors :base07))
   (setq pos-tip-background-color (plist-get base16-generic-colors :base02))
-  (add-hook 'focus-out-hook 'pos-tip-hide))
+  (add-hook 'focus-out-hook #'pos-tip-hide))
 
 ;; autocompletion
 (use-package company

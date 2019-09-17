@@ -13,7 +13,7 @@
 (setq echo-keystrokes .01)
 (setq eldoc-idle-delay .8)
 (setq-default fill-column 80)
-(my/add-hooks 'hl-line-mode '(prog-mode-hook text-mode-hook))
+(my/add-hooks 'hl-line-mode '(prog-mode-hook text-mode-hook conf-mode-hook))
 
 (use-package nswbuff
   :commands nswbuff-switch-to-next-buffer

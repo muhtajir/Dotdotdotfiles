@@ -1,7 +1,7 @@
 # %-LOCATION:$HOME/.config/i3blocks/config-% %-CUSTOM:$HOME/.config/i3blocks/custom-% -*-conf-*-
 # DO EDITS HERE: $HOME/.local/share/skel/i3blocks.skel
 # [global]
-command=${HOME}/.config/i3blocks/blocklets/${BLOCK_NAME}.sh
+command=blocklets/${BLOCK_NAME}.sh
 separator_block_width=15
 markup=none
 

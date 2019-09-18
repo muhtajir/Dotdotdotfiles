@@ -44,20 +44,20 @@
 ;; autoload custom functions early
 (mapc (lambda (func)
         (autoload func "init-my-functions.el"))
-      '(my/add-hooks
-        my/get-line
-        my/sudo-find-file
-        my/dired-mark-toggle
-        my/eshell
-        my/eval-visual-region
-        my/eval-normal-line
-        my/fcitx-init
-        my/open-line-above
-        my/python-remove-breakpoints
-        my/python-test
-        my/source-ssh-env
-        my/straight-update
-        my/term))
+      #'(my/add-hooks
+         my/get-line
+         my/sudo-find-file
+         my/dired-mark-toggle
+         my/eshell
+         my/eval-visual-region
+         my/eval-normal-line
+         my/fcitx-init
+         my/open-line-above
+         my/python-remove-breakpoints
+         my/python-test
+         my/source-ssh-env
+         my/straight-update
+         my/term))
 
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
@@ -94,7 +94,7 @@
 
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)
-(my/add-hooks 'electric-pair-mode '(prog-mode-hook text-mode-hook))
+(my/add-hooks #'electric-pair-mode '(prog-mode-hook text-mode-hook))
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 

@@ -17,15 +17,6 @@
   (evil-mode 1)
   ;; sensible Y behavior
   (customize-set-variable 'evil-want-Y-yank-to-eol t)
-  ;; cursor coloring to use with base16 package
-  (defvar my/base16-colors base16-generic-colors)
-  (setq evil-emacs-state-cursor   `(,(plist-get my/base16-colors :base0D) box)
-        evil-insert-state-cursor  `(,(plist-get my/base16-colors :base05) bar)
-        evil-motion-state-cursor  `(,(plist-get my/base16-colors :base0E) box)
-        evil-normal-state-cursor  `(,(plist-get my/base16-colors :base05) box)
-        evil-replace-state-cursor `(,(plist-get my/base16-colors :base08) hollow)
-        evil-visual-state-cursor  `(,(plist-get my/base16-colors :base05) box))
-
 
   ;; evil-related-functions
   (defun my/evil-dry-open-below (&optional line)

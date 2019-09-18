@@ -1,4 +1,5 @@
 (require 'cl)
+
 ;; get rid of the custom blabla by using custom-file
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)
@@ -57,8 +58,6 @@
         my/source-ssh-env
         my/straight-update
         my/term))
-
-(require 'init-gui-setup)
 
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
@@ -201,3 +200,5 @@ Start terminal if it isn't running already."
 (add-hook 'after-init-hook (lambda ()
                              (find-file (expand-file-name "~/Sync/Diverses/todo.org" (getenv "HOME")))
                              (org-cycle)))
+
+(require 'init-gui-setup)

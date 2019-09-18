@@ -139,8 +139,9 @@
   :commands sublimity-mode
   :init
   (my/add-hooks (lambda ()
-                  (when (> (count-lines 1 (point-max)) 120)
-                    (sublimity-mode 1)))
+                  (if (> (count-lines 1 (point-max)) 80)
+                      (sublimity-mode 1)
+                    (sublimity-mode 0)))
                 '(prog-mode-hook text-mode-hook))
   :config
   (add-to-list 'sublimity-disabled-major-modes 'term-mode)

@@ -35,6 +35,7 @@
 (setq inhibit-startup-message t)
 (fringe-mode '(0 . 0))
 (scroll-bar-mode -1)
+(setq scroll-step 1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (show-paren-mode 1)
@@ -55,7 +56,8 @@
 (use-package telephone-line
   :config
   (telephone-line-defsegment telephone-line-my-projectile-segment ()
-    (if projectile-project-name
+    (if (and (fboundp 'projectile-project-name)
+             (projectile-project-p))
       (let*
           ((branch (car (vc-git-branches)))
            (branch-str (unless (string= branch "master")
@@ -109,7 +111,7 @@
             (car (last dir-list))))
           (mode-line-str (concat first-part-str last-part-str)))
           (if (buffer-modified-p)
-              (propertize mode-line-str 'face 'telephone-line-warning)
+              (propertize (concat mode-line-str "!") 'face 'telephone-line-warning)
             mode-line-str))
       (telephone-line-raw mode-line-buffer-identification)))
 

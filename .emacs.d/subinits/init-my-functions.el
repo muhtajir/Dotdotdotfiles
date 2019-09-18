@@ -48,13 +48,26 @@ Start eshell if it isn't running already."
   (ignore-errors
    (evil-normal-state)))
 
-(defun my/eval-normal-line ()
+(defun my/eval-at-point ()
   "Evaluate current line."
   (interactive)
-  (let ((pos (current-column)))
-    (end-of-line)
-    (eval-last-sexp nil)
-    (move-to-column pos)))
+  (let ((point-char (thing-at-point 'char))
+        (reg-start)
+        (reg-end))
+    (save-excursion
+      (while (not (or (string= point-char "(")
+                      (string= point-char ")")))
+        (backward-sexp)
+        (backward-char)
+        (setq point-char (thing-at-point 'char)))
+      (if (string= point-char "(")
+          (setq reg-start (point))
+        (setq reg-end (+ (point) 1)))
+      (evil-jump-item)
+      (if reg-start
+          (setq reg-end (+ (point) 1))
+        (setq reg-start (point))))
+    (eval-region reg-start reg-end t)))
 
 (defun my/fcitx-init ()
   "Enable fcitx input support."

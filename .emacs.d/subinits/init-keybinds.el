@@ -30,8 +30,6 @@
   (general-def-leader
     :states         'normal
     "RET"           'quickrun
-    "e"             'my/eval-normal-line
-    "E"             'eval-buffer
     "P"             'my/evil-paste-with-newline-above
     "p"             'my/evil-paste-with-newline-below)
 
@@ -372,6 +370,13 @@
     :keymaps        'jedi-mode-map
     "d"             'jedi:goto-definition
     "D"             'jedi:goto-definition-pop-marker)
+
+  ;; elisp keybinds
+  (general-def-leader
+    :states         'motion
+    :keymaps        'emacs-lisp-mode-map
+    "e"             'my/eval-at-point
+    "E"             'eval-buffer)
 
   ;; visual regexp keybinds
   (general-def

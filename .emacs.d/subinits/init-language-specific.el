@@ -203,7 +203,11 @@ If decorator syntax is found a line above the current, don't do any padding."
           ""
         (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
-;; ;; mark text after column 80 in prog-modes (but not elisp because headaches)
+;; use smartparens in elisp
+(use-package smartparens
+  :commands (sp-down-sexp sp-backward-up-sexp))
+
+;; mark text after column 80 in prog-modes (but not elisp because headaches)
 (use-package column-enforce-mode
   :hook ((python-mode go-mode) . column-enforce-mode))
 

@@ -371,10 +371,16 @@
     "d"             'jedi:goto-definition
     "D"             'jedi:goto-definition-pop-marker)
 
-  ;; elisp keybinds
+  ;; (e-)lisp keybinds
+  (general-def
+    :states         'motion
+    :keymaps        'lisp-mode-shared-map
+    "{"             'sp-backward-up-sexp
+    "}"             'sp-down-sexp)
+
   (general-def-leader
     :states         'motion
-    :keymaps        '(emacs-lisp-mode-map lisp-interaction-mode-map)
+    :keymaps        'lisp-mode-shared-map
     "e"             'my/eval-at-point
     "E"             'eval-buffer)
 

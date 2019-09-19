@@ -11,9 +11,6 @@
 !.config/bpython
 !.config/bpython/config
 
-!.config/cower
-!.config/cower/config
-
 !.config/feh
 !.config/feh/*
 
@@ -60,7 +57,9 @@
 !.config/nvim
 !.config/nvim/init.vim
 !.config/nvim/autoload/
-!.config/nvim/autoload/*
+!.config/nvim/autoload/plug.vim
+!.config/nvim/colors/
+!.config/nvim/colors/base16-generic.vim
 
 !.config/pacman
 !.config/pacman/makepkg.conf
@@ -87,12 +86,12 @@
 !.emacs.d/subinits
 !.emacs.d/subinits/*
 
+!.local/bin
+!.local/bin/*
+
 !.local
 !.local/share
 .local/share/*
-
-!.local/bin
-!.local/bin/*
 
 !.local/share/applications/
 .local/share/applications/*

@@ -21,24 +21,23 @@ QT_IM_MODULE                  DEFAULT=ibus
 GNUPGHOME                     DEFAULT=@{HOME}/.config/gnupg
 HISTFILE                      DEFAULT=@{HOME}/.local/share/.bash_history
 LESSHISTFILE                  DEFAULT=@{HOME}/.local/share/.lesshst
-NOTMUCH_CONFIG                DEFAULT=@{HOME}/.config/notmuch/notmuch-config
 
 # setup base16 colors as environment variables
-__BASE00                      DEFAULT=262626
-__BASE01                      DEFAULT=3a3a3a
-__BASE02                      DEFAULT=4e4e4e
-__BASE03                      DEFAULT=8a8a8a
-__BASE04                      DEFAULT=949494
-__BASE05                      DEFAULT=dab997
-__BASE06                      DEFAULT=d5c4a1
-__BASE07                      DEFAULT=ebdbb2
-__BASE08                      DEFAULT=d75f5f
-__BASE09                      DEFAULT=ff8700
-__BASE0A                      DEFAULT=ffaf00
-__BASE0B                      DEFAULT=afaf00
-__BASE0C                      DEFAULT=85ad85
-__BASE0D                      DEFAULT=83adad
-__BASE0E                      DEFAULT=d485ad
+__BASE00                      DEFAULT=282828
+__BASE01                      DEFAULT=3c3836
+__BASE02                      DEFAULT=504945
+__BASE03                      DEFAULT=665c54
+__BASE04                      DEFAULT=bdae93
+__BASE05                      DEFAULT=d5c4a1
+__BASE06                      DEFAULT=ebdbb2
+__BASE07                      DEFAULT=fbf1c7
+__BASE08                      DEFAULT=fb4934
+__BASE09                      DEFAULT=fe8019
+__BASE0A                      DEFAULT=fabd2f
+__BASE0B                      DEFAULT=b8bb26
+__BASE0C                      DEFAULT=8ec07c
+__BASE0D                      DEFAULT=83a598
+__BASE0E                      DEFAULT=d3869b
 __BASE0F                      DEFAULT=d65d0e
 
 # setup font settings for accessing them from the shell

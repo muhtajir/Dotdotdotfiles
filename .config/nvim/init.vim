@@ -1,10 +1,8 @@
 " DON'T DELETE TRAILING WHITESPACE IN THIS FILE!
 
 call plug#begin()
-    Plug 'chrisbra/SudoEdit.vim'
     Plug 'dag/vim-fish'
-    Plug 'dietsche/vim-lastplace'
-    Plug 'InspectorMustache/base16.nvim'
+    Plug 'Soares/base16.nvim'
     Plug 'kana/vim-textobj-user'
     Plug 'machakann/vim-highlightedyank'
     Plug 'raimondi/delimitmate'
@@ -198,12 +196,9 @@ let g:highlightedyank_highlight_duration = 600
 set termguicolors
 set background=dark
 set cursorline
-let base16colorspace=256  " Access colors present in 256 colorspace
-let g:base16_airline = 1
-colorscheme base16-gruvbox-dark-pale
+colorscheme base16-generic
 Base16Highlight Pmenu bg=dark1
 Base16Highlight PmenuSel bg=dark3
-Base16Highlight NeomakeWarningSign fg=yellow
 
 " settings for using nvim as a manpager
 autocmd FileType man doautocmd user AirlineToggledOff | set laststatus=0

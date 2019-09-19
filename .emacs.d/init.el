@@ -9,9 +9,6 @@
 (setq browse-url-generic-program "qutebrowser")
 (setq browse-url-browser-function 'browse-url-generic)
 
-;; use more conservative sentence definition
-(setq sentence-end-double-space nil)
-
 ;; set up a separate location for backup and temp files
 (defconst emacs-tmp-dir (expand-file-name "auto-save" user-emacs-directory))
 (setq backup-directory-alist
@@ -40,6 +37,9 @@
 
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+
+;; use more conservative sentence definition
+(setq sentence-end-double-space nil)
 
 ;; autoload custom functions early
 (mapc (lambda (func)
@@ -196,9 +196,11 @@ Start terminal if it isn't running already."
 
 (require 'init-language-specific)
 
+(use-package f)
+
+(require 'init-gui-setup)
+
 ;; open todo.org on startup
 (add-hook 'after-init-hook (lambda ()
                              (find-file (expand-file-name "~/Sync/Diverses/todo.org" (getenv "HOME")))
                              (org-cycle)))
-
-(require 'init-gui-setup)

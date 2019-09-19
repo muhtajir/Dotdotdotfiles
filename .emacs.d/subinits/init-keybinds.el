@@ -374,7 +374,7 @@
   ;; elisp keybinds
   (general-def-leader
     :states         'motion
-    :keymaps        'emacs-lisp-mode-map
+    :keymaps        '(emacs-lisp-mode-map lisp-interaction-mode-map)
     "e"             'my/eval-at-point
     "E"             'eval-buffer)
 

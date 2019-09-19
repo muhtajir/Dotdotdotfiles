@@ -1,5 +1,3 @@
-(require 'f)
-
 (use-package base16-theme
   :config
   (defvar base16-generic-colors
@@ -29,7 +27,9 @@
         evil-motion-state-cursor  `(,(plist-get base16-generic-colors :base0E) box)
         evil-normal-state-cursor  `(,(plist-get base16-generic-colors :base05) box)
         evil-replace-state-cursor `(,(plist-get base16-generic-colors :base08) hollow)
-        evil-visual-state-cursor  `(,(plist-get base16-generic-colors :base05) box)))
+        evil-visual-state-cursor  `(,(plist-get base16-generic-colors :base05) box))
+  (setq pos-tip-foreground-color (plist-get base16-generic-colors :base00))
+  (setq pos-tip-background-color (plist-get base16-generic-colors :base06)))
 
 ;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
@@ -94,26 +94,31 @@
         (let*
             ((file-path
               (abbreviate-file-name (file-relative-name buffer-file-name (projectile-project-root))))
-             (dir-list
-              (f-split file-path))
-             (first-part-str
-              (apply #'concat
-                     (mapcar (lambda (dir)
-                               (file-name-as-directory
-                                (if (> (length dir) 4)
-                                    (concat (substring dir 0 2)
-                                            (substring dir -2))
-                                  dir)))
-                             (subseq dir-list 0 -2))))
-          (last-part-str
-           (concat
-            (file-name-as-directory (car (last dir-list 2)))
-            (car (last dir-list))))
-          (mode-line-str (concat first-part-str last-part-str)))
+             (dir-list (f-split file-path))
+             (mode-line-str))
+
+          (if (> (length dir-list) 2)
+              (let
+                  ((first-part-str
+                    (apply #'concat
+                           (mapcar (lambda (dir)
+                                     (file-name-as-directory
+                                      (if (> (length dir) 4)
+                                          (concat (substring dir 0 2)
+                                                  (substring dir -2))
+                                        dir)))
+                                   (subseq dir-list 0 (- (length dir-list) 2)))))
+                   (last-part-str
+                    (concat
+                     (file-name-as-directory (car (last dir-list 2)))
+                     (car (last dir-list)))))
+                (setq mode-line-str (concat first-part-str last-part-str)))
+            (setq mode-line-str file-path))
+
           (if (buffer-modified-p)
               (propertize (concat mode-line-str "!") 'face 'telephone-line-warning)
             mode-line-str))
-      (telephone-line-raw mode-line-buffer-identification)))
+      (buffer-name)))
 
   (setq telephone-line-lhs
         '((evil      . (telephone-line-evil-tag-segment))

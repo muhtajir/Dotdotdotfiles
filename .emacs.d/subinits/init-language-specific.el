@@ -8,8 +8,6 @@
   :after company
   :config
   (setq x-gtk-use-system-tooltips nil)
-  (setq pos-tip-foreground-color (plist-get base16-generic-colors :base00))
-  (setq pos-tip-background-color (plist-get base16-generic-colors :base06))
   (add-hook 'focus-out-hook #'pos-tip-hide))
 
 ;; autocompletion

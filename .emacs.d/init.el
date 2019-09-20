@@ -94,7 +94,7 @@
 
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)
-(my/add-hooks #'electric-pair-mode '(prog-mode-hook text-mode-hook))
+(my/add-hooks #'electric-pair-mode 'prog-mode-hook 'text-mode-hook)
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 

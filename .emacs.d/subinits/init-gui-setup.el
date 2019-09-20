@@ -45,7 +45,7 @@
 (setq echo-keystrokes .01)
 (setq eldoc-idle-delay .8)
 (setq-default fill-column 80)
-(my/add-hooks #'hl-line-mode '(prog-mode-hook text-mode-hook conf-mode-hook))
+(my/add-hooks #'hl-line-mode 'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
 
 (use-package nswbuff
   :commands nswbuff-switch-to-next-buffer
@@ -140,7 +140,7 @@
                 (setq display-line-numbers 'relative
                       display-line-numbers-widen t
                       display-line-numbers-current-absolute t))
-              '(prog-mode-hook text-mode-hook conf-mode-hook))
+              'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
 
 (use-package sublimity
   :commands sublimity-mode
@@ -149,7 +149,7 @@
                   (if (> (count-lines 1 (point-max)) 80)
                       (sublimity-mode 1)
                     (sublimity-mode 0)))
-                '(prog-mode-hook text-mode-hook))
+                'prog-mode-hook 'text-mode-hook)
   :config
   (add-to-list 'sublimity-disabled-major-modes 'term-mode)
   (require 'sublimity-scroll)

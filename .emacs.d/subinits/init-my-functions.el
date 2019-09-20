@@ -1,6 +1,6 @@
 (require 'cl)
 
-(defun my/add-hooks (func hooks)
+(defun my/add-hooks (func &rest hooks)
   "Add FUNC to multiple HOOKS at once."
   (mapc (lambda (hook)
           (add-hook hook func))

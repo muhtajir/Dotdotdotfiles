@@ -382,7 +382,8 @@
     :states         'motion
     :keymaps        'lisp-mode-shared-map
     "e"             'my/eval-at-point
-    "E"             'eval-buffer)
+    "E"             'my/eval-line
+    "C-e"           'eval-buffer)
 
   ;; visual regexp keybinds
   (general-def

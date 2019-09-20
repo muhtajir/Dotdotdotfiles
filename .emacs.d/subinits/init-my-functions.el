@@ -48,8 +48,15 @@ Start eshell if it isn't running already."
   (ignore-errors
    (evil-normal-state)))
 
-(defun my/eval-at-point ()
+(defun my/eval-line ()
   "Evaluate current line."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (eval-last-sexp nil)))
+
+(defun my/eval-at-point ()
+  "Move out to closest sexp and evaluate."
   (interactive)
   (let ((point-char (thing-at-point 'char))
         (reg-start)
@@ -57,8 +64,9 @@ Start eshell if it isn't running already."
     (save-excursion
       (while (not (or (string= point-char "(")
                       (string= point-char ")")))
-        (backward-sexp)
-        (backward-char)
+        (ignore-errors
+            (backward-sexp))
+          (backward-char)
         (setq point-char (thing-at-point 'char)))
       (if (string= point-char "(")
           (setq reg-start (point))

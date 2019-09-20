@@ -10,6 +10,14 @@
   (setq x-gtk-use-system-tooltips nil)
   (add-hook 'focus-out-hook #'pos-tip-hide))
 
+;; language server
+(use-package lsp-mode
+  :hook ((go-mode python-mode) . lsp-deferred)
+  :config
+  (setq lsp-auto-configure nil)
+  (require 'lsp-pyls)
+  (require 'lsp-go))
+
 ;; autocompletion
 (use-package company
   :hook (prog-mode . company-mode)
@@ -45,12 +53,13 @@
   :config
   (setq company-quickhelp-delay 0))
 
-(use-package company-jedi
-  :hook (python-mode . (lambda ()
-                         (add-to-list 'company-backends #'company-jedi)
-                         (jedi:setup)
-                         (evil-add-command-properties #'jedi:goto-definition :jump t)
-                         (setq jedi:tooltip-method nil))))
+(use-package company-lsp
+  :commands (company-lsp)
+  :init
+  (my/add-hooks
+   (lambda ()
+     (add-to-list 'company-backends #'company-lsp))
+   'python-mode-hook 'go-mode-hook))
 
 (use-package company-go
   :hook (go-mode . (lambda ()

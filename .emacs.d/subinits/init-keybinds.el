@@ -8,6 +8,12 @@
   (general-create-definer general-def-goleader
     :prefix "g")
 
+  ;; global F-key binds
+  (general-def
+    :keymaps            'override
+    "<f1>"              'eww
+    "<f2>"              'mu4e)
+
   ;; normal state keybinds
   (general-def
     :states         'normal
@@ -109,7 +115,6 @@
     "V"             (general-lambda
                      (evil-window-split) (evil-window-down 1))
     "X"             'evil-window-delete
-    "I"             'ivy-resume
     "q"             'find-file
     "Q"             'my/sudo-find-file
     "<tab>"         'evil-switch-to-windows-last-buffer
@@ -235,6 +240,14 @@
                          (kill-line)
                          (evil-insert-state))))
   (add-hook 'eshell-first-time-mode-hook 'my/eshell-set-keys)
+
+  ;; ewwwwwwwww keybinds
+  (general-def
+    :states             'motion
+    :keymaps            'eww-mode-map
+    "C-o"               'eww-back-url
+    "C-i"               'eww-forward-url
+    "o"                 'eww)
 
   ;; ivy keybinds
   (general-def

@@ -1,6 +1,5 @@
-;; undo-tree is a dependency but not available in melpa so get it from elpa
+;; undo-tree is a dependency but not available in melpa so get it from elpa (straight takes care of this automatically)
 (use-package undo-tree
-  :defer t
   :config
   (setq undo-tree-enable-undo-in-region nil))
 
@@ -91,10 +90,14 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
       (message "No previously used vertigo."))))
 
 (use-package evil-commentary
+  :commands (evil-commentary
+             evil-commentary-yank
+             evil-commentary-line)
   :config
   (evil-commentary-mode 1))
 
 (use-package evil-surround
+  :commands evil-surround-operation
   :config
   (global-evil-surround-mode 1))
 
@@ -114,6 +117,10 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
   (setq evil-goggles-enable-delete nil))
 
 (use-package evil-mc
+  :commands (evil-mc-skip-and-goto-next-match
+             evil-mc-make-and-goto-next-match
+             evil-mc-skip-and-goto-prev-cursor
+             evil-mc-make-all-cursors)
   :config
   (global-evil-mc-mode 1)
   (setq evil-mc-custom-known-commands

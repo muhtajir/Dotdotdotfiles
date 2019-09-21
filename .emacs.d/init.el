@@ -98,6 +98,9 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; mu4e
+(require 'mu4e)
+
 ;; sexier builtin help
 (use-package helpful
   :defer t
@@ -138,6 +141,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
 
 (use-package pcre2el
   :defer t)
+
+(use-package projectile
+  :hook (prog-mode . projectile-mode))
 
 (use-package quickrun
   :commands quickrun

@@ -106,7 +106,7 @@
     "b"             'nswbuff-switch-to-next-buffer
     "B"             (general-lambda
                      (let ((ivy-use-virtual-buffers t))
-                       (ivy-switch-buffer)))
+                       (counsel-switch-buffer)))
     "k"             'kill-this-buffer
     "v"             'evil-window-split
     "s"             'evil-window-vsplit

@@ -1,7 +1,10 @@
 (use-package flx)
 
 (use-package counsel
-  :after flx
+  :commands (counsel-evil-registers
+             counsel-recentf
+             counsel-ag
+             counsel-switch-buffer)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-initial-inputs-alist nil)
@@ -17,10 +20,9 @@
     (let ((ag-root (read-file-name "ag root: ")))
       (counsel-ag nil ag-root))))
 
-(use-package projectile
-  :hook (prog-mode . projectile-mode))
-
 (use-package counsel-projectile
-  :defer t)
+  :after (counsel projectil)
+  :commands (counsel-projectile-switch-project
+             counsel-projectile-find-file))
 
 (provide 'init-ivy)

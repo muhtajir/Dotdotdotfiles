@@ -1,5 +1,3 @@
-(require 'cl)
-
 ;; make shell scripts executable after save if they include a shebang
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
@@ -120,7 +118,7 @@
   (setq flycheck-flake8-maximum-line-length 200))
 
 (use-package yasnippet
-  :hook ((text-mode prog-mode) . yas-minor-mode)
+  :hook ((emacs-lisp-mode go-mode fish-mode snippet-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
   ;; bind this here because yas-maybe-expanded needs to be loaded first
@@ -137,6 +135,8 @@
 
 
   ;; yas related functions
+  (require 'cl)
+
   (defun* my/yas-func-padding (count &optional down)
     "Add COUNT empty lines above current position.
 

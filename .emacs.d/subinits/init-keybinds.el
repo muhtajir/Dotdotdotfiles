@@ -8,10 +8,6 @@
   (general-create-definer general-def-goleader
     :prefix "g")
 
-  (general-create-definer general-def-local
-    :prefix "C-c")
-
-
   ;; normal state keybinds
   (general-def
     :states         'normal
@@ -178,7 +174,7 @@
   (general-def
     :states         'normal
     :keymaps        '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map
-                                       quickrun--mode-map magit-mode-map)
+                                       quickrun--mode-map magit-mode-map xref--xref-buffer-mode-map)
     "q"             'quit-window)
 
   (general-def
@@ -294,21 +290,29 @@
 
   ;; go-mode keybinds
   (general-def-leader
-    :states         'normal
-    :keymaps        'go-mode-map
-    "hx"            'godoc-at-point
-    "hF"            'godoc)
+   :states          'normal         
+   :keymaps         'go-mode-map
+   "ci"             'go-import-add)
+
+  ;;lsp-mode keybinds
+  (general-def-leader
+    :states         'motion
+    :keymaps        'lsp-mode-map
+    "hx"            'lsp-describe-thing-at-point)
+  
+  (general-def-goleader
+    :states         'motion
+    :keymaps        'lsp-mode-map
+    "d"             'lsp-find-definition
+    "D"             (general-lambda
+                     (lsp-find-definition :display-action 'window))
+    "="             'lsp-format-buffer
+    "*"             'lsp-find-references)
 
   (general-def-goleader
-    :states         'normal
-    :keymaps        'go-mode-map
-    "d"             'godef-jump
-    "D"             'godef-jump-other-window)
-
-  (general-def-local
-    :states          'normal
-    :keymaps         'go-mode-map
-    "i"              'go-import-add)
+   :states          'visual
+   :keymaps         'lsp-mode-map
+   "="              'lsp-format-region)
 
   ;; markdown-mode keybinds
   (general-def-leader
@@ -348,28 +352,16 @@
     :states         'normal
     :keymaps        'python-mode-map
     "C-$"           'run-python
-    "cB"            'my/python-remove-breakpoints)
+    "cB"            'my/python-remove-breakpoints
+    "S-<return>"    (general-lambda
+                     (if (string-match-p "^test_" (buffer-file-name))
+                         'my/python-test
+                       'quickrun)))
 
   (general-def
     :states         'insert
     :keymaps        'inferior-python-mode-map
     "<return>"      'comint-send-input)
-
-  (general-def-leader
-    :states         'normal
-    :keymaps        'jedi-mode-map
-    "hF"            'jedi:doc-mode
-    "hx"            'jedi:show-doc
-    "S-<return>"    (general-lambda
-                     (if (string-match-p "^test_" (buffer-file-name))
-                         'my/python-test
-                       'quickrun)))
-  
-  (general-def-goleader
-    :states         'normal
-    :keymaps        'jedi-mode-map
-    "d"             'jedi:goto-definition
-    "D"             'jedi:goto-definition-pop-marker)
 
   ;; (e-)lisp keybinds
   (general-def

@@ -12,11 +12,12 @@
 
 ;; language server
 (use-package lsp-mode
-  :hook ((go-mode python-mode) . lsp-deferred)
+  :hook ((python-mode go-mode) . lsp-deferred)
+  :init
+  (add-hook 'python-mode-hook (lambda () (require 'lsp-pyls)))
+  (add-hook 'go-mode-hook (lambda () (require 'lsp-go)))
   :config
-  (setq lsp-auto-configure nil)
-  (require 'lsp-pyls)
-  (require 'lsp-go))
+  (setq lsp-auto-configure nil))
 
 ;; autocompletion
 (use-package company
@@ -54,16 +55,9 @@
   (setq company-quickhelp-delay 0))
 
 (use-package company-lsp
-  :commands (company-lsp)
-  :init
-  (my/add-hooks
-   (lambda ()
-     (add-to-list 'company-backends #'company-lsp))
-   'python-mode-hook 'go-mode-hook))
-
-(use-package company-go
-  :hook (go-mode . (lambda ()
-                     (add-to-list 'company-backends 'company-go))))
+  :commands company-lsp
+  :hook ((python-mode go-mode) . (lambda ()
+     (add-to-list 'company-backends #'company-lsp))))
 
 (use-package company-auctex
   :after (company tex))
@@ -213,8 +207,21 @@ If decorator syntax is found a line above the current, don't do any padding."
         (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
 ;; use smartparens in elisp
-(use-package smartparens
-  :commands (sp-down-sexp sp-backward-up-sexp))
+(use-package evil-smartparens
+  :hook (((emacs-lisp-mode lisp-interaction-mode) . evil-smartparens-mode)
+         (evil-smartparens-mode . smartparens-strict-mode))
+  :config
+  (mapc (lambda (open)
+          (sp-pair open nil :actions :rem))
+        '("\\\\("
+          "\\{"
+          "\\("
+          "\\\""
+          "\""
+          "'"
+          "["
+          "{"
+          "`")))
 
 ;; mark text after column 80 in prog-modes (but not elisp because headaches)
 (use-package column-enforce-mode

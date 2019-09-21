@@ -64,7 +64,7 @@
 
 ;; syntax checking
 (use-package flycheck
-  :hook ((emacs-lisp-mode python-mode go-mode LaTeX-mode) . flycheck-mode)
+  :hook ((python-mode go-mode LaTeX-mode) . flycheck-mode)
   :config
   ;; flycheck buffer when entering normal state
   (defun my/flycheck-upon-normal-entry ()

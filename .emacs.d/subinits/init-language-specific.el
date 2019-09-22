@@ -208,8 +208,12 @@ If decorator syntax is found a line above the current, don't do any padding."
 
 ;; use smartparens in elisp
 (use-package evil-smartparens
-  :hook (((emacs-lisp-mode lisp-interaction-mode) . evil-smartparens-mode)
-         (evil-smartparens-mode . smartparens-strict-mode))
+  :commands (evil-sp-delete
+             evil-sp-delete-line
+             evil-sp-change
+             evil-sp-change-line
+             sp-backward-up-sexp ;smartparens is loaded as a dependency
+             sp-down-sexp)
   :config
   (mapc (lambda (open)
           (sp-pair open nil :actions :rem))

@@ -12,7 +12,9 @@
   (general-def
     :keymaps            'override
     "<f1>"              'eww
-    "<f2>"              'mu4e)
+    "S-<f1>"            (general-lambda (my/split-window-and-do (call-interactively 'eww)))
+    "<f2>"              'mu4e
+    "S-<f2>"            (general-lambda (my/split-window-and-do (mu4e))))
 
   ;; normal state keybinds
   (general-def
@@ -42,7 +44,8 @@
     "C-S-s"         'vr/query-replace
     "r"             nil
     "r"             'evil-replace-with-register
-    "G"             'magit-status)
+    "G"             'magit-status
+    "c"             'evil-commentary)
 
   (general-def-goleader
     :states         'motion
@@ -376,12 +379,26 @@
     :keymaps        'inferior-python-mode-map
     "<return>"      'comint-send-input)
 
-  ;; (e-)lisp keybinds
+  ;; smartparens bindings
   (general-def
     :states         'motion
     :keymaps        'lisp-mode-shared-map
     "{"             'sp-backward-up-sexp
     "}"             'sp-down-sexp)
+
+  (general-def
+    :states         'normal
+    :keymaps        'lisp-mode-shared-map
+    "D"             'evil-sp-delete-line
+    "d"             'evil-sp-delete
+    "C"             'evil-sp-change-line
+    "c"             'evil-sp-change)
+
+  (general-def
+    :states         'visual
+    :keymaps        'lisp-mode-shared-map
+    "D"             'evil-sp-delete-line
+    "d"             'evil-sp-delete)
 
   (general-def-leader
     :states         'motion

@@ -21,6 +21,9 @@
 ;; enable sourcing from init scripts in emacs.d/subinits
 (add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
 
+;; use pass or an encrypted file for auth-sources
+(setq auth-sources `(password-store ,(expand-file-name "authinfo.gpg" user-emacs-directory)))
+
 ;; setup package management with straight.el and use-package
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -42,26 +45,32 @@
 (setq sentence-end-double-space nil)
 
 ;; autoload custom functions early
-(mapc (lambda (func)
-        (autoload func "init-my-functions.el"))
-      #'(my/add-hooks
-         my/get-line
-         my/sudo-find-file
-         my/dired-mark-toggle
-         my/eshell
-         my/eval-visual-region
-         my/eval-normal-line
-         my/fcitx-init
-         my/open-line-above
-         my/python-remove-breakpoints
-         my/python-test
-         my/source-ssh-env
-         my/straight-update
-         my/term))
+(use-package init-my-functions
+  :straight nil
+  :commands (my/split-window-and-do
+             my/add-hooks
+             my/get-line
+             my/sudo-find-file
+             my/dired-mark-toggle
+             my/eshell
+             my/eval-visual-region
+             my/eval-normal-line
+             my/open-line-above
+             my/python-remove-breakpoints
+             my/python-test
+             my/source-ssh-env
+             my/split-window-sensibly
+             my/straight-update))
 
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+
+;; window splitting settings
+(setq split-width-threshold 80)
+(setq split-height-threshold 30)
+;; WHY is vertical splitting preferred over horizontal?
+(setq split-window-preferred-function 'my/split-window-sensibly)
 
 ;; load up org-mode with workarounds
 (require 'init-org-mode)
@@ -99,7 +108,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; mu4e
-(require 'mu4e)
+(require 'init-mu4e)
 
 ;; sexier builtin help
 (use-package helpful

@@ -1,10 +1,6 @@
 (use-package flx)
 
 (use-package counsel
-  :commands (counsel-evil-registers
-             counsel-recentf
-             counsel-ag
-             counsel-switch-buffer)
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-initial-inputs-alist nil)

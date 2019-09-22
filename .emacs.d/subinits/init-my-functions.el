@@ -1,5 +1,13 @@
 (require 'cl)
 
+;; macros
+(defmacro my/split-window-and-do (&rest funcs)
+  `(progn
+     (ignore-errors
+       (select-window (split-window-sensibly)))
+     ,@funcs))
+
+;; functions
 (defun my/add-hooks (func &rest hooks)
   "Add FUNC to multiple HOOKS at once."
   (mapc (lambda (hook)
@@ -77,13 +85,6 @@ Start eshell if it isn't running already."
         (setq reg-start (point))))
     (eval-region reg-start reg-end t)))
 
-(defun my/fcitx-init ()
-  "Enable fcitx input support."
-  (interactive)
-    (fcitx-default-setup)
-    (when (eq system-type 'gnu/linux)
-      (setq fcitx-use-dbus t)))
-
 (defun my/open-line-above (line)
   "Really open LINE lines above instead of just prepending them to the beginning of the line or something."
   (interactive "p")
@@ -130,6 +131,38 @@ Start eshell if it isn't running already."
              (setq pos2 (- (point) 1))
              (setenv var-str (buffer-substring-no-properties pos1 pos2)))
            var-strs))))))
+
+(defun my/split-window-sensibly (&optional window)
+  "Copied from standard function but with preference for horizontal split."
+  (let ((window (or window (selected-window))))
+    (or (and (window-splittable-p window t)
+             ;; Split window horizontally.
+             (with-selected-window window
+               (split-window-right)))
+        (and (window-splittable-p window)
+             ;; Split window vertically.
+             (with-selected-window window
+               (split-window-below))) (and
+             ;; If WINDOW is the only usable window on its frame (it is
+             ;; the only one or, not being the only one, all the other
+             ;; ones are dedicated) and is not the minibuffer window, try
+             ;; to split it vertically disregarding the value of
+             ;; `split-height-threshold'.
+             (let ((frame (window-frame window)))
+               (or
+                (eq window (frame-root-window frame))
+                (catch 'done
+                  (walk-window-tree (lambda (w)
+                                      (unless (or (eq w window)
+                                                  (window-dedicated-p w))
+                                        (throw 'done nil)))
+                                    frame)
+                  t)))
+             (not (window-minibuffer-p window))
+             (let ((split-height-threshold 0))
+               (when (window-splittable-p window)
+                 (with-selected-window window
+                   (split-window-below))))))))
 
 (defun my/straight-update ()
   "Fetch, merge and rebuild all straight packages."

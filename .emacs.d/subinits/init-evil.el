@@ -92,12 +92,10 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
 (use-package evil-commentary
   :commands (evil-commentary
              evil-commentary-yank
-             evil-commentary-line)
-  :config
-  (evil-commentary-mode 1))
+             evil-commentary-line))
 
 (use-package evil-surround
-  :commands evil-surround-operation
+  :after evil
   :config
   (global-evil-surround-mode 1))
 

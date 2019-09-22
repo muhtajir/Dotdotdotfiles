@@ -20,3 +20,5 @@
         mu4e-trash-folder         "/Trash"
         mu4e-refile-folder        "/Archiv"
         mu4e-get-mail-command     "mbsync -V posteo"))
+
+(provide 'init-mu4e)

@@ -23,8 +23,6 @@ function __fish_set_universal_variables
     # environment variables used by other programs
     # fzf
     __fish_config_fzf
-    # pass
-    set -Ux PASSWORD_STORE_DIR $HOME/.local/share/.password-store
 
     # shell and pager color settings
     set -Ux LS_COLORS 'ow=34'

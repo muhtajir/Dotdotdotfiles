@@ -67,8 +67,8 @@
 (setq-default tab-width 4)
 
 ;; window splitting settings
-(setq split-width-threshold 80)
-(setq split-height-threshold 30)
+(setq split-width-threshold 160)
+(setq split-height-threshold 50)
 ;; WHY is vertical splitting preferred over horizontal?
 (setq split-window-preferred-function 'my/split-window-sensibly)
 

@@ -4,7 +4,7 @@
 (defmacro my/split-window-and-do (&rest funcs)
   `(progn
      (ignore-errors
-       (select-window (split-window-sensibly)))
+       (select-window (funcall split-window-preferred-function)))
      ,@funcs))
 
 ;; functions

@@ -1,5 +1,3 @@
-(require 'cl)
-
 ;; macros
 (defmacro my/split-window-and-do (&rest funcs)
   `(progn

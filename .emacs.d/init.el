@@ -1,5 +1,3 @@
-(require 'cl)
-
 ;; get rid of the custom blabla by using custom-file
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)

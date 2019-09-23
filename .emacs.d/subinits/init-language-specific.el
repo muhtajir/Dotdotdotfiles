@@ -135,8 +135,6 @@
 
 
   ;; yas related functions
-  (require 'cl)
-
   (defun* my/yas-func-padding (count &optional down)
     "Add COUNT empty lines above current position.
 

@@ -396,7 +396,7 @@ config.bind('<Ctrl-Shift-f>', 'rl-forward-word', mode='prompt')
 # one day these might be supported in insert mode as well... until then at
 # least unbind them
 config.unbind('<Ctrl-e>', mode='insert')
-config.bind('<Ctrl-q>', 'open-editor', mode='insert')
+config.bind('<Ctrl-z>', 'open-editor', mode='insert')
 
 ## Per-domain settings
 # SSH tunneling

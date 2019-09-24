@@ -107,7 +107,7 @@
                                           (concat (substring dir 0 2)
                                                   (substring dir -2))
                                         dir)))
-                                   (subseq dir-list 0 (- (length dir-list) 2)))))
+                                   (cl-subseq dir-list 0 (- (length dir-list) 2)))))
                    (last-part-str
                     (concat
                      (file-name-as-directory (car (last dir-list 2)))

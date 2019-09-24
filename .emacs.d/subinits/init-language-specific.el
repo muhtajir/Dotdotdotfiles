@@ -40,7 +40,6 @@
   (evil-declare-not-repeat #'my/company-select-next)
   (evil-declare-not-repeat #'my/company-select-previous))
 
-
 (use-package company-flx
   :after company
   :config
@@ -135,7 +134,7 @@
 
 
   ;; yas related functions
-  (defun* my/yas-func-padding (count &optional down)
+  (cl-defun my/yas-func-padding (count &optional down)
     "Add COUNT empty lines above current position.
 
 If DOWN is non-nil, then add lines below instead."

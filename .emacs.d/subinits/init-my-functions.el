@@ -116,7 +116,7 @@ Start eshell if it isn't running already."
 (defun my/source-ssh-env ()
   "Read environment variables for the ssh environment from '~/.ssh/environment'."
   (let (pos1 pos2 (var-strs '("SSH_AUTH_SOCK" "SSH_AGENT_PID")))
-    (unless (some 'getenv var-strs)
+    (unless (cl-some 'getenv var-strs)
       (with-temp-buffer
         (ignore-errors
           (insert-file-contents "~/.ssh/environment")
@@ -167,5 +167,23 @@ Start eshell if it isn't running already."
   (interactive)
   (straight-pull-all)
   (straight-rebuild-all))
+
+(defun my/toggle-scratch-buffer ()
+  "Go back and forth between scratch buffer and most recent other buffer."
+  (interactive)
+  (if (string= (buffer-name) "*scratch*")
+      (evil-switch-to-windows-last-buffer)
+    (switch-to-buffer "*scratch*")))
+
+(defun my/window-clear-side ()
+  "Clear selected pane from vertically split windows."
+  (interactive)
+  (cl-flet ((clear
+            (direction)
+            (while
+                (ignore-errors
+                  (funcall (intern (concat "windmove-" direction))))
+              (delete-window))))
+    (mapc #'clear (list "up" "down"))))
 
 (provide 'init-my-functions)

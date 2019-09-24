@@ -203,14 +203,9 @@ If decorator syntax is found a line above the current, don't do any padding."
           ""
         (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
-;; use smartparens in elisp
-(use-package evil-smartparens
-  :commands (evil-sp-delete
-             evil-sp-delete-line
-             evil-sp-change
-             evil-sp-change-line
-             sp-backward-up-sexp ;smartparens is loaded as a dependency
-             sp-down-sexp)
+;; use cleverparens in elisp
+(use-package smartparens
+  :commands smartparens-strict-mode
   :config
   (mapc (lambda (open)
           (sp-pair open nil :actions :rem))
@@ -223,6 +218,9 @@ If decorator syntax is found a line above the current, don't do any padding."
           "["
           "{"
           "`")))
+
+(use-package evil-cleverparens
+  :hook ((emacs-lisp-mode lisp-evaluation-mode) . (lambda () (smartparens-strict-mode)))) ; why does it have to be like this?
 
 ;; mark text after column 80 in prog-modes (but not elisp because headaches)
 (use-package column-enforce-mode

@@ -8,6 +8,23 @@
   (general-create-definer general-def-goleader
     :prefix "g")
 
+  ;; use these EVERYWHERE
+  (general-def
+    :keymaps            'override
+    :states             '(motion emacs)
+    "M-o"               'delete-other-windows
+    "M-c"               'delete-window
+    "M-C"               'my/window-clear-side
+    "M-h"               'evil-window-left
+    "M-j"               'evil-window-down
+    "M-k"               'evil-window-up
+    "M-l"               'evil-window-right)
+
+  (general-def-leader
+    :keymaps            'override
+    :states             '(motion emacs)
+    "<tab>"             'evil-switch-to-windows-last-buffer)
+
   ;; global F-key binds
   (general-def
     :keymaps            'override
@@ -49,10 +66,10 @@
 
   (general-def-goleader
     :states         'motion
-    "s"             (general-lambda
-                     (if (string= (buffer-name) "*scratch*")
-                         (evil-switch-to-windows-last-buffer)
-                      (switch-to-buffer "*scratch*"))))
+    "s"             'my/toggle-scratch-buffer
+    "S"             (general-lambda
+                     (my/split-window-and-do
+                      (my/toggle-scratch-buffer))))
 
   ;; motion state keybinds
   (general-def
@@ -76,12 +93,6 @@
                          (evil-force-normal-state))
     "C-s"               'vr/isearch-forward
     "C-S-s"             'vr/isearch-backward
-    "M-o"               'delete-other-windows
-    "M-c"               'delete-window
-    "M-h"               'evil-window-left
-    "M-j"               'evil-window-down
-    "M-k"               'evil-window-up
-    "M-l"               'evil-window-right
     "M-H"               'helpful-kill-buffers
     "Q"                 'counsel-projectile-find-file
     "{"                 'evil-backward-sentence-begin
@@ -120,10 +131,8 @@
     "X"             'evil-window-delete
     "q"             'find-file
     "Q"             'my/sudo-find-file
-    "<tab>"         'evil-switch-to-windows-last-buffer
     "Yn"            'yas-new-snippet
     "Ye"            'yas-visit-snippet-file)
-
 
   ;; visual keybinds
   (general-def
@@ -340,10 +349,6 @@
   (general-def
     :states         'emacs
     :keymaps        'magit-mode-map
-    "M-h"           'evil-window-left
-    "M-j"           'evil-window-down
-    "M-k"           'evil-window-up
-    "M-l"           'evil-window-right
     "j"             'magit-section-forward
     "k"             'magit-section-backward
     "p"             'magit-push
@@ -355,7 +360,42 @@
     "Jz"            'magit-jump-to-stashes
     "Jt"            'magit-jump-to-tracked)
 
-  ;; nswbuff keybindings
+  ;; mu4e keybindings
+  (general-def
+    :states         'emacs
+    :keymaps        '(mu4e-main-mode-map
+                      mu4e-headers-mode-map
+                      mu4e-compose-mode-map)
+    "J"             'mu4e~headers-jump-to-maildir)
+
+  (general-def
+    :states         'emacs
+    :keymaps        'mu4e-headers-mode-map
+    "J"             'mu4e~headers-jump-to-maildir
+    "j"             'mu4e-headers-next
+    "k"             'mu4e-headers-prev
+    "C-j"           'mu4e-headers-next-unread
+    "C-k"           'mu4e-headers-prev-unread
+    "/"             'mu4e-headers-search
+    "S"             'mu4e-headers-change-sorting
+    "<tab>"         'mu4e-headers-toggle-include-related
+    "t"             'my/mu4e-mark-toggle
+    "T"             'mu4e-headers-mark-pattern
+    "%"             'my/mu4e-headers-mark-pattern
+    "$"             'mu4e-mark-execute-all)
+
+  (general-def-leader
+    :states         'emacs
+    :keymaps        'mu4e-headers-mode-map
+    "%"             'mu4e-headers-mark-pattern
+    "/"             'mu4e-headers-search-narrow)
+
+  (general-def-goleader
+    :states         'emacs
+    :keymaps        'mu4e-headers-mode-map
+    "/"             'mu4e-headers-search-edit)
+
+  ;; nswbuf keybindings
   (general-def
     :keymaps        'nswbuff-override-map
     "j"             'nswbuff-switch-to-previous-buffer
@@ -383,22 +423,38 @@
   (general-def
     :states         'motion
     :keymaps        'lisp-mode-shared-map
-    "{"             'sp-backward-up-sexp
-    "}"             'sp-down-sexp)
+    "W"             'evil-cp-forward-symbol-begin
+    "E"             'evil-cp-forward-symbol-end
+    "B"             'evil-cp-backward-symbol-begin
+    "}"             'evil-cp-forward-sexp
+    "{"             'evil-cp-backward-sexp
+    "["             'evil-cp-previous-opening
+    "]"             'evil-cp-next-closing
+    "Y"             'evil-cp-yank-line
+    "0"             'evil-cp-first-non-blank-non-opening)
 
   (general-def
     :states         'normal
     :keymaps        'lisp-mode-shared-map
-    "D"             'evil-sp-delete-line
-    "d"             'evil-sp-delete
-    "C"             'evil-sp-change-line
-    "c"             'evil-sp-change)
+    "d"             'evil-cp-delete
+    "c"             'evil-cp-change
+    "y"             'evil-cp-yank
+    "D"             'evil-cp-delete-line
+    "C"             'evil-cp-change-line
+    "x"             'evil-cp-delete-char-or-splice
+    "X"             'evil-cp-delete-char-or-splice-backwards
+    ">"             'evil-cp->
+    "<"             'evil-cp-<)
 
-  (general-def
-    :states         'visual
+  (general-def-goleader
+    :states         'motion
     :keymaps        'lisp-mode-shared-map
-    "D"             'evil-sp-delete-line
-    "d"             'evil-sp-delete)
+    "("             'evil-cp-backward-up-sexp
+    ")"             'evil-cp-up-sexp
+    "}"             'evil-cp-next-opening
+    "{"             'evil-cp-previous-closing
+    "E"             'evil-cp-backward-symbol-end)
+    
 
   (general-def-leader
     :states         'motion

@@ -58,7 +58,9 @@
              my/python-test
              my/source-ssh-env
              my/split-window-sensibly
-             my/straight-update))
+             my/straight-update
+             my/toggle-scratch-buffer
+             my/window-clear-side))
 
 ;; Indentation settings (no TABs)
 (setq-default indent-tabs-mode nil)
@@ -157,6 +159,9 @@ Replace buffer/window if in helpful-mode, lazy-open otherwise."
   :config
   (setq quickrun-focus-p nil))
 
+(use-package restart-emacs
+  :commands restart-emacs)
+
 (use-package shackle
   :config
   (shackle-mode 1)
@@ -205,9 +210,9 @@ Start terminal if it isn't running already."
 
 (require 'init-evil)
 
-(require 'init-keybinds)
-
 (require 'init-language-specific)
+
+(require 'init-keybinds)
 
 (use-package f)
 

@@ -142,18 +142,18 @@
                       display-line-numbers-current-absolute t))
               'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
 
-(use-package sublimity
-  :commands sublimity-mode
-  :init
-  (my/add-hooks (lambda ()
-                  (if (> (count-lines 1 (point-max)) 80)
-                      (sublimity-mode 1)
-                    (sublimity-mode 0)))
-                'prog-mode-hook 'text-mode-hook)
-  :config
-  (add-to-list 'sublimity-disabled-major-modes 'term-mode)
-  (require 'sublimity-scroll)
-  (setq sublimity-scroll-weight 8)
-  (setq sublimity-scroll-drift-length 2))
+;; (use-package sublimity
+;;   :commands sublimity-mode
+;;   :init
+;;   (my/add-hooks (lambda ()
+;;                   (if (> (count-lines 1 (point-max)) 80)
+;;                       (sublimity-mode 1)
+;;                     (sublimity-mode 0)))
+;;                 'prog-mode-hook 'text-mode-hook)
+;;   :config
+;;   (add-to-list 'sublimity-disabled-major-modes 'term-mode)
+;;   (require 'sublimity-scroll)
+;;   (setq sublimity-scroll-weight 8)
+;;   (setq sublimity-scroll-drift-length 2))
 
 (provide 'init-gui-setup)

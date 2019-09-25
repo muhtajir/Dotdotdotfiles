@@ -19,7 +19,7 @@
         mu4e-drafts-folder        "/Drafts"
         mu4e-trash-folder         "/Trash"
         mu4e-refile-folder        "/Archiv"
-        mu4e-get-mail-command     "mbsync -V posteo"
+        mu4e-get-mail-command     "mbsync posteo"
         mu4e-user-mail-address-list '("{{MAIL_ADDRESS}}"))
   ;; headers view
   (setq mu4e-use-fancy-chars t
@@ -27,7 +27,8 @@
                              (:flags . 6)
                              (:from-or-to . 22)
                              (:subject)))
-  (setq mu4e-confirm-quit nil)
+  (setq mu4e-confirm-quit nil
+        mu4e-change-filenames-when-moving t)
 
   (defun my/mu4e-mark-toggle ()
     (interactive)

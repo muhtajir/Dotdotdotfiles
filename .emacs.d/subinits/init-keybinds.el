@@ -14,7 +14,7 @@
     :states             '(motion emacs)
     "M-o"               'delete-other-windows
     "M-c"               'delete-window
-    "M-C"               'my/window-clear-side
+    "M-O"               'my/window-clear-side
     "M-h"               'evil-window-left
     "M-j"               'evil-window-down
     "M-k"               'evil-window-up

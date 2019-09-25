@@ -1,3 +1,7 @@
+;; default indentation settings (no TABs) - other settings on a per-mode basis
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 ;; make shell scripts executable after save if they include a shebang
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
@@ -226,6 +230,9 @@ If decorator syntax is found a line above the current, don't do any padding."
 (use-package column-enforce-mode
   :hook ((python-mode go-mode) . column-enforce-mode))
 
+;; suggest for help with elisp
+(use-package suggest
+  :commands suggest)
 
 ;; language specific major modes and their settings
 (use-package fish-mode

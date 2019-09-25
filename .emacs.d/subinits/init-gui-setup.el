@@ -43,16 +43,44 @@
 (blink-cursor-mode 0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq echo-keystrokes .01)
-(setq eldoc-idle-delay .8)
+(setq eldoc-idle-delay .45)
 (setq-default fill-column 80)
 (my/add-hooks #'hl-line-mode 'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
 
+;; window splitting settings
+(setq split-width-threshold 160)
+(setq split-height-threshold 50)
+;; WHY is vertical splitting preferred over horizontal?
+(setq split-window-preferred-function 'my/split-window-sensibly)
+
+;; highlight cursor when scrolling
+(use-package beacon
+  :hook ((prog-mode text-mode conf-mode) . beacon-mode)
+  :config
+  (beacon-mode)
+  (setq beacon-color (concat "#" (getenv "__BASE04"))
+        beacon-blink-when-window-changes nil
+        beacon-blink-when-buffer-changes nil
+        beacon-blink-delay 0.05
+        beacon-blink-duration 0.25
+        beacon-size 20
+        beacon-push-mark nil))
+
+;; delimiter highlighting and matching
+(setq electric-pair-open-newline-between-pairs t)
+(my/add-hooks #'electric-pair-mode 'prog-mode-hook 'text-mode-hook)
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; quick buffer switching
 (use-package nswbuff
   :commands nswbuff-switch-to-next-buffer
   :config
   (setq nswbuff-delay-switch t)
   (add-to-list 'nswbuff-exclude-buffer-regexps "^\\*.*\\*$"))
 
+;; modeline
 (use-package telephone-line
   :config
   (telephone-line-defsegment telephone-line-my-projectile-segment ()
@@ -63,8 +91,7 @@
            (branch-str (unless (string= branch "master")
                          (concat "[" branch "]"))))
         (concat (projectile-project-name) branch-str))
-      (file-name-base (directory-file-name (file-name-directory (buffer-file-name))))
-))
+      (file-name-base (directory-file-name (file-name-directory (buffer-file-name))))))
 
   (telephone-line-defsegment telephone-line-my-flycheck-segment ()
     (when (bound-and-true-p flycheck-mode)
@@ -141,19 +168,5 @@
                       display-line-numbers-widen t
                       display-line-numbers-current-absolute t))
               'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
-
-;; (use-package sublimity
-;;   :commands sublimity-mode
-;;   :init
-;;   (my/add-hooks (lambda ()
-;;                   (if (> (count-lines 1 (point-max)) 80)
-;;                       (sublimity-mode 1)
-;;                     (sublimity-mode 0)))
-;;                 'prog-mode-hook 'text-mode-hook)
-;;   :config
-;;   (add-to-list 'sublimity-disabled-major-modes 'term-mode)
-;;   (require 'sublimity-scroll)
-;;   (setq sublimity-scroll-weight 8)
-;;   (setq sublimity-scroll-drift-length 2))
 
 (provide 'init-gui-setup)

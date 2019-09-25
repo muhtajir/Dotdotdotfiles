@@ -2,6 +2,7 @@
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)
   (write-region "" "" custom-file))
+(load (expand-file-name custom-file user-emacs-directory))
 
 ;; set up default browser
 (setq browse-url-generic-program "qutebrowser")
@@ -17,30 +18,15 @@
       emacs-tmp-dir)
 
 ;; enable sourcing from init scripts in emacs.d/subinits
-(add-to-list 'load-path (expand-file-name "subinits" user-emacs-directory))
+(push (expand-file-name "subinits" user-emacs-directory) load-path)
 
 ;; use pass or an encrypted file for auth-sources
 (setq auth-sources `(password-store ,(expand-file-name "authinfo.gpg" user-emacs-directory)))
 
-;; setup package management with straight.el and use-package
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
 ;; use more conservative sentence definition
 (setq sentence-end-double-space nil)
+
+(require 'init-package-management)
 
 ;; autoload custom functions early
 (use-package init-my-functions
@@ -62,16 +48,6 @@
              my/toggle-scratch-buffer
              my/window-clear-side))
 
-;; Indentation settings (no TABs)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-;; window splitting settings
-(setq split-width-threshold 160)
-(setq split-height-threshold 50)
-;; WHY is vertical splitting preferred over horizontal?
-(setq split-window-preferred-function 'my/split-window-sensibly)
-
 ;; load up org-mode with workarounds
 (require 'init-org-mode)
 
@@ -83,7 +59,7 @@
               (my/source-ssh-env))))
 
 ;; various mode setting options
-(add-to-list 'auto-mode-alist '(".gitignore" . prog-mode))
+(push '(".gitignore" . prog-mode) auto-mode-alist)
 
 ;; eshell settings
 (setq eshell-banner-message "")
@@ -100,12 +76,6 @@
       '(("German (Germany)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "de_DE"))
         ("English (US)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
         ("English (Australia)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_AU") nil utf-8)))
-
-;; delimiter highlighting and matching
-(setq electric-pair-open-newline-between-pairs t)
-(my/add-hooks #'electric-pair-mode 'prog-mode-hook 'text-mode-hook)
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; mu4e
 (require 'init-mu4e)
@@ -224,8 +194,6 @@ Start terminal if it isn't running already."
 
 (use-package dashboard
   :config
-  (add-hook 'emacs-startup-hook
-            (lambda () (set-window-fringes nil 4 4))) ; for correct line display
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'logo
         dashboard-center-content t

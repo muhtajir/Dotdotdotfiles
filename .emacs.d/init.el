@@ -218,7 +218,21 @@ Start terminal if it isn't running already."
 
 (require 'init-gui-setup)
 
-;; open todo.org on startup
-(add-hook 'after-init-hook (lambda ()
-                             (find-file (expand-file-name "~/Sync/Diverses/todo.org" (getenv "HOME")))
-                             (org-cycle)))
+;; dashboard
+(use-package all-the-icons
+  :defer t)
+
+(use-package dashboard
+  :config
+  (add-hook 'emacs-startup-hook
+            (lambda () (set-window-fringes nil 4 4))) ; for correct line display
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'logo
+        dashboard-center-content t
+        dashboard-set-file-icons t
+        dashboard-set-heading-icons t)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)
+                          (registers . 5))))

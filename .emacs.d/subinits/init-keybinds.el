@@ -31,7 +31,8 @@
     "<f1>"              'eww
     "S-<f1>"            (general-lambda (my/split-window-and-do (call-interactively 'eww)))
     "<f2>"              'mu4e
-    "S-<f2>"            (general-lambda (my/split-window-and-do (mu4e))))
+    "S-<f2>"            (general-lambda (my/split-window-and-do (mu4e)))
+    "M-<f12>"           'restart-emacs)
 
   ;; normal state keybinds
   (general-def
@@ -444,7 +445,9 @@
     "x"             'evil-cp-delete-char-or-splice
     "X"             'evil-cp-delete-char-or-splice-backwards
     ">"             'evil-cp->
-    "<"             'evil-cp-<)
+    "<"             'evil-cp-<
+    "S"             'evil-cp-change-whole-line
+    "s"             'evil-cp-substitute)
 
   (general-def-goleader
     :states         'motion

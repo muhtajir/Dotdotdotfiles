@@ -6,7 +6,7 @@ WINEARCH                      DEFAULT=win32
 
 # define default applications with some common variables
 EDITOR                        DEFAULT=nvim
-TERMINAL                      DEFAULT=termite
+TERMINAL                      DEFAULT=alacritty
 BROWSER                       DEFAULT=qutebrowser
 
 # define style for QT applications

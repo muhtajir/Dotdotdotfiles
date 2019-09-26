@@ -57,14 +57,19 @@
 (use-package beacon
   :hook ((prog-mode text-mode conf-mode) . beacon-mode)
   :config
-  (beacon-mode)
-  (setq beacon-color (concat "#" (getenv "__BASE04"))
+  (setq beacon-color (concat "#" (getenv "__BASE0C"))
         beacon-blink-when-window-changes nil
         beacon-blink-when-buffer-changes nil
-        beacon-blink-delay 0.05
+        beacon-blink-delay 0.1
         beacon-blink-duration 0.25
         beacon-size 20
-        beacon-push-mark nil))
+        beacon-push-mark nil)
+  (setq beacon-dont-blink-major-modes '(mu4e-main-mode))
+  (setq beacon-dont-blink-commands '(evil-ex-search-next
+                                     evil-ex-search-previous
+                                     exit-minibuffer
+                                     previous-line
+                                     next-line)))
 
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)

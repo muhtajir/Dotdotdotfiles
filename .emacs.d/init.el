@@ -48,6 +48,9 @@
              my/toggle-scratch-buffer
              my/window-clear-side))
 
+;; setup gui early to avoid modeline troubles
+(require 'init-gui-setup)
+
 ;; load up org-mode with workarounds
 (require 'init-org-mode)
 
@@ -186,8 +189,6 @@ Start terminal if it isn't running already."
 
 (use-package f)
 
-(require 'init-gui-setup)
-
 ;; dashboard
 (use-package all-the-icons
   :defer t)
@@ -203,4 +204,11 @@ Start terminal if it isn't running already."
                           (bookmarks . 5)
                           (projects . 5)
                           (agenda . 5)
-                          (registers . 5))))
+                          (registers . 5)))
+  (add-hook 'window-setup-hook (lambda ()
+                                 (evil-emacs-state)
+                                 (dashboard-next-section)
+                                 (dashboard-next-line 1)
+                                 (beacon-blink)))
+  ;; dashboard should ONLY be a starting point
+  (run-at-time 120 nil #'kill-buffer dashboard-buffer-name))

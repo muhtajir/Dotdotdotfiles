@@ -18,7 +18,7 @@
   (customize-set-variable 'evil-want-Y-yank-to-eol t)
 
   ;; evil-related-functions
-  (defun my/evil-dry-open-below (&optional line)
+  (defun my/evil-dry-open-below (line)
     "Open LINE number of lines below but stay in current line."
     (interactive "p")
     (save-excursion
@@ -44,7 +44,6 @@
     (interactive "p")
     (evil-with-single-undo
       (evil-open-below 1)
-      (evil-normal-state nil)
       (evil-paste-after count)
       (indent-according-to-mode)))
 

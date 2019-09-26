@@ -86,10 +86,10 @@ Start eshell if it isn't running already."
 (defun my/open-line-above (line)
   "Really open LINE lines above instead of just prepending them to the beginning of the line or something."
   (interactive "p")
-  (forward-line -1)
-  (end-of-line)
-  (open-line line)
-  (forward-line line))
+  (save-excursion
+   (forward-line -1)
+   (end-of-line)
+   (open-line line)))
 
 (defun my/python-remove-breakpoints ()
   "Remove all breakpoint declarations in buffer."

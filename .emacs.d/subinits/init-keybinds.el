@@ -161,8 +161,9 @@
     "C-S-b"         'backward-word
     "<backtab>"     'indent-relative
     "<return>"      'newline
-    "C-j"           'newline)
-  
+    "C-j"           'newline
+    "M-p"           'evil-paste-pop
+    "M-P"           'evil-paste-pop-next)
 
   ;; isearch keybinds
   (general-def
@@ -218,11 +219,11 @@
   (general-def
     :keymaps       'company-active-map
     "<tab>"        nil
-    "<return>"     (general-lambda
+    "S-<return>"   (general-lambda
                     (company-complete)
                     (company-pseudo-tooltip-hide)
                     (newline 1 t))
-    "S-<return>"   (general-lambda
+    "M-<return>"   (general-lambda
                     (company-abort)
                     (newline 1 t))
     "C-n"          'my/company-select-next
@@ -420,44 +421,19 @@
     :keymaps        'inferior-python-mode-map
     "<return>"      'comint-send-input)
 
-  ;; smartparens bindings
-  (general-def
-    :states         'motion
-    :keymaps        'lisp-mode-shared-map
-    "W"             'evil-cp-forward-symbol-begin
-    "E"             'evil-cp-forward-symbol-end
-    "B"             'evil-cp-backward-symbol-begin
-    "}"             'evil-cp-forward-sexp
-    "{"             'evil-cp-backward-sexp
-    "["             'evil-cp-previous-opening
-    "]"             'evil-cp-next-closing
-    "Y"             'evil-cp-yank-line
-    "0"             'evil-cp-first-non-blank-non-opening)
-
   (general-def
     :states         'normal
     :keymaps        'lisp-mode-shared-map
-    "d"             'evil-cp-delete
-    "c"             'evil-cp-change
-    "y"             'evil-cp-yank
     "D"             'evil-cp-delete-line
     "C"             'evil-cp-change-line
-    "x"             'evil-cp-delete-char-or-splice
-    "X"             'evil-cp-delete-char-or-splice-backwards
-    ">"             'evil-cp->
-    "<"             'evil-cp-<
-    "S"             'evil-cp-change-whole-line
-    "s"             'evil-cp-substitute)
+    "S"             'evil-cp-change-whole-line)
 
-  (general-def-goleader
+  (general-def-leader
     :states         'motion
     :keymaps        'lisp-mode-shared-map
-    "("             'evil-cp-backward-up-sexp
-    ")"             'evil-cp-up-sexp
-    "}"             'evil-cp-next-opening
-    "{"             'evil-cp-previous-closing
-    "E"             'evil-cp-backward-symbol-end)
-    
+    "e"             'my/eval-at-point
+    "E"             'my/eval-line
+    "C-e"           'eval-buffer)
 
   (general-def-leader
     :states         'motion

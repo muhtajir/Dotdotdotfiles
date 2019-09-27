@@ -207,26 +207,34 @@ If decorator syntax is found a line above the current, don't do any padding."
           ""
         (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
-;; use cleverparens in elisp
+;; mark text after column 80 in prog-modes (but not elisp because headaches)
+(use-package column-enforce-mode
+  :hook ((python-mode go-mode) . column-enforce-mode))
+
+
+;; language specific major modes and their settings
+;; elisp helpers
 (use-package evil-cleverparens
   :commands (evil-cp-delete-line
              evil-cp-change-line
              evil-cp-change-whole-line))
 
-;; mark text after column 80 in prog-modes (but not elisp because headaches)
-(use-package column-enforce-mode
-  :hook ((python-mode go-mode) . column-enforce-mode))
+(use-package pcre2el
+  :defer t)
 
-;; suggest for help with elisp
 (use-package suggest
   :commands suggest)
 
-;; language specific major modes and their settings
+;; shell scripting
 (use-package fish-mode
   :defer t
   :config
   (setq fish-enable-auto-indent t))
 
+(use-package pkgbuild-mode
+  :commands pkgbuild-mode)
+
+;; latex
 (use-package tex
   :straight auctex
   :defer t
@@ -239,15 +247,14 @@ If decorator syntax is found a line above the current, don't do any padding."
   (add-hook 'LaTeX-mode-hook 'company-mode)
   (add-hook 'LaTeX-mode-hook 'company-auctex-init))
 
+;; markdown
 (use-package markdown-mode
   :defer t)
+
 (use-package flymd
   :after markdown-mode
   :config
   (setq flymd-output-directory temporary-file-directory))
-
-(use-package pkgbuild-mode
-  :commands pkgbuild-mode)
 
 ;; python settings
 (add-hook
@@ -262,6 +269,7 @@ If decorator syntax is found a line above the current, don't do any padding."
    (setq-local column-enforce-column 79)
    (setq-local electric-pair-open-newline-between-pairs nil)))
 
+;; golang settings
 (use-package go-mode
   :commands go-mode)
 

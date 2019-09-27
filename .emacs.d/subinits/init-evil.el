@@ -15,68 +15,7 @@
                                 "q" nil)))
   (evil-mode 1)
   ;; sensible Y behavior
-  (customize-set-variable 'evil-want-Y-yank-to-eol t)
-
-  ;; evil-related-functions
-  (defun my/evil-dry-open-below (&optional line)
-    "Open LINE number of lines below but stay in current line."
-    (interactive "p")
-    (save-excursion
-      (end-of-line)
-      (open-line line)))
-
-  (defun my/evil-dry-open-above (line)
-    "Open LINE number of lines above but stay in current line."
-    (interactive "p")
-    ;; this does not work with save-excursion if it's done at the beginning of
-    ;; the buffer
-    (let ((col (current-column)))
-      (beginning-of-line)
-      (open-line line)
-      (forward-line line)
-      (move-to-column col)))
-
-  (defun my/evil-paste-with-newline-above (count)
-    "Paste COUNT times into a newly opened line above."
-    (interactive "p")
-    (evil-with-single-undo
-      (evil-save-state
-        (evil-open-above 1)
-        (evil-paste-after count)
-        (indent-according-to-mode))))
-
-  (defun my/evil-paste-with-newline-below (count)
-    "Paste COUNT times into a newly opened line above."
-    (interactive "p")
-    (evil-with-single-undo
-      (evil-save-state
-        (evil-open-below 1)
-        (evil-paste-after count)
-        (indent-according-to-mode))))
-
-  (defun my/evil-search-visual-selection (direction count)
-    "Search for visually selected text in buffer.
-DIRECTION can be forward or backward.  Don't know what COUNT does."
-    (when (> (mark) (point))
-      (exchange-point-and-mark))
-    (when (eq direction 'backward)
-      (setq count (+ (or count 1) 1)))
-    (let ((regex (format "\\<%s\\>" (regexp-quote (buffer-substring (mark) (point))))))
-      (setq evil-ex-search-count count
-            evil-ex-search-direction direction
-            evil-ex-search-pattern
-            (evil-ex-make-search-pattern regex)
-            evil-ex-search-offset nil
-            evil-ex-last-was-search t)
-      ;; update search history unless this pattern equals the
-      ;; previous pattern
-      (unless (equal (car-safe evil-ex-search-history) regex)
-        (push regex evil-ex-search-history))
-      (evil-push-search-history regex (eq direction 'forward))
-      (evil-ex-delete-hl 'evil-ex-search)
-      (evil-exit-visual-state)
-      (when (fboundp 'evil-ex-search-next)
-        (evil-ex-search-next count)))))
+  (customize-set-variable 'evil-want-Y-yank-to-eol t))
 
 (use-package vertigo
   :commands vertigo-set-digit-argument

@@ -27,7 +27,15 @@
 
 (require 'init-package-management)
 
-;; autoload custom functions early
+;; custom functions
+(defun my/add-hooks (func &rest hooks)
+  "Add FUNC to multiple HOOKS at once."
+  (mapc
+   (lambda (hook)
+     (add-hook hook func))
+   hooks))
+
+;; and everything that can be deferred goes in here
 (use-package init-my-functions
   :straight nil
   :commands (my/split-window-and-do
@@ -36,9 +44,14 @@
              my/sudo-find-file
              my/dired-mark-toggle
              my/eshell
+             my/eval-at-point
              my/eval-visual-region
              my/eval-normal-line
-             my/open-line-above
+             my/evil-dry-open-below
+             my/evil-dry-open-above
+             my/evil-paste-with-newline-above
+             my/evil-paste-with-newline-below
+             my/evil-search-visual-selection
              my/python-remove-breakpoints
              my/python-test
              my/source-ssh-env
@@ -53,148 +66,28 @@
 ;; load up org-mode with workarounds
 (require 'init-org-mode)
 
-;; tramp settings (so far not many)
-(setq tramp-default-method "ssh")
-(add-hook 'find-file-hook
-          (lambda ()
-            (when (file-remote-p default-directory)
-              (my/source-ssh-env))))
-
 ;; various mode setting options
 (push '(".gitignore" . prog-mode) auto-mode-alist)
 
-;; eshell settings
-(setq eshell-banner-message "")
-(add-hook 'eshell-exit-hook (lambda ()
-                              (when
-                                  (string= (buffer-name (window-buffer (selected-window)))
-                                           "*eshell*")
-                                (delete-window))))
-
-;; spellchecking settings
-(setq ispell-program-name "hunspell")
-(setq ispell-local-dictionary "de_DE")
-(setq ispell-local-dictionary-alist
-      '(("German (Germany)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "de_DE"))
-        ("English (US)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-        ("English (Australia)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_AU") nil utf-8)))
-
 ;; mu4e
 (require 'init-mu4e)
-
-;; sexier builtin help
-(use-package helpful
-  :defer t
-  :config
-  (setq helpful-switch-buffer-function 'my/helpful-buffer-other-window)
-  (setq helpful-max-buffers 2)
-
-
-  ;; helpful related functions
-  (defun my/helpful-buffer-other-window (buf)
-    "Display helpful buffer BUF the way I want it, ie:
-Replace buffer/window if in helpful-mode, lazy-open otherwise."
-    (let (sw)
-      (if (eq major-mode 'helpful-mode)
-          (progn
-            (quit-window)
-            (pop-to-buffer buf))
-        (progn (setq sw (selected-window))
-               (switch-to-buffer-other-window buf)))
-      (helpful-update)
-      (when sw (select-window sw)))))
-
-;; vimperator-style link-hints
-(use-package link-hint
-  :commands link-hint-open-link)
-
-(use-package magit
-  :commands magit-status
-  :hook ((magit-mode . my/source-ssh-env)
-         (with-editor-mode . evil-insert-state))
-  :config
-  (defun my/force-git-access ()
-    (interactive)
-      (let ((index-file (concat
-                         (projectile-project-root) (file-name-as-directory ".git") "index.lock")))
-        (when (yes-or-no-p (concat "Really delete " index-file "?"))
-          (delete-file index-file)))))
-
-(use-package pcre2el
-  :defer t)
-
-(use-package projectile
-  :hook (prog-mode . projectile-mode))
-
-(use-package quickrun
-  :commands quickrun
-  :config
-  (setq quickrun-focus-p nil))
-
-(use-package restart-emacs
-  :commands restart-emacs)
-
-(use-package shackle
-  :config
-  (shackle-mode 1)
-  (setq shackle-rules
-        '(("*eshell*"
-           :regexp t :select t :popup t :align below :size 0.2)
-          ("^\\*ansi-term.*"
-           :regexp t :select t :popup t :align below :size 0.2)
-          ('inferior-python-mode
-           :select t :popup t :align below :size 0.2)
-          ('vterm-mode
-           :select t :popup t :align below :size 0.2))))
-
-(use-package visual-regexp-steroids
-  :commands (vr/replace vr/query-replace vr/isearch-forward vr/isearch-backward)
-  :after pcre2el
-  :config
-  (setq vr/engine 'pcre2el))
-
-;; use locally installed package (from AUR) of emacs-vterm
-(use-package vterm
-  :straight nil
-  :commands my/vterm
-  :config
-  (defun my/vterm ()
-    "Hide or show vterm window.
-Start terminal if it isn't running already."
-    (interactive)
-    (let* ((vterm-buf "vterm")
-           (vterm-win (get-buffer-window vterm-buf)))
-      (if vterm-win
-          (progn
-            (select-window vterm-win)
-            (ignore-errors
-                (delete-process vterm--process))
-            (while (process-live-p vterm--process)
-              (ignore))
-            (kill-this-buffer)
-            (delete-window))
-        (if (get-buffer vterm-buf)
-            (pop-to-buffer vterm-buf)
-          (vterm-other-window))
-        (evil-insert-state)))))
 
 (require 'init-ivy)
 
 (require 'init-evil)
 
+(require 'init-emacs-extensions)
+
+(require 'init-general-programming)
+
 (require 'init-language-specific)
 
 (require 'init-keybinds)
-
-(use-package f)
 
 ;; load custom file late so it can make use of previously defined references
 (load (expand-file-name custom-file user-emacs-directory))
 
 ;; dashboard
-(use-package all-the-icons
-  :defer t)
-
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)

@@ -1,3 +1,6 @@
+;; carry data across sessions
+(desktop-save-mode)
+
 ;; sexier builtin help
 ;; eshell settings
 (setq eshell-banner-message "")

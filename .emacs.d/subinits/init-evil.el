@@ -18,7 +18,7 @@
   (customize-set-variable 'evil-want-Y-yank-to-eol t)
 
   ;; evil-related-functions
-  (defun my/evil-dry-open-below (line)
+  (defun my/evil-dry-open-below (&optional line)
     "Open LINE number of lines below but stay in current line."
     (interactive "p")
     (save-excursion
@@ -28,24 +28,31 @@
   (defun my/evil-dry-open-above (line)
     "Open LINE number of lines above but stay in current line."
     (interactive "p")
-    (save-excursion
-      (my/open-line-above line)))
+    ;; this does not work with save-excursion if it's done at the beginning of
+    ;; the buffer
+    (let ((col (current-column)))
+      (beginning-of-line)
+      (open-line line)
+      (forward-line line)
+      (move-to-column col)))
 
   (defun my/evil-paste-with-newline-above (count)
     "Paste COUNT times into a newly opened line above."
     (interactive "p")
     (evil-with-single-undo
-      (my/open-line-above 1)
-      (evil-paste-after count)
-      (indent-according-to-mode)))
+      (evil-save-state
+        (evil-open-above 1)
+        (evil-paste-after count)
+        (indent-according-to-mode))))
 
   (defun my/evil-paste-with-newline-below (count)
     "Paste COUNT times into a newly opened line above."
     (interactive "p")
     (evil-with-single-undo
-      (evil-open-below 1)
-      (evil-paste-after count)
-      (indent-according-to-mode)))
+      (evil-save-state
+        (evil-open-below 1)
+        (evil-paste-after count)
+        (indent-according-to-mode))))
 
   (defun my/evil-search-visual-selection (direction count)
     "Search for visually selected text in buffer.

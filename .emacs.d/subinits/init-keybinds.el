@@ -381,10 +381,18 @@
     "/"             'mu4e-headers-search
     "S"             'mu4e-headers-change-sorting
     "<tab>"         'mu4e-headers-toggle-include-related
-    "t"             'my/mu4e-mark-toggle
+    "t"             'my/mu4e-headers-mark-toggle
     "T"             'mu4e-headers-mark-pattern
     "%"             'my/mu4e-headers-mark-pattern
-    "$"             'mu4e-mark-execute-all)
+    "$"             (general-lambda
+                     (mu4e-mark-execute-all t)))
+
+  (general-def
+    :states 'emacs
+    :keymaps 'mu4e-view-mode-map
+    "j"      'mu4e-scroll-down
+    "k"      'mu4e-scroll-up
+    "/"      'mu4e-view-search)
 
   (general-def-leader
     :states         'emacs
@@ -396,6 +404,29 @@
     :states         'emacs
     :keymaps        'mu4e-headers-mode-map
     "/"             'mu4e-headers-search-edit)
+
+  (general-def
+    :states 'emacs
+    :keymaps 'mu4e-view-mode-map
+    "j"      'mu4e-scroll-up
+    "k"      'mu4e-scroll-down
+    "/"      'mu4e-view-search
+    "t"      'my/mu4e-view-mark-toggle
+    "T"      'mu4e-view-mark-pattern
+    "%"      'my/mu4e-view-mark-pattern
+    "$"      'mu4e-view-marked-execute)
+
+  (general-def-leader
+    :states 'emacs
+    :keymaps 'mu4e-view-mode-map
+    "/"      'mu4e-view-search-narrow
+    "e"      'mu4e-view-save-attachment-multi)
+  
+  ;; (general-def-goleader
+  ;;   :states 'emacs
+  ;;   :keymaps 'mu4e-view-mode-map
+  ;;   "/"      'mu4e-view-search-edit)
+
 
   ;; nswbuf keybindings
   (general-def

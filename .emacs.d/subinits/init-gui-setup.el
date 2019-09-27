@@ -64,7 +64,10 @@
         beacon-blink-duration 0.25
         beacon-size 20
         beacon-push-mark nil)
-  (setq beacon-dont-blink-major-modes '(mu4e-main-mode))
+  (setq beacon-dont-blink-major-modes '(mu4e-main-mode
+                                        mu4e-view-mode
+                                        mu4e-headers-mode
+                                        vterm-mode))
   (setq beacon-dont-blink-commands '(evil-ex-search-next
                                      evil-ex-search-previous
                                      exit-minibuffer

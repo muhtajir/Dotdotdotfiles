@@ -2,7 +2,6 @@
 (defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
 (unless (file-exists-p custom-file)
   (write-region "" "" custom-file))
-(load (expand-file-name custom-file user-emacs-directory))
 
 ;; set up default browser
 (setq browse-url-generic-program "qutebrowser")
@@ -188,6 +187,9 @@ Start terminal if it isn't running already."
 (require 'init-keybinds)
 
 (use-package f)
+
+;; load custom file late so it can make use of previously defined references
+(load (expand-file-name custom-file user-emacs-directory))
 
 ;; dashboard
 (use-package all-the-icons

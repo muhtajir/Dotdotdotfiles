@@ -77,11 +77,6 @@ Start terminal if it isn't running already."
       (if vterm-win
           (progn
             (select-window vterm-win)
-            (ignore-errors
-              (delete-process vterm--process))
-            (while (process-live-p vterm--process)
-              (ignore))
-            (kill-this-buffer)
             (delete-window))
         (if (get-buffer vterm-buf)
             (pop-to-buffer vterm-buf)

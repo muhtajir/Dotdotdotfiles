@@ -1,5 +1,5 @@
-;; carry data across sessions
-(desktop-save-mode)
+;; carry history variables across sessions
+(savehist-mode)
 
 ;; sexier builtin help
 ;; eshell settings

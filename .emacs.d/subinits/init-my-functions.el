@@ -1,5 +1,4 @@
 ;; macros
-;;;###autoload
 (defmacro my/split-window-and-do (&rest funcs)
   `(progn
      (ignore-errors
@@ -7,19 +6,16 @@
      ,@funcs))
 
 ;; functions
-;;;###autoload
 (defun my/get-line ()
   "Uniform way to get content of current line."
   (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
 
-;;;###autoload
 (defun my/sudo-find-file ()
   "Open 'find-file' with sudo prefix."
   (interactive)
   (let ((default-directory "/sudo::/"))
     (command-execute 'find-file)))
 
-;;;###autoload
 (defun my/dired-mark-toggle ()
   "Toggle mark for currently selected file."
   (interactive)
@@ -33,7 +29,6 @@
                    (list ?\040 dired-marker-char)
                  (list dired-marker-char ?\040)))))))
 
-;;;###autoload
 (defun my/eshell ()
   "Hide or show eshell window.
 Start eshell if it isn't running already."
@@ -44,7 +39,6 @@ Start eshell if it isn't running already."
         (delete-window))
     (eshell)))
 
-;;;###autoload
 (defun my/eval-visual-region ()
   "Evaluate region."
   (interactive)
@@ -54,7 +48,6 @@ Start eshell if it isn't running already."
   (ignore-errors
    (evil-normal-state)))
 
-;;;###autoload
 (defun my/eval-line ()
   "Evaluate current line."
   (interactive)
@@ -62,7 +55,6 @@ Start eshell if it isn't running already."
     (end-of-line)
     (eval-last-sexp nil)))
 
-;;;###autoload
 (defun my/eval-at-point ()
   "Move out to closest sexp and evaluate."
   (interactive)
@@ -85,7 +77,6 @@ Start eshell if it isn't running already."
         (setq reg-start (point))))
     (eval-region reg-start reg-end t)))
 
-;;;###autoload
 ;; evil-related-functions
 (defun my/evil-dry-open-below (&optional line)
   "Open LINE number of lines below but stay in current line."
@@ -94,7 +85,6 @@ Start eshell if it isn't running already."
     (end-of-line)
     (open-line line)))
 
-;;;###autoload
 (defun my/evil-dry-open-above (line)
   "Open LINE number of lines above but stay in current line."
   (interactive "p")
@@ -106,7 +96,6 @@ Start eshell if it isn't running already."
     (forward-line line)
     (move-to-column col)))
 
-;;;###autoload
 (defun my/evil-paste-with-newline-above (count)
   "Paste COUNT times into a newly opened line above."
   (interactive "p")
@@ -116,7 +105,6 @@ Start eshell if it isn't running already."
       (evil-paste-after count)
       (indent-according-to-mode))))
 
-;;;###autoload
 (defun my/evil-paste-with-newline-below (count)
   "Paste COUNT times into a newly opened line above."
   (interactive "p")
@@ -126,7 +114,6 @@ Start eshell if it isn't running already."
       (evil-paste-after count)
       (indent-according-to-mode))))
 
-;;;###autoload
 (defun my/evil-search-visual-selection (direction count)
   "Search for visually selected text in buffer.
 DIRECTION can be forward or backward.  Don't know what COUNT does."
@@ -151,7 +138,6 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
     (when (fboundp 'evil-ex-search-next)
       (evil-ex-search-next count))))
 
-;;;###autoload
 (defun my/python-remove-breakpoints ()
   "Remove all breakpoint declarations in buffer."
   (interactive)
@@ -163,7 +149,6 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
         (setq counter (1+ counter))))
     (message "%s breakpoint%s removed." counter (if (= counter 1) "" "s"))))
 
-;;;###autoload
 (defun my/python-test ()
   "Run pytest."
   (interactive)
@@ -175,7 +160,6 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
                         (:exec . ("pytest"))))
     (setenv "PYTHONPATH" old-py-path)))
 
-;;;###autoload
 (defun my/source-ssh-env ()
   "Read environment variables for the ssh environment from '~/.ssh/environment'."
   (let (pos1 pos2 (var-strs '("SSH_AUTH_SOCK" "SSH_AGENT_PID")))
@@ -193,7 +177,6 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
              (setenv var-str (buffer-substring-no-properties pos1 pos2)))
            var-strs))))))
 
-;;;###autoload
 (defun my/split-window-sensibly (&optional window)
   "Copied from standard function but with preference for horizontal split."
   (let ((window (or window (selected-window))))
@@ -226,14 +209,12 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
                  (with-selected-window window
                    (split-window-below))))))))
 
-;;;###autoload
 (defun my/straight-update ()
   "Fetch, merge and rebuild all straight packages."
   (interactive)
   (straight-pull-all)
   (straight-rebuild-all))
 
-;;;###autoload
 (defun my/toggle-scratch-buffer ()
   "Go back and forth between scratch buffer and most recent other buffer."
   (interactive)
@@ -241,7 +222,6 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
       (evil-switch-to-windows-last-buffer)
     (switch-to-buffer "*scratch*")))
 
-;;;###autoload
 (defun my/window-clear-side ()
   "Clear selected pane from vertically split windows."
   (interactive)

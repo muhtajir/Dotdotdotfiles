@@ -46,6 +46,7 @@
     "C-x"           'evil-numbers/dec-at-pt
     "ö"             'my/evil-dry-open-below
     "Ö"             'my/evil-dry-open-above
+    "U"             'undo-tree-visualize
     "_"             'goto-last-change
     "-"             'goto-last-change-reverse)
 
@@ -118,7 +119,10 @@
     "C-$"           'my/eshell
     "%"             'my/counsel-ag-projectile
     "C-%"           'my/counsel-ag-prompt-path
-    "b"             'nswbuff-switch-to-next-buffer
+    "b"             (general-lambda
+                     (let ((ivy-use-virtual-buffers nil)
+                           (ivy-ignore-buffers (cons "^\*.+?\*$" ivy-ignore-buffers)))
+                       (counsel-switch-buffer)))
     "B"             (general-lambda
                      (let ((ivy-use-virtual-buffers t))
                        (counsel-switch-buffer)))
@@ -387,13 +391,6 @@
     "$"             (general-lambda
                      (mu4e-mark-execute-all t)))
 
-  (general-def
-    :states 'emacs
-    :keymaps 'mu4e-view-mode-map
-    "j"      'mu4e-scroll-down
-    "k"      'mu4e-scroll-up
-    "/"      'mu4e-view-search)
-
   (general-def-leader
     :states         'emacs
     :keymaps        'mu4e-headers-mode-map
@@ -406,28 +403,25 @@
     "/"             'mu4e-headers-search-edit)
 
   (general-def
-    :states 'emacs
-    :keymaps 'mu4e-view-mode-map
-    "j"      'mu4e-scroll-up
-    "k"      'mu4e-scroll-down
-    "/"      'mu4e-view-search
-    "t"      'my/mu4e-view-mark-toggle
-    "T"      'mu4e-view-mark-pattern
-    "%"      'my/mu4e-view-mark-pattern
-    "$"      'mu4e-view-marked-execute)
+    :states         'emacs
+    :keymaps        'mu4e-view-mode-map
+    "C-d"           'scroll-up-command
+    "C-u"           'scroll-down-command
+    "n"             'mu4e-scroll-up
+    "p"             'mu4e-scroll-down
+    "j"             'mu4e-view-headers-next
+    "k"             'mu4e-view-headers-prev
+    "/"             'mu4e-view-search
+    "t"             'my/mu4e-view-mark-toggle
+    "T"             'mu4e-view-mark-pattern
+    "%"             'my/mu4e-view-mark-pattern
+    "$"             'mu4e-view-marked-execute)
 
   (general-def-leader
     :states 'emacs
     :keymaps 'mu4e-view-mode-map
-    "/"      'mu4e-view-search-narrow
-    "e"      'mu4e-view-save-attachment-multi)
+    "/"      'mu4e-view-search-narrow)
   
-  ;; (general-def-goleader
-  ;;   :states 'emacs
-  ;;   :keymaps 'mu4e-view-mode-map
-  ;;   "/"      'mu4e-view-search-edit)
-
-
   ;; nswbuf keybindings
   (general-def
     :keymaps        'nswbuff-override-map

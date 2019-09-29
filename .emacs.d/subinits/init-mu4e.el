@@ -44,7 +44,9 @@
   (setq mu4e-confirm-quit nil
         mu4e-change-filenames-when-moving t
         mu4e-view-show-images t
-        mu4e-html2text-command "lynx -stdin -dump")
+        mu4e-html2text-command "lynx -stdin -dump"
+        mu4e-attachment-dir (xdg-user-dir "DOWNLOAD")
+        mu4e-save-multiple-attachments-without-asking t)
   (when (image-type-available-p 'imagemagick)
     (imagemagick-register-types))
   (add-to-list 'mu4e-view-actions
@@ -72,26 +74,6 @@
   (defun my/mu4e-view-mark-pattern ()
     (interactive)
     (mu4e~view-in-headers-context
-     (my/mu4e-headers-mark-pattern)))
-
-  (defun my/mu4e-save-attachment (filename mime)
-    (let (dir)
-      (setq dir (read-directory-name "Save to: " (xdg-user-dir "DOWNLOAD")))
-      (cond
-       ((and (file-exists-p) (not (file-directory-p dir)))
-        (message "%s is not a directory.")
-        nil)
-       ((file-directory-p dir)
-        dir)
-       (t
-        (when (y-or-n-p "Directory doesn't exist. Create? ")
-          (make-directory dir t))
-        dir))))
-  (setq mu4e-attachment-dir #'my/mu4e-save-attachment)
-
-  (add-hook 'mu4e-view-mode-hook
-            (lambda ()
-              (setq-local evil-emacs-state-cursor nil)
-              (setq-local cursor-type nil))))
+     (my/mu4e-headers-mark-pattern))))
 
 (provide 'init-mu4e)

@@ -422,13 +422,6 @@
     :keymaps 'mu4e-view-mode-map
     "/"      'mu4e-view-search-narrow)
   
-  ;; nswbuf keybindings
-  (general-def
-    :keymaps        'nswbuff-override-map
-    "j"             'nswbuff-switch-to-previous-buffer
-    "k"             'nswbuff-switch-to-next-buffer
-    "h"             'nswbuff-switch-to-previous-buffer
-    "l"             'nswbuff-switch-to-next-buffer)
 
   ;; python and jedi keybinds
   (general-def-leader

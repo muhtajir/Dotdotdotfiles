@@ -81,13 +81,6 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;; quick buffer switching
-(use-package nswbuff
-  :commands nswbuff-switch-to-next-buffer
-  :config
-  (setq nswbuff-delay-switch t)
-  (add-to-list 'nswbuff-exclude-buffer-regexps "^\\*.*\\*$"))
-
 (use-package shackle
   :config
   (shackle-mode 1)

@@ -23,7 +23,7 @@ function frename
 
     # do the renaming
     for file in $file_list
-        set -l new_name (string replace $_flag_i $_flag_r $argv[1] $argv[2] "$file")
+        set -l new_name (string replace $_flag_i $_flag_r -- $argv[1] $argv[2] "$file")
         if set -ql _flag_n
             echo "$file --> $new_name"
         else

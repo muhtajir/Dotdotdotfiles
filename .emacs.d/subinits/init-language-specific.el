@@ -219,7 +219,9 @@ If decorator syntax is found a line above the current, don't do any padding."
              evil-cp-delete-line
              evil-cp-change
              evil-cp-change-line
-             evil-cp-change-whole-line))
+             evil-cp-change-whole-line)
+  :config
+  (evil-cp--enable-surround-operators))
 
 (use-package pcre2el
   :defer t)

@@ -100,14 +100,14 @@ Start eshell if it isn't running already."
 (defun my/evil-lisp-append-line (count)
   (interactive "p")
   (my//evil-lisp-end-of-depth)
-    (evil-insert count))
+  (evil-insert count))
 
 (defun my//evil-lisp-end-of-depth ()
   "Go to last point of current syntax depth in the current line."
   (let ((depth (my//syntax-depth)))
-    (evil-end-of-line)
+    (end-of-line)
     (while (not (eq depth (my//syntax-depth)))
-      (evil-backward-char))))
+      (backward-char))))
 
 (defun my/evil-lisp-insert-line (count)
   (interactive "p")
@@ -132,9 +132,7 @@ Start eshell if it isn't running already."
 (defun my/evil-lisp-open-below (count)
   (interactive "p")
   (my/evil-lisp-append-line 1)
-  (save-excursion
-    (newline count)
-    (indent-according-to-mode))
+  (newline count)
   (indent-according-to-mode))
 
 (defun my//evil-lisp-start-of-depth ()
@@ -264,8 +262,10 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
 (defun my/straight-update ()
   "Fetch, merge and rebuild all straight packages."
   (interactive)
-  (straight-pull-all)
-  (straight-rebuild-all))
+  (when (y-or-n-p "Fetch package remotes and rebuild modified packages? ")
+    (straight-pull-all)
+    (straight-check-all)
+    (restart-emacs)))
 
 (defun my//syntax-depth ()
   "Return depth at point within syntax tree. "

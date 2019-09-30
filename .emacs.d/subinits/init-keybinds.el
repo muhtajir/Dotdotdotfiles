@@ -32,6 +32,7 @@
     "S-<f1>"            (general-lambda (my/split-window-and-do (call-interactively 'eww)))
     "<f2>"              'mu4e
     "S-<f2>"            (general-lambda (my/split-window-and-do (mu4e)))
+    "<f12>"             'my/straight-update
     "M-<f12>"           'restart-emacs)
 
   ;; normal state keybinds

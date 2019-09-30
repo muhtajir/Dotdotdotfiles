@@ -85,6 +85,7 @@
 !.emacs.d/snippets/**
 !.emacs.d/subinits
 !.emacs.d/subinits/*
+.emacs.d/subinits/init-mu4e.el
 
 !.local/bin
 !.local/bin/*

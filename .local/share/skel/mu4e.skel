@@ -1,3 +1,9 @@
+;; %-LOCATION:$HOME/.emacs.d/subinits/init-mu4e.el-% -*-emacs-lisp-*-
+;; DO EDITS HERE: $HOME/.local/share/skel/mu4e.skel
+
+;; set mu4e as emacs default mail program
+(setq mail-user-agent #'mu4e-user-agent)
+
 ;; smtp
 (use-package smtpmail
   :straight nil
@@ -6,21 +12,24 @@
   (setq message-send-mail-function 'smtpmail-send-it))
 
 (use-package mu4e
-  :commands mu4e
+  :commands (mu4e mu4e-user-agent)
   :straight nil
   :config
   ;; define smtp settings here as well in case they need to be made part of a mu4e context later
   (setq smtpmail-stream-type      'ssl
         smtpmail-smtp-server      "posteo.de"
         smtpmail-smtp-service     465
-        smtpmail-queue-dir        "~/.local/share/mail/queued_mail")
-  (setq mu4e-maildir              (expand-file-name "~/.local/share/mail/posteo")
-        mu4e-sent-folder          "/Sent"
-        mu4e-drafts-folder        "/Drafts"
-        mu4e-trash-folder         "/Trash"
-        mu4e-refile-folder        "/Archiv"
-        mu4e-get-mail-command     "mbsync posteo"
-        mu4e-user-mail-address-list '("{{MAIL_ADDRESS}}"))
+        smtpmail-queue-dir        "~/.local/share/mail/queued_mail/cur")
+  (setq mu4e-maildir                (expand-file-name "~/.local/share/mail/posteo")
+        mu4e-sent-folder            "/Sent"
+        mu4e-drafts-folder          "/Drafts"
+        mu4e-trash-folder           "/Trash"
+        mu4e-refile-folder          "/Archiv"
+        mu4e-get-mail-command       "mbsync posteo"
+        user-mail-address           "{{{MAIL_ADDRESS}}}"
+        user-full-name              "{{{REAL_NAME}}}"
+        mu4e-user-mail-address-list (list user-mail-address))
+
   ;; maildir shortcuts
   (setq mu4e-maildir-shortcuts
         '(("/Arbeit+Bildung/"    . ?b)
@@ -34,6 +43,7 @@
   ;; headers view
   (setq mu4e-use-fancy-chars t
         mu4e-headers-include-related nil
+        mu4e-headers-advance-after-mark nil
         mu4e-headers-fields '((:human-date . 12)
                              (:flags . 6)
                              (:from-or-to . 22)
@@ -51,6 +61,20 @@
     (imagemagick-register-types))
   (add-to-list 'mu4e-view-actions
                '("bopen in browser" . mu4e-action-view-in-browser))
+  ;; compose view
+  (setq mu4e-compose-complete-only-personal t
+        message-kill-buffer-on-exit t
+        mu4e-compose-dont-reply-to-self t)
+  (add-hook 'mu4e-compose-mode-hook
+            (defun my/setup-mu4e-compose-settings ()
+               (set-fill-column 72)
+               (let*
+                   ((sender1 (cdr (car (mu4e-message-field mu4e-compose-parent-message :from))))
+                    (ext (car (s-match "\.[^\.]+?$" sender1))))
+               (setq ispell-local-dictionary (if (string= ext ".de")
+                                                 "de_DE"
+                                               "en_AU"))
+               (flyspell-mode))))
 
   (defun my/mu4e-headers-mark-toggle ()
     (interactive)
@@ -60,7 +84,7 @@
 
   (defun my/mu4e-headers-mark-pattern ()
     (interactive)
-    (cl-letf (((symbol-function 'mu4e~mark-get-markpair)
+    (cl-letf (((symbol-function #'mu4e~mark-get-markpair)
                (lambda (&rest args) '(something))))
       (mu4e-headers-mark-pattern)))
 
@@ -74,6 +98,11 @@
   (defun my/mu4e-view-mark-pattern ()
     (interactive)
     (mu4e~view-in-headers-context
-     (my/mu4e-headers-mark-pattern))))
+     (my/mu4e-headers-mark-pattern)))
+
+  (defun my/mu4e-headers-handle-deferred (action)
+    (cl-letf (((symbol-function #'mu4e-read-option)
+               (lambda (&rest args) action)))
+      (mu4e-mark-resolve-deferred-marks))))
 
 (provide 'init-mu4e)

@@ -96,6 +96,54 @@ Start eshell if it isn't running already."
     (forward-line line)
     (move-to-column col)))
 
+;; lisp related functions
+(defun my/evil-lisp-append-line (count)
+  (interactive "p")
+  (my//evil-lisp-end-of-depth)
+    (evil-insert count))
+
+(defun my//evil-lisp-end-of-depth ()
+  "Go to last point of current syntax depth in the current line."
+  (let ((depth (my//syntax-depth)))
+    (evil-end-of-line)
+    (while (not (eq depth (my//syntax-depth)))
+      (evil-backward-char))))
+
+(defun my/evil-lisp-insert-line (count)
+  (interactive "p")
+  (my//evil-lisp-start-of-depth)
+  (evil-insert count))
+
+(defun my/evil-lisp-first-non-blank ()
+    (interactive)
+  (evil-first-non-blank)
+  (while (and (equal (thing-at-point 'char) "(")
+              (not (my//in-string-p)))
+    (evil-forward-char)))
+
+(defun my/evil-lisp-open-above (count)
+  (interactive "p")
+  (my/evil-lisp-insert-line 1)
+  (save-excursion
+    (newline count)
+    (indent-according-to-mode))
+  (indent-according-to-mode))
+
+(defun my/evil-lisp-open-below (count)
+  (interactive "p")
+  (my/evil-lisp-append-line 1)
+  (save-excursion
+    (newline count)
+    (indent-according-to-mode))
+  (indent-according-to-mode))
+
+(defun my//evil-lisp-start-of-depth ()
+  "Go to first point of current syntax depth in the current line."
+  (let ((depth (my//syntax-depth)))
+    (evil-beginning-of-line)
+    (while (not (eq depth (my//syntax-depth)))
+      (evil-forward-char))))
+
 (defun my/evil-paste-with-newline-above (count)
   "Paste COUNT times into a newly opened line above."
   (interactive "p")
@@ -137,6 +185,10 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
     (evil-exit-visual-state)
     (when (fboundp 'evil-ex-search-next)
       (evil-ex-search-next count))))
+
+(defun my//in-string-p ()
+  "Returns t if point is within a string according to syntax-ppss.  Otherwise nil."
+  (not (eq (nth 3 (syntax-ppss)) nil)))
 
 (defun my/python-remove-breakpoints ()
   "Remove all breakpoint declarations in buffer."
@@ -214,6 +266,10 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
   (interactive)
   (straight-pull-all)
   (straight-rebuild-all))
+
+(defun my//syntax-depth ()
+  "Return depth at point within syntax tree. "
+  (nth 0 (syntax-ppss)))
 
 (defun my/toggle-scratch-buffer ()
   "Go back and forth between scratch buffer and most recent other buffer."

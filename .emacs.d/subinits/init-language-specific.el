@@ -215,7 +215,9 @@ If decorator syntax is found a line above the current, don't do any padding."
 ;; language specific major modes and their settings
 ;; elisp helpers
 (use-package evil-cleverparens
-  :commands (evil-cp-delete-line
+  :commands (evil-cp-delete
+             evil-cp-delete-line
+             evil-cp-change
              evil-cp-change-line
              evil-cp-change-whole-line))
 

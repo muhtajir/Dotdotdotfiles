@@ -13,7 +13,7 @@
     :keymaps            'override
     :states             '(motion emacs)
     "M-o"               'delete-other-windows
-    "M-c"               'delete-window
+    "M-c"               'evil-window-delete
     "M-O"               'my/window-clear-side
     "M-h"               'evil-window-left
     "M-j"               'evil-window-down
@@ -22,7 +22,7 @@
 
   (general-def-leader
     :keymaps            'override
-    :states             '(motion emacs)
+    :states             'motion
     "<tab>"             'evil-switch-to-windows-last-buffer)
 
   ;; global F-key binds
@@ -71,11 +71,15 @@
     "s"             'my/toggle-scratch-buffer
     "S"             (general-lambda
                      (my/split-window-and-do
-                      (my/toggle-scratch-buffer))))
+                      (my/toggle-scratch-buffer)))
+    "/"             'evil-ex-search-forward
+    "?"             'evil-ex-search-backward
+    "D"             'counsel-imenu)
 
   ;; motion state keybinds
   (general-def
     :states             'motion
+    "/"                 'swiper
     "("                 'evil-backward-paragraph
     ")"                 'evil-forward-paragraph
     "+"                 'goto-last-change-reverse
@@ -133,11 +137,11 @@
                      (evil-window-vsplit) (evil-window-right 1))
     "V"             (general-lambda
                      (evil-window-split) (evil-window-down 1))
-    "X"             'evil-window-delete
     "q"             'find-file
     "Q"             'my/sudo-find-file
     "Yn"            'yas-new-snippet
-    "Ye"            'yas-visit-snippet-file)
+    "Ye"            'yas-visit-snippet-file
+    "/"             'swiper-all)
 
   ;; visual keybinds
   (general-def
@@ -267,6 +271,12 @@
     "C-i"               'eww-forward-url
     "o"                 'eww)
 
+  ;; edebug keybinds
+  (general-def
+    :states         'emacs
+    :keymaps        'edebug-mode-map
+    "SPC"           'edebug-step-mode)
+
   ;; ivy keybinds
   (general-def
     :keymaps        'ivy-minibuffer-map
@@ -370,8 +380,7 @@
   (general-def
     :states         'emacs
     :keymaps        '(mu4e-main-mode-map
-                      mu4e-headers-mode-map
-                      mu4e-compose-mode-map)
+                      mu4e-headers-mode-map)
     "J"             'mu4e~headers-jump-to-maildir)
 
   (general-def
@@ -388,6 +397,8 @@
     "t"             'my/mu4e-headers-mark-toggle
     "T"             'mu4e-headers-mark-pattern
     "%"             'my/mu4e-headers-mark-pattern
+    "D"             (general-lambda (my/mu4e-headers-handle-deferred 'trash))
+    "M"             (general-lambda (my/mu4e-headers-handle-deferred 'move))
     "$"             (general-lambda
                      (mu4e-mark-execute-all t)))
 
@@ -395,7 +406,8 @@
     :states         'emacs
     :keymaps        'mu4e-headers-mode-map
     "%"             'mu4e-headers-mark-pattern
-    "/"             'mu4e-headers-search-narrow)
+    "/"             'mu4e-headers-search-narrow
+    "d"             'mu4e-headers-mark-for-delete)
 
   (general-def-goleader
     :states         'emacs
@@ -420,8 +432,16 @@
   (general-def-leader
     :states 'emacs
     :keymaps 'mu4e-view-mode-map
-    "/"      'mu4e-view-search-narrow)
+    "/"      'mu4e-view-search-narrow
+    "d"      'mu4e-view-mark-for-delete)
   
+  (general-def-leader
+    :states     'normal
+    :keymaps    'mu4e-compose-mode-map
+    "!"         'message-send-and-exit
+    "k"         'mu4e-message-kill-buffer
+    "a"         'mail-add-attachment
+    "cc"        'message-dont-send)
 
   ;; python and jedi keybinds
   (general-def-leader
@@ -444,21 +464,36 @@
     :keymaps        'lisp-mode-shared-map
     "D"             'evil-cp-delete-line
     "C"             'evil-cp-change-line
-    "S"             'evil-cp-change-whole-line)
+    "c"             'evil-cp-change
+    "d"             'evil-cp-delete
+    "S"             'evil-cp-change-whole-line
+    "^"             'my/evil-lisp-first-non-blank
+    "A"             'my/evil-lisp-append-line
+    "I"             'my/evil-lisp-insert-line
+    "o"             'my/evil-lisp-open-below
+    "O"             'my/evil-lisp-open-above)
+
+  (general-def
+    :states         'visual
+    :keymaps        'lisp-mode-shared-map
+    "c"             'evil-cp-change)
 
   (general-def-leader
     :states         'motion
     :keymaps        'lisp-mode-shared-map
     "e"             'my/eval-at-point
     "E"             'my/eval-line
-    "C-e"           'eval-buffer)
+    "M-e"           'eval-buffer
+    "C-e"           'eval-defun)
 
   (general-def-leader
-    :states         'motion
+    :states         'normal
     :keymaps        'lisp-mode-shared-map
-    "e"             'my/eval-at-point
-    "E"             'my/eval-line
-    "C-e"           'eval-buffer)
+    "A"             'evil-append-line
+    "I"             'evil-insert-line
+    "^"             'evil-first-non-blank
+    "o"             'evil-open-below
+    "O"             'evil-open-above)
 
   ;; visual regexp keybinds
   (general-def

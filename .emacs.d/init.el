@@ -38,9 +38,7 @@
 ;; and everything that can be deferred goes in here
 (use-package init-my-functions
   :straight nil
-  :commands (my/split-window-and-do
-             my/add-hooks
-             my/get-line
+  :commands (my/get-line
              my/sudo-find-file
              my/dired-mark-toggle
              my/eshell
@@ -49,6 +47,10 @@
              my/eval-normal-line
              my/evil-dry-open-below
              my/evil-dry-open-above
+             my/evil-lisp-first-non-blank
+             my/evil-lisp-append-line
+             my/evil-lisp-insert-line
+             my/evil-lisp-open-below
              my/evil-paste-with-newline-above
              my/evil-paste-with-newline-below
              my/evil-search-visual-selection
@@ -58,7 +60,8 @@
              my/split-window-sensibly
              my/straight-update
              my/toggle-scratch-buffer
-             my/window-clear-side))
+             my/window-clear-side
+             my/split-window-and-do))
 
 ;; setup gui early to avoid modeline troubles
 (require 'init-gui-setup)

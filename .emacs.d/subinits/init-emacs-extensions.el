@@ -1,7 +1,13 @@
 ;; carry history variables across sessions
 (savehist-mode)
 
-;; sexier builtin help
+;; debug settings
+(add-hook 'edebug-mode-hook
+          (lambda ()
+            (if (not (evil-emacs-state-p))
+                (evil-emacs-state)
+              (evil-normal-state))))
+
 ;; eshell settings
 (setq eshell-banner-message "")
 (add-hook 'eshell-exit-hook (lambda ()
@@ -12,11 +18,6 @@
 
 ;; spellchecking settings
 (setq ispell-program-name "hunspell")
-(setq ispell-local-dictionary "de_DE")
-(setq ispell-local-dictionary-alist
-      '(("German (Germany)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "de_DE"))
-        ("English (US)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
-        ("English (Australia)" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_AU") nil utf-8)))
 
 ;; tramp settings (so far not many)
 (setq tramp-default-method "ssh")
@@ -25,11 +26,17 @@
             (when (file-remote-p default-directory)
               (my/source-ssh-env))))
 
+;; use pass or an encrypted file for auth-sources
+(use-package auth-source-pass
+  :config
+  (auth-source-pass-enable))
+
 (use-package all-the-icons
   :defer t)
 
 (use-package f)
 
+;; sexier builtin help
 (use-package helpful
   :defer t
   :config

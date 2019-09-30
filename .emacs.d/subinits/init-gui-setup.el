@@ -45,7 +45,8 @@
 (setq echo-keystrokes .01)
 (setq eldoc-idle-delay .45)
 (setq-default fill-column 80)
-(my/add-hooks #'hl-line-mode 'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook #'hl-line-mode))
 
 ;; window splitting settings
 (setq split-width-threshold 160)
@@ -76,7 +77,8 @@
 
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)
-(my/add-hooks #'electric-pair-mode 'prog-mode-hook 'text-mode-hook)
+(dolist (hook '(prog-mode-hook text-mode-hook))
+  (add-hook hook #'electric-pair-mode))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -177,10 +179,10 @@
         telephone-line-secondary-right-separator  'telephone-line-abs-right)
   (telephone-line-mode t))
 
-(my/add-hooks (lambda ()
-                (setq display-line-numbers 'relative
-                      display-line-numbers-widen t
-                      display-line-numbers-current-absolute t))
-              'prog-mode-hook 'text-mode-hook 'conf-mode-hook)
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook (lambda ()
+                   (setq display-line-numbers 'relative
+                         display-line-numbers-widen t
+                         display-line-numbers-current-absolute t))))
 
 (provide 'init-gui-setup)

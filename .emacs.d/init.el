@@ -19,9 +19,6 @@
 ;; enable sourcing from init scripts in emacs.d/subinits
 (push (expand-file-name "subinits" user-emacs-directory) load-path)
 
-;; use pass or an encrypted file for auth-sources
-(setq auth-sources `(password-store ,(expand-file-name "authinfo.gpg" user-emacs-directory)))
-
 ;; use more conservative sentence definition
 (setq sentence-end-double-space nil)
 

@@ -1,12 +1,9 @@
 ;; carry history variables across sessions
 (savehist-mode)
 
-;; debug settings
-(add-hook 'edebug-mode-hook
-          (lambda ()
-            (if (not (evil-emacs-state-p))
-                (evil-emacs-state)
-              (evil-normal-state))))
+;; set up default browser
+(setq browse-url-generic-program "qutebrowser")
+(setq browse-url-browser-function 'browse-url-generic)
 
 ;; eshell settings
 (setq eshell-banner-message "")
@@ -18,6 +15,9 @@
 
 ;; spellchecking settings
 (setq ispell-program-name "hunspell")
+
+;; use more conservative sentence definition
+(setq sentence-end-double-space nil)
 
 ;; tramp settings (so far not many)
 (setq tramp-default-method "ssh")

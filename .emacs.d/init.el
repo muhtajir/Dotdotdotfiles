@@ -1,11 +1,7 @@
 ;; get rid of the custom blabla by using custom-file
-(defconst custom-file (expand-file-name "custom.el" user-emacs-directory))
-(unless (file-exists-p custom-file)
-  (write-region "" "" custom-file))
-
-;; set up default browser
-(setq browse-url-generic-program "qutebrowser")
-(setq browse-url-browser-function 'browse-url-generic)
+(defconst emacs-custom-file (expand-file-name "custom.el" user-emacs-directory))
+(unless (file-exists-p emacs-custom-file)
+  (write-region "" "" emacs-custom-file))
 
 ;; set up a separate location for backup and temp files
 (defconst emacs-tmp-dir (expand-file-name "auto-save" user-emacs-directory))
@@ -16,21 +12,11 @@
     (setq auto-save-list-file-prefix
       emacs-tmp-dir)
 
+(defconst emacs-subinit-dir (expand-file-name "subinits" user-emacs-directory))
 ;; enable sourcing from init scripts in emacs.d/subinits
-(push (expand-file-name "subinits" user-emacs-directory) load-path)
-
-;; use more conservative sentence definition
-(setq sentence-end-double-space nil)
+(push emacs-subinit-dir load-path)
 
 (require 'init-package-management)
-
-;; custom functions
-(defun my/add-hooks (func &rest hooks)
-  "Add FUNC to multiple HOOKS at once."
-  (mapc
-   (lambda (hook)
-     (add-hook hook func))
-   hooks))
 
 ;; and everything that can be deferred goes in here
 (use-package init-my-functions
@@ -48,6 +34,7 @@
              my/evil-lisp-append-line
              my/evil-lisp-insert-line
              my/evil-lisp-open-below
+             my/evil-lisp-open-above
              my/evil-paste-with-newline-above
              my/evil-paste-with-newline-below
              my/evil-search-visual-selection
@@ -85,7 +72,7 @@
 (require 'init-keybinds)
 
 ;; load custom file late so it can make use of previously defined references
-(load (expand-file-name custom-file user-emacs-directory))
+(load (expand-file-name emacs-custom-file user-emacs-directory))
 
 ;; dashboard
 (use-package dashboard
@@ -95,15 +82,15 @@
         dashboard-center-content t
         dashboard-set-file-icons t
         dashboard-set-heading-icons t)
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
+  (setq dashboard-items '((bookmarks . 5)
+                          (recents  . 5)
                           (projects . 5)
                           (agenda . 5)
                           (registers . 5)))
-  (add-hook 'window-setup-hook (lambda ()
-                                 (evil-emacs-state)
-                                 (dashboard-next-section)
-                                 (dashboard-next-line 1)
-                                 (beacon-blink)))
-  ;; dashboard should ONLY be a starting point
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (dashboard-next-section)
+              (dashboard-next-line 1)
+              (beacon-blink)))
+  ;; kill dashboard after a while
   (run-at-time 120 nil #'kill-buffer dashboard-buffer-name))

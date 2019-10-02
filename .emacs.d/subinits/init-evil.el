@@ -15,7 +15,10 @@
                                 "q" nil)))
   (evil-mode 1)
   ;; sensible Y behavior
-  (customize-set-variable 'evil-want-Y-yank-to-eol t))
+  (customize-set-variable 'evil-want-Y-yank-to-eol t)
+  (dolist (modestate '((dashboard-mode . emacs)
+                      (edebug-mode . emacs)))
+    (evil-set-initial-state (car modestate) (cdr modestate))))
 
 (use-package vertigo
   :commands vertigo-set-digit-argument

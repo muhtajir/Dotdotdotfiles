@@ -19,7 +19,8 @@
   (add-hook 'python-mode-hook (lambda () (require 'lsp-pyls)))
   (add-hook 'go-mode-hook (lambda () (require 'lsp-go)))
   :config
-  (setq lsp-auto-configure nil))
+  (setq lsp-auto-configure nil
+        lsp-document-highlight-delay 2))
 
 ;; autocompletion
 (use-package company
@@ -59,6 +60,12 @@
   :commands company-lsp
   :hook ((python-mode go-mode) . (lambda ()
      (add-to-list 'company-backends #'company-lsp))))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-delay 2)
+  (lsp-ui-sideline-mode 0))
 
 (use-package company-auctex
   :after (company tex))

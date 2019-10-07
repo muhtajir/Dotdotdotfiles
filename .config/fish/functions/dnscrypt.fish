@@ -16,8 +16,8 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
             end
 
             for f in $resolv $nm_config
-                sudo chown root:root $i
-                sudo chmod 644 $i
+                sudo chown root:root $f
+                sudo chmod 644 $f
             end
 
             if not systemctl is-active dnscrypt-proxy > /dev/null
@@ -41,6 +41,7 @@ function dnscrypt --description 'Turn dnscrypt-proxy on or off'
                 sudo systemctl stop dnscrypt-proxy.service
             end
 
+            sudo rm "$resolv"
             sudo systemctl restart NetworkManager
 
         case '*'

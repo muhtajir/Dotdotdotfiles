@@ -32,14 +32,14 @@
 
   ;; maildir shortcuts
   (setq mu4e-maildir-shortcuts
-        '(("/Arbeit+Bildung/"    . ?b)
-          ("/Archiv/"            . ?a)
-          ("/Drafts/"            . ?d)
-          ("/Following/"         . ?f)
-          ("/Inbox/"             . ?i)
-          ("/Privat/"            . ?p)
-          ("/Sent/"              . ?s)
-          ("/Transaktionen/"     . ?t)))
+        '(("/Arbeit+Bildung"    . ?b)
+          ("/Archiv"            . ?a)
+          ("/Drafts"            . ?d)
+          ("/Following"         . ?f)
+          ("/Inbox"             . ?i)
+          ("/Privat"            . ?p)
+          ("/Sent"              . ?s)
+          ("/Transaktionen"     . ?t)))
   ;; headers view
   (setq mu4e-use-fancy-chars t
         mu4e-headers-include-related nil

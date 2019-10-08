@@ -214,11 +214,6 @@ If decorator syntax is found a line above the current, don't do any padding."
           ""
         (my/yas-func-padding (if (> indent 0) 1 2) down)))))
 
-;; mark text after column 80 in prog-modes (but not elisp because headaches)
-(use-package column-enforce-mode
-  :hook ((python-mode go-mode) . column-enforce-mode))
-
-
 ;; language specific major modes and their settings
 ;; elisp helpers
 (use-package evil-cleverparens
@@ -278,11 +273,19 @@ If decorator syntax is found a line above the current, don't do any padding."
    ;; width settings
    (setq-local fill-column 79)
    (setq-local column-enforce-column 79)
-   (setq-local electric-pair-open-newline-between-pairs nil)))
+   (setq-local electric-pair-open-newline-between-pairs nil)
+   (make-local-variable 'write-file-functions)
+   (add-to-list 'write-file-functions (my/nillify-func (lsp-format-buffer)))))
 
 ;; golang settings
 (use-package go-mode
-  :commands go-mode)
+  :commands go-mode
+  :config
+  (add-hook
+   'go-mode-hook
+   (lambda ()
+     (make-local-variable 'write-file-functions)
+     (add-to-list 'write-file-functions (my/nillify-func (lsp-format-buffer))))))
 
 (use-package go-eldoc
   :hook (go-mode . go-eldoc-setup))

@@ -5,6 +5,12 @@
        (select-window (funcall split-window-preferred-function)))
      ,@funcs))
 
+(defmacro my/nillify-func (&rest funcs)
+  "Return a function that runs FUNCS but always returns nil."
+  `(lambda ()
+     ,@funcs
+     nil))
+
 ;; functions
 (defun my/get-line ()
   "Uniform way to get content of current line."

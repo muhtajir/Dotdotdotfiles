@@ -38,6 +38,7 @@
              my/evil-paste-with-newline-above
              my/evil-paste-with-newline-below
              my/evil-search-visual-selection
+             my/nillify-func
              my/python-remove-breakpoints
              my/python-test
              my/source-ssh-env

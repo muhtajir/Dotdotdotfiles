@@ -75,7 +75,7 @@
                       (my/toggle-scratch-buffer)))
     "/"             'evil-ex-search-forward
     "?"             'evil-ex-search-backward
-    "D"             'counsel-imenu)
+    "I"             'counsel-imenu)
 
   ;; motion state keybinds
   (general-def
@@ -201,8 +201,10 @@
   ;; simple escape for multiple modes
   (general-def
     :states         'normal
-    :keymaps        '(helpful-mode-map flycheck-error-list-mode-map godoc-mode-map
-                                       quickrun--mode-map magit-mode-map xref--xref-buffer-mode-map)
+    :keymaps        '(helpful-mode-map
+                      flycheck-error-list-mode-map godoc-mode-map
+                      quickrun--mode-map magit-mode-map xref--xref-buffer-mode-map
+                      lsp-ui-imenu-mode-map)
     "q"             'quit-window)
 
   (general-def

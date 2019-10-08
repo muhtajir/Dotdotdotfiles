@@ -18,7 +18,9 @@ function __fish_man_page
 
     if set -q args[2]
         man -w "$maincmd-$args[2]" >/dev/null 2>&1; and set cmd "$maincmd-$args[2]" 
-        or man -w "$maincmd" >/dev/null 2>&1; and set cmd "$maincmd" 
+        or begin
+            man -w "$maincmd" >/dev/null 2>&1; and set cmd "$maincmd" 
+        end
     else
         man -w "$maincmd" >/dev/null 2>&1; and set cmd "$maincmd" 
     end

@@ -109,7 +109,7 @@ Start eshell if it isn't running already."
   (evil-insert count))
 
 (defun my//evil-lisp-end-of-depth ()
-  "Go to last point of current syntax depth in the current line."
+  "Go to last point of current syntax depth on the current line."
   (let ((depth (my//syntax-depth)))
     (end-of-line)
     (while (not (eq depth (my//syntax-depth)))
@@ -118,6 +118,8 @@ Start eshell if it isn't running already."
 (defun my/evil-lisp-insert-line (count)
   (interactive "p")
   (my//evil-lisp-start-of-depth)
+  (when (looking-at "\s")
+    (my/evil-lisp-first-non-blank))
   (evil-insert count))
 
 (defun my/evil-lisp-first-non-blank ()
@@ -142,7 +144,7 @@ Start eshell if it isn't running already."
   (indent-according-to-mode))
 
 (defun my//evil-lisp-start-of-depth ()
-  "Go to first point of current syntax depth in the current line."
+  "Go to first point of current syntax depth on the current line."
   (let ((depth (my//syntax-depth)))
     (evil-beginning-of-line)
     (while (not (eq depth (my//syntax-depth)))

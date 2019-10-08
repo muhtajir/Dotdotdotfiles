@@ -198,7 +198,7 @@ function update_pacman_mirrorlist
     set mirrorlist_temp (mktemp --suffix="-mirrorlist")
     curl -m "$PACUPDATE_CURL_TIMEOUT" -s "https://www.archlinux.org/mirrorlist/$PACUPDATE_MIRRORLIST_STRING" > $mirrorlist_temp 2>/dev/null
         or begin
-            echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING correctly set?' >&2
+            echo 'Error retrieving the mirrorlist. Is $PACUPDATE_MIRRORLIST_STRING set correctly?' >&2
             return 1
         end
 
@@ -220,6 +220,10 @@ function check_mailing_list
     set mail_list_file (mktemp --suffix="-maillist")
     echo "Retrieving current copy..."
     curl -m "$PACUPDATE_CURL_TIMEOUT" -s https://lists.archlinux.org/pipermail/arch-announce.mbox/arch-announce.mbox > $mail_list_file
+    or begin
+        echo "Error retrieving mailing list." >&2
+        return 1
+    end
 
     # get most recent message id from arch mailing list
     set msg_id_list (string match -r '(?<=^Message-ID: <)[^>]+' < $mail_list_file)
@@ -250,15 +254,18 @@ function check_mailing_list
 end
 
 
+function get_git_package_commit -a pkg
+    pacman -Q $pkg | awk '{ print $NF }' | string match -r '.{7}(?=-\d+$)'
+end
+
+
 function get_package_buildtime -a pkg
-    set orig_lang $LANG
     set -lx LANG en_US.UTF-8
 
     pacman -Qi $pkg | \
     string replace -rf 'Build Date\s+:\s+(.+)$' '$1' | \
     read -l builddate_time
         or return 1
-    set -lx LANG $orig_lang
     date -d $builddate_time +%s
 end
 
@@ -334,7 +341,7 @@ function get_last_git_commit -a git_url
         end
 
     # this is the return value
-    git -C "$git_dir" log -1 --format=format:%at
+    git -C "$git_dir" log -1 --format=format:%h
         or return 1
 end
 
@@ -348,7 +355,7 @@ function check_git_package -a pkg
 
     echo "Checking updates for $pkg..."
     set git_url (get_git_url $pkg)
-    set last_git_commit_date (get_last_git_commit "$git_url")
+    set last_git_commit (get_last_git_commit "$git_url")
     # if the url is commit specific (see get_last_git_commit function) we can
     # abort here
     if [ $status != 0 ]
@@ -357,7 +364,7 @@ function check_git_package -a pkg
 
     set_cache_var "$pkg-checkdate" (date +%s)
 
-    if [ $last_git_commit_date -gt (get_package_buildtime $pkg) ]
+    if [ $last_git_commit != (get_git_package_commit $pkg) ]
         return 0
     else
         return 1
@@ -541,7 +548,7 @@ function main
         and set exit_status 1
     end
 
-    # rm -rf $parent_tmp_dir
+    rm -rf $parent_tmp_dir
     exit $exit_status
 end
 

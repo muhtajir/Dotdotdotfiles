@@ -57,14 +57,18 @@
 (use-package telephone-line
   :config
   (telephone-line-defsegment telephone-line-my-projectile-segment ()
-    (if (and (fboundp 'projectile-project-name)
-             (projectile-project-p))
-        (let*
-            ((branch (car (vc-git-branches)))
-             (branch-str (unless (string= branch "master")
-                           (concat "[" branch "]"))))
-          (concat (projectile-project-name) branch-str))
-      (file-name-base (directory-file-name (file-name-directory (buffer-file-name))))))
+    (cond
+     ((not (buffer-file-name)) ; buffer is not a file
+      "")
+     ((and (fboundp 'projectile-project-name)
+           (projectile-project-p)) ; buffer is part of a project
+      (let*
+          ((branch (car (vc-git-branches)))
+           (branch-str (unless (string= branch "master")
+                         (concat "[" branch "]"))))
+        (concat (projectile-project-name) branch-str)))
+     (t ; buffer is a file but not part of a project
+      (file-name-base (directory-file-name (file-name-directory (buffer-file-name)))))))
 
   (telephone-line-defsegment telephone-line-my-flycheck-segment ()
     (when (bound-and-true-p flycheck-mode)

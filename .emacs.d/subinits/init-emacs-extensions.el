@@ -87,8 +87,7 @@ Start terminal if it isn't running already."
             (delete-window))
         (if (get-buffer vterm-buf)
             (pop-to-buffer vterm-buf)
-          (vterm-other-window))
-        (evil-insert-state)))))
+          (vterm-other-window))))))
 
 
 (provide 'init-emacs-extensions)

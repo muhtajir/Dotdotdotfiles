@@ -300,10 +300,10 @@
 
   ;; term keybinds
   (general-def
-    :states         'insert
+    :states         'emacs
     :keymaps        'vterm-mode-map
-    "<return>"      'vterm--self-insert
-    "C-h k"         'helpful-key)
+    "C-h k"         'helpful-key
+    "C-c $"         'my/vterm)
 
   ;; fish-mode keybinds
   (general-def-leader

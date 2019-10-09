@@ -17,7 +17,8 @@
   ;; sensible Y behavior
   (customize-set-variable 'evil-want-Y-yank-to-eol t)
   (dolist (modestate '((dashboard-mode . emacs)
-                      (edebug-mode . emacs)))
+                      (edebug-mode . emacs)
+                      (vterm-mode . emacs)))
     (evil-set-initial-state (car modestate) (cdr modestate))))
 
 (use-package vertigo

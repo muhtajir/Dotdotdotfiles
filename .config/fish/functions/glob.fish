@@ -1,6 +1,6 @@
 function glob
-    argparse -n 'glob' -x 'd,f' 'h/hidden' 'x/except=+' 'd/directory' 'f/file' -- $argv
-        or return 1
+    argparse -n 'glob' -x 'b,c,d,f,g,G,L,O,p,r,s,S,t,u,w,x' 'h/hidden' 'X/except=+' 'b/block' 'c/character' 'd/directory' 'g/group' 'G/Group' 'f/file' 'L/Link' 'O/Owned' 'p/pipe' 'r/readable' 's/size' 'S/Socket' 't/terminal' 'u/user' 'w/writable' 'x/xecutable' -- $argv
+    or return 1
 
     # build list of files
     set -l all_files
@@ -10,12 +10,21 @@ function glob
         set all_files $argv
     end
 
-    if [ "$_flag_h" ]
-        set all_files $all_files .*
+    if [ "$_flag_hidden" ]
+        set -a all_files .*
     end
 
-    set -l out_files
-    # loop through all_files and only put those we need into out_files
+    set -l flag
+    # trim flags so we can use them as operators
+    for f in $_flag_b $_flag_c $_flag_d $_flag_f $_flag_g $_flag_G $_flag_L $_flag_O $_flag_p $_flag_r $_flag_s $_flag_S $_flag_t $_flag_u $_flag_w $_flag_x
+        test -n "$f"; and set flag "$f"; or continue
+        if [ (string length -- "$flag") -gt 2 ]
+            set flag (string sub -s 2 -l 2 -- $flag)
+            break
+        end
+    end
+
+    # loop through all_files and print those that match
     for f in $all_files
         # skip for any exception defined on the command line
         set -l except ""
@@ -24,14 +33,8 @@ function glob
         end
         test "$except"; and continue
 
-        if [ -n "$_flag_directory" -a ! -d "$f" ]
-            continue
-        else if [ -n "$_flag_file" -a ! -f "$f" ]
-            continue
-        else
-            set out_files $out_files "$f"
+        if [ $flag "$f" ]
+            printf '%s\n' "$f"
         end
     end
-
-    printf '%s\n' $out_files
 end

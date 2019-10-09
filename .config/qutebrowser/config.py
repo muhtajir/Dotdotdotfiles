@@ -2,6 +2,7 @@
 import os
 from qutebrowser.config.configfiles import ConfigAPI  # noqa: F401
 from qutebrowser.config.config import ConfigContainer  # noqa: F401
+
 config = config  # type: ConfigAPI # noqa: F821 pylint: disable=E0602,C0103
 c = c  # type: ConfigContainer # noqa: F821 pylint: disable=E0602,C0103
 
@@ -15,15 +16,16 @@ def get_rgba(hexcode, alpha):
 def merge_bookmarks():
     """Merge bookmarks from the cloud with those kept by qutebrowser."""
     try:
-        int_bookmarks = os.path.join(config.configdir, 'bookmarks', 'urls')
-        ext_bookmarks = os.path.join(os.getenv('HOME'), 'Sync', 'Diverses',
-                                     'Bookmarks', 'qute_urls')
+        int_bookmarks = os.path.join(config.configdir, "bookmarks", "urls")
+        ext_bookmarks = os.path.join(
+            os.getenv("HOME"), "Sync", "Diverses", "Bookmarks", "qute_urls"
+        )
         with open(ext_bookmarks) as f:
             ext_urls = f.readlines()
     except (FileNotFoundError, TypeError):
         return
 
-    f_mode = 'r+' if os.path.exists(int_bookmarks) else 'w+'
+    f_mode = "r+" if os.path.exists(int_bookmarks) else "w+"
     with open(int_bookmarks, f_mode) as f:
         int_urls = f.readlines()
         f.seek(0)
@@ -31,25 +33,25 @@ def merge_bookmarks():
         f.writelines(sorted(set(ext_urls + int_urls)))
 
 
-BASE00 = '#{}'.format(os.getenv('__BASE00') or '262626')  # black0
-BASE01 = '#{}'.format(os.getenv('__BASE01') or '3a3a3a')  # black1
-BASE02 = '#{}'.format(os.getenv('__BASE02') or '4e4e4e')  # black2
-BASE03 = '#{}'.format(os.getenv('__BASE03') or '8a8a8a')  # black3
-BASE04 = '#{}'.format(os.getenv('__BASE04') or '949494')  # black4
-BASE05 = '#{}'.format(os.getenv('__BASE05') or 'dab997')  # white0
-BASE06 = '#{}'.format(os.getenv('__BASE06') or 'd5c4a1')  # white1
-BASE07 = '#{}'.format(os.getenv('__BASE07') or 'ebdbb2')  # white2
-BASE08 = '#{}'.format(os.getenv('__BASE08') or 'd75f5f')  # red
-BASE09 = '#{}'.format(os.getenv('__BASE09') or 'ff8700')  # light_orange
-BASE0A = '#{}'.format(os.getenv('__BASE0A') or 'ffaf00')  # yellow
-BASE0B = '#{}'.format(os.getenv('__BASE0B') or 'afaf00')  # green
-BASE0C = '#{}'.format(os.getenv('__BASE0C') or '85ad85')  # cyan
-BASE0D = '#{}'.format(os.getenv('__BASE0D') or '83adad')  # blue
-BASE0E = '#{}'.format(os.getenv('__BASE0E') or 'd485ad')  # magenta
-BASE0F = '#{}'.format(os.getenv('__BASE0F') or 'd65d0e')  # dark_orange
+BASE00 = "#{}".format(os.getenv("__BASE00") or "262626")  # black0
+BASE01 = "#{}".format(os.getenv("__BASE01") or "3a3a3a")  # black1
+BASE02 = "#{}".format(os.getenv("__BASE02") or "4e4e4e")  # black2
+BASE03 = "#{}".format(os.getenv("__BASE03") or "8a8a8a")  # black3
+BASE04 = "#{}".format(os.getenv("__BASE04") or "949494")  # black4
+BASE05 = "#{}".format(os.getenv("__BASE05") or "dab997")  # white0
+BASE06 = "#{}".format(os.getenv("__BASE06") or "d5c4a1")  # white1
+BASE07 = "#{}".format(os.getenv("__BASE07") or "ebdbb2")  # white2
+BASE08 = "#{}".format(os.getenv("__BASE08") or "d75f5f")  # red
+BASE09 = "#{}".format(os.getenv("__BASE09") or "ff8700")  # light_orange
+BASE0A = "#{}".format(os.getenv("__BASE0A") or "ffaf00")  # yellow
+BASE0B = "#{}".format(os.getenv("__BASE0B") or "afaf00")  # green
+BASE0C = "#{}".format(os.getenv("__BASE0C") or "85ad85")  # cyan
+BASE0D = "#{}".format(os.getenv("__BASE0D") or "83adad")  # blue
+BASE0E = "#{}".format(os.getenv("__BASE0E") or "d485ad")  # magenta
+BASE0F = "#{}".format(os.getenv("__BASE0F") or "d65d0e")  # dark_orange
 
-FONT_SANS = os.getenv('FONT_SANS', default='Liberation Sans')
-FONT_MONO = 'Source Code Pro'
+FONT_SANS = os.getenv("FONT_SANS", default="Liberation Sans")
+FONT_MONO = "Source Code Pro"
 
 merge_bookmarks()
 
@@ -98,13 +100,13 @@ c.colors.downloads.stop.bg = BASE0B
 c.colors.downloads.stop.fg = BASE00
 # Color gradient interpolation system for download backgrounds.
 # Valid values:
-c.colors.downloads.system.bg = 'rgb'
+c.colors.downloads.system.bg = "rgb"
 # Color gradient interpolation system for download text.
 # Valid values:
-c.colors.downloads.system.fg = 'rgb'
+c.colors.downloads.system.fg = "rgb"
 # Background color for hints. Note that you can use a `rgba(...)` value
 # for transparency.
-c.colors.hints.bg = get_rgba(BASE02, '0.85')
+c.colors.hints.bg = get_rgba(BASE02, "0.85")
 # Font color for hints.
 c.colors.hints.fg = BASE07
 # Font color for the matched part of hints.
@@ -136,7 +138,7 @@ c.colors.messages.warning.fg = BASE07
 # Background color for prompts.
 c.colors.prompts.bg = BASE02
 # Border used around UI elements in prompts.
-c.colors.prompts.border = '1px solid {}'.format(BASE07)
+c.colors.prompts.border = "1px solid {}".format(BASE07)
 # Foreground color for prompts.
 c.colors.prompts.fg = BASE07
 # Background color for the selected item in filename prompts.
@@ -203,7 +205,7 @@ c.colors.tabs.indicator.stop = BASE0B
 #   - hsv: Interpolate in the HSV color system.
 #   - hsl: Interpolate in the HSL color system.
 #   - none: Don't show a gradient.
-c.colors.tabs.indicator.system = 'rgb'
+c.colors.tabs.indicator.system = "rgb"
 # Background color of unselected odd tabs.
 c.colors.tabs.odd.bg = BASE01
 # Foreground color of unselected odd tabs.
@@ -218,7 +220,7 @@ c.colors.tabs.selected.odd.bg = BASE07
 c.colors.tabs.selected.odd.fg = BASE00
 # Background color for webpages if unset (or empty to use the theme's
 # color)
-c.colors.webpage.bg = 'white'
+c.colors.webpage.bg = "white"
 # Background color of the statusbar in passthrough mode.
 c.colors.statusbar.passthrough.bg = BASE07
 # Foreground color of the statusbar in passthrough mode.
@@ -229,174 +231,190 @@ c.colors.statusbar.passthrough.fg = BASE00
 # Only let completion use up as little space as possible
 c.completion.shrink = True
 # Font used in the completion categories.
-c.fonts.completion.category = 'bold 9pt {}'.format(FONT_MONO)
+c.fonts.completion.category = "bold 9pt {}".format(FONT_MONO)
 # Font used in the completion widget.
-c.fonts.completion.entry = '9pt {}'.format(FONT_MONO)
+c.fonts.completion.entry = "9pt {}".format(FONT_MONO)
 # Font used for the debugging console.
-c.fonts.debug_console = '9pt {}'.format(FONT_MONO)
+c.fonts.debug_console = "9pt {}".format(FONT_MONO)
 # Font used for the downloadbar.
-c.fonts.downloads = '9pt {}'.format(FONT_SANS)
+c.fonts.downloads = "9pt {}".format(FONT_SANS)
 # Font used for the hints.
-c.fonts.hints = '9pt {}'.format(FONT_MONO)
+c.fonts.hints = "9pt {}".format(FONT_MONO)
 # Font used in the keyhint widget.
-c.fonts.keyhint = '9pt {}'.format(FONT_SANS)
+c.fonts.keyhint = "9pt {}".format(FONT_SANS)
 # Font used for error messages.
-c.fonts.messages.error = '9pt {}'.format(FONT_SANS)
+c.fonts.messages.error = "9pt {}".format(FONT_SANS)
 # Font used for info messages.
-c.fonts.messages.info = '9pt {}'.format(FONT_SANS)
+c.fonts.messages.info = "9pt {}".format(FONT_SANS)
 # Font used for warning messages.
-c.fonts.messages.warning = '9pt {}'.format(FONT_SANS)
+c.fonts.messages.warning = "9pt {}".format(FONT_SANS)
 # Font used for prompts.
-c.fonts.prompts = '9pt {}'.format(FONT_SANS)
+c.fonts.prompts = "9pt {}".format(FONT_SANS)
 # Font used in the statusbar.
-c.fonts.statusbar = '9pt {}'.format(FONT_MONO)
+c.fonts.statusbar = "9pt {}".format(FONT_MONO)
 # Font used in the tab bar.
-c.fonts.tabs = '10pt {}'.format(FONT_SANS)
+c.fonts.tabs = "10pt {}".format(FONT_SANS)
 ## Font family for sans-serif fonts.
-c.fonts.web.family.sans_serif = 'Liberation Sans'
+c.fonts.web.family.sans_serif = "Liberation Sans"
 ## Font family for serif fonts.
-c.fonts.web.family.serif = 'Liberation Serif'
+c.fonts.web.family.serif = "Liberation Serif"
 # Nice looking padding for tabs headers
-c.tabs.padding = {'top': 2, 'bottom': 2, 'left': 3, 'right': 3}
+c.tabs.padding = {"top": 2, "bottom": 2, "left": 3, "right": 3}
 
 ## Hint settings
 # Mode to use for hints.
-c.hints.mode = 'letter'
-c.hints.chars = 'asdfghjklö'
+c.hints.mode = "letter"
+c.hints.chars = "asdfghjklö"
 # A comma-separated list of regexes to use for 'next' links.
-c.hints.next_regexes = ['\\bnext\\b', '\\bmore\\b', '\\bnewer\\b',
-                        '\\b[>→≫]\\b', '\\b(>>|»)\\b', '\\bcontinue\\b']
+c.hints.next_regexes = [
+    "\\bnext\\b",
+    "\\bmore\\b",
+    "\\bnewer\\b",
+    "\\b[>→≫]\\b",
+    "\\b(>>|»)\\b",
+    "\\bcontinue\\b",
+]
 # A comma-separated list of regexes to use for 'prev' links.
-c.hints.prev_regexes = ['\\bprev(ious)?\\b', '\\bback\\b', '\\bolder\\b',
-                        '\\b[<←≪]\\b', '\\b(<<|«)\\b']
+c.hints.prev_regexes = [
+    "\\bprev(ious)?\\b",
+    "\\bback\\b",
+    "\\bolder\\b",
+    "\\b[<←≪]\\b",
+    "\\b(<<|«)\\b",
+]
 # Time from pressing a key to seeing the keyhint dialog (ms).
 c.keyhint.delay = 200
 # A timeout (in milliseconds) to ignore normal-mode key bindings after a
 # successful auto-follow.
 c.hints.auto_follow_timeout = 300
 # setup hints border
-c.hints.border = '1px solid {}'.format(BASE04)
+c.hints.border = "1px solid {}".format(BASE04)
 
 ## Address bar shortcut settings
 # Definitions of search engines which can be used via the address bar.
 c.url.open_base_url = True
 c.url.searchengines = {
-    'DEFAULT': 'https://duckduckgo.com/?q={}',
-    'aw': 'https://wiki.archlinux.org/index.php?search={}',
-    'bc': 'https://bandcamp.com/search?q={}',
-    'bgg': 'https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={}',
-    'fm': 'https://www.last.fm/search?q={}',
-    'g': 'https://encrypted.google.com/search?q={}',
-    'gh': 'https://github.com/search?utf8=%E2%9C%93&q={}',
-    'lc': 'https://dict.leo.org/chinesisch-deutsch/{}',
-    'le': 'https://dict.leo.org/german-english/{}',
-    'lf': 'https://dict.leo.org/französisch-deutsch/{}',
-    'mel': 'http://melpa.org/#/?q={}',
-    'py': 'https://docs.python.org/3.7/search.html?q={}',
-    'ug': 'https://www.ultimate-guitar.com/search.php?search_type=title&value={}',
-    'w': 'https://en.wikipedia.org/w/index.php?search={}',
-    'wd': 'https://de.wikipedia.org/w/index.php?search={}',
-    'wv': 'https://en.wikivoyage.org/wiki/index.php?search={}',
-    'yt': 'https://www.youtube.com/results?search_query={}'}
+    "DEFAULT": "https://duckduckgo.com/?q={}",
+    "aw": "https://wiki.archlinux.org/index.php?search={}",
+    "bc": "https://bandcamp.com/search?q={}",
+    "bgg": "https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q={}",
+    "fm": "https://www.last.fm/search?q={}",
+    "g": "https://encrypted.google.com/search?q={}",
+    "gh": "https://github.com/search?q={}",
+    "lc": "https://dict.leo.org/chinesisch-deutsch/{}",
+    "le": "https://dict.leo.org/german-english/{}",
+    "lf": "https://dict.leo.org/französisch-deutsch/{}",
+    "mel": "http://melpa.org/#/?q={}",
+    "py": "https://docs.python.org/3.7/search.html?q={}",
+    "ug": "https://www.ultimate-guitar.com/search.php?search_type=title&value={}",
+    "w": "https://en.wikipedia.org/w/index.php?search={}",
+    "wd": "https://de.wikipedia.org/w/index.php?search={}",
+    "wv": "https://en.wikivoyage.org/wiki/index.php?search={}",
+    "yt": "https://www.youtube.com/results?search_query={}",
+}
 
 # Aliases
-c.aliases['ssh-tunnel'] = 'config-cycle --temp content.proxy socks://localhost:4711 system'
+c.aliases[
+    "ssh-tunnel"
+] = "config-cycle --temp content.proxy socks://localhost:4711 system"
 
 ## Miscellaneous settings
 # Start page
-c.url.start_pages = 'https://www.punknews.org/'
+c.url.start_pages = "https://www.punknews.org/"
 # Where to show the downloaded files.
-c.downloads.position = 'bottom'
+c.downloads.position = "bottom"
 # Open new tabs in background
 c.tabs.background = True
 # Don't store cookies because I don't like them
 c.content.cookies.store = False
 # Set editor
-c.editor.command = ['termite', '-e',
-                    'nvim -c "normal {line}G{column0}l" {file}']
+c.editor.command = ["termite", "-e", 'nvim -c "normal {line}G{column0}l" {file}']
 # Which tab to select when the focused tab is removed.
-c.tabs.select_on_remove = 'last-used'
+c.tabs.select_on_remove = "last-used"
 # Confirm exit when there's downloads running
-c.confirm_quit = ['downloads']
+c.confirm_quit = ["downloads"]
 
 ## Key bindings
 # Deletion
-config.unbind('d', mode='normal')
-config.unbind('D', mode='normal')
-config.bind('dd', 'tab-close')
-config.bind('dD', 'tab-only')
-config.bind('dk', 'tab-close --prev')
-config.bind('dj', 'tab-close --next')
-config.bind('dK', 'tab-only --next')
-config.bind('dJ', 'tab-only --prev')
-config.bind('dq', 'set-cmd-text --space :quickmark-del')
-config.bind('db', 'set-cmd-text --space :bookmark-del')
+config.unbind("d", mode="normal")
+config.unbind("D", mode="normal")
+config.bind("dd", "tab-close")
+config.bind("dD", "tab-only")
+config.bind("dk", "tab-close --prev")
+config.bind("dj", "tab-close --next")
+config.bind("dK", "tab-only --next")
+config.bind("dJ", "tab-only --prev")
+config.bind("dq", "set-cmd-text --space :quickmark-del")
+config.bind("db", "set-cmd-text --space :bookmark-del")
 # Tab moving
-config.bind('<Alt-Shift-J>', 'tab-move +')
-config.bind('<Alt-Shift-K>', 'tab-move -')
+config.bind("<Alt-Shift-J>", "tab-move +")
+config.bind("<Alt-Shift-K>", "tab-move -")
 # direct tab selection
-config.bind('g1', 'tab-focus 1')
-config.bind('g2', 'tab-focus 2')
-config.bind('g3', 'tab-focus 3')
-config.bind('g4', 'tab-focus 4')
-config.bind('g5', 'tab-focus 5')
-config.bind('g6', 'tab-focus 6')
-config.bind('g7', 'tab-focus 7')
-config.bind('g8', 'tab-focus 8')
-config.bind('g9', 'tab-focus 9')
-config.bind('g0', 'tab-focus 10')
+config.bind("g1", "tab-focus 1")
+config.bind("g2", "tab-focus 2")
+config.bind("g3", "tab-focus 3")
+config.bind("g4", "tab-focus 4")
+config.bind("g5", "tab-focus 5")
+config.bind("g6", "tab-focus 6")
+config.bind("g7", "tab-focus 7")
+config.bind("g8", "tab-focus 8")
+config.bind("g9", "tab-focus 9")
+config.bind("g0", "tab-focus 10")
 # Clear search highlighting
-config.bind('<Ctrl-´>', 'search')
+config.bind("<Ctrl-´>", "search")
 # Quickmark/Bookmark opening (mostly redundant, replace e bindings if
 # necessary)
-config.bind('eq', 'set-cmd-text --space :quickmark-load')
-config.bind('eb', 'set-cmd-text --space :bookmark-load')
+config.bind("eq", "set-cmd-text --space :quickmark-load")
+config.bind("eb", "set-cmd-text --space :bookmark-load")
 # bind mute command
-config.bind('M', 'tab-mute')
+config.bind("M", "tab-mute")
 # Completion navigation command mode
-config.bind('<Alt-k>', 'command-history-prev', mode='command')
-config.bind('<Alt-j>', 'command-history-next', mode='command')
-config.bind('<Ctrl-n>', 'completion-item-focus next', mode='command')
-config.bind('<Ctrl-p>', 'completion-item-focus prev', mode='command')
+config.bind("<Alt-k>", "command-history-prev", mode="command")
+config.bind("<Alt-j>", "command-history-next", mode="command")
+config.bind("<Ctrl-n>", "completion-item-focus next", mode="command")
+config.bind("<Ctrl-p>", "completion-item-focus prev", mode="command")
 # Additional hinting
-config.bind('e', 'hint all hover', mode='normal')
-config.bind(';o', 'set-cmd-text --space :open -b')
-config.bind(';O', 'set-cmd-text --space :open -p')
-config.bind(';p', 'hint images yank')
-config.bind(';v', 'hint links spawn --detach mpv {hint-url}')
-config.bind(';a', 'hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}')
-config.bind(';x', 'hint links userscript xdg-open')
+config.bind("e", "hint all hover", mode="normal")
+config.bind(";o", "set-cmd-text --space :open -b")
+config.bind(";O", "set-cmd-text --space :open -p")
+config.bind(";p", "hint images yank")
+config.bind(";v", "hint links spawn --detach mpv {hint-url}")
+config.bind(
+    ";a",
+    "hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}",
+)
+config.bind(";x", "hint links userscript xdg-open")
 # Open current url in new windows
-config.unbind('wO', mode='normal')
-config.bind('gw', 'set-cmd-text :open -w {url:pretty}')
+config.unbind("wO", mode="normal")
+config.bind("gw", "set-cmd-text :open -w {url:pretty}")
 # Buffer navigation
-config.bind('b', 'set-cmd-text --space :buffer')
+config.bind("b", "set-cmd-text --space :buffer")
 # Source config
-config.bind('<Ctrl-R>', 'config-source')
+config.bind("<Ctrl-R>", "config-source")
 # Passthrough settings
-config.unbind('<Ctrl-v>')
-config.bind('I', 'enter-mode passthrough')
-config.bind('<Escape>', 'leave-mode', mode='passthrough')
-config.bind('<Shift-Escape>', 'fake-key <Escape>', mode='passthrough')
-config.bind('<Shift-Escape>', 'fake-key <Escape>')
+config.unbind("<Ctrl-v>")
+config.bind("I", "enter-mode passthrough")
+config.bind("<Escape>", "leave-mode", mode="passthrough")
+config.bind("<Shift-Escape>", "fake-key <Escape>", mode="passthrough")
+config.bind("<Shift-Escape>", "fake-key <Escape>")
 # emacsy input keybindings in command mode
-config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='command')
-config.bind('<Ctrl-e>', 'rl-end-of-line', mode='command')
-config.bind('<Ctrl-b>', 'rl-backward-char', mode='command')
-config.bind('<Ctrl-f>', 'rl-forward-char', mode='command')
-config.bind('<Ctrl-Shift-b>', 'rl-backward-word', mode='command')
-config.bind('<Ctrl-Shift-f>', 'rl-forward-word', mode='command')
+config.bind("<Ctrl-a>", "rl-beginning-of-line", mode="command")
+config.bind("<Ctrl-e>", "rl-end-of-line", mode="command")
+config.bind("<Ctrl-b>", "rl-backward-char", mode="command")
+config.bind("<Ctrl-f>", "rl-forward-char", mode="command")
+config.bind("<Ctrl-Shift-b>", "rl-backward-word", mode="command")
+config.bind("<Ctrl-Shift-f>", "rl-forward-word", mode="command")
 # emacsy input keybindings in prompt mode
-config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='prompt')
-config.bind('<Ctrl-e>', 'rl-end-of-line', mode='prompt')
-config.bind('<Ctrl-b>', 'rl-backward-char', mode='prompt')
-config.bind('<Ctrl-f>', 'rl-forward-char', mode='prompt')
-config.bind('<Ctrl-Shift-b>', 'rl-backward-word', mode='prompt')
-config.bind('<Ctrl-Shift-f>', 'rl-forward-word', mode='prompt')
+config.bind("<Ctrl-a>", "rl-beginning-of-line", mode="prompt")
+config.bind("<Ctrl-e>", "rl-end-of-line", mode="prompt")
+config.bind("<Ctrl-b>", "rl-backward-char", mode="prompt")
+config.bind("<Ctrl-f>", "rl-forward-char", mode="prompt")
+config.bind("<Ctrl-Shift-b>", "rl-backward-word", mode="prompt")
+config.bind("<Ctrl-Shift-f>", "rl-forward-word", mode="prompt")
 # one day these might be supported in insert mode as well... until then at
 # least unbind them
-config.unbind('<Ctrl-e>', mode='insert')
-config.bind('<Ctrl-z>', 'open-editor', mode='insert')
+config.unbind("<Ctrl-e>", mode="insert")
+config.bind("<Ctrl-z>", "open-editor", mode="insert")
 
 ## Per-domain settings
 # SSH tunneling

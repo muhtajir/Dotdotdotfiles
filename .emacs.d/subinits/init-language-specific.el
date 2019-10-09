@@ -128,7 +128,7 @@
   (setq flycheck-flake8-maximum-line-length 200))
 
 (use-package yasnippet
-  :hook ((emacs-lisp-mode go-mode fish-mode snippet-mode) . yas-minor-mode)
+  :hook ((emacs-lisp-mode go-mode fish-mode snippet-mode python-mode) . yas-minor-mode)
   :config
   (yas-reload-all)
   ;; bind this here because yas-maybe-expanded needs to be loaded first

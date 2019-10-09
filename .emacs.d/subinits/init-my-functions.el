@@ -110,6 +110,10 @@ Start eshell if it isn't running already."
 
 (defun my//evil-lisp-end-of-depth ()
   "Go to last point of current syntax depth on the current line."
+  ;; if we're on a parens move into its scope
+  (when (and (not (my//in-string-p))
+             (or (mapcar #'looking-at '("(" ")"))))
+    (forward-char))
   (let ((depth (my//syntax-depth)))
     (end-of-line)
     (while (not (eq depth (my//syntax-depth)))

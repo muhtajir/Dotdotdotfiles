@@ -46,7 +46,8 @@
                                      evil-ex-search-previous
                                      exit-minibuffer
                                      previous-line
-                                     next-line)))
+                                     next-line))
+  (add-hook 'focus-in-hook #'beacon-blink))
 
 ;; delimiter highlighting and matching
 (setq electric-pair-open-newline-between-pairs t)

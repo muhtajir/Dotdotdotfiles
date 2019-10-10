@@ -26,7 +26,7 @@
 (use-package company
   :hook (prog-mode . company-mode)
   :config
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.3)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)
   (push 'company-tng-frontend company-frontends)

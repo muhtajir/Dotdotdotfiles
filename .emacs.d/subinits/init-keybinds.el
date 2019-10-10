@@ -118,6 +118,7 @@
     "hF"            'helpful-command
     "hv"            'helpful-variable
     "hk"            'helpful-key
+    "hb"            'counsel-descbinds
     "hm"            'describe-mode
     "SPC"           'vertigo-set-digit-argument
     "$"             'my/vterm

@@ -35,6 +35,8 @@
              my/evil-lisp-insert-line
              my/evil-lisp-open-below
              my/evil-lisp-open-above
+             my/evil-lisp-paste-with-newline-above
+             my/evil-lisp-paste-with-newline-below
              my/evil-paste-with-newline-above
              my/evil-paste-with-newline-below
              my/evil-search-visual-selection

@@ -19,7 +19,7 @@
       (counsel-ag nil ag-root))))
 
 (use-package counsel-projectile
-  :after (counsel projectil)
+  :after (counsel projectile)
   :commands (counsel-projectile-switch-project
              counsel-projectile-find-file))
 

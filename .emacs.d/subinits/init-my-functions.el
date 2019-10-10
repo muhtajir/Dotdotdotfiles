@@ -11,6 +11,17 @@
      ,@funcs
      nil))
 
+(defmacro my/defun-newline-paste (func-name &rest open-funcs)
+  "Create a function that pastes after opening lines with OPEN-FUNCS."
+  `(defun ,func-name (count)
+     (interactive "p")
+     (evil-with-single-undo
+       (while (> (setq count (1- count)) -1)
+         (evil-save-state
+           ,@open-funcs)
+         (evil-paste-after 1)
+         (indent-according-to-mode)))))
+
 ;; functions
 (defun my/get-line ()
   "Uniform way to get content of current line."
@@ -111,13 +122,14 @@ Start eshell if it isn't running already."
 (defun my//evil-lisp-end-of-depth ()
   "Go to last point of current syntax depth on the current line."
   ;; if we're on a parens move into its scope
-  (when (and (not (my//in-string-p))
-             (or (mapcar #'looking-at '("(" ")"))))
-    (forward-char))
-  (let ((depth (my//syntax-depth)))
-    (end-of-line)
-    (while (not (eq depth (my//syntax-depth)))
-      (backward-char))))
+  (unless (eq (length (my/get-line)) 0) ; don't move if on empty line
+    (when (and (not (my//in-string-p))
+               (or (mapcar #'looking-at '("(" ")"))))
+      (forward-char))
+    (let ((depth (my//syntax-depth)))
+      (end-of-line)
+      (while (not (eq depth (my//syntax-depth)))
+        (backward-char)))))
 
 (defun my/evil-lisp-insert-line (count)
   (interactive "p")
@@ -154,23 +166,21 @@ Start eshell if it isn't running already."
     (while (not (eq depth (my//syntax-depth)))
       (evil-forward-char))))
 
-(defun my/evil-paste-with-newline-above (count)
-  "Paste COUNT times into a newly opened line above."
-  (interactive "p")
-  (evil-with-single-undo
-    (evil-save-state
-      (evil-open-above 1)
-      (evil-paste-after count)
-      (indent-according-to-mode))))
+(my/defun-newline-paste
+ my/evil-paste-with-newline-above
+ (evil-open-above 1))
 
-(defun my/evil-paste-with-newline-below (count)
-  "Paste COUNT times into a newly opened line above."
-  (interactive "p")
-  (evil-with-single-undo
-    (evil-save-state
-      (evil-open-below 1)
-      (evil-paste-after count)
-      (indent-according-to-mode))))
+(my/defun-newline-paste
+ my/evil-paste-with-newline-below
+ (evil-open-below 1))
+
+(my/defun-newline-paste
+ my/evil-lisp-paste-with-newline-above
+ (my/evil-lisp-open-above 1))
+
+(my/defun-newline-paste
+ my/evil-lisp-paste-with-newline-below
+ (my/evil-lisp-open-below 1))
 
 (defun my/evil-search-visual-selection (direction count)
   "Search for visually selected text in buffer.

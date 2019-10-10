@@ -497,7 +497,9 @@
     "I"             'evil-insert-line
     "^"             'evil-first-non-blank
     "o"             'evil-open-below
-    "O"             'evil-open-above)
+    "O"             'evil-open-above
+    "p"             'my/evil-lisp-paste-with-newline-below
+    "P"             'my/evil-lisp-paste-with-newline-above)
 
   ;; visual regexp keybinds
   (general-def

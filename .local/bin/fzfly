@@ -1,0 +1,27 @@
+#!/bin/bash
+
+tmp_stdin=$(mktemp)
+tmp_stdout=$(mktemp)
+tmp_conf=$(mktemp)
+tmp_scr=$(mktemp)
+
+cat > "$tmp_stdin"
+sed -r 's/^(\s*size:\s*)[0-9.]+/\115.0/' "$HOME/.config/alacritty/alacritty.yml" > "$tmp_conf" &
+echo "#!/bin/bash
+fzf $FZF_OVERLAY_OPTS < $tmp_stdin > $tmp_stdout" > "$tmp_scr"
+chmod +x "$tmp_scr"
+
+alacritty -t fzfly --class fzfly --config-file "$tmp_conf" -e "$tmp_scr"
+cat "$tmp_stdout"
+
+if [[ ! -s "$tmp_stdout" ]]; then
+    exit_code=130
+else
+    exit_code=0
+fi
+
+rm "$tmp_conf"
+rm "$tmp_scr"
+rm "$tmp_stdin"
+rm "$tmp_stdout"
+exit $exit_code

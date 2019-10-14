@@ -19,7 +19,9 @@
   (dolist (modestate '((dashboard-mode . emacs)
                       (edebug-mode . emacs)
                       (vterm-mode . emacs)))
-    (evil-set-initial-state (car modestate) (cdr modestate))))
+    (evil-set-initial-state (car modestate) (cdr modestate)))
+  (add-hook 'evil-insert-state-entry-hook (lambda () (blink-cursor-mode 1)))
+  (add-hook 'evil-insert-state-exit-hook (lambda () (blink-cursor-mode -1))))
 
 (use-package vertigo
   :commands vertigo-set-digit-argument

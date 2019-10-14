@@ -88,8 +88,7 @@
   (setq dashboard-items '((bookmarks . 5)
                           (recents  . 5)
                           (projects . 5)
-                          (agenda . 5)
-                          (registers . 5)))
+                          (agenda . 5)))
   (add-hook 'window-setup-hook
             (lambda ()
               (dashboard-next-section)

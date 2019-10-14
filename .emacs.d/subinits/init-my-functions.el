@@ -95,14 +95,14 @@ Start eshell if it isn't running already."
     (eval-region reg-start reg-end t)))
 
 ;; evil-related-functions
-(defun my/evil-dry-open-below (&optional line)
+(defun my/evil-dry-open-below (count)
   "Open LINE number of lines below but stay in current line."
   (interactive "p")
   (save-excursion
     (end-of-line)
-    (open-line line)))
+    (open-line count)))
 
-(defun my/evil-dry-open-above (line)
+(defun my/evil-dry-open-above (count)
   "Open LINE number of lines above but stay in current line."
   (interactive "p")
   ;; this does not work with save-excursion if it's done at the beginning of
@@ -117,7 +117,8 @@ Start eshell if it isn't running already."
 (defun my/evil-lisp-append-line (count)
   (interactive "p")
   (my//evil-lisp-end-of-depth)
-  (evil-insert count))
+  (setq evil-insert-count count)
+  (evil-insert-state 1))
 
 (defun my//evil-lisp-end-of-depth ()
   "Go to last point of current syntax depth on the current line."
@@ -136,7 +137,8 @@ Start eshell if it isn't running already."
   (my//evil-lisp-start-of-depth)
   (when (looking-at "\s")
     (my/evil-lisp-first-non-blank))
-  (evil-insert count))
+  (setq evil-insert-count count)
+  (evil-insert-state 1))
 
 (defun my/evil-lisp-first-non-blank ()
     (interactive)
@@ -147,17 +149,23 @@ Start eshell if it isn't running already."
 
 (defun my/evil-lisp-open-above (count)
   (interactive "p")
-  (my/evil-lisp-insert-line 1)
+  (my//evil-lisp-start-of-depth)
   (save-excursion
-    (newline count)
+    (newline 1)
     (indent-according-to-mode))
-  (indent-according-to-mode))
+  (indent-according-to-mode)
+  (setq evil-insert-count count
+        evil-insert-lines t)
+  (evil-insert-state 1))
 
 (defun my/evil-lisp-open-below (count)
   (interactive "p")
-  (my/evil-lisp-append-line 1)
-  (newline count)
-  (indent-according-to-mode))
+  (my//evil-lisp-end-of-depth)
+  (newline 1)
+  (indent-according-to-mode)
+  (setq evil-insert-count count
+        evil-insert-lines t)
+  (evil-insert-state 1))
 
 (defun my//evil-lisp-start-of-depth ()
   "Go to first point of current syntax depth on the current line."

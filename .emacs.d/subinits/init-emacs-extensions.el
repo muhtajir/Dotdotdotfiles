@@ -28,6 +28,7 @@
 
 ;; use pass or an encrypted file for auth-sources
 (use-package auth-source-pass
+  :defer 5
   :config
   (auth-source-pass-enable))
 

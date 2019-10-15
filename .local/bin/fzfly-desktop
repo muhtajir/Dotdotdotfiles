@@ -44,7 +44,8 @@ def get_entry_freq(entry):
 
 @contextmanager
 def update_conf(conf_file, ensure_sections=[]):
-    """Context manager for reading and writing to conf_file. Use ensure_sections to make sure specific sections exist."""
+    """Context manager for reading and writing to conf_file. Use
+    ensure_sections to make sure specific sections exist."""
     cp = get_config(conf_file)
     for s in ensure_sections:
         if s not in cp.sections():

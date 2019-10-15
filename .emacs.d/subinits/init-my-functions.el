@@ -109,8 +109,8 @@ Start eshell if it isn't running already."
   ;; the buffer
   (let ((col (current-column)))
     (beginning-of-line)
-    (open-line line)
-    (forward-line line)
+    (open-line count)
+    (forward-line count)
     (move-to-column col)))
 
 ;; lisp related functions

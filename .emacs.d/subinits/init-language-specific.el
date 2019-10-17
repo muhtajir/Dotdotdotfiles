@@ -59,63 +59,6 @@
   (setq flymake-no-changes-timeout nil
         flymake-fringe-indicator-position 'right-fringe))
 
-;; (use-package flycheck
-;;   :defer t
-;;   :hook ((python-mode go-mode LaTeX-mode) . flycheck-mode)
-;;   :config
-;;   ;; flycheck buffer when entering normal state
-;;   (defun my/flycheck-upon-normal-entry ()
-;;     (when (bound-and-true-p flycheck-mode)
-;;       (flycheck-buffer)
-;;       (setq flycheck-check-syntax-automatically
-;;             (append flycheck-check-syntax-automatically '(idle-change)))))
-;;   (defun my/flycheck-upon-normal-exit()
-;;     (when (bound-and-true-p flycheck-mode)
-;;       (flycheck-clear)
-;;       (setq flycheck-check-syntax-automatically
-;;             (delq 'idle-change flycheck-check-syntax-automatically))))
-;;   (setq flycheck-check-syntax-automatically '(save idle-change))
-;;   (setq flycheck-idle-change-delay 0.1)
-;;   (setq flycheck-display-errors-delay 1)
-;;   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
-;;   (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
-
-;;   ;; hack for actions that aren't considered changes by flycheck
-;;   (defun my/flycheck-idleize (&rest args)
-;;     (cl-pushnew 'idle-change flycheck--idle-trigger-conditions))
-;;   (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
-;;   (advice-add 'undo-tree-undo :after #'my/flycheck-idleize)
-
-;;   (mapc 'evil-declare-motion (list 'flycheck-next-error 'flycheck-previous-error))
-
-;;   ;; create a right fringe if there are any errors
-;;   (setq flycheck-indication-mode 'right-fringe)
-;;   (defun my/flycheck-create-fringe ()
-;;     (if (> (length flycheck-current-errors) 0)
-;;         (set-window-fringes nil nil 9)
-;;       (set-window-fringes nil nil 0)))
-;;   (add-hook 'flycheck-after-syntax-check-hook 'my/flycheck-create-fringe)
-
-;;   ;; select different fringe bitmaps for flycheck error levels
-;;   (flycheck-define-error-level 'error
-;;     :severity 2
-;;     :overlay-category 'flycheck-error-overlay
-;;     :fringe-bitmap 'left-triangle
-;;     :fringe-face 'flycheck-fringe-error)
-;;   (flycheck-define-error-level 'warning
-;;     :severity 1
-;;     :overlay-category 'flycheck-warning-overlay
-;;     :fringe-bitmap 'left-triangle
-;;     :fringe-face 'flycheck-fringe-warning)
-;;   (flycheck-define-error-level 'info
-;;     :severity 0
-;;     :overlay-category 'flycheck-info-overlay
-;;     :fringe-bitmap 'left-triangle
-;;     :fringe-face 'flycheck-fringe-info)
-
-;;   ;; checker specific settings
-;;   (setq flycheck-flake8-maximum-line-length 200))
-
 (use-package yasnippet
   :hook ((emacs-lisp-mode go-mode fish-mode snippet-mode python-mode) . yas-minor-mode)
   :config

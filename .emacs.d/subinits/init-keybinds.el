@@ -430,6 +430,7 @@
   (general-def-leader
     :states 'emacs
     :keymaps 'mu4e-view-mode-map
+    "f"      'link-hint-open-link
     "/"      'mu4e-view-search-narrow
     "d"      'mu4e-view-mark-for-delete)
   

@@ -1,4 +1,13 @@
 ;; macros
+(defmacro my/flet (bindings &rest body)
+  "Like flet but using cl-letf and therefore not deprecated."
+  `(cl-letf ,(mapcar
+              (lambda (binding)
+                `((symbol-function (quote ,(car binding)))
+                  ,@(cdr binding)))
+              bindings)
+     ,@body))
+
 (defmacro my/split-window-and-do (&rest funcs)
   `(progn
      (ignore-errors
@@ -258,36 +267,26 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
            var-strs))))))
 
 (defun my/split-window-sensibly (&optional window)
-  "Copied from standard function but with preference for horizontal split."
-  (let ((window (or window (selected-window))))
-    (or (and (window-splittable-p window t)
-             ;; Split window horizontally.
-             (with-selected-window window
-               (split-window-right)))
-        (and (window-splittable-p window)
-             ;; Split window vertically.
-             (with-selected-window window
-               (split-window-below))) (and
-             ;; If WINDOW is the only usable window on its frame (it is
-             ;; the only one or, not being the only one, all the other
-             ;; ones are dedicated) and is not the minibuffer window, try
-             ;; to split it vertically disregarding the value of
-             ;; `split-height-threshold'.
-             (let ((frame (window-frame window)))
-               (or
-                (eq window (frame-root-window frame))
-                (catch 'done
-                  (walk-window-tree (lambda (w)
-                                      (unless (or (eq w window)
-                                                  (window-dedicated-p w))
-                                        (throw 'done nil)))
-                                    frame)
-                  t)))
-             (not (window-minibuffer-p window))
-             (let ((split-height-threshold 0))
-               (when (window-splittable-p window)
-                 (with-selected-window window
-                   (split-window-below))))))))
+  "Prefer horizontal splits for state-of-the-art widescreen monitors. Also don't
+  split when there's 3 or more windows open."
+  (if (>= (count-windows) 3)
+      nil
+    (let* ((window (or window (selected-window)))
+           (window-size-h (window-size window))
+           (window-size-w (window-size window t))
+           (frame-size-h (window-size (frame-root-window)))
+           (frame-size-w (window-size (frame-root-window) t)))
+      (or
+       (and
+        (> window-size-w split-width-threshold)
+        (eq frame-size-w window-size-w)
+        (with-selected-window window
+          (split-window-right)))
+       (and
+        (eq frame-size-h window-size-h)
+        (with-selected-window window
+          (split-window-below)))))))
+
 
 (defun my/straight-update ()
   "Fetch, merge and rebuild all straight packages."

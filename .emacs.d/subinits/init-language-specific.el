@@ -13,22 +13,16 @@
   (add-hook 'focus-out-hook #'pos-tip-hide))
 
 ;; language server
-(use-package lsp-mode
-  :hook ((python-mode go-mode) . lsp-deferred)
-  :init
-  (add-hook 'python-mode-hook (lambda () (require 'lsp-pyls)))
-  (add-hook 'go-mode-hook (lambda () (require 'lsp-go)))
-  :config
-  (setq lsp-auto-configure nil
-        lsp-document-highlight-delay 2))
+(use-package eglot
+  :hook ((python-mode go-mode) . eglot-ensure))
 
 ;; autocompletion
 (use-package company
   :hook (prog-mode . company-mode)
   :config
-  (setq company-idle-delay 0.3)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)
+  (setq company-idle-delay 0.1)
   (push 'company-tng-frontend company-frontends)
 
   (defun my/company-select-next ()
@@ -56,76 +50,71 @@
   :config
   (setq company-quickhelp-delay 0))
 
-(use-package company-lsp
-  :commands company-lsp
-  :hook ((python-mode go-mode) . (lambda ()
-     (add-to-list 'company-backends #'company-lsp))))
-
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-doc-delay 2)
-  (lsp-ui-sideline-mode 0))
-
 (use-package company-auctex
   :after (company tex))
 
 ;; syntax checking
-(use-package flycheck
-  :hook ((python-mode go-mode LaTeX-mode) . flycheck-mode)
+(use-package flymake
   :config
-  ;; flycheck buffer when entering normal state
-  (defun my/flycheck-upon-normal-entry ()
-    (when (bound-and-true-p flycheck-mode)
-      (flycheck-buffer)
-      (setq flycheck-check-syntax-automatically
-            (append flycheck-check-syntax-automatically '(idle-change)))))
-  (defun my/flycheck-upon-normal-exit()
-    (when (bound-and-true-p flycheck-mode)
-      (flycheck-clear)
-      (setq flycheck-check-syntax-automatically
-            (delq 'idle-change flycheck-check-syntax-automatically))))
-  (setq flycheck-check-syntax-automatically '(save idle-change))
-  (setq flycheck-idle-change-delay 0.1)
-  (setq flycheck-display-errors-delay 1)
-  (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
-  (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
+  (setq flymake-no-changes-timeout nil
+        flymake-fringe-indicator-position 'right-fringe))
 
-  ;; hack for actions that aren't considered changes by flycheck
-  (defun my/flycheck-idleize (&rest args)
-    (cl-pushnew 'idle-change flycheck--idle-trigger-conditions))
-  (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
-  (advice-add 'undo-tree-undo :after #'my/flycheck-idleize)
+;; (use-package flycheck
+;;   :defer t
+;;   :hook ((python-mode go-mode LaTeX-mode) . flycheck-mode)
+;;   :config
+;;   ;; flycheck buffer when entering normal state
+;;   (defun my/flycheck-upon-normal-entry ()
+;;     (when (bound-and-true-p flycheck-mode)
+;;       (flycheck-buffer)
+;;       (setq flycheck-check-syntax-automatically
+;;             (append flycheck-check-syntax-automatically '(idle-change)))))
+;;   (defun my/flycheck-upon-normal-exit()
+;;     (when (bound-and-true-p flycheck-mode)
+;;       (flycheck-clear)
+;;       (setq flycheck-check-syntax-automatically
+;;             (delq 'idle-change flycheck-check-syntax-automatically))))
+;;   (setq flycheck-check-syntax-automatically '(save idle-change))
+;;   (setq flycheck-idle-change-delay 0.1)
+;;   (setq flycheck-display-errors-delay 1)
+;;   (add-hook 'evil-normal-state-entry-hook 'my/flycheck-upon-normal-entry)
+;;   (add-hook 'evil-normal-state-exit-hook 'my/flycheck-upon-normal-exit)
 
-  (mapc 'evil-declare-motion (list 'flycheck-next-error 'flycheck-previous-error))
+;;   ;; hack for actions that aren't considered changes by flycheck
+;;   (defun my/flycheck-idleize (&rest args)
+;;     (cl-pushnew 'idle-change flycheck--idle-trigger-conditions))
+;;   (advice-add 'insert-for-yank :after #'my/flycheck-idleize)
+;;   (advice-add 'undo-tree-undo :after #'my/flycheck-idleize)
 
-  ;; create a right fringe if there are any errors
-  (setq flycheck-indication-mode 'right-fringe)
-  (defun my/flycheck-create-fringe ()
-    (if (> (length flycheck-current-errors) 0)
-        (set-window-fringes nil nil 9)
-      (set-window-fringes nil nil 0)))
-  (add-hook 'flycheck-after-syntax-check-hook 'my/flycheck-create-fringe)
+;;   (mapc 'evil-declare-motion (list 'flycheck-next-error 'flycheck-previous-error))
 
-  ;; select different fringe bitmaps for flycheck error levels
-  (flycheck-define-error-level 'error
-    :severity 2
-    :overlay-category 'flycheck-error-overlay
-    :fringe-bitmap 'left-triangle
-    :fringe-face 'flycheck-fringe-error)
-  (flycheck-define-error-level 'warning
-    :severity 1
-    :overlay-category 'flycheck-warning-overlay
-    :fringe-bitmap 'left-triangle
-    :fringe-face 'flycheck-fringe-warning)
-  (flycheck-define-error-level 'info
-    :severity 0
-    :overlay-category 'flycheck-info-overlay
-    :fringe-bitmap 'left-triangle
-    :fringe-face 'flycheck-fringe-info)
+;;   ;; create a right fringe if there are any errors
+;;   (setq flycheck-indication-mode 'right-fringe)
+;;   (defun my/flycheck-create-fringe ()
+;;     (if (> (length flycheck-current-errors) 0)
+;;         (set-window-fringes nil nil 9)
+;;       (set-window-fringes nil nil 0)))
+;;   (add-hook 'flycheck-after-syntax-check-hook 'my/flycheck-create-fringe)
 
-  ;; checker specific settings
-  (setq flycheck-flake8-maximum-line-length 200))
+;;   ;; select different fringe bitmaps for flycheck error levels
+;;   (flycheck-define-error-level 'error
+;;     :severity 2
+;;     :overlay-category 'flycheck-error-overlay
+;;     :fringe-bitmap 'left-triangle
+;;     :fringe-face 'flycheck-fringe-error)
+;;   (flycheck-define-error-level 'warning
+;;     :severity 1
+;;     :overlay-category 'flycheck-warning-overlay
+;;     :fringe-bitmap 'left-triangle
+;;     :fringe-face 'flycheck-fringe-warning)
+;;   (flycheck-define-error-level 'info
+;;     :severity 0
+;;     :overlay-category 'flycheck-info-overlay
+;;     :fringe-bitmap 'left-triangle
+;;     :fringe-face 'flycheck-fringe-info)
+
+;;   ;; checker specific settings
+;;   (setq flycheck-flake8-maximum-line-length 200))
 
 (use-package yasnippet
   :hook ((emacs-lisp-mode go-mode fish-mode snippet-mode python-mode) . yas-minor-mode)
@@ -217,6 +206,7 @@ If decorator syntax is found a line above the current, don't do any padding."
 ;; language specific major modes and their settings
 ;; elisp helpers
 (use-package evil-cleverparens
+  :after evil-surround
   :commands (evil-cp-delete
              evil-cp-delete-line
              evil-cp-change
@@ -275,7 +265,7 @@ If decorator syntax is found a line above the current, don't do any padding."
    (setq-local column-enforce-column 79)
    (setq-local electric-pair-open-newline-between-pairs nil)
    (make-local-variable 'write-file-functions)
-   (add-to-list 'write-file-functions (my/nillify-func (lsp-format-buffer)))))
+   (add-to-list 'write-file-functions (my/nillify-func (eglot-format-buffer)))))
 
 ;; golang settings
 (use-package go-mode
@@ -285,7 +275,7 @@ If decorator syntax is found a line above the current, don't do any padding."
    'go-mode-hook
    (lambda ()
      (make-local-variable 'write-file-functions)
-     (add-to-list 'write-file-functions (my/nillify-func (lsp-format-buffer))))))
+     (add-to-list 'write-file-functions (my/nillify-func (eglot-format-buffer))))))
 
 (use-package go-eldoc
   :hook (go-mode . go-eldoc-setup))

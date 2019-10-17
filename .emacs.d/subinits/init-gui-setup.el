@@ -1,6 +1,6 @@
 ;; GUI and Highlighting settings
 (setq inhibit-startup-message t)
-(fringe-mode '(0 . 0))
+(fringe-mode '(0 . 8))
 (scroll-bar-mode -1)
 (setq scroll-step 1)
 (tool-bar-mode -1)

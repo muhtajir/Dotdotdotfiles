@@ -85,16 +85,18 @@
     ")"                 'evil-forward-paragraph
     "+"                 'goto-last-change-reverse
     "-"                 'goto-last-change
-    "C-S-l"             'link-hint-copy-link
-    "C-S-n"             'evil-mc-skip-and-goto-next-match
     "C-l"               'link-hint-open-link
-    "C-n"               'evil-mc-make-and-goto-next-match
-    "C-S-p"             (general-lambda
+    "C-S-l"             'link-hint-copy-link
+    "M-n"               'evil-mc-make-and-goto-next-match
+    "M-S-n"             'evil-mc-skip-and-goto-next-match
+    "M-p"               'evil-mc-skip-and-goto-prev-cursor
+    "M-S-p"             (general-lambda
                          (evil-mc-undo-cursor-at-pos (point))
-                          (evil-mc-skip-and-goto-prev-cursor))
-    "C-p"               'evil-mc-skip-and-goto-prev-cursor
+                         (evil-mc-skip-and-goto-prev-cursor))
     "C-q"               'counsel-projectile-switch-project
     "C-u"               'evil-scroll-up
+    "Ä"                 'evil-mc-undo-all-cursors
+    "ä"                 'evil-mc-make-all-cursors
     "<escape>"          (general-lambda
                          (evil-ex-nohighlight)
                          (evil-force-normal-state))
@@ -104,8 +106,6 @@
     "Q"                 'counsel-projectile-find-file
     "{"                 'evil-backward-sentence-begin
     "}"                 'evil-forward-sentence-begin
-    "Ä"                 'evil-mc-undo-all-cursors
-    "ä"                 'evil-mc-make-all-cursors
     "<S-SPC><S-SPC>"    'my/vertigo-reuse-last-arg)
 
   (general-def-leader
@@ -171,9 +171,7 @@
     "C-S-b"         'backward-word
     "<backtab>"     'indent-relative
     "<return>"      'newline
-    "C-j"           'newline
-    "M-p"           'evil-paste-pop
-    "M-P"           'evil-paste-pop-next)
+    "C-j"           'newline)
 
   ;; isearch keybinds
   (general-def
@@ -204,8 +202,7 @@
     :states         'normal
     :keymaps        '(helpful-mode-map
                       flycheck-error-list-mode-map godoc-mode-map
-                      quickrun--mode-map magit-mode-map xref--xref-buffer-mode-map
-                      lsp-ui-imenu-mode-map)
+                      quickrun--mode-map magit-mode-map xref--xref-buffer-mode-map)
     "q"             'quit-window)
 
   (general-def
@@ -315,23 +312,22 @@
   ;; flycheck-mode keybinds
   (general-def
     :states         'normal
-    :keymaps        'flycheck-mode-map
-    "M--"           'flycheck-next-error
-    "M-_"           'flycheck-previous-error)
+    :keymaps        'flymake-mode-map
+    "M--"           'flymake-goto-next-error
+    "M-_"           'flymake-goto-prev-error)
 
   (general-def-goleader
     :states         'normal
-    :keymaps        'flycheck-mode-map
-    "!"             'flycheck-list-errors)
+    :keymaps        'flymake-mode-map
+    "!"             'flymake-diagnostic-buffer)
 
-  ;; flycheck-list-mode keybinds
+  ;; keybinds for flymake diagnostics buffer
   (general-def
     :states         'normal
-    :keymaps        'flycheck-error-list-mode-map
-    "j"             'flycheck-error-list-next-error
-    "k"             'flycheck-error-list-previous-error
-    "f"             'flycheck-error-list-set-filter
-    "F"             'flycheck-error-list-reset-filter)
+    :keymaps        'flymake-diagnostics-buffer-mode-map
+    "j"             'next-line
+    "k"             'previous-line
+    "RET"           'flymake-goto-diagnostic)
 
   ;; go-mode keybinds
   (general-def-leader
@@ -339,25 +335,23 @@
    :keymaps         'go-mode-map
    "ci"             'go-import-add)
 
-  ;;lsp-mode keybinds
+  ;;eglot keybinds
   (general-def-leader
     :states         'motion
-    :keymaps        'lsp-mode-map
-    "hx"            'lsp-describe-thing-at-point)
+    :keymaps        'eglot-mode-map
+    "hx"            'eglot-help-at-point)
   
   (general-def-goleader
     :states         'motion
-    :keymaps        'lsp-mode-map
-    "d"             'lsp-find-definition
-    "D"             (general-lambda
-                     (lsp-find-definition :display-action 'window))
-    "="             'lsp-format-buffer
-    "*"             'lsp-find-references)
+    :keymaps        'eglot-mode-map
+    "d"             'xref-find-definitions
+    "="             'eglot-format-buffer
+    "*"             'xref-find-references)
 
   (general-def-goleader
    :states          'visual
-   :keymaps         'lsp-mode-map
-   "="              'lsp-format-region)
+   :keymaps         'eglot-mode-map
+   "="              'eglot-format)
 
   ;; markdown-mode keybinds
   (general-def-leader

@@ -27,7 +27,6 @@ function __fish_set_user_abbreviations
     abbr --add lo libreoffice
     abbr --add mc 'merge-configs; and fish_update_user_settings'
     abbr --add mksri makepkg -sri
-    abbr --add m mymail
     abbr --add nd nextd
     abbr --add o open
     abbr --add pd prevd

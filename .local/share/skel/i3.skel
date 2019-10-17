@@ -91,7 +91,7 @@ bindsym $mod+Pause exec $i3scriptsdir/screen_off
 bindsym $mod+Shift+Pause exec systemctl suspend
 
 # start a program launcher
-bindsym $mod+r exec rofi -show drun
+bindsym $mod+r exec fzfly-desktop
 
 # start the password finder
 bindsym $mod+y exec $i3scriptsdir/pass_get

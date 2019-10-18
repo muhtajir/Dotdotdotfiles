@@ -1,4 +1,5 @@
 function __fish_set_user_abbreviations
+    set -U fish_user_abbreviations_set
     abbr --add abbra fish_add_user_abbreviation
     abbr --add aliasa fish_add_user_alias
     abbr --add aur auracle

@@ -90,7 +90,7 @@ If DOWN is non-nil, then add lines below instead."
       (when (or
              (= current-line 1)
              (>= current-line (- (line-number-at-pos (max-char)) 1)))
-        (return-from my/yas-func-padding))
+        (cl-return-from my/yas-func-padding))
       (save-excursion
         (while (and (> counter 0) non-break)
           (forward-line direction)

@@ -269,7 +269,9 @@ DIRECTION can be forward or backward.  Don't know what COUNT does."
 (defun my/split-window-sensibly (&optional window)
   "Prefer horizontal splits for state-of-the-art widescreen monitors. Also don't
   split when there's 3 or more windows open."
-  (if (>= (count-windows) 3)
+  (if (or
+       (>= (count-windows) 3)
+       (> (length (get-buffer-window-list)) 1))
       nil
     (let* ((window (or window (selected-window)))
            (window-size-h (window-size window))

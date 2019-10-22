@@ -157,7 +157,7 @@
 
   (general-def-leader
     :states         'visual
-    "e"             'my/eval-visual-region)
+    "RET"            'quickrun-region)
 
 
   ;; insert keybinds
@@ -425,7 +425,9 @@
     "t"             'my/mu4e-view-mark-toggle
     "T"             'mu4e-view-mark-pattern
     "%"             'my/mu4e-view-mark-pattern
-    "$"             'mu4e-view-marked-execute)
+    "$"             (general-lambda
+                     (mu4e~view-in-headers-context
+                      (mu4e-mark-execute-all t))))
 
   (general-def-leader
     :states 'emacs
@@ -496,6 +498,10 @@
     "p"             'my/evil-lisp-paste-with-newline-below
     "P"             'my/evil-lisp-paste-with-newline-above)
 
+  (general-def-leader
+    :states         'visual
+    :keymaps        'lisp-mode-shared-map
+    "e"             'my/eval-visual-region)
   ;; visual regexp keybinds
   (general-def
     :keymaps        'vr/minibuffer-keymap

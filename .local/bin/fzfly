@@ -9,7 +9,7 @@ echo "#!/bin/bash
 fzf $FZF_OVERLAY_OPTS < $tmp_stdin > $tmp_stdout" > "$tmp_scr"
 chmod +x "$tmp_scr"
 
-alacritty -t fzfly --class fzfly --config-file "$HOME/.config/alacritty//overlay.yml" -e "$tmp_scr"
+alacritty -t fzfly --class fzfly --config-file "$HOME/.config/alacritty/overlay.yml" -e "$tmp_scr"
 cat "$tmp_stdout"
 
 if [[ ! -s "$tmp_stdout" ]]; then

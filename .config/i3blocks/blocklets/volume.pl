@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use strict;
-use warnings;
+# use warnings;
+# use diagnostics;
 
 $ENV{LANG} = 'C';
 

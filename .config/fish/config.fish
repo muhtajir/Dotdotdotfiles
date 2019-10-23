@@ -18,6 +18,3 @@ __fish_load_event_handlers
 
 # initialize SSH agent
 __fish_initialize_ssh_agent
-
-# indicate that shadow_mode isn't active
-set __fish_shadow_mode 0

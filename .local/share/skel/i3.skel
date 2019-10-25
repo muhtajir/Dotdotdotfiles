@@ -273,10 +273,10 @@ mode $mode_music {
 
 # access i3blocks features without using the mouse
 mode $mode_blocks {
-        bindsym s exec BLOCK_BUTTON=1 $i3blockletsdir/shutdown.sh; mode "default"
-        bindsym d exec BLOCK_BUTTON=3 $i3blockletsdir/time.sh; mode "default"
-        bindsym c exec BLOCK_BUTTON=1 $i3blockletsdir/clipboard.sh; mode "default"
-        bindsym n exec BLOCK_BUTTON=1 $i3blockletsdir/network.sh; mode "default"
+        bindsym s exec BLOCK_BUTTON=1 $i3blockletsdir/shutdown; mode "default"
+        bindsym d exec BLOCK_BUTTON=3 $i3blockletsdir/time; mode "default"
+        bindsym c exec BLOCK_BUTTON=1 $i3blockletsdir/clipboard; mode "default"
+        bindsym n exec BLOCK_BUTTON=1 $i3blockletsdir/network; mode "default"
 
         bindsym Escape mode "default"
         bindsym $mod+b mode "default"

@@ -41,8 +41,6 @@
     "<escape>"      (general-lambda
                      (evil-ex-nohighlight)
                      (evil-force-normal-state))
-    "M-p"           'evil-paste-pop
-    "M-P"           'evil-paste-pop-next
     "C-a"           'evil-numbers/inc-at-pt
     "C-x"           'evil-numbers/dec-at-pt
     "ö"             'my/evil-dry-open-below
@@ -148,6 +146,8 @@
   ;; visual keybinds
   (general-def
     :states         'visual
+    "M-n"           'evil-mc-make-and-goto-next-match
+    "M-p"           'evil-mc-skip-and-goto-prev-cursor
     "*"             (lambda (count)
                       (interactive "P")
                       (my/evil-search-visual-selection 'forward count))
@@ -216,9 +216,13 @@
 
   ;; workaround for disabling evil-mc-key-map
   (general-def
-    :states         '(normal motion)
+    :states         '(normal motion visual)
     :keymaps        'evil-mc-key-map
     "gr"            nil
+    "C-p"           nil
+    "C-n"           nil
+    "M-N"           nil
+    "M-n"           nil
     "M-P"           nil
     "M-p"           nil)
 

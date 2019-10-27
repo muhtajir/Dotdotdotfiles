@@ -2,7 +2,7 @@
 
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set PASSWORD_STORE_DIR $HOME/.password-store
-test -z $PASS_FALLBACK_LOGIN; and set PASS_FALLBACK_LOGIN "InspectorMustache"
+test -z $PASS_FALLBACK_LOGIN; and set PASS_FALLBACK_LOGIN "User"
 
 # get name of currently active window
 test -z "$argv"; and set -l argv ""
@@ -18,7 +18,7 @@ set class (string replace -a ' ' '_' "$class")
 
 function get_value -a pass key copy fallback
     # get the value for $key in the pass file
-    pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value
+    pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value; or return 1
     test -z $value; and set value "$fallback"
     if test -n "$value"
         if eval $copy

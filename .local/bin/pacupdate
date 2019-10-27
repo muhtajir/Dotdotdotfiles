@@ -143,6 +143,17 @@ function get_cache_var -a key
 end
 
 
+function html_unescape
+    # replace all html escape expressions with their proper characters
+    string replace '&amp;' '&' -- "$argv" | \
+    string replace '&lt;' '<' | \
+    string replace '&gt;' '>' | \
+    string replace '&quot;' '"' | \
+    string replace '&#39;' "'" 
+    true
+end
+
+
 function print_msg -a msg_id msg_file
     set record_mode 0
     set msg_chunk
@@ -158,7 +169,7 @@ function print_msg -a msg_id msg_file
                 if string match -qr 'From (arch-)?announce@archlinux.org' -- $line
                     break
                 else
-                    set msg_chunk $msg_chunk $line
+                    set -a msg_chunk (html_unescape $line)
                 end
         end
     end < $msg_file
@@ -397,7 +408,7 @@ function check_aur_updates
 
     for pkg in (auracle sync -q)
         # this is for packages that get moved from the aur to the official repos
-        not contains $pkg $repo_updates; and set aur_updates $aur_updates $pkg
+        not contains $pkg $repo_updates; and set -a aur_updates $pkg
     end
     set aur_updates_count (count $aur_updates)
 
@@ -421,7 +432,7 @@ function check_git_updates
         if not contains $pkg $aur_updates
             check_git_package $pkg; or continue
 
-            set git_updates $git_updates $pkg
+            set -a git_updates $pkg
         end
     end
 

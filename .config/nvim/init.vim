@@ -2,19 +2,13 @@
 
 call plug#begin()
     Plug 'dag/vim-fish'
-    Plug 'Soares/base16.nvim'
-    Plug 'kana/vim-textobj-user'
+    Plug 'jeffkreeftmeijer/vim-dim'
     Plug 'machakann/vim-highlightedyank'
-    Plug 'raimondi/delimitmate'
+    Plug 'Raimondi/delimitmate'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
-    Plug 'vim-airline/vim-airline'
     Plug 'vim-scripts/ReplaceWithRegister'
-    Plug 'vim-scripts/vis'
-    " custom text objects
-    Plug 'Julian/vim-textobj-variable-segment'
-    Plug 'kana/vim-textobj-indent'
 call plug#end()
 
 " add plugins that come with locally installed packages
@@ -90,8 +84,8 @@ set guicursor=i-ci-ve:ver20-blinkwait700-blinkoff400-blinkon250
             \,n-v-c:block-blinkon0,i-ci-ve:ver20-blinkon0
             \,r-cr:hor20-blinkon0,o:hor50-blinkon0
 
-" set tex flavor to latex
-let g:tex_flavor = 'latex'
+" color options
+colorscheme dim
 
 " always use system clipboard (you know, like emacs)
 set clipboard+=unnamedplus
@@ -99,8 +93,6 @@ set clipboard+=unnamedplus
 "" autocommands
 " retain clipboard content after closing vim
 autocmd VimLeave * call system(getreg('+'), " | xclip -se c -i <<<")
-" adapt linebreak settings for mail
-autocmd FileType mail setl formatoptions+=aw spell spelllang=de
 
 
 "" keybinds
@@ -185,20 +177,5 @@ vnoremap <silent> # :<C-U>
 " delimitMate
 let g:delimitMate_expand_cr = 1
 
-" vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
 " vim-highlightedyank
 let g:highlightedyank_highlight_duration = 600
-
-" base16.nvim color settings
-set termguicolors
-set background=dark
-set cursorline
-colorscheme base16-generic
-Base16Highlight Pmenu bg=dark1
-Base16Highlight PmenuSel bg=dark3
-
-" settings for using nvim as a manpager
-autocmd FileType man doautocmd user AirlineToggledOff | set laststatus=0

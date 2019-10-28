@@ -20,9 +20,7 @@ set $base0E {{{__BASE0E_HASH}}}
 set $base0F {{{__BASE0F_HASH}}}
 
 # input setup
-input * xkb_layout de
-input * xkb_variant nodeadkeys
-input * xkb_options caps:escape
+input * xkb_file {{{HOME}}}/.config/xkb/custom.xkb
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
@@ -37,9 +35,20 @@ set $font {{{FONT_SANS}}}
 set $i3scriptsdir $HOME/.config/i3/scripts
 set $i3b_up $HOME/.config/i3/scripts/i3b_up
 set $i3blockletsdir $HOME/.config/i3blocks/blocklets
-set $rofimodedir $HOME/.config/rofi/custom_modes
 set $mod Mod4
 set $i3b_up10 "pkill -RTMIN+10 i3blocks"
+
+# define workspaces
+set $ws1 "1   "
+set $ws2 "2  "
+set $ws3 "3  "
+set $ws4 "4  "
+set $ws5 "5  "
+set $ws6 "6  "
+set $ws7 "7  "
+set $ws8 "8  "
+set $ws9 "9  "
+set $ws10 "10  "
 
 # custom settings
 {{{custom}}}
@@ -50,13 +59,11 @@ set $i3b_up10 "pkill -RTMIN+10 i3blocks"
 focus_on_window_activation urgent
 # don't move focus with mouse
 focus_follows_mouse no
-# application specific focus settings
-no_focus [class="mpv"]
 
 ## configure window decorations
 # first the border
 hide_edge_borders smart
-new_window pixel 5
+default_border pixel 5
 
 # next the title font
 font pango:$font 8
@@ -75,10 +82,18 @@ floating_modifier $mod
 # set cursor hiding timeout
 seat seat0 hide_cursor 10000
 
+# application specific appearance settings
+no_focus [class="mpv"]
+for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable
+for_window [class="Zenity"] floating enable
+for_window [class="Yad"] floating enable
+for_window [class="Pinentry"] floating enable
+
+
 # start a terminal
 bindsym $mod+Return exec termite
 # start a terminal on workspace 1
-bindsym $mod+Shift+Return workspace $ws1; exec termite
+bindsym $mod+Shift+Return workspace $ws1 ; exec termite
 
 # kill focused window
 bindsym $mod+q kill
@@ -89,9 +104,6 @@ bindsym --release button2 kill
 # Power management
 bindsym $mod+Pause exec $i3scriptsdir/screen_off
 bindsym $mod+Shift+Pause exec systemctl suspend
-
-# start a program launcher
-bindsym $mod+r exec rofi -show drun
 
 # start the password finder
 bindsym $mod+y exec $i3scriptsdir/pass_get
@@ -151,25 +163,13 @@ bindsym $mod+e layout toggle split
 bindsym $mod+g floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+space focus mode_toggle
+bindsym $mod+t focus mode_toggle
 
 # focus the parent container
 bindsym $mod+p focus parent
 
 # focus the child container
 bindsym $mod+Shift+p focus child
-
-# define workspaces
-set $ws1 "1   "
-set $ws2 "2  "
-set $ws3 "3  "
-set $ws4 "4  "
-set $ws5 "5  "
-set $ws6 "6  "
-set $ws7 "7  "
-set $ws8 "8  "
-set $ws9 "9  "
-set $ws10 "10  "
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -231,11 +231,6 @@ assign [class="Emacs"] $ws4
 assign [class="jetbrains.*"] $ws5
 assign [class="Steam"] $ws6
 
-# window arrangement fixes
-for_window [class="Zotero" title="Schnellformatierung Zitation"] floating enable
-for_window [class="Yad"] floating enable
-for_window [class="Pinentry"] floating enable
-
 ## modes
 set $mode_resize " resize"
 set $mode_music " music"
@@ -265,9 +260,6 @@ mode $mode_music {
         bindsym h exec mpc prev; exec $i3b_up 10 0
         bindsym r exec mpc random; exec $i3b_up 10 0
         bindsym Tab exec $i3scriptsdir/mpd_toggle
-        # sexy rofi modes
-        bindsym p exec "rofi -modi \\"queue:$rofimodedir/mpc_qu.fish,playlists:$rofimodedir/mpc_pl.fish\\" -show playlists -sidebar-mode"; mode "default"
-        bindsym q exec "rofi -modi \\"queue:$rofimodedir/mpc_qu.fish,playlists:$rofimodedir/mpc_pl.fish\\" -show queue -sidebar-mode"; mode "default"
 
         # back to normal: Enter or Escape
         bindsym Escape mode "default"

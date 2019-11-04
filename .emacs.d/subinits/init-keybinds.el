@@ -381,9 +381,12 @@
   ;; mu4e keybindings
   (general-def
     :states         'emacs
-    :keymaps        '(mu4e-main-mode-map
-                      mu4e-headers-mode-map)
-    "J"             'mu4e~headers-jump-to-maildir)
+    :keymaps        'mu4e-main-mode-map
+    "J"             'mu4e~headers-jump-to-maildir
+    "q"             (general-lambda
+                     (mu4e-quit)
+                     (mu4e-update-mail-and-index t))
+    "Q"             'mu4e-quit)
 
   (general-def
     :states         'emacs

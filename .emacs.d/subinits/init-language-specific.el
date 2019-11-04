@@ -20,6 +20,7 @@
 (use-package company
   :hook (prog-mode . company-mode)
   :config
+  (delq 'company-echo-metadata-frontend company-frontends)
   (setq company-minimum-prefix-length 3)
   (setq company-selection-wrap-around t)
   (setq company-idle-delay 0.1)

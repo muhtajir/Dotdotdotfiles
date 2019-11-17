@@ -17,7 +17,7 @@ function __fish_vifm_bind -d 'Open vifm in CWD'
         end
 
         set -l files
-        vifm -c only --select $start_dir --choose-files - | while read -l file
+        vifm -c only --select "$start_dir" --choose-files - | while read -l file
             set files $files (string escape $file)
         end
 

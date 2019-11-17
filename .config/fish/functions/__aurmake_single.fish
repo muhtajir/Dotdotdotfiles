@@ -13,11 +13,16 @@ function __aurmake_single
     set pos (pwd)
     mkdir -p "$AURMAKE_FOLDER"
     cd "$AURMAKE_FOLDER"
-    auracle download $pkg | string match -r '[^/]+$' | read -l pkg_folder
-        or return 1
+    set exit_status 0
 
-    cd $pkg_folder
-    makepkg -sri $args $pkg
-    
+    auracle download $pkg | string match -r '/\S+$' | read -l pkg_folder
+    if [ $status = "0" ]
+        cd $pkg_folder
+        makepkg -sri $args $pkg; or set exit_status 1
+    else
+        set exit_status 1
+    end
+
     cd $pos
+    return $exit_status
 end

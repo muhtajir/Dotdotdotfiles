@@ -18,7 +18,7 @@ set class (string replace -a ' ' '_' "$class")
 
 function get_value -a pass key copy fallback
     # get the value for $key in the pass file
-    pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value; or return 1
+    pass show $pass | string replace -rf '^'$key':\s?(.+)$' '$1' | read -l value
     test -z $value; and set value "$fallback"
     if test -n "$value"
         if eval $copy

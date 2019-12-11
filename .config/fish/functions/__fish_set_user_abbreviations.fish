@@ -9,6 +9,7 @@ function __fish_set_user_abbreviations
     abbr --add bgd 'bg; and disown'
     abbr --add bpy bpython
     abbr --add f function
+    abbr --add ff ffmpeg
     abbr --add ga git add
     abbr --add ga. git add .
     abbr --add gca git commit -a

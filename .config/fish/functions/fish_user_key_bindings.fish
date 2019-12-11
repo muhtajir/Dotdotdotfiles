@@ -26,7 +26,7 @@ function fish_user_key_bindings
     bind \cQ edit_command_buffer
 
     # file selection with vifm
-    bind -M insert \e\u00b4 __fish_vifm_bind
+    bind -M insert \e\* __fish_vifm_bind
 
     # keybindings for path navigation
     bind -M insert \eH 'prevd; commandline -f repaint'

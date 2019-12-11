@@ -394,8 +394,13 @@
     "J"             'mu4e~headers-jump-to-maildir
     "j"             'mu4e-headers-next
     "k"             'mu4e-headers-prev
+    "G"             'evil-goto-line
     "C-j"           'mu4e-headers-next-unread
     "C-k"           'mu4e-headers-prev-unread
+    "C-d"           (general-lambda
+                      (evil-scroll-down 0))
+    "C-u"           (general-lambda
+                      (evil-scroll-up 0))
     "/"             'mu4e-headers-search
     "S"             'mu4e-headers-change-sorting
     "<tab>"         'mu4e-headers-toggle-include-related
@@ -417,7 +422,8 @@
   (general-def-goleader
     :states         'emacs
     :keymaps        'mu4e-headers-mode-map
-    "/"             'mu4e-headers-search-edit)
+    "/"             'mu4e-headers-search-edit
+    "g"             'evil-goto-first-line)
 
   (general-def
     :states         'emacs

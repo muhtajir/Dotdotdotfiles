@@ -64,17 +64,25 @@
   ;; compose view
   (setq mu4e-compose-complete-only-personal t
         message-kill-buffer-on-exit t
-        mu4e-compose-dont-reply-to-self t)
+        mu4e-compose-dont-reply-to-self t
+        mu4e-compose-format-flowed t)
   (add-hook 'mu4e-compose-mode-hook
             (defun my/setup-mu4e-compose-settings ()
-               (set-fill-column 72)
-               (let*
-                   ((sender1 (cdr (car (mu4e-message-field mu4e-compose-parent-message :from))))
-                    (ext (car (s-match "\.[^\.]+?$" sender1))))
-               (setq ispell-local-dictionary (if (string= ext ".de")
-                                                 "de_DE"
-                                               "en_AU"))
-               (flyspell-mode))))
+              (visual-line-mode)
+              (let*
+                  ((sender1 (cdr (car
+                                  (ignore-errors
+                                    (mu4e-message-field mu4e-compose-parent-message :from)))))
+                   (ext (or (car (ignore-errors (s-match "\.[^\.]+?$" sender1)))
+                            ".de")))
+                ;; decide which dict to used based on the extension of the
+                ;; parent message's email adress, use de_DE if there is no
+                ;; parent message
+                (setq ispell-local-dictionary (if (string= ext ".de")
+                                                  "de_DE"
+                                                "en_AU"))
+                (flyspell-mode)
+                (message "Ispell Dictionary set to %s." ispell-local-dictionary))))
 
   (defun my/mu4e-headers-mark-toggle ()
     (interactive)

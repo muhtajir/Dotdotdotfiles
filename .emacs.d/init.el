@@ -76,23 +76,3 @@
 
 ;; load custom file late so it can make use of previously defined references
 (load (expand-file-name emacs-custom-file user-emacs-directory))
-
-;; dashboard
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner 'logo
-        dashboard-center-content t
-        dashboard-set-file-icons t
-        dashboard-set-heading-icons t)
-  (setq dashboard-items '((bookmarks . 5)
-                          (recents  . 5)
-                          (projects . 5)
-                          (agenda . 5)))
-  (add-hook 'window-setup-hook
-            (lambda ()
-              (dashboard-next-section)
-              (dashboard-next-line 1)
-              (beacon-blink)))
-  ;; kill dashboard after a while
-  (run-at-time 120 nil #'kill-buffer dashboard-buffer-name))

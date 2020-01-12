@@ -405,8 +405,8 @@
     "S"             'mu4e-headers-change-sorting
     "<tab>"         'mu4e-headers-toggle-include-related
     "t"             'my/mu4e-headers-mark-toggle
-    "T"             'mu4e-headers-mark-pattern
-    "%"             'my/mu4e-headers-mark-pattern
+    "%"             'mu4e-headers-mark-pattern
+    "T"             'my/mu4e-headers-mark-pattern
     "D"             (general-lambda (my/mu4e-headers-handle-deferred 'trash))
     "M"             (general-lambda (my/mu4e-headers-handle-deferred 'move))
     "$"             (general-lambda

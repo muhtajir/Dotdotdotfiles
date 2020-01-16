@@ -1,6 +1,12 @@
 #!/bin/bash
 
-battery=/sys/class/power_supply/${BLOCK_INSTANCE}
+if [[ -n "$BLOCK_INSTANCE" ]]; then
+    battery=/sys/class/power_supply/${BLOCK_INSTANCE}
+else
+    # use BAT1 as a fallback
+    battery=/sys/class/power_supply/BAT1
+fi
+
 charge=$(grep '^POWER_SUPPLY_CAPACITY=' ${battery}/uevent | sed -r 's/^.+=//')
 status=$(grep '^POWER_SUPPLY_STATUS=' ${battery}/uevent | sed -r 's/^.+=//')
 

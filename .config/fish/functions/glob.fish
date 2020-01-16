@@ -29,7 +29,7 @@ function glob
         # skip for any exception defined on the command line
         set -l except ""
         for x in $_flag_except
-            string match -q "$x" "$f"; and set except "$f"; and break
+            string match -q "$x" (basename "$f"); and set except "$f"; and break
         end
         test "$except"; and continue
 

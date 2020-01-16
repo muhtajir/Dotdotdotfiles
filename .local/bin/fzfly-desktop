@@ -17,20 +17,32 @@ class ConfigParser(configparser.ConfigParser):
 
 CONF_DIR = os.path.join(
     os.getenv("XDG_CONFIG_HOME", default=os.path.join(os.getenv("HOME"), ".config")),
-    "fzfly",
+    "fzfly"
 )
 XDG_DESKTOP_FILE_DIRS = [
     os.path.join("/", "usr", "share", "applications"),
     os.path.join(os.getenv("HOME"), ".local", ".share", "applications"),
 ]
 
+# ensure existence of CONF_DIR
+try:
+    os.mkdir(CONF_DIR)
+except FileExistsError:
+    pass
 
 def get_config(conf_file):
     """Return configparser instance for conf_file."""
-    with open(conf_file, mode="r") as f:
-        cp = ConfigParser()
+    # create file if it doesn't exist
+    cp = ConfigParser()
+    try:
+        f = open(conf_file, mode="r")
+    except FileNotFoundError:
+        f = open(conf_file, mode="w+")
+    finally:
         cp.read_file(f)
-        return cp
+        f.close()
+
+    return cp
 
 
 def get_entry_freq(entry):

@@ -32,4 +32,7 @@ function __fish_set_universal_variables
 
     # use nvim as a pager for man pages
     set -Ux MANPAGER "nvim -c 'set ft=man' -"
+
+    # set folder for aurmake
+    set -Ux AURMAKE_FOLDER ~/Downloads/AUR
 end

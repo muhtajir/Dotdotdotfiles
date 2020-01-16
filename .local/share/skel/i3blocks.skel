@@ -3,18 +3,16 @@
 # [global]
 command=blocklets/${BLOCK_NAME}
 separator_block_width=15
-markup=none
+markup=pango
 
 [clipboard]
 label= 
 interval=5
-markup=pango
 
 [mpd]
 label= 
 interval=8
 signal=10
-markup=pango
 instance=localhost; 6600
 
 # [custom]
@@ -26,10 +24,11 @@ instance=localhost; 6600
 label= 
 interval=30
 format=json
-markup=pango
 _BLOCK_STATE=time
+markup=none
 
 [shutdown]
 interval=once
+markup=none
 
 # vim:ft=dosini

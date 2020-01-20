@@ -1,0 +1,4 @@
+#!/bin/bash
+
+notify-send -u normal 'qutebrowser' "Attempting to play $QUTE_URL..."
+mpv "$QUTE_URL"

@@ -378,7 +378,7 @@ config.bind("e", "hint all hover", mode="normal")
 config.bind(";o", "set-cmd-text --space :open -b")
 config.bind(";O", "set-cmd-text --space :open -p")
 config.bind(";p", "hint images yank")
-config.bind(";v", "hint links spawn --detach mpv {hint-url}")
+config.bind(";v", "hint links userscript mpv-play")
 config.bind(
     ";a",
     "hint links spawn --detach mpv --no-video --player-operation-mode=pseudo-gui {hint-url}",

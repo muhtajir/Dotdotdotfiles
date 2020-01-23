@@ -362,12 +362,10 @@ config.bind("g9", "tab-focus 9")
 config.bind("g0", "tab-focus 10")
 # Clear search highlighting
 config.bind("<Ctrl-´>", "search")
-# Quickmark/Bookmark opening (mostly redundant, replace e bindings if
-# necessary)
-config.bind("eq", "set-cmd-text --space :quickmark-load")
-config.bind("eb", "set-cmd-text --space :bookmark-load")
+# Quickmark/Bookmark opening
+config.bind("gm", "set-cmd-text --space :bookmark-load")
 # bind mute command
-config.bind("M", "tab-mute")
+config.bind("am", "tab-mute")
 # Completion navigation command mode
 config.bind("<Alt-k>", "command-history-prev", mode="command")
 config.bind("<Alt-j>", "command-history-next", mode="command")

@@ -8,6 +8,9 @@
 !.config/
 .config/*
 
+!.config/aria2
+!.config/aria2/*
+
 !.config/bpython
 !.config/bpython/config
 
@@ -78,6 +81,9 @@
 
 !.config/xkb
 !.config/xkb/custom.xkb
+
+!.config/youtube-dl
+!.config/youtube-dl/*
 
 !.emacs.d/
 !.emacs.d/init.el

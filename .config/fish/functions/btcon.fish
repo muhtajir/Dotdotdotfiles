@@ -3,7 +3,7 @@ function btcon
     or return 1
 
     if not systemctl is-active bluetooth.service > /dev/null
-        sudo systemctl start bluetooth
+        sudo systemctl start bluetooth.service
     end
 
     # pulseaudio must be running for this to work

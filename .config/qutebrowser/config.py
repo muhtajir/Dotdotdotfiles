@@ -364,6 +364,7 @@ config.bind("g0", "tab-focus 10")
 config.bind("<Ctrl-´>", "search")
 # Quickmark/Bookmark opening
 config.bind("gm", "set-cmd-text --space :bookmark-load")
+config.bind("gM", "set-cmd-text --space :bookmark-load -t")
 # bind mute command
 config.bind("am", "tab-mute")
 # Completion navigation command mode

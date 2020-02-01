@@ -89,7 +89,7 @@ sudo pacman -S --needed \
     dunst \
     feh \
     i3-gaps \
-    compton \
+    picom \
     alacritty \
     pass \
     i3blocks \

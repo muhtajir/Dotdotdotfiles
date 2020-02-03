@@ -16,7 +16,7 @@
   (add-hook hook #'hl-line-mode))
 
 ;; window splitting settings
-(setq split-width-threshold 200)
+(setq split-width-threshold 100)
 ;; WHY is vertical splitting preferred over horizontal?
 (setq split-window-preferred-function 'my/split-window-sensibly)
 

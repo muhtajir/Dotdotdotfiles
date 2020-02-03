@@ -82,31 +82,36 @@ install_from_aur ttf-quicksand
 print_bold "Downloading essential packages from the official repositiories..."
 # some basic packages and globally acessible fonts
 sudo pacman -S --needed \
+    adobe-source-code-pro-fonts \
+    alacritty \
     alsa-utils \
-    openssh \
-    numlockx \
+    arc-gtk-theme \
+    dnscrypt-proxy \
+    dunst \
+    elinks \
+    feh \
     firejail \
     fzf \
-    dunst \
-    feh \
     i3-gaps \
-    picom \
-    alacritty \
-    pass \
     i3blocks \
-    ttf-liberation \
-    noto-fonts-cjk \
-    ttf-freefont \
-    adobe-source-code-pro-fonts \
-    arc-gtk-theme \
-    ibus \
-    xss-lock \
     i3lock-color \
-    elinks \
+    ibus \
+    mpv \
+    noto-fonts-cjk \
+    numlockx \
+    openssh \
+    pass \
+    picom \
     syncthing \
-    dnscrypt-proxy \
+    ttf-freefont \
+    ttf-liberation \
     xorg-xkbcomp \
-    xorg-xset
+    xorg-xset \
+    xss-lock \
+    zathura
+
+# backend for zathura
+sudo pacman -S --asdeps zathura-pdf-poppler
 
 # setup firejail
 print_bold "Creating firejail config..."

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 notify-send -u normal 'qutebrowser' "Attempting to play $QUTE_URL..."
-mpv "$QUTE_URL"
+mpv --ytdl-format="best[height<=1080]" "$QUTE_URL"

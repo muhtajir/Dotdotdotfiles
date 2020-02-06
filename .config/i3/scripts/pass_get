@@ -2,7 +2,7 @@
 
 test -z $PASS_SUBNAME_SPLIT_CHAR; and set PASS_SUBNAME_SPLIT_CHAR '%'
 test -z $PASSWORD_STORE_DIR; and set PASSWORD_STORE_DIR $HOME/.password-store
-test -z $PASS_FALLBACK_LOGIN; and set PASS_FALLBACK_LOGIN "User"
+test -z $PASS_FALLBACK_USER; and set PASS_FALLBACK_USER "User"
 
 # get name of currently active window
 test -z "$argv"; and set -l argv ""
@@ -40,12 +40,12 @@ end
 
 
 function xdo_pass_entry -a pass
-    set -l login (get_value $pass "login" false "$PASS_FALLBACK_LOGIN"); or return
+    set -l user (get_value $pass "user" false "$PASS_FALLBACK_USER"); or return
     set -l pass_string (pass show $pass | head -n 1); or return
     set -l field_div (get_value $pass "xdoDiv" false)
     test -z "$field_div"; and set field_div "Tab"
     xdotool keyup Super
-    xdotool type --clearmodifiers $login
+    xdotool type --clearmodifiers $user
     xdotool keyup Super
     xdotool key --clearmodifiers (string split " " $field_div)
     xdotool keyup Super
@@ -115,7 +115,7 @@ if test -n "$final_candidate"
     # handle different command flags
     switch $argv
         case "-l"
-            get_value $final_candidate "login" true "$PASS_FALLBACK_LOGIN"; or exit 1
+            get_value $final_candidate "user" true "$PASS_FALLBACK_USER"; or exit 1
         case "-x"
             xdo_pass_entry $final_candidate; or exit 1
         case "*"

@@ -10,6 +10,7 @@ function __fish_set_user_abbreviations
     abbr --add do disown
     abbr --add ff ffmpeg
     abbr --add f function
+    abbr --add fs functions
     abbr --add ga git add
     abbr --add ga. git add .
     abbr --add gca git commit -a

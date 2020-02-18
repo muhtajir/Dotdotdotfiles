@@ -26,7 +26,7 @@ if [[ -n $WIFI_INSTANCE ]]; then
     wifi=''
     else
         QUALITY=$(grep $WIFI_INSTANCE /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
-        WIFI_SSID=$(iwgetid -r)
+        WIFI_SSID=$(iwctl station $WIFI_INSTANCE show | grep "Connected network" | awk '{print $(NF)}')
 
         if [[ $QUALITY -ge 80 ]]; then
             mark_front="<span foreground=\"#${__BASE0B}\">"

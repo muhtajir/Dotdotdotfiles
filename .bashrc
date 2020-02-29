@@ -1,3 +1,3 @@
-if [[ $TERM == xterm-* ]]; then
+if tty | grep -q pts ; then
     exec fish
 fi

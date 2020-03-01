@@ -1,4 +1,4 @@
-#!/bin/env fish
+#!/usr/bin/env fish
 
 test -n "$argv"
 and test "$argv" -eq "$argv" 2>/dev/null

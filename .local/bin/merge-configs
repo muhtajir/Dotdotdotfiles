@@ -63,7 +63,7 @@ function process_skel -a skel_file
     end
 
     if [ -z "$custom" ]
-        safe_write "$location" (mergevars $skel_file | tail -n +2)
+        safe_write "$location" (mergevars $skel_file 2>/dev/null | tail -n +2)
         or return 1
     else
         set merged_var_lines (mergevars -i custom $skel_file 2>/dev/null | tail -n +2)

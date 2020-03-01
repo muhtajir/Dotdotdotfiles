@@ -112,6 +112,9 @@
 !.local/share/skel
 !.local/share/skel/*
 
+!.local/share/vendor-skel
+!.local/share/vendor-skel/*
+
 !.audiotools.cfg
 !.bashrc
 !.ctags

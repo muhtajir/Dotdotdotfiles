@@ -1,6 +1,6 @@
 function fish_title
-    # emacs doesn't like this and for everything not xterm-* it doesn't matter
-    if not string match -q 'xterm-*' $TERM
+    # only set title for the terminal emulator
+    if not string match -qe "$TERMINAL" "$TERM"
         return
     end
 
